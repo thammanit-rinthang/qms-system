@@ -4,6 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import type { DepartmentRow } from "@/types/department";
 import type { GraphGroup } from "@/services/ms-graph";
 import { useLocale } from "@/lib/locale-context";
+import ResponsiveFormOverlay from "@/components/common/ResponsiveFormOverlay";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 type Mode = "create" | "edit";
 
@@ -141,21 +144,32 @@ export default function DepartmentModal({ mode, department, onClose, onSuccess }
   }
 
   return (
-    <dialog open className="modal modal-open">
-      <div className="modal-box max-w-md">
-        <h3 className="text-[16px] font-semibold text-base-content mb-4">
-          {mode === "create" ? t.titleCreate : t.titleEdit}
-        </h3>
-
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+    <ResponsiveFormOverlay
+      open={true}
+      onOpenChange={(value) => { if (!value) onClose(); }}
+      title={mode === "create" ? t.titleCreate : t.titleEdit}
+      desktopContentClassName="w-[min(96vw,48rem)] max-w-xl"
+      bodyClassName="px-4 py-5 md:px-6 md:py-5"
+      footer={
+        <>
+          <Button type="button" variant="outline" onClick={onClose} disabled={loading}>
+            {t.cancel}
+          </Button>
+          <Button type="submit" form="it-department-form" disabled={loading}>
+            {loading && <span className="mr-1.5 h-3 w-3 rounded-full border-2 border-current border-t-transparent animate-spin" />}
+            {mode === "create" ? t.add : t.save}
+          </Button>
+        </>
+      }
+    >
+        <form id="it-department-form" onSubmit={handleSubmit} className="mt-1 flex flex-col gap-3">
           {/* Department name */}
-          <div className="form-control">
-            <label className="label pb-1">
-              <span className="label-text text-[14px]">{t.labelName} <span className="text-error">*</span></span>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[14px] font-medium text-slate-700">
+              {t.labelName} <span className="text-rose-500">*</span>
             </label>
-            <input
+            <Input
               type="text"
-              className="input input-bordered w-full text-[14px]"
               placeholder={t.placeholderName}
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -165,27 +179,27 @@ export default function DepartmentModal({ mode, department, onClose, onSuccess }
           </div>
 
           {/* Email group combobox */}
-          <div className="form-control" ref={comboRef}>
-            <label className="label pb-1">
-              <span className="label-text text-[14px]">{t.labelEmail}</span>
-              <span className="label-text-alt text-neutral text-[12px]">{t.labelEmailOpt}</span>
+          <div className="flex flex-col gap-1.5" ref={comboRef}>
+            <label className="text-[14px] font-medium text-slate-700 flex justify-between">
+              <span>{t.labelEmail}</span>
+              <span className="text-slate-500 text-[12px]">{t.labelEmailOpt}</span>
             </label>
 
             <div className="relative">
-              <input
+              <Input
                 type="text"
-                className="input input-bordered w-full text-[14px] pr-8"
                 placeholder={t.placeholderEmail}
                 value={emailGroup}
                 onFocus={handleInputFocus}
                 onChange={handleInputChange}
                 autoComplete="off"
                 maxLength={100}
+                className="pr-8"
               />
               {/* chevron / spinner indicator */}
-              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-neutral">
+              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
                 {groupsLoading ? (
-                  <span className="loading loading-spinner loading-xs" />
+                  <span className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin block" />
                 ) : (
                   <ChevronIcon />
                 )}
@@ -193,24 +207,24 @@ export default function DepartmentModal({ mode, department, onClose, onSuccess }
 
               {/* Dropdown */}
               {open && (
-                <ul className="absolute z-20 mt-1 w-full bg-base-100 border border-base-300 rounded-lg shadow-md max-h-52 overflow-y-auto">
+                <ul className="absolute z-50 mt-1 w-full bg-white border border-slate-200 rounded-lg shadow-md max-h-52 overflow-y-auto">
                   {groupsLoading && (
-                    <li className="px-3 py-2 text-[13px] text-neutral flex items-center gap-2">
-                      <span className="loading loading-spinner loading-xs" /> {t.loadingGroups}
+                    <li className="px-3 py-2 text-[13px] text-slate-500 flex items-center gap-2">
+                      <span className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" /> {t.loadingGroups}
                     </li>
                   )}
                   {!groupsLoading && filtered.length === 0 && (
-                    <li className="px-3 py-2 text-[13px] text-neutral">{t.noGroups}</li>
+                    <li className="px-3 py-2 text-[13px] text-slate-500">{t.noGroups}</li>
                   )}
                   {!groupsLoading && filtered.map((g) => (
                     <li key={g.id}>
                       <button
                         type="button"
-                        className="w-full text-left px-3 py-2 hover:bg-base-200 transition-colors"
+                        className="w-full text-left px-3 py-2 hover:bg-slate-100 transition-colors"
                         onMouseDown={(e) => { e.preventDefault(); selectGroup(g); }}
                       >
-                        <p className="text-[13px] font-medium text-base-content leading-tight">{g.displayName}</p>
-                        {g.mail && <p className="text-[12px] text-neutral">{g.mail}</p>}
+                        <p className="text-[13px] font-medium text-slate-800 leading-tight">{g.displayName}</p>
+                        {g.mail && <p className="text-[12px] text-slate-500">{g.mail}</p>}
                       </button>
                     </li>
                   ))}
@@ -221,38 +235,27 @@ export default function DepartmentModal({ mode, department, onClose, onSuccess }
 
           {/* Active toggle (edit only) */}
           {mode === "edit" && (
-            <div className="form-control">
-              <label className="label cursor-pointer justify-start gap-3">
-                <input
-                  type="checkbox"
-                  className="checkbox checkbox-primary"
-                  checked={isActive}
-                  onChange={(e) => setIsActive(e.target.checked)}
-                />
-                <span className="label-text text-[14px]">{t.labelActive}</span>
+            <div className="flex items-center gap-2 mt-2">
+              <input
+                type="checkbox"
+                id="activeToggle"
+                className="w-4 h-4 text-emerald-600 bg-slate-100 border-slate-300 rounded focus:ring-emerald-500"
+                checked={isActive}
+                onChange={(e) => setIsActive(e.target.checked)}
+              />
+              <label htmlFor="activeToggle" className="text-[14px] cursor-pointer text-slate-700">
+                {t.labelActive}
               </label>
             </div>
           )}
 
           {error && (
-            <div className="alert alert-error py-2 px-3">
+            <div className="bg-rose-50 border border-rose-200 text-rose-700 py-2 px-3 rounded-md mt-2">
               <span className="text-[13px]">{error}</span>
             </div>
           )}
-
-          <div className="modal-action mt-2">
-            <button type="button" className="btn btn-ghost btn-sm" onClick={onClose} disabled={loading}>
-              {t.cancel}
-            </button>
-            <button type="submit" className="btn btn-primary btn-sm" disabled={loading}>
-              {loading && <span className="loading loading-spinner loading-xs" />}
-              {mode === "create" ? t.add : t.save}
-            </button>
-          </div>
         </form>
-      </div>
-      <div className="modal-backdrop" onClick={onClose} />
-    </dialog>
+    </ResponsiveFormOverlay>
   );
 }
 

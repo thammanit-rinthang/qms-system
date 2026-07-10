@@ -1,20 +1,19 @@
 
-import { NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
-import { AppError } from "@/lib/errors";
-import { getActiveDepartments } from "@/services/department";
-import type { ApiResponse } from "@/types/api";
+import { DepartmentService } from "@/services/departmentService";
+import { sendSuccess } from "@/lib/apiResponse";
+import { handleApiError } from "@/lib/apiErrorHandler";
 
-export async function GET(): Promise<NextResponse<ApiResponse<{ id: string; name: string }[]>>> {
+const deptService = new DepartmentService();
+
+export async function GET() {
   try {
-    await requireAuth();
-    const departments = await getActiveDepartments();
-    return NextResponse.json({ data: departments, error: null }, { headers: { "Cache-Control": "s-maxage=3600" } });
+    const session = await requireAuth();
+    const departments = await deptService.getActiveDepartments(session.user.accessToken);
+    const res = sendSuccess(departments, "Active departments retrieved successfully");
+    res.headers.set("Cache-Control", "s-maxage=3600");
+    return res;
   } catch (err) {
-    if (err instanceof AppError) {
-      return NextResponse.json({ data: null, error: err.message }, { status: err.statusCode });
-    }
-    console.error("[GET /api/departments]", err);
-    return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 });
+    return handleApiError(err);
   }
 }

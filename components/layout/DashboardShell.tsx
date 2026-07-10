@@ -20,7 +20,7 @@ export default function DashboardShell({ role, name, email, image, children }: P
 
   return (
     <LocaleContext.Provider value={locale}>
-      <div className="flex h-screen overflow-hidden bg-base-200">
+      <div className="flex h-screen overflow-hidden bg-slate-100">
         {/* Sidebar: persistent on desktop, drawer on mobile */}
         <DashboardSidebar
           role={role}

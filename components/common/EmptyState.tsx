@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   title: string;
@@ -42,9 +43,11 @@ export default function EmptyState({ title, description, ctaLabel, ctaHref }: Pr
 
       {/* CTA */}
       {ctaLabel && ctaHref && (
-        <Link href={ctaHref} className="btn btn-primary btn-sm mt-2">
-          {ctaLabel}
-        </Link>
+        <Button asChild size="sm" className="mt-2">
+          <Link href={ctaHref}>
+            {ctaLabel}
+          </Link>
+        </Button>
       )}
     </div>
   );

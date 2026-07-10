@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { requireAuth } from "@/lib/auth";
 import { getFileInfo, getOfficePreviewUrl } from "@/lib/sharepoint";
 import { AppError } from "@/lib/errors";
+import { logger } from "@/lib/logger";
 import { z } from "zod";
 
 const OFFICE_MIMES = new Set([
@@ -42,7 +43,7 @@ export async function GET(req: NextRequest) {
     if (err instanceof AppError) {
       return NextResponse.json({ data: null, error: err.message }, { status: err.statusCode });
     }
-    console.error("[GET /api/sharepoint/get-file]", err);
+    logger.error("[GET /api/sharepoint/get-file]", err);
     return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 });
   }
 }

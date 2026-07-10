@@ -45,6 +45,8 @@ export type DarAttachmentMinAggregateOutputType = {
   folderPath: string | null
   darMasterId: string | null
   uploadedById: string | null
+  uploadedByAuthUserId: string | null
+  uploadedByName: string | null
   createdAt: Date | null
 }
 
@@ -59,6 +61,8 @@ export type DarAttachmentMaxAggregateOutputType = {
   folderPath: string | null
   darMasterId: string | null
   uploadedById: string | null
+  uploadedByAuthUserId: string | null
+  uploadedByName: string | null
   createdAt: Date | null
 }
 
@@ -73,6 +77,8 @@ export type DarAttachmentCountAggregateOutputType = {
   folderPath: number
   darMasterId: number
   uploadedById: number
+  uploadedByAuthUserId: number
+  uploadedByName: number
   createdAt: number
   _all: number
 }
@@ -97,6 +103,8 @@ export type DarAttachmentMinAggregateInputType = {
   folderPath?: true
   darMasterId?: true
   uploadedById?: true
+  uploadedByAuthUserId?: true
+  uploadedByName?: true
   createdAt?: true
 }
 
@@ -111,6 +119,8 @@ export type DarAttachmentMaxAggregateInputType = {
   folderPath?: true
   darMasterId?: true
   uploadedById?: true
+  uploadedByAuthUserId?: true
+  uploadedByName?: true
   createdAt?: true
 }
 
@@ -125,6 +135,8 @@ export type DarAttachmentCountAggregateInputType = {
   folderPath?: true
   darMasterId?: true
   uploadedById?: true
+  uploadedByAuthUserId?: true
+  uploadedByName?: true
   createdAt?: true
   _all?: true
 }
@@ -226,6 +238,8 @@ export type DarAttachmentGroupByOutputType = {
   folderPath: string
   darMasterId: string
   uploadedById: string
+  uploadedByAuthUserId: string | null
+  uploadedByName: string | null
   createdAt: Date
   _count: DarAttachmentCountAggregateOutputType | null
   _avg: DarAttachmentAvgAggregateOutputType | null
@@ -263,9 +277,10 @@ export type DarAttachmentWhereInput = {
   folderPath?: Prisma.StringFilter<"DarAttachment"> | string
   darMasterId?: Prisma.StringFilter<"DarAttachment"> | string
   uploadedById?: Prisma.StringFilter<"DarAttachment"> | string
+  uploadedByAuthUserId?: Prisma.StringNullableFilter<"DarAttachment"> | string | null
+  uploadedByName?: Prisma.StringNullableFilter<"DarAttachment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"DarAttachment"> | Date | string
   darMaster?: Prisma.XOR<Prisma.DarMasterScalarRelationFilter, Prisma.DarMasterWhereInput>
-  uploadedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type DarAttachmentOrderByWithRelationInput = {
@@ -279,9 +294,10 @@ export type DarAttachmentOrderByWithRelationInput = {
   folderPath?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   uploadedById?: Prisma.SortOrder
+  uploadedByAuthUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  uploadedByName?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   darMaster?: Prisma.DarMasterOrderByWithRelationInput
-  uploadedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type DarAttachmentWhereUniqueInput = Prisma.AtLeast<{
@@ -298,9 +314,10 @@ export type DarAttachmentWhereUniqueInput = Prisma.AtLeast<{
   folderPath?: Prisma.StringFilter<"DarAttachment"> | string
   darMasterId?: Prisma.StringFilter<"DarAttachment"> | string
   uploadedById?: Prisma.StringFilter<"DarAttachment"> | string
+  uploadedByAuthUserId?: Prisma.StringNullableFilter<"DarAttachment"> | string | null
+  uploadedByName?: Prisma.StringNullableFilter<"DarAttachment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"DarAttachment"> | Date | string
   darMaster?: Prisma.XOR<Prisma.DarMasterScalarRelationFilter, Prisma.DarMasterWhereInput>
-  uploadedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type DarAttachmentOrderByWithAggregationInput = {
@@ -314,6 +331,8 @@ export type DarAttachmentOrderByWithAggregationInput = {
   folderPath?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   uploadedById?: Prisma.SortOrder
+  uploadedByAuthUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  uploadedByName?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.DarAttachmentCountOrderByAggregateInput
   _avg?: Prisma.DarAttachmentAvgOrderByAggregateInput
@@ -336,6 +355,8 @@ export type DarAttachmentScalarWhereWithAggregatesInput = {
   folderPath?: Prisma.StringWithAggregatesFilter<"DarAttachment"> | string
   darMasterId?: Prisma.StringWithAggregatesFilter<"DarAttachment"> | string
   uploadedById?: Prisma.StringWithAggregatesFilter<"DarAttachment"> | string
+  uploadedByAuthUserId?: Prisma.StringNullableWithAggregatesFilter<"DarAttachment"> | string | null
+  uploadedByName?: Prisma.StringNullableWithAggregatesFilter<"DarAttachment"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"DarAttachment"> | Date | string
 }
 
@@ -348,9 +369,11 @@ export type DarAttachmentCreateInput = {
   spWebUrl: string
   spDownloadUrl: string
   folderPath: string
+  uploadedById: string
+  uploadedByAuthUserId?: string | null
+  uploadedByName?: string | null
   createdAt?: Date | string
   darMaster: Prisma.DarMasterCreateNestedOneWithoutAttachmentsInput
-  uploadedBy: Prisma.UserCreateNestedOneWithoutDarAttachmentsInput
 }
 
 export type DarAttachmentUncheckedCreateInput = {
@@ -364,6 +387,8 @@ export type DarAttachmentUncheckedCreateInput = {
   folderPath: string
   darMasterId: string
   uploadedById: string
+  uploadedByAuthUserId?: string | null
+  uploadedByName?: string | null
   createdAt?: Date | string
 }
 
@@ -376,9 +401,11 @@ export type DarAttachmentUpdateInput = {
   spWebUrl?: Prisma.StringFieldUpdateOperationsInput | string
   spDownloadUrl?: Prisma.StringFieldUpdateOperationsInput | string
   folderPath?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedById?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedByAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  uploadedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   darMaster?: Prisma.DarMasterUpdateOneRequiredWithoutAttachmentsNestedInput
-  uploadedBy?: Prisma.UserUpdateOneRequiredWithoutDarAttachmentsNestedInput
 }
 
 export type DarAttachmentUncheckedUpdateInput = {
@@ -392,6 +419,8 @@ export type DarAttachmentUncheckedUpdateInput = {
   folderPath?: Prisma.StringFieldUpdateOperationsInput | string
   darMasterId?: Prisma.StringFieldUpdateOperationsInput | string
   uploadedById?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedByAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  uploadedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -406,6 +435,8 @@ export type DarAttachmentCreateManyInput = {
   folderPath: string
   darMasterId: string
   uploadedById: string
+  uploadedByAuthUserId?: string | null
+  uploadedByName?: string | null
   createdAt?: Date | string
 }
 
@@ -418,6 +449,9 @@ export type DarAttachmentUpdateManyMutationInput = {
   spWebUrl?: Prisma.StringFieldUpdateOperationsInput | string
   spDownloadUrl?: Prisma.StringFieldUpdateOperationsInput | string
   folderPath?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedById?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedByAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  uploadedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -432,6 +466,8 @@ export type DarAttachmentUncheckedUpdateManyInput = {
   folderPath?: Prisma.StringFieldUpdateOperationsInput | string
   darMasterId?: Prisma.StringFieldUpdateOperationsInput | string
   uploadedById?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedByAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  uploadedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -456,6 +492,8 @@ export type DarAttachmentCountOrderByAggregateInput = {
   folderPath?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   uploadedById?: Prisma.SortOrder
+  uploadedByAuthUserId?: Prisma.SortOrder
+  uploadedByName?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -474,6 +512,8 @@ export type DarAttachmentMaxOrderByAggregateInput = {
   folderPath?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   uploadedById?: Prisma.SortOrder
+  uploadedByAuthUserId?: Prisma.SortOrder
+  uploadedByName?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -488,53 +528,13 @@ export type DarAttachmentMinOrderByAggregateInput = {
   folderPath?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   uploadedById?: Prisma.SortOrder
+  uploadedByAuthUserId?: Prisma.SortOrder
+  uploadedByName?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type DarAttachmentSumOrderByAggregateInput = {
   fileSize?: Prisma.SortOrder
-}
-
-export type DarAttachmentCreateNestedManyWithoutUploadedByInput = {
-  create?: Prisma.XOR<Prisma.DarAttachmentCreateWithoutUploadedByInput, Prisma.DarAttachmentUncheckedCreateWithoutUploadedByInput> | Prisma.DarAttachmentCreateWithoutUploadedByInput[] | Prisma.DarAttachmentUncheckedCreateWithoutUploadedByInput[]
-  connectOrCreate?: Prisma.DarAttachmentCreateOrConnectWithoutUploadedByInput | Prisma.DarAttachmentCreateOrConnectWithoutUploadedByInput[]
-  createMany?: Prisma.DarAttachmentCreateManyUploadedByInputEnvelope
-  connect?: Prisma.DarAttachmentWhereUniqueInput | Prisma.DarAttachmentWhereUniqueInput[]
-}
-
-export type DarAttachmentUncheckedCreateNestedManyWithoutUploadedByInput = {
-  create?: Prisma.XOR<Prisma.DarAttachmentCreateWithoutUploadedByInput, Prisma.DarAttachmentUncheckedCreateWithoutUploadedByInput> | Prisma.DarAttachmentCreateWithoutUploadedByInput[] | Prisma.DarAttachmentUncheckedCreateWithoutUploadedByInput[]
-  connectOrCreate?: Prisma.DarAttachmentCreateOrConnectWithoutUploadedByInput | Prisma.DarAttachmentCreateOrConnectWithoutUploadedByInput[]
-  createMany?: Prisma.DarAttachmentCreateManyUploadedByInputEnvelope
-  connect?: Prisma.DarAttachmentWhereUniqueInput | Prisma.DarAttachmentWhereUniqueInput[]
-}
-
-export type DarAttachmentUpdateManyWithoutUploadedByNestedInput = {
-  create?: Prisma.XOR<Prisma.DarAttachmentCreateWithoutUploadedByInput, Prisma.DarAttachmentUncheckedCreateWithoutUploadedByInput> | Prisma.DarAttachmentCreateWithoutUploadedByInput[] | Prisma.DarAttachmentUncheckedCreateWithoutUploadedByInput[]
-  connectOrCreate?: Prisma.DarAttachmentCreateOrConnectWithoutUploadedByInput | Prisma.DarAttachmentCreateOrConnectWithoutUploadedByInput[]
-  upsert?: Prisma.DarAttachmentUpsertWithWhereUniqueWithoutUploadedByInput | Prisma.DarAttachmentUpsertWithWhereUniqueWithoutUploadedByInput[]
-  createMany?: Prisma.DarAttachmentCreateManyUploadedByInputEnvelope
-  set?: Prisma.DarAttachmentWhereUniqueInput | Prisma.DarAttachmentWhereUniqueInput[]
-  disconnect?: Prisma.DarAttachmentWhereUniqueInput | Prisma.DarAttachmentWhereUniqueInput[]
-  delete?: Prisma.DarAttachmentWhereUniqueInput | Prisma.DarAttachmentWhereUniqueInput[]
-  connect?: Prisma.DarAttachmentWhereUniqueInput | Prisma.DarAttachmentWhereUniqueInput[]
-  update?: Prisma.DarAttachmentUpdateWithWhereUniqueWithoutUploadedByInput | Prisma.DarAttachmentUpdateWithWhereUniqueWithoutUploadedByInput[]
-  updateMany?: Prisma.DarAttachmentUpdateManyWithWhereWithoutUploadedByInput | Prisma.DarAttachmentUpdateManyWithWhereWithoutUploadedByInput[]
-  deleteMany?: Prisma.DarAttachmentScalarWhereInput | Prisma.DarAttachmentScalarWhereInput[]
-}
-
-export type DarAttachmentUncheckedUpdateManyWithoutUploadedByNestedInput = {
-  create?: Prisma.XOR<Prisma.DarAttachmentCreateWithoutUploadedByInput, Prisma.DarAttachmentUncheckedCreateWithoutUploadedByInput> | Prisma.DarAttachmentCreateWithoutUploadedByInput[] | Prisma.DarAttachmentUncheckedCreateWithoutUploadedByInput[]
-  connectOrCreate?: Prisma.DarAttachmentCreateOrConnectWithoutUploadedByInput | Prisma.DarAttachmentCreateOrConnectWithoutUploadedByInput[]
-  upsert?: Prisma.DarAttachmentUpsertWithWhereUniqueWithoutUploadedByInput | Prisma.DarAttachmentUpsertWithWhereUniqueWithoutUploadedByInput[]
-  createMany?: Prisma.DarAttachmentCreateManyUploadedByInputEnvelope
-  set?: Prisma.DarAttachmentWhereUniqueInput | Prisma.DarAttachmentWhereUniqueInput[]
-  disconnect?: Prisma.DarAttachmentWhereUniqueInput | Prisma.DarAttachmentWhereUniqueInput[]
-  delete?: Prisma.DarAttachmentWhereUniqueInput | Prisma.DarAttachmentWhereUniqueInput[]
-  connect?: Prisma.DarAttachmentWhereUniqueInput | Prisma.DarAttachmentWhereUniqueInput[]
-  update?: Prisma.DarAttachmentUpdateWithWhereUniqueWithoutUploadedByInput | Prisma.DarAttachmentUpdateWithWhereUniqueWithoutUploadedByInput[]
-  updateMany?: Prisma.DarAttachmentUpdateManyWithWhereWithoutUploadedByInput | Prisma.DarAttachmentUpdateManyWithWhereWithoutUploadedByInput[]
-  deleteMany?: Prisma.DarAttachmentScalarWhereInput | Prisma.DarAttachmentScalarWhereInput[]
 }
 
 export type DarAttachmentCreateNestedManyWithoutDarMasterInput = {
@@ -579,75 +579,6 @@ export type DarAttachmentUncheckedUpdateManyWithoutDarMasterNestedInput = {
   deleteMany?: Prisma.DarAttachmentScalarWhereInput | Prisma.DarAttachmentScalarWhereInput[]
 }
 
-export type DarAttachmentCreateWithoutUploadedByInput = {
-  id?: string
-  fileName: string
-  fileSize: number
-  mimeType: string
-  spItemId: string
-  spWebUrl: string
-  spDownloadUrl: string
-  folderPath: string
-  createdAt?: Date | string
-  darMaster: Prisma.DarMasterCreateNestedOneWithoutAttachmentsInput
-}
-
-export type DarAttachmentUncheckedCreateWithoutUploadedByInput = {
-  id?: string
-  fileName: string
-  fileSize: number
-  mimeType: string
-  spItemId: string
-  spWebUrl: string
-  spDownloadUrl: string
-  folderPath: string
-  darMasterId: string
-  createdAt?: Date | string
-}
-
-export type DarAttachmentCreateOrConnectWithoutUploadedByInput = {
-  where: Prisma.DarAttachmentWhereUniqueInput
-  create: Prisma.XOR<Prisma.DarAttachmentCreateWithoutUploadedByInput, Prisma.DarAttachmentUncheckedCreateWithoutUploadedByInput>
-}
-
-export type DarAttachmentCreateManyUploadedByInputEnvelope = {
-  data: Prisma.DarAttachmentCreateManyUploadedByInput | Prisma.DarAttachmentCreateManyUploadedByInput[]
-  skipDuplicates?: boolean
-}
-
-export type DarAttachmentUpsertWithWhereUniqueWithoutUploadedByInput = {
-  where: Prisma.DarAttachmentWhereUniqueInput
-  update: Prisma.XOR<Prisma.DarAttachmentUpdateWithoutUploadedByInput, Prisma.DarAttachmentUncheckedUpdateWithoutUploadedByInput>
-  create: Prisma.XOR<Prisma.DarAttachmentCreateWithoutUploadedByInput, Prisma.DarAttachmentUncheckedCreateWithoutUploadedByInput>
-}
-
-export type DarAttachmentUpdateWithWhereUniqueWithoutUploadedByInput = {
-  where: Prisma.DarAttachmentWhereUniqueInput
-  data: Prisma.XOR<Prisma.DarAttachmentUpdateWithoutUploadedByInput, Prisma.DarAttachmentUncheckedUpdateWithoutUploadedByInput>
-}
-
-export type DarAttachmentUpdateManyWithWhereWithoutUploadedByInput = {
-  where: Prisma.DarAttachmentScalarWhereInput
-  data: Prisma.XOR<Prisma.DarAttachmentUpdateManyMutationInput, Prisma.DarAttachmentUncheckedUpdateManyWithoutUploadedByInput>
-}
-
-export type DarAttachmentScalarWhereInput = {
-  AND?: Prisma.DarAttachmentScalarWhereInput | Prisma.DarAttachmentScalarWhereInput[]
-  OR?: Prisma.DarAttachmentScalarWhereInput[]
-  NOT?: Prisma.DarAttachmentScalarWhereInput | Prisma.DarAttachmentScalarWhereInput[]
-  id?: Prisma.StringFilter<"DarAttachment"> | string
-  fileName?: Prisma.StringFilter<"DarAttachment"> | string
-  fileSize?: Prisma.IntFilter<"DarAttachment"> | number
-  mimeType?: Prisma.StringFilter<"DarAttachment"> | string
-  spItemId?: Prisma.StringFilter<"DarAttachment"> | string
-  spWebUrl?: Prisma.StringFilter<"DarAttachment"> | string
-  spDownloadUrl?: Prisma.StringFilter<"DarAttachment"> | string
-  folderPath?: Prisma.StringFilter<"DarAttachment"> | string
-  darMasterId?: Prisma.StringFilter<"DarAttachment"> | string
-  uploadedById?: Prisma.StringFilter<"DarAttachment"> | string
-  createdAt?: Prisma.DateTimeFilter<"DarAttachment"> | Date | string
-}
-
 export type DarAttachmentCreateWithoutDarMasterInput = {
   id?: string
   fileName: string
@@ -657,8 +588,10 @@ export type DarAttachmentCreateWithoutDarMasterInput = {
   spWebUrl: string
   spDownloadUrl: string
   folderPath: string
+  uploadedById: string
+  uploadedByAuthUserId?: string | null
+  uploadedByName?: string | null
   createdAt?: Date | string
-  uploadedBy: Prisma.UserCreateNestedOneWithoutDarAttachmentsInput
 }
 
 export type DarAttachmentUncheckedCreateWithoutDarMasterInput = {
@@ -671,6 +604,8 @@ export type DarAttachmentUncheckedCreateWithoutDarMasterInput = {
   spDownloadUrl: string
   folderPath: string
   uploadedById: string
+  uploadedByAuthUserId?: string | null
+  uploadedByName?: string | null
   createdAt?: Date | string
 }
 
@@ -700,56 +635,23 @@ export type DarAttachmentUpdateManyWithWhereWithoutDarMasterInput = {
   data: Prisma.XOR<Prisma.DarAttachmentUpdateManyMutationInput, Prisma.DarAttachmentUncheckedUpdateManyWithoutDarMasterInput>
 }
 
-export type DarAttachmentCreateManyUploadedByInput = {
-  id?: string
-  fileName: string
-  fileSize: number
-  mimeType: string
-  spItemId: string
-  spWebUrl: string
-  spDownloadUrl: string
-  folderPath: string
-  darMasterId: string
-  createdAt?: Date | string
-}
-
-export type DarAttachmentUpdateWithoutUploadedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  fileSize?: Prisma.IntFieldUpdateOperationsInput | number
-  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
-  spItemId?: Prisma.StringFieldUpdateOperationsInput | string
-  spWebUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  spDownloadUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  folderPath?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  darMaster?: Prisma.DarMasterUpdateOneRequiredWithoutAttachmentsNestedInput
-}
-
-export type DarAttachmentUncheckedUpdateWithoutUploadedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  fileSize?: Prisma.IntFieldUpdateOperationsInput | number
-  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
-  spItemId?: Prisma.StringFieldUpdateOperationsInput | string
-  spWebUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  spDownloadUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  folderPath?: Prisma.StringFieldUpdateOperationsInput | string
-  darMasterId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type DarAttachmentUncheckedUpdateManyWithoutUploadedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  fileSize?: Prisma.IntFieldUpdateOperationsInput | number
-  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
-  spItemId?: Prisma.StringFieldUpdateOperationsInput | string
-  spWebUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  spDownloadUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  folderPath?: Prisma.StringFieldUpdateOperationsInput | string
-  darMasterId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type DarAttachmentScalarWhereInput = {
+  AND?: Prisma.DarAttachmentScalarWhereInput | Prisma.DarAttachmentScalarWhereInput[]
+  OR?: Prisma.DarAttachmentScalarWhereInput[]
+  NOT?: Prisma.DarAttachmentScalarWhereInput | Prisma.DarAttachmentScalarWhereInput[]
+  id?: Prisma.StringFilter<"DarAttachment"> | string
+  fileName?: Prisma.StringFilter<"DarAttachment"> | string
+  fileSize?: Prisma.IntFilter<"DarAttachment"> | number
+  mimeType?: Prisma.StringFilter<"DarAttachment"> | string
+  spItemId?: Prisma.StringFilter<"DarAttachment"> | string
+  spWebUrl?: Prisma.StringFilter<"DarAttachment"> | string
+  spDownloadUrl?: Prisma.StringFilter<"DarAttachment"> | string
+  folderPath?: Prisma.StringFilter<"DarAttachment"> | string
+  darMasterId?: Prisma.StringFilter<"DarAttachment"> | string
+  uploadedById?: Prisma.StringFilter<"DarAttachment"> | string
+  uploadedByAuthUserId?: Prisma.StringNullableFilter<"DarAttachment"> | string | null
+  uploadedByName?: Prisma.StringNullableFilter<"DarAttachment"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"DarAttachment"> | Date | string
 }
 
 export type DarAttachmentCreateManyDarMasterInput = {
@@ -762,6 +664,8 @@ export type DarAttachmentCreateManyDarMasterInput = {
   spDownloadUrl: string
   folderPath: string
   uploadedById: string
+  uploadedByAuthUserId?: string | null
+  uploadedByName?: string | null
   createdAt?: Date | string
 }
 
@@ -774,8 +678,10 @@ export type DarAttachmentUpdateWithoutDarMasterInput = {
   spWebUrl?: Prisma.StringFieldUpdateOperationsInput | string
   spDownloadUrl?: Prisma.StringFieldUpdateOperationsInput | string
   folderPath?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedById?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedByAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  uploadedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  uploadedBy?: Prisma.UserUpdateOneRequiredWithoutDarAttachmentsNestedInput
 }
 
 export type DarAttachmentUncheckedUpdateWithoutDarMasterInput = {
@@ -788,6 +694,8 @@ export type DarAttachmentUncheckedUpdateWithoutDarMasterInput = {
   spDownloadUrl?: Prisma.StringFieldUpdateOperationsInput | string
   folderPath?: Prisma.StringFieldUpdateOperationsInput | string
   uploadedById?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedByAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  uploadedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -801,6 +709,8 @@ export type DarAttachmentUncheckedUpdateManyWithoutDarMasterInput = {
   spDownloadUrl?: Prisma.StringFieldUpdateOperationsInput | string
   folderPath?: Prisma.StringFieldUpdateOperationsInput | string
   uploadedById?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedByAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  uploadedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -817,9 +727,10 @@ export type DarAttachmentSelect<ExtArgs extends runtime.Types.Extensions.Interna
   folderPath?: boolean
   darMasterId?: boolean
   uploadedById?: boolean
+  uploadedByAuthUserId?: boolean
+  uploadedByName?: boolean
   createdAt?: boolean
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  uploadedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["darAttachment"]>
 
 export type DarAttachmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -833,9 +744,10 @@ export type DarAttachmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   folderPath?: boolean
   darMasterId?: boolean
   uploadedById?: boolean
+  uploadedByAuthUserId?: boolean
+  uploadedByName?: boolean
   createdAt?: boolean
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  uploadedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["darAttachment"]>
 
 export type DarAttachmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -849,9 +761,10 @@ export type DarAttachmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   folderPath?: boolean
   darMasterId?: boolean
   uploadedById?: boolean
+  uploadedByAuthUserId?: boolean
+  uploadedByName?: boolean
   createdAt?: boolean
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  uploadedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["darAttachment"]>
 
 export type DarAttachmentSelectScalar = {
@@ -865,28 +778,26 @@ export type DarAttachmentSelectScalar = {
   folderPath?: boolean
   darMasterId?: boolean
   uploadedById?: boolean
+  uploadedByAuthUserId?: boolean
+  uploadedByName?: boolean
   createdAt?: boolean
 }
 
-export type DarAttachmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fileName" | "fileSize" | "mimeType" | "spItemId" | "spWebUrl" | "spDownloadUrl" | "folderPath" | "darMasterId" | "uploadedById" | "createdAt", ExtArgs["result"]["darAttachment"]>
+export type DarAttachmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fileName" | "fileSize" | "mimeType" | "spItemId" | "spWebUrl" | "spDownloadUrl" | "folderPath" | "darMasterId" | "uploadedById" | "uploadedByAuthUserId" | "uploadedByName" | "createdAt", ExtArgs["result"]["darAttachment"]>
 export type DarAttachmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  uploadedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type DarAttachmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  uploadedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type DarAttachmentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  uploadedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $DarAttachmentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DarAttachment"
   objects: {
     darMaster: Prisma.$DarMasterPayload<ExtArgs>
-    uploadedBy: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -899,6 +810,8 @@ export type $DarAttachmentPayload<ExtArgs extends runtime.Types.Extensions.Inter
     folderPath: string
     darMasterId: string
     uploadedById: string
+    uploadedByAuthUserId: string | null
+    uploadedByName: string | null
     createdAt: Date
   }, ExtArgs["result"]["darAttachment"]>
   composites: {}
@@ -1295,7 +1208,6 @@ readonly fields: DarAttachmentFieldRefs;
 export interface Prisma__DarAttachmentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   darMaster<T extends Prisma.DarMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DarMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__DarMasterClient<runtime.Types.Result.GetResult<Prisma.$DarMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  uploadedBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1335,6 +1247,8 @@ export interface DarAttachmentFieldRefs {
   readonly folderPath: Prisma.FieldRef<"DarAttachment", 'String'>
   readonly darMasterId: Prisma.FieldRef<"DarAttachment", 'String'>
   readonly uploadedById: Prisma.FieldRef<"DarAttachment", 'String'>
+  readonly uploadedByAuthUserId: Prisma.FieldRef<"DarAttachment", 'String'>
+  readonly uploadedByName: Prisma.FieldRef<"DarAttachment", 'String'>
   readonly createdAt: Prisma.FieldRef<"DarAttachment", 'DateTime'>
 }
     

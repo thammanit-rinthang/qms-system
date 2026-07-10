@@ -68,8 +68,10 @@ export type DarAttachmentRow = {
 
 export type DarRequester = {
   id: string;
+  authUserId?: string | null;
   name: string | null;
   employeeId: string | null;
+  email?: string | null;
   department: { id: string; name: string } | null;
 };
 
@@ -85,8 +87,10 @@ export type DarApprovalRow = {
   actionDate: string | null;
   signatureUsedUrl: string | null;
   signatureTypeUsed: SignatureType | null;
+  comment: string | null;
   assignedUser: {
     id: string;
+    authUserId?: string | null;
     name: string | null;
     employeeId: string | null;
     department: { id: string; name: string } | null;
@@ -116,6 +120,21 @@ export type DarDetail = {
   distributions: DarDistributionItem[];
   approvals: DarApprovalRow[];
   attachments: DarAttachmentRow[];
+  qmsProcessing: {
+    chkHasAttachment: boolean;
+    chkPrintAndValidate: boolean;
+    chkRenumber: boolean;
+    chkImpactInvestigated: boolean;
+    chkSubmitVerification: boolean;
+    chkGetBackProcess: boolean;
+    chkCopyDistribute: boolean;
+    comments: string | null;
+    processDate: string | null;
+    qmsUserId: string;
+    qmsAuthUserId?: string | null;
+    qmsUserName?: string | null;
+    qmsUserEmployeeId?: string | null;
+  } | null;
 };
 
 export type DarSummary = {
@@ -147,4 +166,3 @@ export type CreateDarInput = {
   distributionDepartmentIds: string[];
   tempAttachments?: TempAttachmentInput[];
 };
-

@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { requireRole } from "@/lib/auth";
 import { uploadFile } from "@/lib/sharepoint";
 import { AppError } from "@/lib/errors";
+import { logger } from "@/lib/logger";
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,7 +25,7 @@ export async function POST(req: NextRequest) {
     if (err instanceof AppError) {
       return NextResponse.json({ data: null, error: err.message }, { status: err.statusCode });
     }
-    console.error("[POST /api/sharepoint/upload-file]", err);
+    logger.error("[POST /api/sharepoint/upload-file]", err);
     return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 });
   }
 }

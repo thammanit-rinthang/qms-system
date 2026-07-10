@@ -7,7 +7,380 @@ datasource db {
   provider = "postgresql"
 }
 
-// ─── Enums ───────────────────────────────────────────────────────────────────
+
+model SystemConfig {
+  configKey   String   @id
+  configValue String
+  description String?
+  updatedAt   DateTime @updatedAt
+
+  @@map("SystemConfig")
+}
+
+model LocalRoleGrant {
+  id          String   @id @default(uuid())
+  authUserId  String   @map("auth_user_id")
+  role        String   // QMS_MR, QMS_QMS, QMS_IT, QMS_USER
+  displayName String?  @map("display_name")
+  email       String?
+  grantedAt   DateTime @default(now()) @map("granted_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@unique([authUserId, role])
+  @@map("LocalRoleGrant")
+}
+
+model DepartmentCode {
+  id             String   @id @default(uuid())
+  authDeptId     String   @unique @map("auth_dept_id")
+  departmentName String   @map("department_name")
+  code           String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("DepartmentCode")
+}
+
+// Local department registry for KPI module.
+// Seeded from Auth Center (authDeptCode links back); QMS/IT/MR can rename, deactivate, or add local-only rows.
+// Sync from Auth Center only upserts — never deletes existing rows.
+// KPI.department stores the name string (not FK) so renaming here does NOT auto-update existing KPIs.
+model KpiDept {
+  id           String   @id @default(uuid())
+  name         String   @unique
+  authDeptCode String?  @unique @map("auth_dept_code")
+  emailGroup   String?  @map("email_group")
+  isActive     Boolean  @default(true) @map("is_active")
+  sortOrder    Int      @default(0) @map("sort_order")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("kpi_depts")
+}
+
+// Local department registry for Document Control.
+// Seeded from Auth Center (authDeptCode links back); QMS/IT/MR can rename, deactivate, or add local-only rows.
+// Sync from Auth Center only upserts — never deletes existing rows.
+model DocControlDept {
+  id           String   @id @default(uuid())
+  name         String
+  authDeptCode String?  @unique @map("auth_dept_code") // null = local-only (no Auth Center counterpart)
+  emailGroup   String?  @map("email_group")
+  isActive     Boolean  @default(true) @map("is_active")
+  sortOrder    Int      @default(0) @map("sort_order")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  categories   DocumentCategory[]
+
+  @@map("doc_control_depts")
+}
+
+model UserPreference {
+  authUserId        String        @id @map("auth_user_id")
+  savedSignatureUrl String?       @map("saved_signature_url")
+  signatureType     SignatureType? @map("signature_type")
+  updatedAt         DateTime      @updatedAt
+
+  @@map("user_preferences")
+}
+
+model Announcement {
+  id                  String      @id @default(uuid())
+  sourceSystem        String
+  title               String
+  content             String
+  displayType         DisplayType @default(LIST)
+  pushToCompanyCenter Boolean     @default(false)
+  expiryDate          DateTime?
+  startDate           DateTime?
+  endDate             DateTime?
+  spItemId            String?
+  spWebUrl            String?
+  spDownloadUrl       String?
+  fileName            String?
+  mimeType            String?
+  bgColor             String?
+  bgImageUrl          String?
+  bgImageSpId         String?
+  textColor           String?
+  status              String      @default("ACTIVE")
+  createdById         String
+  createdByAuthUserId String?     @map("created_by_auth_user_id")
+  createdByName       String?     @map("created_by_name")
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+
+  @@map("Announcement")
+}
+
+model DarMaster {
+  id            String            @id @default(uuid())
+  darNo         String?           @unique
+  requestDate   DateTime          @default(now())
+  objective     String
+  docType       String
+  docTypeOther  String?
+  reason        String
+  spFolderId    String?
+  spFolderPath  String?
+  spDriveId     String?
+  spItemId      String?
+  spWebUrl      String?
+  status                  DarStatus         @default(DRAFT)
+  requesterId             String
+  requesterAuthUserId     String?           @map("requester_auth_user_id")
+  requesterName           String?           @map("requester_name")
+  requesterEmployeeId     String?           @map("requester_employee_id")
+  requesterEmail          String?           @map("requester_email")
+  requesterDepartmentName String?           @map("requester_department_name")
+  departmentId            String
+  authDepartmentId        String?           @map("auth_department_id")
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  approvals     DarApproval[]
+  attachments   DarAttachment[]
+  distributions DarDistribution[]
+  items         DarItem[]
+  qmsProcessing QmsProcessing?
+
+  @@index([status])
+  @@index([requesterId])
+  @@index([departmentId])
+  @@map("DarMaster")
+}
+
+model DarItem {
+  id          String    @id @default(uuid())
+  itemNo      Int
+  docNumber   String
+  docName     String
+  revision    String
+  darMasterId String
+  darMaster   DarMaster @relation(fields: [darMasterId], references: [id], onDelete: Cascade)
+
+  @@map("DarItem")
+}
+
+model DarDistribution {
+  id               String    @id @default(uuid())
+  darMasterId      String
+  departmentId     String
+  authDepartmentId String?   @map("auth_department_id")
+  departmentName   String?   @map("department_name")
+  darMaster        DarMaster @relation(fields: [darMasterId], references: [id], onDelete: Cascade)
+
+  @@map("DarDistribution")
+}
+
+model DarAttachment {
+  id            String    @id @default(uuid())
+  fileName      String
+  fileSize      Int
+  mimeType      String
+  spItemId      String
+  spWebUrl      String
+  spDownloadUrl String
+  folderPath    String
+  darMasterId          String
+  uploadedById         String
+  uploadedByAuthUserId String?   @map("uploaded_by_auth_user_id")
+  uploadedByName       String?   @map("uploaded_by_name")
+  createdAt            DateTime  @default(now())
+  darMaster            DarMaster @relation(fields: [darMasterId], references: [id], onDelete: Cascade)
+  // uploadedBy relation removed
+
+  @@index([darMasterId])
+  @@index([spItemId])
+  @@map("DarAttachment")
+}
+
+model DarApproval {
+  id                String         @id @default(uuid())
+  stepRole          ApprovalStep
+  action            ApprovalAction @default(PENDING)
+  actionDate        DateTime?
+  signatureUsedUrl  String?
+  signatureTypeUsed SignatureType?
+  darMasterId        String
+  assignedUserId     String
+  assignedAuthUserId String?        @map("assigned_auth_user_id")
+  assignedUserName   String?        @map("assigned_user_name")
+  assignedEmployeeId String?        @map("assigned_employee_id")
+  assignedDepartmentName String?    @map("assigned_department_name")
+  comment            String?
+  darMaster          DarMaster      @relation(fields: [darMasterId], references: [id], onDelete: Cascade)
+
+  @@index([darMasterId])
+  @@index([assignedUserId])
+  @@map("DarApproval")
+}
+
+model ApprovalSignature {
+  id            String         @id @default(uuid())
+  module        ApprovalModule
+  documentId    String
+  step          ApprovalStep
+  action        ApprovalAction @default(PENDING)
+  actionDate    DateTime?
+  signerUserId     String
+  signerAuthUserId String?        @map("signer_auth_user_id")
+  signerName       String?        @map("signer_name")
+  signerEmail      String?        @map("signer_email")
+  signerDepartmentName String?    @map("signer_department_name")
+  signaturePath    String?
+  comment          String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@index([module, documentId])
+  @@index([signerUserId])
+  @@unique([module, documentId, step])
+  @@map("ApprovalSignature")
+}
+
+model QmsProcessing {
+  id                    String    @id @default(uuid())
+  chkHasAttachment      Boolean   @default(false)
+  chkPrintAndValidate   Boolean   @default(false)
+  chkRenumber           Boolean   @default(false)
+  chkImpactInvestigated Boolean   @default(false)
+  chkSubmitVerification Boolean   @default(false)
+  chkGetBackProcess     Boolean   @default(false)
+  chkCopyDistribute     Boolean   @default(false)
+  comments              String?
+  processDate           DateTime?
+  darMasterId        String    @unique
+  qmsUserId          String
+  qmsAuthUserId      String?   @map("qms_auth_user_id")
+  qmsUserName        String?   @map("qms_user_name")
+  qmsUserEmployeeId  String?   @map("qms_user_employee_id")
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  darMaster          DarMaster @relation(fields: [darMasterId], references: [id], onDelete: Cascade)
+
+  @@map("QmsProcessing")
+}
+
+model PublicDocument {
+  id            String   @id @default(uuid())
+  darMasterId   String?
+  docNumber     String
+  docName       String
+  revision      String
+  spDriveId     String
+  spItemId      String
+  spFolderPath  String?
+  spWebUrl      String
+  publishedDate DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("PublicDocument")
+}
+
+model KPI {
+  id                String             @id @default(uuid())
+  yearly            Int
+  department        String
+  prepare           String
+  reviewer          String
+  approver          String
+  status            KpiObjectiveStatus @default(DRAFT)
+  prepareSignature  String?            @map("prepare_signature") @db.Text
+  reviewerUserId        String?            @map("reviewer_user_id")
+  reviewerAuthUserId    String?            @map("reviewer_auth_user_id")
+  reviewerEmail         String?            @map("reviewer_email")
+  approverUserId        String?            @map("approver_user_id")
+  approverAuthUserId    String?            @map("approver_auth_user_id")
+  approverEmail         String?            @map("approver_email")
+  submittedAt       DateTime?          @map("submitted_at")
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  objectives        KPIObjective[]
+  monthlyReports    KPIMonthlyReport[]
+
+  @@unique([department, yearly])
+  @@map("kpis")
+}
+
+model KPIObjective {
+  id                   String             @id @default(uuid())
+  kpiId                String             @map("kpi_id")
+  target               Float
+  unit                 String?
+  objective            String             @db.Text
+  frequency            String
+  calculationFormula   String             @map("calculation_formula") @db.Text
+  actionPlanGuidelines String             @map("action_plan_guidelines") @db.Text
+  referenceDocuments   String?            @map("reference_documents") @db.Text
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  kpi                  KPI                @relation(fields: [kpiId], references: [id], onDelete: Cascade)
+  monthlyDetails       KPIMonthlyDetail[]
+
+  @@map("kpi_objectives")
+}
+
+model KPIMonthlyReport {
+  id          String             @id @default(uuid())
+  kpiId       String             @map("kpi_id")
+  month       String
+  year        Int
+  status      MonthlyStatus      @default(DRAFT)
+  prepareBy   String?            @map("prepare_by")
+  reviewBy    String?            @map("review_by")
+  approveBy   String?            @map("approve_by")
+  submittedAt DateTime?          @map("submitted_at")
+  approvedAt  DateTime?          @map("approved_at")
+  remark      String?            @db.Text
+  attachmentFileName String?     @map("attachment_file_name")
+  attachmentFileSize Int?        @map("attachment_file_size")
+  attachmentMimeType String?     @map("attachment_mime_type")
+  attachmentSpItemId String?     @map("attachment_sp_item_id")
+  attachmentWebUrl String?       @map("attachment_web_url") @db.Text
+  attachmentDownloadUrl String?  @map("attachment_download_url") @db.Text
+  attachmentUploadedAt DateTime? @map("attachment_uploaded_at")
+  attachmentUploadedBy String?   @map("attachment_uploaded_by")
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  kpi         KPI                @relation(fields: [kpiId], references: [id], onDelete: Cascade)
+  details     KPIMonthlyDetail[]
+
+  @@unique([kpiId, month, year])
+  @@map("kpi_monthly_reports")
+}
+
+model KPIMonthlyDetail {
+  id                String                @id @default(uuid())
+  monthlyReportId   String                @map("monthly_report_id")
+  kpiObjectiveId    String                @map("kpi_objective_id")
+  actualResult      Float?                @map("actual_result")
+  achievedStatus    AchievedStatus        @default(PENDING)
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+  monthlyReport     KPIMonthlyReport      @relation(fields: [monthlyReportId], references: [id], onDelete: Cascade)
+  kpiObjective      KPIObjective          @relation(fields: [kpiObjectiveId], references: [id], onDelete: Restrict)
+  correctiveActions KPICorrectiveAction[]
+
+  @@unique([monthlyReportId, kpiObjectiveId])
+  @@map("kpi_monthly_details")
+}
+
+model KPICorrectiveAction {
+  id                String           @id @default(uuid())
+  monthlyDetailId   String           @map("monthly_detail_id")
+  times             Int
+  rootCause         String           @map("root_cause") @db.Text
+  guidelines        String           @db.Text
+  responsiblePerson String           @map("responsible_person")
+  dueDate           DateTime         @map("due_date")
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  monthlyDetail     KPIMonthlyDetail @relation(fields: [monthlyDetailId], references: [id], onDelete: Cascade)
+
+  @@map("kpi_corrective_actions")
+}
 
 enum UserRole {
   USER
@@ -38,9 +411,53 @@ enum ApprovalAction {
 }
 
 enum ApprovalStep {
+  REQUESTER
+  REQUESTER_MANAGER
   PREPARER
   REVIEWER
+  APPROVER
   APPROVER_MR
+  APPROVER_DCC
+  QMS_PROCESSOR
+  // Audit sign-off steps
+  LEAD_AUDITOR
+  AUDIT_SIGNER
+}
+
+enum ApprovalModule {
+  DAR
+  KPI
+  KPI_MONTHLY
+  CAR
+  AUDIT
+}
+
+enum CarStatus {
+  DRAFT
+  ISSUED
+  RESPONDED
+  VERIFY_1
+  VERIFY_2
+  CLOSED
+  RE_CAR
+  CANCELLED
+}
+
+enum CarSourceType {
+  I
+  C
+  N
+  O
+}
+
+enum VerificationResult {
+  PASSED
+  FAILED
+}
+
+enum CarResponseType {
+  FIVE_WHY
+  OTHER
 }
 
 enum SignatureType {
@@ -49,174 +466,311 @@ enum SignatureType {
   IMAGE
 }
 
-enum KpiPeriodType {
-  YEARLY
-  QUARTERLY
-}
-
-enum KpiMonthlyStatus {
-  OK
-  NG
-  PENDING
-}
-
-enum KpiApprovalStatus {
+enum KpiObjectiveStatus {
   DRAFT
-  SUBMITTED
-  REVIEWED
-  VERIFIED
+  PENDING_REVIEW
+  PENDING_APPROVAL
+  APPROVED
   REJECTED
 }
 
-enum KpiApprovalStep {
-  PREPARER
-  REVIEWER
-  QMS_VERIFIER
+enum MonthlyStatus {
+  DRAFT
+  PENDING_REVIEW
+  PENDING_APPROVAL
+  APPROVED
+  REJECTED
 }
 
-// ─── Models ──────────────────────────────────────────────────────────────────
-
-model Department {
-  id         String   @id @default(uuid())
-  name       String   @unique
-  emailGroup String?
-  isActive   Boolean  @default(true)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  users            User[]
-  darMasters       DarMaster[]
-  darDistributions DarDistribution[]
-  kpiMasters       KpiMaster[]
-
-  @@map("Department")
+enum AchievedStatus {
+  PENDING
+  OK
+  NOT_OK
 }
 
-model User {
-  id                 String        @id @default(uuid())
-  employeeId         String?       @unique
-  msUserId           String?       @unique
-  name               String?
-  email              String        @unique
-  emailVerified      DateTime?
-  image              String?
-  role               UserRole      @default(USER)
-  savedSignatureUrl  String?
-  signatureType      SignatureType?
-  departmentId       String?
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
-
-  department       Department?      @relation(fields: [departmentId], references: [id], onDelete: SetNull)
-  announcements    Announcement[]
-  darMasters       DarMaster[]
-  darAttachments   DarAttachment[]
-  darApprovals     DarApproval[]
-  qmsProcessings   QmsProcessing[]
-  kpiApprovalLogs  KpiApprovalLog[]
-
-  @@index([role])
-  @@index([departmentId])
-  @@map("User")
-}
-
-model SystemConfig {
-  configKey   String   @id
-  configValue String
-  description String?
-  updatedAt   DateTime @updatedAt
-
-  @@map("SystemConfig")
-}
-
-model Announcement {
-  id                  String      @id @default(uuid())
-  sourceSystem        String
-  title               String
-  content             String
-  displayType         DisplayType @default(LIST)
-  pushToCompanyCenter Boolean     @default(false)
-  expiryDate          DateTime?
-  startDate           DateTime?
-  endDate             DateTime?
-  spItemId            String?
-  spWebUrl            String?
-  spDownloadUrl       String?
-  fileName            String?
-  mimeType            String?
-  bgColor             String?
-  bgImageUrl          String?
-  bgImageSpId         String?
-  textColor           String?
-  status              String      @default("ACTIVE")
-  createdById         String
-  createdAt           DateTime    @default(now())
-  updatedAt           DateTime    @updatedAt
-
-  createdBy User @relation(fields: [createdById], references: [id])
-
-  @@map("Announcement")
-}
-
-model DarMaster {
-  id            String    @id @default(uuid())
-  darNo         String?   @unique
-  requestDate   DateTime  @default(now())
-  objective     String
-  docType       String
-  docTypeOther  String?
-  reason        String
-  spFolderId    String?
-  spFolderPath  String?
+model DocumentControl {
+  id            String           @id @default(uuid())
+  docNumber     String           @unique
+  docName       String
+  revision      String?
+  description   String?
+  status        DocControlStatus @default(DRAFT)
+  effectiveDate DateTime?
   spDriveId     String?
   spItemId      String?
   spWebUrl      String?
-  status        DarStatus @default(DRAFT)
-  requesterId   String
-  departmentId  String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  spDownloadUrl String?
+  spFolderPath  String?
+  fileName      String?
+  fileSize      Int?
+  mimeType      String?
+  createdById          String
+  createdByAuthUserId  String?          @map("created_by_auth_user_id")
+  createdByName        String?          @map("created_by_name")
+  updatedById          String?
+  updatedByAuthUserId  String?          @map("updated_by_auth_user_id")
+  updatedByName        String?          @map("updated_by_name")
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
 
-  requester        User              @relation(fields: [requesterId], references: [id])
-  department       Department        @relation(fields: [departmentId], references: [id])
-  items            DarItem[]
-  distributions    DarDistribution[]
-  attachments      DarAttachment[]
-  approvals        DarApproval[]
-  qmsProcessing    QmsProcessing?
+  departmentId         String?
+  authDepartmentId     String?           @map("auth_department_id")
+  departmentName       String?           @map("department_name")
+  categoryId   String?
+  category     DocumentCategory?         @relation(fields: [categoryId], references: [id])
+  revisions    DocumentControlRevision[]
 
   @@index([status])
-  @@index([requesterId])
+  @@index([categoryId])
+  @@index([createdById])
   @@index([departmentId])
-  @@map("DarMaster")
+  @@map("DocumentControl")
 }
 
-model DarItem {
-  id          String @id @default(uuid())
-  itemNo      Int
-  docNumber   String
-  docName     String
-  revision    String
-  darMasterId String
+model DocumentCategory {
+  id               String   @id @default(uuid())
+  name             String
+  description      String?
+  order            Int      @default(0)
+  departmentId     String
+  authDepartmentId String?  @map("auth_department_id")
+  departmentName   String?  @map("department_name")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
-  darMaster DarMaster @relation(fields: [darMasterId], references: [id], onDelete: Cascade)
+  department DocControlDept  @relation(fields: [departmentId], references: [id])
+  documents  DocumentControl[]
 
-  @@map("DarItem")
+  @@unique([departmentId, name])
+  @@index([departmentId])
+  @@map("DocumentCategory")
 }
 
-model DarDistribution {
-  id           String @id @default(uuid())
-  darMasterId  String
-  departmentId String
+model DocumentControlRevision {
+  id                String           @id @default(uuid())
+  documentControlId String
+  revision          String
+  effectiveDate     DateTime?
+  status            DocControlStatus @default(ACTIVE)
+  spDriveId         String?
+  spItemId          String?
+  spWebUrl          String?
+  spDownloadUrl     String?
+  spFolderPath      String?
+  fileName          String?
+  fileSize          Int?
+  mimeType          String?
+  createdById         String
+  createdByAuthUserId String?          @map("created_by_auth_user_id")
+  createdByName       String?          @map("created_by_name")
+  createdAt           DateTime         @default(now())
 
-  darMaster  DarMaster  @relation(fields: [darMasterId], references: [id], onDelete: Cascade)
-  department Department @relation(fields: [departmentId], references: [id])
+  documentControl DocumentControl @relation(fields: [documentControlId], references: [id], onDelete: Cascade)
 
-  @@map("DarDistribution")
+  @@index([documentControlId])
+  @@index([status])
+  @@map("DocumentControlRevision")
 }
 
-model DarAttachment {
-  id            String   @id @default(uuid())
+enum DocControlStatus {
+  DRAFT
+  ACTIVE
+  OBSOLETE
+}
+
+model AuditLog {
+  id              String   @id @default(uuid())
+  actorUserId     String   @map("actor_user_id")
+  actorAuthUserId String?  @map("actor_auth_user_id")
+  actorRole       String   @map("actor_role")
+  action       String   // CREATE | UPDATE | DELETE | APPROVE | REJECT | RECALL | SYNC | EXPORT | ROLE_CHANGE
+  resourceType String   @map("resource_type") // KPI | DAR | USER | DOCUMENT | DOCUMENT_CATEGORY
+  resourceId   String   @map("resource_id")
+  before       Json?    // snapshot before change
+  after        Json?    // snapshot after change
+  metadata     Json?    // requestId, ip, source, etc.
+  createdAt    DateTime @default(now())
+
+  @@index([resourceType, resourceId])
+  @@index([actorUserId])
+  @@index([createdAt])
+  @@index([action])
+  @@map("audit_logs")
+}
+
+model NotificationLog {
+  id             String    @id @default(uuid())
+  idempotencyKey String    @unique @map("idempotency_key")
+  channel        String    @default("EMAIL") // EMAIL | PUSH
+  status         String    @default("PENDING") // PENDING | SENT | FAILED
+  recipient      String
+  subject        String?
+  errorMessage   String?   @map("error_message")
+  attempts       Int       @default(0)
+  sentAt         DateTime? @map("sent_at")
+  createdAt      DateTime  @default(now())
+
+  @@index([status])
+  @@index([createdAt])
+  @@map("notification_logs")
+}
+
+model Notification {
+  id                  String   @id @default(uuid())
+  recipientId         String   @map("recipient_id")
+  recipientAuthUserId String?  @map("recipient_auth_user_id")
+  title               String
+  body                String
+  htmlBody            String?  @map("html_body")
+  module              String
+  resourceId          String   @map("resource_id")
+  resourceType        String   @map("resource_type")
+  isRead              Boolean  @default(false) @map("is_read")
+  createdAt           DateTime @default(now())
+
+  @@index([recipientId, isRead])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+model ActionToken {
+  id         String         @id @default(cuid())
+  token      String         @unique
+  module     ApprovalModule
+  documentId String
+  role       ApprovalStep
+  issuedTo   String         // Auth Center authUserId
+  metadata   Json?
+  expiresAt  DateTime
+  usedAt     DateTime?
+  revokedAt  DateTime?
+  createdAt  DateTime       @default(now())
+
+  @@index([token])
+  @@index([documentId, module])
+  @@index([expiresAt])
+  @@map("action_tokens")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CAR Domain
+// ─────────────────────────────────────────────────────────────────────────────
+
+model CarMaster {
+  id                 String               @id @default(uuid())
+  carNo              String               @unique
+  carYear            Int
+  sequenceNo         Int
+  status             CarStatus            @default(DRAFT)
+  sourceType         CarSourceType
+  sourceDetail       String?
+  isoStandards       String[]
+  defectDetail       String
+  nonConformanceRef  String
+  issuerId               String
+  issuerAuthUserId       String?              @map("issuer_auth_user_id")
+  issuerName             String?              @map("issuer_name")
+  issuerEmployeeId       String?              @map("issuer_employee_id")
+  issuerPosition         String
+  issuerSignaturePath    String?              @map("issuer_signature_path") @db.Text
+  issuedAt               DateTime?
+  targetDepartmentId     String
+  targetAuthDepartmentId String?              @map("target_auth_department_id")
+  targetDepartmentName   String?              @map("target_department_name")
+  targetEmailGroups      String[]
+  targetEmailGroupsCc    String[]             @default([]) @map("target_email_groups_cc")
+  responseDueAt      DateTime?
+  reCar              Boolean              @default(false)
+  reCarRefId         String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  reCarRef           CarMaster?           @relation("ReCarRef", fields: [reCarRefId], references: [id])
+  reCarChildren      CarMaster[]          @relation("ReCarRef")
+  response             CarResponse?
+  verifications        CarVerification[]
+  mrSignature          CarMrSignature?
+  mrResponseReview     CarMrResponseReview?
+  notificationLogs     CarNotificationLog[]
+
+  @@index([status])
+  @@index([issuerId])
+  @@index([targetDepartmentId])
+  @@index([carYear, sequenceNo])
+  @@map("CarMaster")
+}
+
+model CarResponse {
+  id                   String          @id @default(uuid())
+  carMasterId           String          @unique
+  responderId           String
+  responderAuthUserId   String?         @map("responder_auth_user_id")
+  responderName         String?         @map("responder_name")
+  responderEmployeeId   String?         @map("responder_employee_id")
+  responderPosition     String
+  respondedAt          DateTime        @default(now())
+  responseType         CarResponseType @default(FIVE_WHY) @map("response_type")
+  fiveWhys             Json?           @map("five_whys")
+  whyAnalysis          String          @default("")
+  additionalToolDetail String?
+  responderSignaturePath String?        @map("responder_signature_path") @db.Text
+  rootCausePerson      Boolean         @default(false)
+  rootCauseMaterial    Boolean         @default(false)
+  rootCauseMachine     Boolean         @default(false)
+  rootCauseMethod      Boolean         @default(false)
+  rootCauseOther       Boolean         @default(false)
+  rootCauseOtherDetail String?
+  rootCauseSummary     String
+  immediateAction      String
+  preventiveAction     String
+  plannedCompletionDate DateTime
+
+  carMaster            CarMaster       @relation(fields: [carMasterId], references: [id], onDelete: Cascade)
+  attachments          CarAttachment[]
+
+  @@map("CarResponse")
+}
+
+model CarVerification {
+  id               String             @id @default(uuid())
+  carMasterId         String
+  round               Int
+  verifierId          String
+  verifierAuthUserId  String?            @map("verifier_auth_user_id")
+  verifierName        String?            @map("verifier_name")
+  verifierEmployeeId  String?            @map("verifier_employee_id")
+  verifierPosition    String
+  verifiedAt       DateTime           @default(now())
+  findings         String
+  result           VerificationResult
+  nextDueDate      DateTime?
+  verifierSignaturePath String?        @map("verifier_signature_path") @db.Text
+
+  carMaster        CarMaster          @relation(fields: [carMasterId], references: [id], onDelete: Cascade)
+
+  @@unique([carMasterId, round])
+  @@map("CarVerification")
+}
+
+model CarMrSignature {
+  id          String    @id @default(uuid())
+  carMasterId    String    @unique
+  mrUserId       String
+  mrAuthUserId   String?   @map("mr_auth_user_id")
+  mrUserName     String?   @map("mr_user_name")
+  mrEmployeeId   String?   @map("mr_employee_id")
+  signedAt          DateTime  @default(now())
+  comment           String?
+  signaturePath     String?   @map("signature_path") @db.Text
+
+  carMaster   CarMaster @relation(fields: [carMasterId], references: [id], onDelete: Cascade)
+
+  @@map("CarMrSignature")
+}
+
+model CarAttachment {
+  id            String      @id @default(uuid())
+  carResponseId String
   fileName      String
   fileSize      Int
   mimeType      String
@@ -224,159 +778,512 @@ model DarAttachment {
   spWebUrl      String
   spDownloadUrl String
   folderPath    String
-  darMasterId   String
-  uploadedById  String
-  createdAt     DateTime @default(now())
+  uploadedById         String
+  uploadedByAuthUserId String?     @map("uploaded_by_auth_user_id")
+  uploadedByName       String?     @map("uploaded_by_name")
+  createdAt            DateTime    @default(now())
 
-  darMaster   DarMaster @relation(fields: [darMasterId], references: [id], onDelete: Cascade)
-  uploadedBy  User      @relation(fields: [uploadedById], references: [id])
+  carResponse   CarResponse @relation(fields: [carResponseId], references: [id], onDelete: Cascade)
 
-  @@index([darMasterId])
-  @@index([spItemId])
-  @@map("DarAttachment")
+  @@index([carResponseId])
+  @@map("CarAttachment")
 }
 
-model DarApproval {
-  id                 String         @id @default(uuid())
-  stepRole           ApprovalStep
-  action             ApprovalAction @default(PENDING)
-  actionDate         DateTime?
-  signatureUsedUrl   String?
-  signatureTypeUsed  SignatureType?
-  darMasterId        String
-  assignedUserId     String
+model CarMrResponseReview {
+  id          String    @id @default(uuid())
+  carMasterId  String    @unique
+  mrUserId     String
+  mrAuthUserId String?   @map("mr_auth_user_id")
+  mrUserName   String?   @map("mr_user_name")
+  mrEmployeeId String?   @map("mr_employee_id")
+  reviewedAt   DateTime  @default(now())
+  action       String    // "APPROVED" | "REJECTED"
+  comment      String?
+  signaturePath String?  @map("signature_path") @db.Text
 
-  darMaster    DarMaster @relation(fields: [darMasterId], references: [id], onDelete: Cascade)
-  assignedUser User      @relation(fields: [assignedUserId], references: [id])
+  carMaster   CarMaster @relation(fields: [carMasterId], references: [id], onDelete: Cascade)
 
-  @@index([darMasterId])
-  @@index([assignedUserId])
-  @@map("DarApproval")
+  @@map("CarMrResponseReview")
 }
 
-model QmsProcessing {
-  id                    String    @id @default(uuid())
-  chkHasAttachment      Boolean   @default(false)
-  chkPrintAndValidate   Boolean   @default(false)
-  chkRenumber           Boolean   @default(false)
-  chkImpactInvestigated Boolean   @default(false)
-  chkSubmitVerification Boolean   @default(false)
-  chkGetBackProcess     Boolean   @default(false)
-  chkCopyDistribute     Boolean   @default(false)
-  comments              String?
-  processDate           DateTime?
-  darMasterId           String    @unique
-  qmsUserId             String
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
+model CarNotificationLog {
+  id          String    @id @default(uuid())
+  carMasterId String
+  type        String
+  sentAt      DateTime  @default(now())
+  recipient   String
 
-  darMaster DarMaster @relation(fields: [darMasterId], references: [id], onDelete: Cascade)
-  qmsUser   User      @relation(fields: [qmsUserId], references: [id])
+  carMaster   CarMaster @relation(fields: [carMasterId], references: [id], onDelete: Cascade)
 
-  @@map("QmsProcessing")
+  @@index([carMasterId])
+  @@map("CarNotificationLog")
 }
 
-model PublicDocument {
+// ─────────────────────────────────────────────────────────────────────────────
+// Audit Domain
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum AuditType {
+  INTERNAL
+  EXTERNAL
+}
+
+enum AuditMode {
+  SYSTEM
+  FILE_UPLOAD
+}
+
+enum AuditPlanStatus {
+  DRAFT
+  PENDING_REVIEW
+  PENDING_APPROVAL
+  PLANNED
+  ANNOUNCED
+  IN_PROGRESS
+  WAITING_CORRECTIVE
+  READY_TO_CLOSE
+  CLOSED
+  CANCELLED
+}
+
+enum AuditorRole {
+  LEAD
+  MEMBER
+  OBSERVER
+}
+
+enum FindingCategory {
+  NC
+  OBSERVATION
+  OFI
+}
+
+enum FindingSeverity {
+  MINOR
+  MAJOR
+  CRITICAL
+}
+
+enum FindingStatus {
+  OPEN
+  RESPONDED
+  VERIFIED
+  CLOSED
+  REOPENED
+  REJECTED
+}
+
+enum AuditDeliveryMode {
+  LINK
+  ATTACHMENT
+  BOTH
+}
+
+enum AuditSignType {
+  IN_APP
+  TOKEN_LINK
+}
+
+enum AuditVerifyResult {
+  PASS
+  FAIL
+  REOPEN
+}
+
+enum AuditScheduleConfirmStatus {
+  PENDING
+  CONFIRMED
+  UNAVAILABLE
+}
+
+enum AuditTeamRole {
+  LEAD_AUDITOR
+  AUDITOR
+  OBSERVER
+  AUDITEE
+}
+
+enum AuditAppointmentStatus {
+  DRAFT
+  PENDING_REVIEW
+  PENDING_APPROVAL
+  PUBLISHED
+}
+
+model AuditAppointment {
+  id                    String                   @id @default(uuid())
+  appointmentNo         String                   @unique @map("appointment_no")
+  year                  Int
+  title                 String
+  standards             String[]                 @default([])
+  status                AuditAppointmentStatus   @default(DRAFT)
+  rejectReason          String?                  @map("reject_reason")
+  ownerAuthUserId       String?                  @map("owner_auth_user_id")
+  ownerEmail            String?                  @map("owner_email")
+  ownerNameSnapshot     String?                  @map("owner_name_snapshot")
+  reviewerAuthUserId    String?                  @map("reviewer_auth_user_id")
+  reviewerEmail         String?                  @map("reviewer_email")
+  reviewerNameSnapshot  String?                  @map("reviewer_name_snapshot")
+  approverAuthUserId    String?                  @map("approver_auth_user_id")
+  approverEmail         String?                  @map("approver_email")
+  approverNameSnapshot  String?                  @map("approver_name_snapshot")
+  emailGroupMails       String[]                 @default([]) @map("email_group_mails")
+  emailGroupMailsCc     String[]                 @default([]) @map("email_group_mails_cc")
+  ownerSignaturePath    String?                  @map("owner_signature_path") @db.Text
+  publishedAt           DateTime?                @map("published_at")
+  members               AuditAppointmentMember[]
+  signoffs              AuditAppointmentSignoff[]
+  sessionPlan           AuditSessionPlan?
+  createdAt             DateTime                 @default(now()) @map("created_at")
+  updatedAt             DateTime                 @updatedAt @map("updated_at")
+
+  @@map("audit_appointments")
+}
+
+model AuditAppointmentMember {
+  id            String           @id @default(uuid())
+  appointmentId String           @map("appointment_id")
+  authUserId    String           @map("auth_user_id")
+  name          String
+  department    String?
+  role          String
+  standards     String[]         @default([])
+  orderIndex    Int              @default(0) @map("order_index")
+  appointment   AuditAppointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+
+  @@index([appointmentId])
+  @@map("audit_appointment_members")
+}
+
+model AuditAppointmentSignoff {
+  id                 String           @id @default(uuid())
+  appointmentId      String           @map("appointment_id")
+  signedByAuthUserId String           @map("signed_by_auth_user_id")
+  signedRole         String           @map("signed_role")
+  signerNameSnapshot String?          @map("signer_name_snapshot")
+  signaturePath      String?          @map("signature_path")
+  signedAt           DateTime         @default(now()) @map("signed_at")
+  appointment        AuditAppointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+
+  @@map("audit_appointment_signoffs")
+}
+
+// ─── Audit Session Plan (ประกาศการตรวจ + Gantt) ───────────────────────────────
+
+model AuditSessionPlan {
+  id            String                  @id @default(uuid())
+  appointmentId String                  @unique @map("appointment_id")
+  reviseNo      Int                     @default(0) @map("revise_no")
+  reviseDate    DateTime?               @map("revise_date")
+  createdAt     DateTime                @default(now()) @map("created_at")
+  updatedAt     DateTime                @updatedAt @map("updated_at")
+
+  appointment   AuditAppointment        @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  sessions      AuditSessionRow[]
+  ganttRows     AuditGanttRow[]
+
+  @@map("audit_session_plans")
+}
+
+model AuditSessionRow {
+  id          String           @id @default(uuid())
+  planId      String           @map("plan_id")
+  orderIndex  Int              @default(0) @map("order_index")
+  auditDate   DateTime         @map("audit_date")
+  startTime   String           @map("start_time")
+  endTime     String           @map("end_time")
+  department  String
+  remark      String?
+
+  plan        AuditSessionPlan      @relation(fields: [planId], references: [id], onDelete: Cascade)
+  teamMembers AuditSessionTeamMember[]
+
+  @@index([planId])
+  @@map("audit_session_rows")
+}
+
+model AuditSessionTeamMember {
   id            String   @id @default(uuid())
-  darMasterId   String?
-  docNumber     String
-  docName       String
-  revision      String
-  spDriveId     String
-  spItemId      String
-  spFolderPath  String?
-  spWebUrl      String
-  publishedDate DateTime @default(now())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  sessionId     String   @map("session_id")
+  role          String   // LEAD_AUDITOR | AUDITOR | OBSERVER | AUDITEE
+  name          String
+  authUserId    String?  @map("auth_user_id")
 
-  @@map("PublicDocument")
+  session AuditSessionRow @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@map("audit_session_team_members")
 }
 
-model KpiSchedule {
+model AuditGanttRow {
+  id          String           @id @default(uuid())
+  planId      String           @map("plan_id")
+  orderIndex  Int              @default(0) @map("order_index")
+  department  String
+  processes   String[]         @default([])
+  planWeeks   String[]         @default([]) @map("plan_weeks")
+  actualWeeks String[]         @default([]) @map("actual_weeks")
+
+  plan  AuditSessionPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@index([planId])
+  @@map("audit_gantt_rows")
+}
+
+model AuditPlan {
+  id                    String          @id @default(uuid())
+  auditNo               String          @unique @map("audit_no")
+  title                 String
+  auditType             AuditType       @map("audit_type")
+  mode                  AuditMode       @default(SYSTEM)
+  status                AuditPlanStatus @default(DRAFT)
+  standard              String?
+  scope                 String?
+  objective             String?
+  ownerAuthUserId       String          @map("owner_auth_user_id")
+  ownerEmail            String?         @map("owner_email")
+  ownerNameSnapshot     String?         @map("owner_name_snapshot")
+  leadAuditorAuthUserId String?         @map("lead_auditor_auth_user_id")
+  sourceOrganization    String?         @map("source_organization")
+  startDate             DateTime?       @map("start_date")
+  endDate               DateTime?       @map("end_date")
+  calendarEventId       String?         @map("calendar_event_id")
+  summary                String?
+  standards              String[]
+  reviewerAuthUserId     String?  @map("reviewer_auth_user_id")
+  reviewerEmail          String?  @map("reviewer_email")
+  reviewerNameSnapshot   String?  @map("reviewer_name_snapshot")
+  approverAuthUserId     String?  @map("approver_auth_user_id")
+  approverEmail          String?  @map("approver_email")
+  approverNameSnapshot   String?  @map("approver_name_snapshot")
+  emailGroupMails        String[] @map("email_group_mails")
+  rejectReason           String?  @map("reject_reason")
+  appointmentId          String?  @map("appointment_id")
+  createdAt              DateTime        @default(now()) @map("created_at")
+  updatedAt              DateTime        @updatedAt @map("updated_at")
+
+  departments   AuditPlanDepartment[]
+  auditors      AuditAuditorAssignment[]
+  schedules     AuditSchedule[]
+  announcements AuditAnnouncement[]
+  findings      AuditFinding[]
+  signoffs      AuditSignoff[]
+  report        AuditReport?
+
+  @@index([status])
+  @@index([auditType])
+  @@index([ownerAuthUserId])
+  @@map("audit_plans")
+}
+
+model AuditStandard {
   id        String   @id @default(uuid())
-  year      Int
-  month     Int
-  dueDate   DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  name      String   @unique
+  active    Boolean  @default(true)
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at")
 
-  @@unique([year, month])
-  @@map("KpiSchedule")
+  @@map("audit_standards")
 }
 
-model KpiMaster {
-  id                   String        @id @default(uuid())
-  year                 Int
-  periodType           KpiPeriodType @default(YEARLY)
-  objectiveDetails     String
-  measurementFrequency String        @default("Every Month")
-  calculationFormula   String?
-  guidelines           String?
-  trackingRecords      String?
-  targetValue          Decimal       @db.Decimal(5, 2)
-  departmentId         String
-  createdById          String?
-  createdAt            DateTime      @default(now())
-  updatedAt            DateTime      @updatedAt
 
-  department      Department         @relation(fields: [departmentId], references: [id])
-  monthlyResults  KpiMonthlyResult[]
-  approvalLogs    KpiApprovalLog[]
+model AuditPlanDepartment {
+  id             String    @id @default(uuid())
+  planId         String    @map("plan_id")
+  departmentId   String    @map("department_id")
+  departmentCode String?   @map("department_code")
+  departmentName String?   @map("department_name")
 
-  @@map("KpiMaster")
+  plan AuditPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@unique([planId, departmentId])
+  @@map("audit_plan_departments")
 }
 
-model KpiMonthlyResult {
-  id             String            @id @default(uuid())
-  month          Int
-  actualValue    Decimal?          @db.Decimal(5, 2)
-  isNa           Boolean           @default(false)
-  status         KpiMonthlyStatus  @default(PENDING)
-  approvalStatus KpiApprovalStatus @default(DRAFT)
-  spItemId       String?
-  spWebUrl       String?
-  spDownloadUrl  String?
-  fileName       String?
-  kpiMasterId    String
-  createdAt      DateTime          @default(now())
-  updatedAt      DateTime          @updatedAt
+model AuditAuditorAssignment {
+  id                    String      @id @default(uuid())
+  planId                String      @map("plan_id")
+  assigneeAuthUserId    String      @map("assignee_auth_user_id")
+  assigneeNameSnapshot  String?     @map("assignee_name_snapshot")
+  assigneeEmailSnapshot String?     @map("assignee_email_snapshot")
+  role                  AuditorRole @default(MEMBER)
+  assignedAt            DateTime    @default(now()) @map("assigned_at")
 
-  kpiMaster         KpiMaster              @relation(fields: [kpiMasterId], references: [id], onDelete: Cascade)
-  correctiveActions KpiCorrectiveAction[]
+  plan AuditPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
 
-  @@unique([kpiMasterId, month])
-  @@map("KpiMonthlyResult")
+  @@unique([planId, assigneeAuthUserId])
+  @@index([planId])
+  @@map("audit_auditor_assignments")
 }
 
-model KpiCorrectiveAction {
-  id                       String   @id @default(uuid())
-  sequenceNo               Int
-  rootCauseAnalysis        String
-  improvementGuidelines    String
-  responsiblePersonM365    String
-  dueDate                  DateTime @db.Date
-  kpiMonthlyResultId       String
-  createdAt                DateTime @default(now())
-  updatedAt                DateTime @updatedAt
+model AuditSchedule {
+  id                    String                     @id @default(uuid())
+  planId                String                     @map("plan_id")
+  sessionTitle          String                     @map("session_title")
+  location              String?
+  agenda                String?
+  startAt               DateTime                   @map("start_at")
+  endAt                 DateTime                   @map("end_at")
+  calendarEventId       String?                    @map("calendar_event_id")
+  departmentId          String?                    @map("department_id")
+  departmentName        String?                    @map("department_name")
+  contactEmail          String?                    @map("contact_email")
+  confirmStatus         AuditScheduleConfirmStatus @default(PENDING) @map("confirm_status")
+  unavailableReason     String?                    @map("unavailable_reason")
+  confirmedAt           DateTime?                  @map("confirmed_at")
+  confirmedByAuthUserId String?                    @map("confirmed_by_auth_user_id")
+  confirmedByName       String?                    @map("confirmed_by_name")
 
-  kpiMonthlyResult KpiMonthlyResult @relation(fields: [kpiMonthlyResultId], references: [id], onDelete: Cascade)
+  leadAuditorAuthUserId    String? @map("lead_auditor_auth_user_id")
+  leadAuditorNameSnapshot  String? @map("lead_auditor_name_snapshot")
+  leadAuditorEmailSnapshot String? @map("lead_auditor_email_snapshot")
 
-  @@map("KpiCorrectiveAction")
+  checklistDueAt             DateTime? @map("checklist_due_at")
+  checklistSubmittedAt       DateTime? @map("checklist_submitted_at")
+  checklistSubmittedByUserId String?   @map("checklist_submitted_by_user_id")
+  checklistSubmittedByName   String?   @map("checklist_submitted_by_name")
+
+  auditeeNotifyDept Boolean  @default(true) @map("auditee_notify_dept")
+
+  plan AuditPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  team AuditScheduleTeamMember[]
+
+  @@index([planId])
+  @@map("audit_schedules")
 }
 
-model KpiApprovalLog {
-  id                 String          @id @default(uuid())
-  month              Int
-  stepRole           KpiApprovalStep
-  actionDate         DateTime        @default(now())
-  signatureUsedUrl   String?
-  signatureTypeUsed  SignatureType?
-  kpiMasterId        String
-  assignedUserId     String
+model AuditScheduleTeamMember {
+  id            String        @id @default(uuid())
+  scheduleId    String        @map("schedule_id")
+  authUserId    String        @map("auth_user_id")
+  nameSnapshot  String?       @map("name_snapshot")
+  emailSnapshot String?       @map("email_snapshot")
+  role          AuditTeamRole
+  schedule      AuditSchedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
 
-  kpiMaster    KpiMaster @relation(fields: [kpiMasterId], references: [id], onDelete: Cascade)
-  assignedUser User      @relation(fields: [assignedUserId], references: [id])
+  @@index([scheduleId])
+  @@map("audit_schedule_team_members")
+}
 
-  @@map("KpiApprovalLog")
+// ponytail: pure generic attachment table — repository queries by (resourceType, resourceId).
+// No FK per resource type; the @@index covers all lookup patterns cleanly.
+// Add per-resource FKs only if eager-loading via Prisma include becomes a hard requirement.
+model AuditAttachment {
+  id                   String   @id @default(uuid())
+  resourceType         String   @map("resource_type") // PLAN | FINDING | REPORT
+  resourceId           String   @map("resource_id")
+  fileName             String   @map("file_name")
+  fileUrl              String?  @map("file_url")
+  spDownloadUrl        String?  @map("sp_download_url")
+  sharePointItemId     String?  @map("sharepoint_item_id")
+  mimeType             String?  @map("mime_type")
+  sizeBytes            Int?     @map("size_bytes")
+  uploadedByAuthUserId String   @map("uploaded_by_auth_user_id")
+  createdAt            DateTime @default(now()) @map("created_at")
+
+  @@index([resourceType, resourceId])
+  @@map("audit_attachments")
+}
+
+model AuditAnnouncement {
+  id                   String            @id @default(uuid())
+  planId               String            @map("plan_id")
+  title                String
+  message              String
+  deliveryMode         AuditDeliveryMode @default(LINK) @map("delivery_mode")
+  publishedAt          DateTime?         @map("published_at")
+  publishedByAuthUserId String?          @map("published_by_auth_user_id")
+
+  plan AuditPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@index([planId])
+  @@map("audit_announcements")
+}
+
+model AuditFinding {
+  id                  String          @id @default(uuid())
+  planId              String          @map("plan_id")
+  findingNo           String          @map("finding_no")
+  departmentId        String?         @map("department_id")
+  category            FindingCategory
+  severity            FindingSeverity @default(MINOR)
+  clause              String?
+  title               String
+  detail              String
+  evidenceSummary     String?         @map("evidence_summary")
+  ownerAuthUserId     String?         @map("owner_auth_user_id")
+  ownerNameSnapshot   String?         @map("owner_name_snapshot")
+  dueAt               DateTime?       @map("due_at")
+  status              FindingStatus   @default(OPEN)
+  createdByAuthUserId String          @map("created_by_auth_user_id")
+  createdAt           DateTime        @default(now()) @map("created_at")
+  updatedAt           DateTime        @updatedAt @map("updated_at")
+
+  plan             AuditPlan             @relation(fields: [planId], references: [id], onDelete: Cascade)
+  correctiveAction AuditCorrectiveAction?
+  verification     AuditVerification?
+
+  @@unique([planId, findingNo])
+  @@index([planId, status])
+  @@index([ownerAuthUserId])
+  @@map("audit_findings")
+}
+
+model AuditCorrectiveAction {
+  id                   String    @id @default(uuid())
+  findingId            String    @unique @map("finding_id")
+  rootCause            String?   @map("root_cause")
+  correction           String?
+  correctiveActionPlan String?   @map("corrective_action_plan")
+  targetDate           DateTime? @map("target_date")
+  respondedByAuthUserId String?  @map("responded_by_auth_user_id")
+  respondedAt          DateTime? @map("responded_at")
+
+  finding AuditFinding @relation(fields: [findingId], references: [id], onDelete: Cascade)
+
+  @@map("audit_corrective_actions")
+}
+
+model AuditVerification {
+  id                String            @id @default(uuid())
+  findingId         String            @unique @map("finding_id")
+  verifierAuthUserId String           @map("verifier_auth_user_id")
+  result            AuditVerifyResult
+  comment           String?
+  verifiedAt        DateTime          @default(now()) @map("verified_at")
+
+  finding AuditFinding @relation(fields: [findingId], references: [id], onDelete: Cascade)
+
+  @@map("audit_verifications")
+}
+
+model AuditSignoff {
+  id                 String        @id @default(uuid())
+  planId             String        @map("plan_id")
+  signedByAuthUserId String        @map("signed_by_auth_user_id")
+  signedRole         String        @map("signed_role")
+  signType           AuditSignType @default(IN_APP) @map("sign_type")
+  tokenId            String?       @map("token_id")
+  signedAt           DateTime      @default(now()) @map("signed_at")
+  signerNameSnapshot String?       @map("signer_name_snapshot")
+  signaturePath      String?       @map("signature_path") @db.Text
+
+  plan AuditPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@index([planId])
+  @@map("audit_signoffs")
+}
+
+model AuditReport {
+  id                   String    @id @default(uuid())
+  planId               String    @unique @map("plan_id")
+  summary              String?
+  conclusion           String?
+  pdfFileUrl           String?   @map("pdf_file_url")
+  generatedAt          DateTime? @map("generated_at")
+  generatedByAuthUserId String?  @map("generated_by_auth_user_id")
+
+  plan AuditPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@map("audit_reports")
 }

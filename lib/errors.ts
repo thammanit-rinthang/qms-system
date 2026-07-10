@@ -1,37 +1,12 @@
-export class AppError extends Error {
-  constructor(
-    message: string,
-    public readonly statusCode: number = 500,
-  ) {
-    super(message);
-    this.name = "AppError";
-  }
-}
+// Re-export base from the canonical error hierarchy used by handleApiError.
+// This ensures `instanceof AppError` checks work across both lib/errors and errors/customErrors.
+export { AppError, UnauthorizedError, ForbiddenError, ValidationError } from '@/errors/customErrors';
 
+import { AppError } from '@/errors/customErrors';
+
+// NotFoundError keeps its resource-name constructor API (new NotFoundError('Document'))
 export class NotFoundError extends AppError {
   constructor(resource = "Resource") {
-    super(`${resource} not found`, 404);
-    this.name = "NotFoundError";
-  }
-}
-
-export class ValidationError extends AppError {
-  constructor(message: string) {
-    super(message, 400);
-    this.name = "ValidationError";
-  }
-}
-
-export class UnauthorizedError extends AppError {
-  constructor(message = "Unauthorized") {
-    super(message, 401);
-    this.name = "UnauthorizedError";
-  }
-}
-
-export class ForbiddenError extends AppError {
-  constructor(message = "Forbidden") {
-    super(message, 403);
-    this.name = "ForbiddenError";
+    super(`${resource} not found`, 404, "NOT_FOUND");
   }
 }

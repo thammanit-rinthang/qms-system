@@ -2,6 +2,12 @@
 
 import type { DarItemInput } from "@/types/dar";
 import { useT } from "@/lib/i18n";
+import { ActionIconButton } from "@/components/common/ActionButtons";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Plus } from "lucide-react";
 
 type ItemRow = Omit<DarItemInput, "itemNo">;
 
@@ -27,84 +33,80 @@ export default function DarItemsSection({ items, onChange, errors }: Props) {
   }
 
   return (
-    <div className="card-premium p-5">
+    <Card className="p-5 border border-slate-200/60 shadow-sm bg-white/50">
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-sm md:text-base font-bold text-primary">{t("sectionItems")} <span className="text-error">*</span></h2>
-        <button type="button" onClick={addRow} className="btn btn-ghost btn-xs gap-1">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-          </svg>
+        <h2 className="text-sm md:text-base font-bold text-slate-800">{t("sectionItems")} <span className="text-rose-500">*</span></h2>
+        <Button variant="ghost" size="sm" onClick={addRow} className="gap-1 h-8 px-2 text-slate-600">
+          <Plus className="h-4 w-4" />
           {t("addItem")}
-        </button>
+        </Button>
       </div>
 
       {items.length === 0 && (
-        <p className="text-[14px] text-neutral text-center py-4">{t("emptyItems")}</p>
+        <p className="text-sm text-slate-500 text-center py-4">{t("emptyItems")}</p>
       )}
 
       {items.length > 0 && (
         <div className="overflow-x-auto">
-          <table className="table table-sm w-full">
-            <thead>
-              <tr className="bg-base-200 text-[14px] text-neutral border-b border-base-300">
-                <th className="py-2 px-2 font-medium w-12">{t("colNo")}</th>
-                <th className="py-2 px-2 font-medium">{t("colDocNum")} <span className="text-error">*</span></th>
-                <th className="py-2 px-2 font-medium">{t("colDocName")} <span className="text-error">*</span></th>
-                <th className="py-2 px-2 font-medium w-28">{t("colRevision")} <span className="text-error">*</span></th>
-                <th className="py-2 px-2 w-10"></th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-slate-50 border-b border-slate-200">
+                <TableHead className="w-12 font-medium">{t("colNo")}</TableHead>
+                <TableHead className="font-medium">{t("colDocNum")} <span className="text-rose-500">*</span></TableHead>
+                <TableHead className="font-medium">{t("colDocName")} <span className="text-rose-500">*</span></TableHead>
+                <TableHead className="w-28 font-medium">{t("colRevision")} <span className="text-rose-500">*</span></TableHead>
+                <TableHead className="w-10"></TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {items.map((item, idx) => (
-                <tr key={idx} className="border-b border-base-300">
-                  <td className="py-2 px-2 text-neutral text-[14px]">{idx + 1}</td>
-                  <td className="py-2 px-2">
-                    <input
+                <TableRow key={idx}>
+                  <TableCell className="text-slate-600 text-sm">{idx + 1}</TableCell>
+                  <TableCell>
+                    <Input
                       type="text"
-                      className={`input input-bordered input-xs w-full text-[14px] ${errors?.[`items.${idx}.docNumber`] ? "input-error" : ""}`}
+                      className={`h-8 ${errors?.[`items.${idx}.docNumber`] ? "border-rose-500 focus-visible:ring-rose-500" : ""}`}
                       value={item.docNumber}
                       onChange={(e) => updateRow(idx, "docNumber", e.target.value)}
                       placeholder={t("phDocNum")}
                       maxLength={100}
                     />
-                  </td>
-                  <td className="py-2 px-2">
-                    <input
+                  </TableCell>
+                  <TableCell>
+                    <Input
                       type="text"
-                      className={`input input-bordered input-xs w-full text-[14px] ${errors?.[`items.${idx}.docName`] ? "input-error" : ""}`}
+                      className={`h-8 ${errors?.[`items.${idx}.docName`] ? "border-rose-500 focus-visible:ring-rose-500" : ""}`}
                       value={item.docName}
                       onChange={(e) => updateRow(idx, "docName", e.target.value)}
                       placeholder={t("phDocName")}
                       maxLength={255}
                     />
-                  </td>
-                  <td className="py-2 px-2">
-                    <input
+                  </TableCell>
+                  <TableCell>
+                    <Input
                       type="text"
-                      className={`input input-bordered input-xs w-full text-[14px] ${errors?.[`items.${idx}.revision`] ? "input-error" : ""}`}
+                      className={`h-8 ${errors?.[`items.${idx}.revision`] ? "border-rose-500 focus-visible:ring-rose-500" : ""}`}
                       value={item.revision}
                       onChange={(e) => updateRow(idx, "revision", e.target.value)}
                       placeholder={t("phRevision")}
                       maxLength={50}
                     />
-                  </td>
-                  <td className="py-2 px-2">
-                    <button
-                      type="button"
+                  </TableCell>
+                  <TableCell>
+                    <ActionIconButton
+                      tone="delete"
+                      label={t("common.delete")}
                       onClick={() => removeRow(idx)}
-                      className="btn btn-ghost btn-xs text-error"
                       disabled={items.length === 1}
-                    >
-                      ✕
-                    </button>
-                  </td>
-                </tr>
+                    />
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       )}
-      {errors?.items && <p className="text-[12px] text-error mt-2">{errors.items}</p>}
-    </div>
+      {errors?.items && <p className="text-sm text-rose-500 mt-2">{errors.items}</p>}
+    </Card>
   );
 }

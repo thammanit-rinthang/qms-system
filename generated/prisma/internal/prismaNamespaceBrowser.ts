@@ -51,22 +51,60 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  Department: 'Department',
-  User: 'User',
   SystemConfig: 'SystemConfig',
+  LocalRoleGrant: 'LocalRoleGrant',
+  DepartmentCode: 'DepartmentCode',
+  KpiDept: 'KpiDept',
+  DocControlDept: 'DocControlDept',
+  UserPreference: 'UserPreference',
   Announcement: 'Announcement',
   DarMaster: 'DarMaster',
   DarItem: 'DarItem',
   DarDistribution: 'DarDistribution',
   DarAttachment: 'DarAttachment',
   DarApproval: 'DarApproval',
+  ApprovalSignature: 'ApprovalSignature',
   QmsProcessing: 'QmsProcessing',
   PublicDocument: 'PublicDocument',
-  KpiSchedule: 'KpiSchedule',
-  KpiMaster: 'KpiMaster',
-  KpiMonthlyResult: 'KpiMonthlyResult',
-  KpiCorrectiveAction: 'KpiCorrectiveAction',
-  KpiApprovalLog: 'KpiApprovalLog'
+  KPI: 'KPI',
+  KPIObjective: 'KPIObjective',
+  KPIMonthlyReport: 'KPIMonthlyReport',
+  KPIMonthlyDetail: 'KPIMonthlyDetail',
+  KPICorrectiveAction: 'KPICorrectiveAction',
+  DocumentControl: 'DocumentControl',
+  DocumentCategory: 'DocumentCategory',
+  DocumentControlRevision: 'DocumentControlRevision',
+  AuditLog: 'AuditLog',
+  NotificationLog: 'NotificationLog',
+  Notification: 'Notification',
+  ActionToken: 'ActionToken',
+  CarMaster: 'CarMaster',
+  CarResponse: 'CarResponse',
+  CarVerification: 'CarVerification',
+  CarMrSignature: 'CarMrSignature',
+  CarAttachment: 'CarAttachment',
+  CarMrResponseReview: 'CarMrResponseReview',
+  CarNotificationLog: 'CarNotificationLog',
+  AuditAppointment: 'AuditAppointment',
+  AuditAppointmentMember: 'AuditAppointmentMember',
+  AuditAppointmentSignoff: 'AuditAppointmentSignoff',
+  AuditSessionPlan: 'AuditSessionPlan',
+  AuditSessionRow: 'AuditSessionRow',
+  AuditSessionTeamMember: 'AuditSessionTeamMember',
+  AuditGanttRow: 'AuditGanttRow',
+  AuditPlan: 'AuditPlan',
+  AuditStandard: 'AuditStandard',
+  AuditPlanDepartment: 'AuditPlanDepartment',
+  AuditAuditorAssignment: 'AuditAuditorAssignment',
+  AuditSchedule: 'AuditSchedule',
+  AuditScheduleTeamMember: 'AuditScheduleTeamMember',
+  AuditAttachment: 'AuditAttachment',
+  AuditAnnouncement: 'AuditAnnouncement',
+  AuditFinding: 'AuditFinding',
+  AuditCorrectiveAction: 'AuditCorrectiveAction',
+  AuditVerification: 'AuditVerification',
+  AuditSignoff: 'AuditSignoff',
+  AuditReport: 'AuditReport'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -85,37 +123,6 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const DepartmentScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  emailGroup: 'emailGroup',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
-
-
-export const UserScalarFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId',
-  msUserId: 'msUserId',
-  name: 'name',
-  email: 'email',
-  emailVerified: 'emailVerified',
-  image: 'image',
-  role: 'role',
-  savedSignatureUrl: 'savedSignatureUrl',
-  signatureType: 'signatureType',
-  departmentId: 'departmentId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
-
-
 export const SystemConfigScalarFieldEnum = {
   configKey: 'configKey',
   configValue: 'configValue',
@@ -124,6 +131,69 @@ export const SystemConfigScalarFieldEnum = {
 } as const
 
 export type SystemConfigScalarFieldEnum = (typeof SystemConfigScalarFieldEnum)[keyof typeof SystemConfigScalarFieldEnum]
+
+
+export const LocalRoleGrantScalarFieldEnum = {
+  id: 'id',
+  authUserId: 'authUserId',
+  role: 'role',
+  displayName: 'displayName',
+  email: 'email',
+  grantedAt: 'grantedAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LocalRoleGrantScalarFieldEnum = (typeof LocalRoleGrantScalarFieldEnum)[keyof typeof LocalRoleGrantScalarFieldEnum]
+
+
+export const DepartmentCodeScalarFieldEnum = {
+  id: 'id',
+  authDeptId: 'authDeptId',
+  departmentName: 'departmentName',
+  code: 'code',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DepartmentCodeScalarFieldEnum = (typeof DepartmentCodeScalarFieldEnum)[keyof typeof DepartmentCodeScalarFieldEnum]
+
+
+export const KpiDeptScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  authDeptCode: 'authDeptCode',
+  emailGroup: 'emailGroup',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KpiDeptScalarFieldEnum = (typeof KpiDeptScalarFieldEnum)[keyof typeof KpiDeptScalarFieldEnum]
+
+
+export const DocControlDeptScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  authDeptCode: 'authDeptCode',
+  emailGroup: 'emailGroup',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DocControlDeptScalarFieldEnum = (typeof DocControlDeptScalarFieldEnum)[keyof typeof DocControlDeptScalarFieldEnum]
+
+
+export const UserPreferenceScalarFieldEnum = {
+  authUserId: 'authUserId',
+  savedSignatureUrl: 'savedSignatureUrl',
+  signatureType: 'signatureType',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserPreferenceScalarFieldEnum = (typeof UserPreferenceScalarFieldEnum)[keyof typeof UserPreferenceScalarFieldEnum]
 
 
 export const AnnouncementScalarFieldEnum = {
@@ -147,6 +217,8 @@ export const AnnouncementScalarFieldEnum = {
   textColor: 'textColor',
   status: 'status',
   createdById: 'createdById',
+  createdByAuthUserId: 'createdByAuthUserId',
+  createdByName: 'createdByName',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -169,7 +241,13 @@ export const DarMasterScalarFieldEnum = {
   spWebUrl: 'spWebUrl',
   status: 'status',
   requesterId: 'requesterId',
+  requesterAuthUserId: 'requesterAuthUserId',
+  requesterName: 'requesterName',
+  requesterEmployeeId: 'requesterEmployeeId',
+  requesterEmail: 'requesterEmail',
+  requesterDepartmentName: 'requesterDepartmentName',
   departmentId: 'departmentId',
+  authDepartmentId: 'authDepartmentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -192,7 +270,9 @@ export type DarItemScalarFieldEnum = (typeof DarItemScalarFieldEnum)[keyof typeo
 export const DarDistributionScalarFieldEnum = {
   id: 'id',
   darMasterId: 'darMasterId',
-  departmentId: 'departmentId'
+  departmentId: 'departmentId',
+  authDepartmentId: 'authDepartmentId',
+  departmentName: 'departmentName'
 } as const
 
 export type DarDistributionScalarFieldEnum = (typeof DarDistributionScalarFieldEnum)[keyof typeof DarDistributionScalarFieldEnum]
@@ -209,6 +289,8 @@ export const DarAttachmentScalarFieldEnum = {
   folderPath: 'folderPath',
   darMasterId: 'darMasterId',
   uploadedById: 'uploadedById',
+  uploadedByAuthUserId: 'uploadedByAuthUserId',
+  uploadedByName: 'uploadedByName',
   createdAt: 'createdAt'
 } as const
 
@@ -223,10 +305,36 @@ export const DarApprovalScalarFieldEnum = {
   signatureUsedUrl: 'signatureUsedUrl',
   signatureTypeUsed: 'signatureTypeUsed',
   darMasterId: 'darMasterId',
-  assignedUserId: 'assignedUserId'
+  assignedUserId: 'assignedUserId',
+  assignedAuthUserId: 'assignedAuthUserId',
+  assignedUserName: 'assignedUserName',
+  assignedEmployeeId: 'assignedEmployeeId',
+  assignedDepartmentName: 'assignedDepartmentName',
+  comment: 'comment'
 } as const
 
 export type DarApprovalScalarFieldEnum = (typeof DarApprovalScalarFieldEnum)[keyof typeof DarApprovalScalarFieldEnum]
+
+
+export const ApprovalSignatureScalarFieldEnum = {
+  id: 'id',
+  module: 'module',
+  documentId: 'documentId',
+  step: 'step',
+  action: 'action',
+  actionDate: 'actionDate',
+  signerUserId: 'signerUserId',
+  signerAuthUserId: 'signerAuthUserId',
+  signerName: 'signerName',
+  signerEmail: 'signerEmail',
+  signerDepartmentName: 'signerDepartmentName',
+  signaturePath: 'signaturePath',
+  comment: 'comment',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ApprovalSignatureScalarFieldEnum = (typeof ApprovalSignatureScalarFieldEnum)[keyof typeof ApprovalSignatureScalarFieldEnum]
 
 
 export const QmsProcessingScalarFieldEnum = {
@@ -242,6 +350,9 @@ export const QmsProcessingScalarFieldEnum = {
   processDate: 'processDate',
   darMasterId: 'darMasterId',
   qmsUserId: 'qmsUserId',
+  qmsAuthUserId: 'qmsAuthUserId',
+  qmsUserName: 'qmsUserName',
+  qmsUserEmployeeId: 'qmsUserEmployeeId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -267,83 +378,704 @@ export const PublicDocumentScalarFieldEnum = {
 export type PublicDocumentScalarFieldEnum = (typeof PublicDocumentScalarFieldEnum)[keyof typeof PublicDocumentScalarFieldEnum]
 
 
-export const KpiScheduleScalarFieldEnum = {
+export const KPIScalarFieldEnum = {
   id: 'id',
-  year: 'year',
+  yearly: 'yearly',
+  department: 'department',
+  prepare: 'prepare',
+  reviewer: 'reviewer',
+  approver: 'approver',
+  status: 'status',
+  prepareSignature: 'prepareSignature',
+  reviewerUserId: 'reviewerUserId',
+  reviewerAuthUserId: 'reviewerAuthUserId',
+  reviewerEmail: 'reviewerEmail',
+  approverUserId: 'approverUserId',
+  approverAuthUserId: 'approverAuthUserId',
+  approverEmail: 'approverEmail',
+  submittedAt: 'submittedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KPIScalarFieldEnum = (typeof KPIScalarFieldEnum)[keyof typeof KPIScalarFieldEnum]
+
+
+export const KPIObjectiveScalarFieldEnum = {
+  id: 'id',
+  kpiId: 'kpiId',
+  target: 'target',
+  unit: 'unit',
+  objective: 'objective',
+  frequency: 'frequency',
+  calculationFormula: 'calculationFormula',
+  actionPlanGuidelines: 'actionPlanGuidelines',
+  referenceDocuments: 'referenceDocuments',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KPIObjectiveScalarFieldEnum = (typeof KPIObjectiveScalarFieldEnum)[keyof typeof KPIObjectiveScalarFieldEnum]
+
+
+export const KPIMonthlyReportScalarFieldEnum = {
+  id: 'id',
+  kpiId: 'kpiId',
   month: 'month',
+  year: 'year',
+  status: 'status',
+  prepareBy: 'prepareBy',
+  reviewBy: 'reviewBy',
+  approveBy: 'approveBy',
+  submittedAt: 'submittedAt',
+  approvedAt: 'approvedAt',
+  remark: 'remark',
+  attachmentFileName: 'attachmentFileName',
+  attachmentFileSize: 'attachmentFileSize',
+  attachmentMimeType: 'attachmentMimeType',
+  attachmentSpItemId: 'attachmentSpItemId',
+  attachmentWebUrl: 'attachmentWebUrl',
+  attachmentDownloadUrl: 'attachmentDownloadUrl',
+  attachmentUploadedAt: 'attachmentUploadedAt',
+  attachmentUploadedBy: 'attachmentUploadedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KPIMonthlyReportScalarFieldEnum = (typeof KPIMonthlyReportScalarFieldEnum)[keyof typeof KPIMonthlyReportScalarFieldEnum]
+
+
+export const KPIMonthlyDetailScalarFieldEnum = {
+  id: 'id',
+  monthlyReportId: 'monthlyReportId',
+  kpiObjectiveId: 'kpiObjectiveId',
+  actualResult: 'actualResult',
+  achievedStatus: 'achievedStatus',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KPIMonthlyDetailScalarFieldEnum = (typeof KPIMonthlyDetailScalarFieldEnum)[keyof typeof KPIMonthlyDetailScalarFieldEnum]
+
+
+export const KPICorrectiveActionScalarFieldEnum = {
+  id: 'id',
+  monthlyDetailId: 'monthlyDetailId',
+  times: 'times',
+  rootCause: 'rootCause',
+  guidelines: 'guidelines',
+  responsiblePerson: 'responsiblePerson',
   dueDate: 'dueDate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type KpiScheduleScalarFieldEnum = (typeof KpiScheduleScalarFieldEnum)[keyof typeof KpiScheduleScalarFieldEnum]
+export type KPICorrectiveActionScalarFieldEnum = (typeof KPICorrectiveActionScalarFieldEnum)[keyof typeof KPICorrectiveActionScalarFieldEnum]
 
 
-export const KpiMasterScalarFieldEnum = {
+export const DocumentControlScalarFieldEnum = {
   id: 'id',
-  year: 'year',
-  periodType: 'periodType',
-  objectiveDetails: 'objectiveDetails',
-  measurementFrequency: 'measurementFrequency',
-  calculationFormula: 'calculationFormula',
-  guidelines: 'guidelines',
-  trackingRecords: 'trackingRecords',
-  targetValue: 'targetValue',
-  departmentId: 'departmentId',
-  createdById: 'createdById',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type KpiMasterScalarFieldEnum = (typeof KpiMasterScalarFieldEnum)[keyof typeof KpiMasterScalarFieldEnum]
-
-
-export const KpiMonthlyResultScalarFieldEnum = {
-  id: 'id',
-  month: 'month',
-  actualValue: 'actualValue',
-  isNa: 'isNa',
+  docNumber: 'docNumber',
+  docName: 'docName',
+  revision: 'revision',
+  description: 'description',
   status: 'status',
-  approvalStatus: 'approvalStatus',
+  effectiveDate: 'effectiveDate',
+  spDriveId: 'spDriveId',
   spItemId: 'spItemId',
   spWebUrl: 'spWebUrl',
   spDownloadUrl: 'spDownloadUrl',
+  spFolderPath: 'spFolderPath',
   fileName: 'fileName',
-  kpiMasterId: 'kpiMasterId',
+  fileSize: 'fileSize',
+  mimeType: 'mimeType',
+  createdById: 'createdById',
+  createdByAuthUserId: 'createdByAuthUserId',
+  createdByName: 'createdByName',
+  updatedById: 'updatedById',
+  updatedByAuthUserId: 'updatedByAuthUserId',
+  updatedByName: 'updatedByName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  departmentId: 'departmentId',
+  authDepartmentId: 'authDepartmentId',
+  departmentName: 'departmentName',
+  categoryId: 'categoryId'
+} as const
+
+export type DocumentControlScalarFieldEnum = (typeof DocumentControlScalarFieldEnum)[keyof typeof DocumentControlScalarFieldEnum]
+
+
+export const DocumentCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  order: 'order',
+  departmentId: 'departmentId',
+  authDepartmentId: 'authDepartmentId',
+  departmentName: 'departmentName',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type KpiMonthlyResultScalarFieldEnum = (typeof KpiMonthlyResultScalarFieldEnum)[keyof typeof KpiMonthlyResultScalarFieldEnum]
+export type DocumentCategoryScalarFieldEnum = (typeof DocumentCategoryScalarFieldEnum)[keyof typeof DocumentCategoryScalarFieldEnum]
 
 
-export const KpiCorrectiveActionScalarFieldEnum = {
+export const DocumentControlRevisionScalarFieldEnum = {
   id: 'id',
+  documentControlId: 'documentControlId',
+  revision: 'revision',
+  effectiveDate: 'effectiveDate',
+  status: 'status',
+  spDriveId: 'spDriveId',
+  spItemId: 'spItemId',
+  spWebUrl: 'spWebUrl',
+  spDownloadUrl: 'spDownloadUrl',
+  spFolderPath: 'spFolderPath',
+  fileName: 'fileName',
+  fileSize: 'fileSize',
+  mimeType: 'mimeType',
+  createdById: 'createdById',
+  createdByAuthUserId: 'createdByAuthUserId',
+  createdByName: 'createdByName',
+  createdAt: 'createdAt'
+} as const
+
+export type DocumentControlRevisionScalarFieldEnum = (typeof DocumentControlRevisionScalarFieldEnum)[keyof typeof DocumentControlRevisionScalarFieldEnum]
+
+
+export const AuditLogScalarFieldEnum = {
+  id: 'id',
+  actorUserId: 'actorUserId',
+  actorAuthUserId: 'actorAuthUserId',
+  actorRole: 'actorRole',
+  action: 'action',
+  resourceType: 'resourceType',
+  resourceId: 'resourceId',
+  before: 'before',
+  after: 'after',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+} as const
+
+export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const NotificationLogScalarFieldEnum = {
+  id: 'id',
+  idempotencyKey: 'idempotencyKey',
+  channel: 'channel',
+  status: 'status',
+  recipient: 'recipient',
+  subject: 'subject',
+  errorMessage: 'errorMessage',
+  attempts: 'attempts',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationLogScalarFieldEnum = (typeof NotificationLogScalarFieldEnum)[keyof typeof NotificationLogScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  recipientId: 'recipientId',
+  recipientAuthUserId: 'recipientAuthUserId',
+  title: 'title',
+  body: 'body',
+  htmlBody: 'htmlBody',
+  module: 'module',
+  resourceId: 'resourceId',
+  resourceType: 'resourceType',
+  isRead: 'isRead',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const ActionTokenScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  module: 'module',
+  documentId: 'documentId',
+  role: 'role',
+  issuedTo: 'issuedTo',
+  metadata: 'metadata',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  revokedAt: 'revokedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type ActionTokenScalarFieldEnum = (typeof ActionTokenScalarFieldEnum)[keyof typeof ActionTokenScalarFieldEnum]
+
+
+export const CarMasterScalarFieldEnum = {
+  id: 'id',
+  carNo: 'carNo',
+  carYear: 'carYear',
   sequenceNo: 'sequenceNo',
-  rootCauseAnalysis: 'rootCauseAnalysis',
-  improvementGuidelines: 'improvementGuidelines',
-  responsiblePersonM365: 'responsiblePersonM365',
-  dueDate: 'dueDate',
-  kpiMonthlyResultId: 'kpiMonthlyResultId',
+  status: 'status',
+  sourceType: 'sourceType',
+  sourceDetail: 'sourceDetail',
+  isoStandards: 'isoStandards',
+  defectDetail: 'defectDetail',
+  nonConformanceRef: 'nonConformanceRef',
+  issuerId: 'issuerId',
+  issuerAuthUserId: 'issuerAuthUserId',
+  issuerName: 'issuerName',
+  issuerEmployeeId: 'issuerEmployeeId',
+  issuerPosition: 'issuerPosition',
+  issuerSignaturePath: 'issuerSignaturePath',
+  issuedAt: 'issuedAt',
+  targetDepartmentId: 'targetDepartmentId',
+  targetAuthDepartmentId: 'targetAuthDepartmentId',
+  targetDepartmentName: 'targetDepartmentName',
+  targetEmailGroups: 'targetEmailGroups',
+  targetEmailGroupsCc: 'targetEmailGroupsCc',
+  responseDueAt: 'responseDueAt',
+  reCar: 'reCar',
+  reCarRefId: 'reCarRefId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type KpiCorrectiveActionScalarFieldEnum = (typeof KpiCorrectiveActionScalarFieldEnum)[keyof typeof KpiCorrectiveActionScalarFieldEnum]
+export type CarMasterScalarFieldEnum = (typeof CarMasterScalarFieldEnum)[keyof typeof CarMasterScalarFieldEnum]
 
 
-export const KpiApprovalLogScalarFieldEnum = {
+export const CarResponseScalarFieldEnum = {
   id: 'id',
-  month: 'month',
-  stepRole: 'stepRole',
-  actionDate: 'actionDate',
-  signatureUsedUrl: 'signatureUsedUrl',
-  signatureTypeUsed: 'signatureTypeUsed',
-  kpiMasterId: 'kpiMasterId',
-  assignedUserId: 'assignedUserId'
+  carMasterId: 'carMasterId',
+  responderId: 'responderId',
+  responderAuthUserId: 'responderAuthUserId',
+  responderName: 'responderName',
+  responderEmployeeId: 'responderEmployeeId',
+  responderPosition: 'responderPosition',
+  respondedAt: 'respondedAt',
+  responseType: 'responseType',
+  fiveWhys: 'fiveWhys',
+  whyAnalysis: 'whyAnalysis',
+  additionalToolDetail: 'additionalToolDetail',
+  responderSignaturePath: 'responderSignaturePath',
+  rootCausePerson: 'rootCausePerson',
+  rootCauseMaterial: 'rootCauseMaterial',
+  rootCauseMachine: 'rootCauseMachine',
+  rootCauseMethod: 'rootCauseMethod',
+  rootCauseOther: 'rootCauseOther',
+  rootCauseOtherDetail: 'rootCauseOtherDetail',
+  rootCauseSummary: 'rootCauseSummary',
+  immediateAction: 'immediateAction',
+  preventiveAction: 'preventiveAction',
+  plannedCompletionDate: 'plannedCompletionDate'
 } as const
 
-export type KpiApprovalLogScalarFieldEnum = (typeof KpiApprovalLogScalarFieldEnum)[keyof typeof KpiApprovalLogScalarFieldEnum]
+export type CarResponseScalarFieldEnum = (typeof CarResponseScalarFieldEnum)[keyof typeof CarResponseScalarFieldEnum]
+
+
+export const CarVerificationScalarFieldEnum = {
+  id: 'id',
+  carMasterId: 'carMasterId',
+  round: 'round',
+  verifierId: 'verifierId',
+  verifierAuthUserId: 'verifierAuthUserId',
+  verifierName: 'verifierName',
+  verifierEmployeeId: 'verifierEmployeeId',
+  verifierPosition: 'verifierPosition',
+  verifiedAt: 'verifiedAt',
+  findings: 'findings',
+  result: 'result',
+  nextDueDate: 'nextDueDate',
+  verifierSignaturePath: 'verifierSignaturePath'
+} as const
+
+export type CarVerificationScalarFieldEnum = (typeof CarVerificationScalarFieldEnum)[keyof typeof CarVerificationScalarFieldEnum]
+
+
+export const CarMrSignatureScalarFieldEnum = {
+  id: 'id',
+  carMasterId: 'carMasterId',
+  mrUserId: 'mrUserId',
+  mrAuthUserId: 'mrAuthUserId',
+  mrUserName: 'mrUserName',
+  mrEmployeeId: 'mrEmployeeId',
+  signedAt: 'signedAt',
+  comment: 'comment',
+  signaturePath: 'signaturePath'
+} as const
+
+export type CarMrSignatureScalarFieldEnum = (typeof CarMrSignatureScalarFieldEnum)[keyof typeof CarMrSignatureScalarFieldEnum]
+
+
+export const CarAttachmentScalarFieldEnum = {
+  id: 'id',
+  carResponseId: 'carResponseId',
+  fileName: 'fileName',
+  fileSize: 'fileSize',
+  mimeType: 'mimeType',
+  spItemId: 'spItemId',
+  spWebUrl: 'spWebUrl',
+  spDownloadUrl: 'spDownloadUrl',
+  folderPath: 'folderPath',
+  uploadedById: 'uploadedById',
+  uploadedByAuthUserId: 'uploadedByAuthUserId',
+  uploadedByName: 'uploadedByName',
+  createdAt: 'createdAt'
+} as const
+
+export type CarAttachmentScalarFieldEnum = (typeof CarAttachmentScalarFieldEnum)[keyof typeof CarAttachmentScalarFieldEnum]
+
+
+export const CarMrResponseReviewScalarFieldEnum = {
+  id: 'id',
+  carMasterId: 'carMasterId',
+  mrUserId: 'mrUserId',
+  mrAuthUserId: 'mrAuthUserId',
+  mrUserName: 'mrUserName',
+  mrEmployeeId: 'mrEmployeeId',
+  reviewedAt: 'reviewedAt',
+  action: 'action',
+  comment: 'comment',
+  signaturePath: 'signaturePath'
+} as const
+
+export type CarMrResponseReviewScalarFieldEnum = (typeof CarMrResponseReviewScalarFieldEnum)[keyof typeof CarMrResponseReviewScalarFieldEnum]
+
+
+export const CarNotificationLogScalarFieldEnum = {
+  id: 'id',
+  carMasterId: 'carMasterId',
+  type: 'type',
+  sentAt: 'sentAt',
+  recipient: 'recipient'
+} as const
+
+export type CarNotificationLogScalarFieldEnum = (typeof CarNotificationLogScalarFieldEnum)[keyof typeof CarNotificationLogScalarFieldEnum]
+
+
+export const AuditAppointmentScalarFieldEnum = {
+  id: 'id',
+  appointmentNo: 'appointmentNo',
+  year: 'year',
+  title: 'title',
+  standards: 'standards',
+  status: 'status',
+  rejectReason: 'rejectReason',
+  ownerAuthUserId: 'ownerAuthUserId',
+  ownerEmail: 'ownerEmail',
+  ownerNameSnapshot: 'ownerNameSnapshot',
+  reviewerAuthUserId: 'reviewerAuthUserId',
+  reviewerEmail: 'reviewerEmail',
+  reviewerNameSnapshot: 'reviewerNameSnapshot',
+  approverAuthUserId: 'approverAuthUserId',
+  approverEmail: 'approverEmail',
+  approverNameSnapshot: 'approverNameSnapshot',
+  emailGroupMails: 'emailGroupMails',
+  emailGroupMailsCc: 'emailGroupMailsCc',
+  ownerSignaturePath: 'ownerSignaturePath',
+  publishedAt: 'publishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuditAppointmentScalarFieldEnum = (typeof AuditAppointmentScalarFieldEnum)[keyof typeof AuditAppointmentScalarFieldEnum]
+
+
+export const AuditAppointmentMemberScalarFieldEnum = {
+  id: 'id',
+  appointmentId: 'appointmentId',
+  authUserId: 'authUserId',
+  name: 'name',
+  department: 'department',
+  role: 'role',
+  standards: 'standards',
+  orderIndex: 'orderIndex'
+} as const
+
+export type AuditAppointmentMemberScalarFieldEnum = (typeof AuditAppointmentMemberScalarFieldEnum)[keyof typeof AuditAppointmentMemberScalarFieldEnum]
+
+
+export const AuditAppointmentSignoffScalarFieldEnum = {
+  id: 'id',
+  appointmentId: 'appointmentId',
+  signedByAuthUserId: 'signedByAuthUserId',
+  signedRole: 'signedRole',
+  signerNameSnapshot: 'signerNameSnapshot',
+  signaturePath: 'signaturePath',
+  signedAt: 'signedAt'
+} as const
+
+export type AuditAppointmentSignoffScalarFieldEnum = (typeof AuditAppointmentSignoffScalarFieldEnum)[keyof typeof AuditAppointmentSignoffScalarFieldEnum]
+
+
+export const AuditSessionPlanScalarFieldEnum = {
+  id: 'id',
+  appointmentId: 'appointmentId',
+  reviseNo: 'reviseNo',
+  reviseDate: 'reviseDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuditSessionPlanScalarFieldEnum = (typeof AuditSessionPlanScalarFieldEnum)[keyof typeof AuditSessionPlanScalarFieldEnum]
+
+
+export const AuditSessionRowScalarFieldEnum = {
+  id: 'id',
+  planId: 'planId',
+  orderIndex: 'orderIndex',
+  auditDate: 'auditDate',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  department: 'department',
+  remark: 'remark'
+} as const
+
+export type AuditSessionRowScalarFieldEnum = (typeof AuditSessionRowScalarFieldEnum)[keyof typeof AuditSessionRowScalarFieldEnum]
+
+
+export const AuditSessionTeamMemberScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  role: 'role',
+  name: 'name',
+  authUserId: 'authUserId'
+} as const
+
+export type AuditSessionTeamMemberScalarFieldEnum = (typeof AuditSessionTeamMemberScalarFieldEnum)[keyof typeof AuditSessionTeamMemberScalarFieldEnum]
+
+
+export const AuditGanttRowScalarFieldEnum = {
+  id: 'id',
+  planId: 'planId',
+  orderIndex: 'orderIndex',
+  department: 'department',
+  processes: 'processes',
+  planWeeks: 'planWeeks',
+  actualWeeks: 'actualWeeks'
+} as const
+
+export type AuditGanttRowScalarFieldEnum = (typeof AuditGanttRowScalarFieldEnum)[keyof typeof AuditGanttRowScalarFieldEnum]
+
+
+export const AuditPlanScalarFieldEnum = {
+  id: 'id',
+  auditNo: 'auditNo',
+  title: 'title',
+  auditType: 'auditType',
+  mode: 'mode',
+  status: 'status',
+  standard: 'standard',
+  scope: 'scope',
+  objective: 'objective',
+  ownerAuthUserId: 'ownerAuthUserId',
+  ownerEmail: 'ownerEmail',
+  ownerNameSnapshot: 'ownerNameSnapshot',
+  leadAuditorAuthUserId: 'leadAuditorAuthUserId',
+  sourceOrganization: 'sourceOrganization',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  calendarEventId: 'calendarEventId',
+  summary: 'summary',
+  standards: 'standards',
+  reviewerAuthUserId: 'reviewerAuthUserId',
+  reviewerEmail: 'reviewerEmail',
+  reviewerNameSnapshot: 'reviewerNameSnapshot',
+  approverAuthUserId: 'approverAuthUserId',
+  approverEmail: 'approverEmail',
+  approverNameSnapshot: 'approverNameSnapshot',
+  emailGroupMails: 'emailGroupMails',
+  rejectReason: 'rejectReason',
+  appointmentId: 'appointmentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuditPlanScalarFieldEnum = (typeof AuditPlanScalarFieldEnum)[keyof typeof AuditPlanScalarFieldEnum]
+
+
+export const AuditStandardScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  active: 'active',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt'
+} as const
+
+export type AuditStandardScalarFieldEnum = (typeof AuditStandardScalarFieldEnum)[keyof typeof AuditStandardScalarFieldEnum]
+
+
+export const AuditPlanDepartmentScalarFieldEnum = {
+  id: 'id',
+  planId: 'planId',
+  departmentId: 'departmentId',
+  departmentCode: 'departmentCode',
+  departmentName: 'departmentName'
+} as const
+
+export type AuditPlanDepartmentScalarFieldEnum = (typeof AuditPlanDepartmentScalarFieldEnum)[keyof typeof AuditPlanDepartmentScalarFieldEnum]
+
+
+export const AuditAuditorAssignmentScalarFieldEnum = {
+  id: 'id',
+  planId: 'planId',
+  assigneeAuthUserId: 'assigneeAuthUserId',
+  assigneeNameSnapshot: 'assigneeNameSnapshot',
+  assigneeEmailSnapshot: 'assigneeEmailSnapshot',
+  role: 'role',
+  assignedAt: 'assignedAt'
+} as const
+
+export type AuditAuditorAssignmentScalarFieldEnum = (typeof AuditAuditorAssignmentScalarFieldEnum)[keyof typeof AuditAuditorAssignmentScalarFieldEnum]
+
+
+export const AuditScheduleScalarFieldEnum = {
+  id: 'id',
+  planId: 'planId',
+  sessionTitle: 'sessionTitle',
+  location: 'location',
+  agenda: 'agenda',
+  startAt: 'startAt',
+  endAt: 'endAt',
+  calendarEventId: 'calendarEventId',
+  departmentId: 'departmentId',
+  departmentName: 'departmentName',
+  contactEmail: 'contactEmail',
+  confirmStatus: 'confirmStatus',
+  unavailableReason: 'unavailableReason',
+  confirmedAt: 'confirmedAt',
+  confirmedByAuthUserId: 'confirmedByAuthUserId',
+  confirmedByName: 'confirmedByName',
+  leadAuditorAuthUserId: 'leadAuditorAuthUserId',
+  leadAuditorNameSnapshot: 'leadAuditorNameSnapshot',
+  leadAuditorEmailSnapshot: 'leadAuditorEmailSnapshot',
+  checklistDueAt: 'checklistDueAt',
+  checklistSubmittedAt: 'checklistSubmittedAt',
+  checklistSubmittedByUserId: 'checklistSubmittedByUserId',
+  checklistSubmittedByName: 'checklistSubmittedByName',
+  auditeeNotifyDept: 'auditeeNotifyDept'
+} as const
+
+export type AuditScheduleScalarFieldEnum = (typeof AuditScheduleScalarFieldEnum)[keyof typeof AuditScheduleScalarFieldEnum]
+
+
+export const AuditScheduleTeamMemberScalarFieldEnum = {
+  id: 'id',
+  scheduleId: 'scheduleId',
+  authUserId: 'authUserId',
+  nameSnapshot: 'nameSnapshot',
+  emailSnapshot: 'emailSnapshot',
+  role: 'role'
+} as const
+
+export type AuditScheduleTeamMemberScalarFieldEnum = (typeof AuditScheduleTeamMemberScalarFieldEnum)[keyof typeof AuditScheduleTeamMemberScalarFieldEnum]
+
+
+export const AuditAttachmentScalarFieldEnum = {
+  id: 'id',
+  resourceType: 'resourceType',
+  resourceId: 'resourceId',
+  fileName: 'fileName',
+  fileUrl: 'fileUrl',
+  spDownloadUrl: 'spDownloadUrl',
+  sharePointItemId: 'sharePointItemId',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  uploadedByAuthUserId: 'uploadedByAuthUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type AuditAttachmentScalarFieldEnum = (typeof AuditAttachmentScalarFieldEnum)[keyof typeof AuditAttachmentScalarFieldEnum]
+
+
+export const AuditAnnouncementScalarFieldEnum = {
+  id: 'id',
+  planId: 'planId',
+  title: 'title',
+  message: 'message',
+  deliveryMode: 'deliveryMode',
+  publishedAt: 'publishedAt',
+  publishedByAuthUserId: 'publishedByAuthUserId'
+} as const
+
+export type AuditAnnouncementScalarFieldEnum = (typeof AuditAnnouncementScalarFieldEnum)[keyof typeof AuditAnnouncementScalarFieldEnum]
+
+
+export const AuditFindingScalarFieldEnum = {
+  id: 'id',
+  planId: 'planId',
+  findingNo: 'findingNo',
+  departmentId: 'departmentId',
+  category: 'category',
+  severity: 'severity',
+  clause: 'clause',
+  title: 'title',
+  detail: 'detail',
+  evidenceSummary: 'evidenceSummary',
+  ownerAuthUserId: 'ownerAuthUserId',
+  ownerNameSnapshot: 'ownerNameSnapshot',
+  dueAt: 'dueAt',
+  status: 'status',
+  createdByAuthUserId: 'createdByAuthUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuditFindingScalarFieldEnum = (typeof AuditFindingScalarFieldEnum)[keyof typeof AuditFindingScalarFieldEnum]
+
+
+export const AuditCorrectiveActionScalarFieldEnum = {
+  id: 'id',
+  findingId: 'findingId',
+  rootCause: 'rootCause',
+  correction: 'correction',
+  correctiveActionPlan: 'correctiveActionPlan',
+  targetDate: 'targetDate',
+  respondedByAuthUserId: 'respondedByAuthUserId',
+  respondedAt: 'respondedAt'
+} as const
+
+export type AuditCorrectiveActionScalarFieldEnum = (typeof AuditCorrectiveActionScalarFieldEnum)[keyof typeof AuditCorrectiveActionScalarFieldEnum]
+
+
+export const AuditVerificationScalarFieldEnum = {
+  id: 'id',
+  findingId: 'findingId',
+  verifierAuthUserId: 'verifierAuthUserId',
+  result: 'result',
+  comment: 'comment',
+  verifiedAt: 'verifiedAt'
+} as const
+
+export type AuditVerificationScalarFieldEnum = (typeof AuditVerificationScalarFieldEnum)[keyof typeof AuditVerificationScalarFieldEnum]
+
+
+export const AuditSignoffScalarFieldEnum = {
+  id: 'id',
+  planId: 'planId',
+  signedByAuthUserId: 'signedByAuthUserId',
+  signedRole: 'signedRole',
+  signType: 'signType',
+  tokenId: 'tokenId',
+  signedAt: 'signedAt',
+  signerNameSnapshot: 'signerNameSnapshot',
+  signaturePath: 'signaturePath'
+} as const
+
+export type AuditSignoffScalarFieldEnum = (typeof AuditSignoffScalarFieldEnum)[keyof typeof AuditSignoffScalarFieldEnum]
+
+
+export const AuditReportScalarFieldEnum = {
+  id: 'id',
+  planId: 'planId',
+  summary: 'summary',
+  conclusion: 'conclusion',
+  pdfFileUrl: 'pdfFileUrl',
+  generatedAt: 'generatedAt',
+  generatedByAuthUserId: 'generatedByAuthUserId'
+} as const
+
+export type AuditReportScalarFieldEnum = (typeof AuditReportScalarFieldEnum)[keyof typeof AuditReportScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -352,6 +1084,14 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -368,4 +1108,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

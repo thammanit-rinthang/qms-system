@@ -4,7 +4,7 @@
 // biome-ignore-all lint: generated file
 // @ts-nocheck 
 /*
- * This file exports the `KpiCorrectiveAction` model and its related types.
+ * This file exports the `KPICorrectiveAction` model and its related types.
  *
  * 🟢 You can import this file directly.
  */
@@ -13,586 +13,586 @@ import type * as $Enums from "../enums"
 import type * as Prisma from "../internal/prismaNamespace"
 
 /**
- * Model KpiCorrectiveAction
+ * Model KPICorrectiveAction
  * 
  */
-export type KpiCorrectiveActionModel = runtime.Types.Result.DefaultSelection<Prisma.$KpiCorrectiveActionPayload>
+export type KPICorrectiveActionModel = runtime.Types.Result.DefaultSelection<Prisma.$KPICorrectiveActionPayload>
 
-export type AggregateKpiCorrectiveAction = {
-  _count: KpiCorrectiveActionCountAggregateOutputType | null
-  _avg: KpiCorrectiveActionAvgAggregateOutputType | null
-  _sum: KpiCorrectiveActionSumAggregateOutputType | null
-  _min: KpiCorrectiveActionMinAggregateOutputType | null
-  _max: KpiCorrectiveActionMaxAggregateOutputType | null
+export type AggregateKPICorrectiveAction = {
+  _count: KPICorrectiveActionCountAggregateOutputType | null
+  _avg: KPICorrectiveActionAvgAggregateOutputType | null
+  _sum: KPICorrectiveActionSumAggregateOutputType | null
+  _min: KPICorrectiveActionMinAggregateOutputType | null
+  _max: KPICorrectiveActionMaxAggregateOutputType | null
 }
 
-export type KpiCorrectiveActionAvgAggregateOutputType = {
-  sequenceNo: number | null
+export type KPICorrectiveActionAvgAggregateOutputType = {
+  times: number | null
 }
 
-export type KpiCorrectiveActionSumAggregateOutputType = {
-  sequenceNo: number | null
+export type KPICorrectiveActionSumAggregateOutputType = {
+  times: number | null
 }
 
-export type KpiCorrectiveActionMinAggregateOutputType = {
+export type KPICorrectiveActionMinAggregateOutputType = {
   id: string | null
-  sequenceNo: number | null
-  rootCauseAnalysis: string | null
-  improvementGuidelines: string | null
-  responsiblePersonM365: string | null
+  monthlyDetailId: string | null
+  times: number | null
+  rootCause: string | null
+  guidelines: string | null
+  responsiblePerson: string | null
   dueDate: Date | null
-  kpiMonthlyResultId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
-export type KpiCorrectiveActionMaxAggregateOutputType = {
+export type KPICorrectiveActionMaxAggregateOutputType = {
   id: string | null
-  sequenceNo: number | null
-  rootCauseAnalysis: string | null
-  improvementGuidelines: string | null
-  responsiblePersonM365: string | null
+  monthlyDetailId: string | null
+  times: number | null
+  rootCause: string | null
+  guidelines: string | null
+  responsiblePerson: string | null
   dueDate: Date | null
-  kpiMonthlyResultId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
-export type KpiCorrectiveActionCountAggregateOutputType = {
+export type KPICorrectiveActionCountAggregateOutputType = {
   id: number
-  sequenceNo: number
-  rootCauseAnalysis: number
-  improvementGuidelines: number
-  responsiblePersonM365: number
+  monthlyDetailId: number
+  times: number
+  rootCause: number
+  guidelines: number
+  responsiblePerson: number
   dueDate: number
-  kpiMonthlyResultId: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
 
-export type KpiCorrectiveActionAvgAggregateInputType = {
-  sequenceNo?: true
+export type KPICorrectiveActionAvgAggregateInputType = {
+  times?: true
 }
 
-export type KpiCorrectiveActionSumAggregateInputType = {
-  sequenceNo?: true
+export type KPICorrectiveActionSumAggregateInputType = {
+  times?: true
 }
 
-export type KpiCorrectiveActionMinAggregateInputType = {
+export type KPICorrectiveActionMinAggregateInputType = {
   id?: true
-  sequenceNo?: true
-  rootCauseAnalysis?: true
-  improvementGuidelines?: true
-  responsiblePersonM365?: true
+  monthlyDetailId?: true
+  times?: true
+  rootCause?: true
+  guidelines?: true
+  responsiblePerson?: true
   dueDate?: true
-  kpiMonthlyResultId?: true
   createdAt?: true
   updatedAt?: true
 }
 
-export type KpiCorrectiveActionMaxAggregateInputType = {
+export type KPICorrectiveActionMaxAggregateInputType = {
   id?: true
-  sequenceNo?: true
-  rootCauseAnalysis?: true
-  improvementGuidelines?: true
-  responsiblePersonM365?: true
+  monthlyDetailId?: true
+  times?: true
+  rootCause?: true
+  guidelines?: true
+  responsiblePerson?: true
   dueDate?: true
-  kpiMonthlyResultId?: true
   createdAt?: true
   updatedAt?: true
 }
 
-export type KpiCorrectiveActionCountAggregateInputType = {
+export type KPICorrectiveActionCountAggregateInputType = {
   id?: true
-  sequenceNo?: true
-  rootCauseAnalysis?: true
-  improvementGuidelines?: true
-  responsiblePersonM365?: true
+  monthlyDetailId?: true
+  times?: true
+  rootCause?: true
+  guidelines?: true
+  responsiblePerson?: true
   dueDate?: true
-  kpiMonthlyResultId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
 }
 
-export type KpiCorrectiveActionAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Filter which KpiCorrectiveAction to aggregate.
+   * Filter which KPICorrectiveAction to aggregate.
    */
-  where?: Prisma.KpiCorrectiveActionWhereInput
+  where?: Prisma.KPICorrectiveActionWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of KpiCorrectiveActions to fetch.
+   * Determine the order of KPICorrectiveActions to fetch.
    */
-  orderBy?: Prisma.KpiCorrectiveActionOrderByWithRelationInput | Prisma.KpiCorrectiveActionOrderByWithRelationInput[]
+  orderBy?: Prisma.KPICorrectiveActionOrderByWithRelationInput | Prisma.KPICorrectiveActionOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
    * Sets the start position
    */
-  cursor?: Prisma.KpiCorrectiveActionWhereUniqueInput
+  cursor?: Prisma.KPICorrectiveActionWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` KpiCorrectiveActions from the position of the cursor.
+   * Take `±n` KPICorrectiveActions from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` KpiCorrectiveActions.
+   * Skip the first `n` KPICorrectiveActions.
    */
   skip?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Count returned KpiCorrectiveActions
+   * Count returned KPICorrectiveActions
   **/
-  _count?: true | KpiCorrectiveActionCountAggregateInputType
+  _count?: true | KPICorrectiveActionCountAggregateInputType
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
    * Select which fields to average
   **/
-  _avg?: KpiCorrectiveActionAvgAggregateInputType
+  _avg?: KPICorrectiveActionAvgAggregateInputType
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
    * Select which fields to sum
   **/
-  _sum?: KpiCorrectiveActionSumAggregateInputType
+  _sum?: KPICorrectiveActionSumAggregateInputType
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
    * Select which fields to find the minimum value
   **/
-  _min?: KpiCorrectiveActionMinAggregateInputType
+  _min?: KPICorrectiveActionMinAggregateInputType
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
    * Select which fields to find the maximum value
   **/
-  _max?: KpiCorrectiveActionMaxAggregateInputType
+  _max?: KPICorrectiveActionMaxAggregateInputType
 }
 
-export type GetKpiCorrectiveActionAggregateType<T extends KpiCorrectiveActionAggregateArgs> = {
-      [P in keyof T & keyof AggregateKpiCorrectiveAction]: P extends '_count' | 'count'
+export type GetKPICorrectiveActionAggregateType<T extends KPICorrectiveActionAggregateArgs> = {
+      [P in keyof T & keyof AggregateKPICorrectiveAction]: P extends '_count' | 'count'
     ? T[P] extends true
       ? number
-      : Prisma.GetScalarType<T[P], AggregateKpiCorrectiveAction[P]>
-    : Prisma.GetScalarType<T[P], AggregateKpiCorrectiveAction[P]>
+      : Prisma.GetScalarType<T[P], AggregateKPICorrectiveAction[P]>
+    : Prisma.GetScalarType<T[P], AggregateKPICorrectiveAction[P]>
 }
 
 
 
 
-export type KpiCorrectiveActionGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.KpiCorrectiveActionWhereInput
-  orderBy?: Prisma.KpiCorrectiveActionOrderByWithAggregationInput | Prisma.KpiCorrectiveActionOrderByWithAggregationInput[]
-  by: Prisma.KpiCorrectiveActionScalarFieldEnum[] | Prisma.KpiCorrectiveActionScalarFieldEnum
-  having?: Prisma.KpiCorrectiveActionScalarWhereWithAggregatesInput
+export type KPICorrectiveActionGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.KPICorrectiveActionWhereInput
+  orderBy?: Prisma.KPICorrectiveActionOrderByWithAggregationInput | Prisma.KPICorrectiveActionOrderByWithAggregationInput[]
+  by: Prisma.KPICorrectiveActionScalarFieldEnum[] | Prisma.KPICorrectiveActionScalarFieldEnum
+  having?: Prisma.KPICorrectiveActionScalarWhereWithAggregatesInput
   take?: number
   skip?: number
-  _count?: KpiCorrectiveActionCountAggregateInputType | true
-  _avg?: KpiCorrectiveActionAvgAggregateInputType
-  _sum?: KpiCorrectiveActionSumAggregateInputType
-  _min?: KpiCorrectiveActionMinAggregateInputType
-  _max?: KpiCorrectiveActionMaxAggregateInputType
+  _count?: KPICorrectiveActionCountAggregateInputType | true
+  _avg?: KPICorrectiveActionAvgAggregateInputType
+  _sum?: KPICorrectiveActionSumAggregateInputType
+  _min?: KPICorrectiveActionMinAggregateInputType
+  _max?: KPICorrectiveActionMaxAggregateInputType
 }
 
-export type KpiCorrectiveActionGroupByOutputType = {
+export type KPICorrectiveActionGroupByOutputType = {
   id: string
-  sequenceNo: number
-  rootCauseAnalysis: string
-  improvementGuidelines: string
-  responsiblePersonM365: string
+  monthlyDetailId: string
+  times: number
+  rootCause: string
+  guidelines: string
+  responsiblePerson: string
   dueDate: Date
-  kpiMonthlyResultId: string
   createdAt: Date
   updatedAt: Date
-  _count: KpiCorrectiveActionCountAggregateOutputType | null
-  _avg: KpiCorrectiveActionAvgAggregateOutputType | null
-  _sum: KpiCorrectiveActionSumAggregateOutputType | null
-  _min: KpiCorrectiveActionMinAggregateOutputType | null
-  _max: KpiCorrectiveActionMaxAggregateOutputType | null
+  _count: KPICorrectiveActionCountAggregateOutputType | null
+  _avg: KPICorrectiveActionAvgAggregateOutputType | null
+  _sum: KPICorrectiveActionSumAggregateOutputType | null
+  _min: KPICorrectiveActionMinAggregateOutputType | null
+  _max: KPICorrectiveActionMaxAggregateOutputType | null
 }
 
-export type GetKpiCorrectiveActionGroupByPayload<T extends KpiCorrectiveActionGroupByArgs> = Prisma.PrismaPromise<
+export type GetKPICorrectiveActionGroupByPayload<T extends KPICorrectiveActionGroupByArgs> = Prisma.PrismaPromise<
   Array<
-    Prisma.PickEnumerable<KpiCorrectiveActionGroupByOutputType, T['by']> &
+    Prisma.PickEnumerable<KPICorrectiveActionGroupByOutputType, T['by']> &
       {
-        [P in ((keyof T) & (keyof KpiCorrectiveActionGroupByOutputType))]: P extends '_count'
+        [P in ((keyof T) & (keyof KPICorrectiveActionGroupByOutputType))]: P extends '_count'
           ? T[P] extends boolean
             ? number
-            : Prisma.GetScalarType<T[P], KpiCorrectiveActionGroupByOutputType[P]>
-          : Prisma.GetScalarType<T[P], KpiCorrectiveActionGroupByOutputType[P]>
+            : Prisma.GetScalarType<T[P], KPICorrectiveActionGroupByOutputType[P]>
+          : Prisma.GetScalarType<T[P], KPICorrectiveActionGroupByOutputType[P]>
       }
     >
   >
 
 
 
-export type KpiCorrectiveActionWhereInput = {
-  AND?: Prisma.KpiCorrectiveActionWhereInput | Prisma.KpiCorrectiveActionWhereInput[]
-  OR?: Prisma.KpiCorrectiveActionWhereInput[]
-  NOT?: Prisma.KpiCorrectiveActionWhereInput | Prisma.KpiCorrectiveActionWhereInput[]
-  id?: Prisma.StringFilter<"KpiCorrectiveAction"> | string
-  sequenceNo?: Prisma.IntFilter<"KpiCorrectiveAction"> | number
-  rootCauseAnalysis?: Prisma.StringFilter<"KpiCorrectiveAction"> | string
-  improvementGuidelines?: Prisma.StringFilter<"KpiCorrectiveAction"> | string
-  responsiblePersonM365?: Prisma.StringFilter<"KpiCorrectiveAction"> | string
-  dueDate?: Prisma.DateTimeFilter<"KpiCorrectiveAction"> | Date | string
-  kpiMonthlyResultId?: Prisma.StringFilter<"KpiCorrectiveAction"> | string
-  createdAt?: Prisma.DateTimeFilter<"KpiCorrectiveAction"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"KpiCorrectiveAction"> | Date | string
-  kpiMonthlyResult?: Prisma.XOR<Prisma.KpiMonthlyResultScalarRelationFilter, Prisma.KpiMonthlyResultWhereInput>
+export type KPICorrectiveActionWhereInput = {
+  AND?: Prisma.KPICorrectiveActionWhereInput | Prisma.KPICorrectiveActionWhereInput[]
+  OR?: Prisma.KPICorrectiveActionWhereInput[]
+  NOT?: Prisma.KPICorrectiveActionWhereInput | Prisma.KPICorrectiveActionWhereInput[]
+  id?: Prisma.StringFilter<"KPICorrectiveAction"> | string
+  monthlyDetailId?: Prisma.StringFilter<"KPICorrectiveAction"> | string
+  times?: Prisma.IntFilter<"KPICorrectiveAction"> | number
+  rootCause?: Prisma.StringFilter<"KPICorrectiveAction"> | string
+  guidelines?: Prisma.StringFilter<"KPICorrectiveAction"> | string
+  responsiblePerson?: Prisma.StringFilter<"KPICorrectiveAction"> | string
+  dueDate?: Prisma.DateTimeFilter<"KPICorrectiveAction"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"KPICorrectiveAction"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"KPICorrectiveAction"> | Date | string
+  monthlyDetail?: Prisma.XOR<Prisma.KPIMonthlyDetailScalarRelationFilter, Prisma.KPIMonthlyDetailWhereInput>
 }
 
-export type KpiCorrectiveActionOrderByWithRelationInput = {
+export type KPICorrectiveActionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  sequenceNo?: Prisma.SortOrder
-  rootCauseAnalysis?: Prisma.SortOrder
-  improvementGuidelines?: Prisma.SortOrder
-  responsiblePersonM365?: Prisma.SortOrder
+  monthlyDetailId?: Prisma.SortOrder
+  times?: Prisma.SortOrder
+  rootCause?: Prisma.SortOrder
+  guidelines?: Prisma.SortOrder
+  responsiblePerson?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
-  kpiMonthlyResultId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  kpiMonthlyResult?: Prisma.KpiMonthlyResultOrderByWithRelationInput
+  monthlyDetail?: Prisma.KPIMonthlyDetailOrderByWithRelationInput
 }
 
-export type KpiCorrectiveActionWhereUniqueInput = Prisma.AtLeast<{
+export type KPICorrectiveActionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  AND?: Prisma.KpiCorrectiveActionWhereInput | Prisma.KpiCorrectiveActionWhereInput[]
-  OR?: Prisma.KpiCorrectiveActionWhereInput[]
-  NOT?: Prisma.KpiCorrectiveActionWhereInput | Prisma.KpiCorrectiveActionWhereInput[]
-  sequenceNo?: Prisma.IntFilter<"KpiCorrectiveAction"> | number
-  rootCauseAnalysis?: Prisma.StringFilter<"KpiCorrectiveAction"> | string
-  improvementGuidelines?: Prisma.StringFilter<"KpiCorrectiveAction"> | string
-  responsiblePersonM365?: Prisma.StringFilter<"KpiCorrectiveAction"> | string
-  dueDate?: Prisma.DateTimeFilter<"KpiCorrectiveAction"> | Date | string
-  kpiMonthlyResultId?: Prisma.StringFilter<"KpiCorrectiveAction"> | string
-  createdAt?: Prisma.DateTimeFilter<"KpiCorrectiveAction"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"KpiCorrectiveAction"> | Date | string
-  kpiMonthlyResult?: Prisma.XOR<Prisma.KpiMonthlyResultScalarRelationFilter, Prisma.KpiMonthlyResultWhereInput>
+  AND?: Prisma.KPICorrectiveActionWhereInput | Prisma.KPICorrectiveActionWhereInput[]
+  OR?: Prisma.KPICorrectiveActionWhereInput[]
+  NOT?: Prisma.KPICorrectiveActionWhereInput | Prisma.KPICorrectiveActionWhereInput[]
+  monthlyDetailId?: Prisma.StringFilter<"KPICorrectiveAction"> | string
+  times?: Prisma.IntFilter<"KPICorrectiveAction"> | number
+  rootCause?: Prisma.StringFilter<"KPICorrectiveAction"> | string
+  guidelines?: Prisma.StringFilter<"KPICorrectiveAction"> | string
+  responsiblePerson?: Prisma.StringFilter<"KPICorrectiveAction"> | string
+  dueDate?: Prisma.DateTimeFilter<"KPICorrectiveAction"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"KPICorrectiveAction"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"KPICorrectiveAction"> | Date | string
+  monthlyDetail?: Prisma.XOR<Prisma.KPIMonthlyDetailScalarRelationFilter, Prisma.KPIMonthlyDetailWhereInput>
 }, "id">
 
-export type KpiCorrectiveActionOrderByWithAggregationInput = {
+export type KPICorrectiveActionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  sequenceNo?: Prisma.SortOrder
-  rootCauseAnalysis?: Prisma.SortOrder
-  improvementGuidelines?: Prisma.SortOrder
-  responsiblePersonM365?: Prisma.SortOrder
+  monthlyDetailId?: Prisma.SortOrder
+  times?: Prisma.SortOrder
+  rootCause?: Prisma.SortOrder
+  guidelines?: Prisma.SortOrder
+  responsiblePerson?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
-  kpiMonthlyResultId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  _count?: Prisma.KpiCorrectiveActionCountOrderByAggregateInput
-  _avg?: Prisma.KpiCorrectiveActionAvgOrderByAggregateInput
-  _max?: Prisma.KpiCorrectiveActionMaxOrderByAggregateInput
-  _min?: Prisma.KpiCorrectiveActionMinOrderByAggregateInput
-  _sum?: Prisma.KpiCorrectiveActionSumOrderByAggregateInput
+  _count?: Prisma.KPICorrectiveActionCountOrderByAggregateInput
+  _avg?: Prisma.KPICorrectiveActionAvgOrderByAggregateInput
+  _max?: Prisma.KPICorrectiveActionMaxOrderByAggregateInput
+  _min?: Prisma.KPICorrectiveActionMinOrderByAggregateInput
+  _sum?: Prisma.KPICorrectiveActionSumOrderByAggregateInput
 }
 
-export type KpiCorrectiveActionScalarWhereWithAggregatesInput = {
-  AND?: Prisma.KpiCorrectiveActionScalarWhereWithAggregatesInput | Prisma.KpiCorrectiveActionScalarWhereWithAggregatesInput[]
-  OR?: Prisma.KpiCorrectiveActionScalarWhereWithAggregatesInput[]
-  NOT?: Prisma.KpiCorrectiveActionScalarWhereWithAggregatesInput | Prisma.KpiCorrectiveActionScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"KpiCorrectiveAction"> | string
-  sequenceNo?: Prisma.IntWithAggregatesFilter<"KpiCorrectiveAction"> | number
-  rootCauseAnalysis?: Prisma.StringWithAggregatesFilter<"KpiCorrectiveAction"> | string
-  improvementGuidelines?: Prisma.StringWithAggregatesFilter<"KpiCorrectiveAction"> | string
-  responsiblePersonM365?: Prisma.StringWithAggregatesFilter<"KpiCorrectiveAction"> | string
-  dueDate?: Prisma.DateTimeWithAggregatesFilter<"KpiCorrectiveAction"> | Date | string
-  kpiMonthlyResultId?: Prisma.StringWithAggregatesFilter<"KpiCorrectiveAction"> | string
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"KpiCorrectiveAction"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"KpiCorrectiveAction"> | Date | string
+export type KPICorrectiveActionScalarWhereWithAggregatesInput = {
+  AND?: Prisma.KPICorrectiveActionScalarWhereWithAggregatesInput | Prisma.KPICorrectiveActionScalarWhereWithAggregatesInput[]
+  OR?: Prisma.KPICorrectiveActionScalarWhereWithAggregatesInput[]
+  NOT?: Prisma.KPICorrectiveActionScalarWhereWithAggregatesInput | Prisma.KPICorrectiveActionScalarWhereWithAggregatesInput[]
+  id?: Prisma.StringWithAggregatesFilter<"KPICorrectiveAction"> | string
+  monthlyDetailId?: Prisma.StringWithAggregatesFilter<"KPICorrectiveAction"> | string
+  times?: Prisma.IntWithAggregatesFilter<"KPICorrectiveAction"> | number
+  rootCause?: Prisma.StringWithAggregatesFilter<"KPICorrectiveAction"> | string
+  guidelines?: Prisma.StringWithAggregatesFilter<"KPICorrectiveAction"> | string
+  responsiblePerson?: Prisma.StringWithAggregatesFilter<"KPICorrectiveAction"> | string
+  dueDate?: Prisma.DateTimeWithAggregatesFilter<"KPICorrectiveAction"> | Date | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"KPICorrectiveAction"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"KPICorrectiveAction"> | Date | string
 }
 
-export type KpiCorrectiveActionCreateInput = {
+export type KPICorrectiveActionCreateInput = {
   id?: string
-  sequenceNo: number
-  rootCauseAnalysis: string
-  improvementGuidelines: string
-  responsiblePersonM365: string
+  times: number
+  rootCause: string
+  guidelines: string
+  responsiblePerson: string
   dueDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  kpiMonthlyResult: Prisma.KpiMonthlyResultCreateNestedOneWithoutCorrectiveActionsInput
+  monthlyDetail: Prisma.KPIMonthlyDetailCreateNestedOneWithoutCorrectiveActionsInput
 }
 
-export type KpiCorrectiveActionUncheckedCreateInput = {
+export type KPICorrectiveActionUncheckedCreateInput = {
   id?: string
-  sequenceNo: number
-  rootCauseAnalysis: string
-  improvementGuidelines: string
-  responsiblePersonM365: string
+  monthlyDetailId: string
+  times: number
+  rootCause: string
+  guidelines: string
+  responsiblePerson: string
   dueDate: Date | string
-  kpiMonthlyResultId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type KpiCorrectiveActionUpdateInput = {
+export type KPICorrectiveActionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sequenceNo?: Prisma.IntFieldUpdateOperationsInput | number
-  rootCauseAnalysis?: Prisma.StringFieldUpdateOperationsInput | string
-  improvementGuidelines?: Prisma.StringFieldUpdateOperationsInput | string
-  responsiblePersonM365?: Prisma.StringFieldUpdateOperationsInput | string
+  times?: Prisma.IntFieldUpdateOperationsInput | number
+  rootCause?: Prisma.StringFieldUpdateOperationsInput | string
+  guidelines?: Prisma.StringFieldUpdateOperationsInput | string
+  responsiblePerson?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  kpiMonthlyResult?: Prisma.KpiMonthlyResultUpdateOneRequiredWithoutCorrectiveActionsNestedInput
+  monthlyDetail?: Prisma.KPIMonthlyDetailUpdateOneRequiredWithoutCorrectiveActionsNestedInput
 }
 
-export type KpiCorrectiveActionUncheckedUpdateInput = {
+export type KPICorrectiveActionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sequenceNo?: Prisma.IntFieldUpdateOperationsInput | number
-  rootCauseAnalysis?: Prisma.StringFieldUpdateOperationsInput | string
-  improvementGuidelines?: Prisma.StringFieldUpdateOperationsInput | string
-  responsiblePersonM365?: Prisma.StringFieldUpdateOperationsInput | string
+  monthlyDetailId?: Prisma.StringFieldUpdateOperationsInput | string
+  times?: Prisma.IntFieldUpdateOperationsInput | number
+  rootCause?: Prisma.StringFieldUpdateOperationsInput | string
+  guidelines?: Prisma.StringFieldUpdateOperationsInput | string
+  responsiblePerson?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  kpiMonthlyResultId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type KpiCorrectiveActionCreateManyInput = {
+export type KPICorrectiveActionCreateManyInput = {
   id?: string
-  sequenceNo: number
-  rootCauseAnalysis: string
-  improvementGuidelines: string
-  responsiblePersonM365: string
+  monthlyDetailId: string
+  times: number
+  rootCause: string
+  guidelines: string
+  responsiblePerson: string
   dueDate: Date | string
-  kpiMonthlyResultId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type KpiCorrectiveActionUpdateManyMutationInput = {
+export type KPICorrectiveActionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sequenceNo?: Prisma.IntFieldUpdateOperationsInput | number
-  rootCauseAnalysis?: Prisma.StringFieldUpdateOperationsInput | string
-  improvementGuidelines?: Prisma.StringFieldUpdateOperationsInput | string
-  responsiblePersonM365?: Prisma.StringFieldUpdateOperationsInput | string
+  times?: Prisma.IntFieldUpdateOperationsInput | number
+  rootCause?: Prisma.StringFieldUpdateOperationsInput | string
+  guidelines?: Prisma.StringFieldUpdateOperationsInput | string
+  responsiblePerson?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type KpiCorrectiveActionUncheckedUpdateManyInput = {
+export type KPICorrectiveActionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sequenceNo?: Prisma.IntFieldUpdateOperationsInput | number
-  rootCauseAnalysis?: Prisma.StringFieldUpdateOperationsInput | string
-  improvementGuidelines?: Prisma.StringFieldUpdateOperationsInput | string
-  responsiblePersonM365?: Prisma.StringFieldUpdateOperationsInput | string
+  monthlyDetailId?: Prisma.StringFieldUpdateOperationsInput | string
+  times?: Prisma.IntFieldUpdateOperationsInput | number
+  rootCause?: Prisma.StringFieldUpdateOperationsInput | string
+  guidelines?: Prisma.StringFieldUpdateOperationsInput | string
+  responsiblePerson?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  kpiMonthlyResultId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type KpiCorrectiveActionListRelationFilter = {
-  every?: Prisma.KpiCorrectiveActionWhereInput
-  some?: Prisma.KpiCorrectiveActionWhereInput
-  none?: Prisma.KpiCorrectiveActionWhereInput
+export type KPICorrectiveActionListRelationFilter = {
+  every?: Prisma.KPICorrectiveActionWhereInput
+  some?: Prisma.KPICorrectiveActionWhereInput
+  none?: Prisma.KPICorrectiveActionWhereInput
 }
 
-export type KpiCorrectiveActionOrderByRelationAggregateInput = {
+export type KPICorrectiveActionOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type KpiCorrectiveActionCountOrderByAggregateInput = {
+export type KPICorrectiveActionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  sequenceNo?: Prisma.SortOrder
-  rootCauseAnalysis?: Prisma.SortOrder
-  improvementGuidelines?: Prisma.SortOrder
-  responsiblePersonM365?: Prisma.SortOrder
+  monthlyDetailId?: Prisma.SortOrder
+  times?: Prisma.SortOrder
+  rootCause?: Prisma.SortOrder
+  guidelines?: Prisma.SortOrder
+  responsiblePerson?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
-  kpiMonthlyResultId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
-export type KpiCorrectiveActionAvgOrderByAggregateInput = {
-  sequenceNo?: Prisma.SortOrder
+export type KPICorrectiveActionAvgOrderByAggregateInput = {
+  times?: Prisma.SortOrder
 }
 
-export type KpiCorrectiveActionMaxOrderByAggregateInput = {
+export type KPICorrectiveActionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  sequenceNo?: Prisma.SortOrder
-  rootCauseAnalysis?: Prisma.SortOrder
-  improvementGuidelines?: Prisma.SortOrder
-  responsiblePersonM365?: Prisma.SortOrder
+  monthlyDetailId?: Prisma.SortOrder
+  times?: Prisma.SortOrder
+  rootCause?: Prisma.SortOrder
+  guidelines?: Prisma.SortOrder
+  responsiblePerson?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
-  kpiMonthlyResultId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
-export type KpiCorrectiveActionMinOrderByAggregateInput = {
+export type KPICorrectiveActionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  sequenceNo?: Prisma.SortOrder
-  rootCauseAnalysis?: Prisma.SortOrder
-  improvementGuidelines?: Prisma.SortOrder
-  responsiblePersonM365?: Prisma.SortOrder
+  monthlyDetailId?: Prisma.SortOrder
+  times?: Prisma.SortOrder
+  rootCause?: Prisma.SortOrder
+  guidelines?: Prisma.SortOrder
+  responsiblePerson?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
-  kpiMonthlyResultId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
-export type KpiCorrectiveActionSumOrderByAggregateInput = {
-  sequenceNo?: Prisma.SortOrder
+export type KPICorrectiveActionSumOrderByAggregateInput = {
+  times?: Prisma.SortOrder
 }
 
-export type KpiCorrectiveActionCreateNestedManyWithoutKpiMonthlyResultInput = {
-  create?: Prisma.XOR<Prisma.KpiCorrectiveActionCreateWithoutKpiMonthlyResultInput, Prisma.KpiCorrectiveActionUncheckedCreateWithoutKpiMonthlyResultInput> | Prisma.KpiCorrectiveActionCreateWithoutKpiMonthlyResultInput[] | Prisma.KpiCorrectiveActionUncheckedCreateWithoutKpiMonthlyResultInput[]
-  connectOrCreate?: Prisma.KpiCorrectiveActionCreateOrConnectWithoutKpiMonthlyResultInput | Prisma.KpiCorrectiveActionCreateOrConnectWithoutKpiMonthlyResultInput[]
-  createMany?: Prisma.KpiCorrectiveActionCreateManyKpiMonthlyResultInputEnvelope
-  connect?: Prisma.KpiCorrectiveActionWhereUniqueInput | Prisma.KpiCorrectiveActionWhereUniqueInput[]
+export type KPICorrectiveActionCreateNestedManyWithoutMonthlyDetailInput = {
+  create?: Prisma.XOR<Prisma.KPICorrectiveActionCreateWithoutMonthlyDetailInput, Prisma.KPICorrectiveActionUncheckedCreateWithoutMonthlyDetailInput> | Prisma.KPICorrectiveActionCreateWithoutMonthlyDetailInput[] | Prisma.KPICorrectiveActionUncheckedCreateWithoutMonthlyDetailInput[]
+  connectOrCreate?: Prisma.KPICorrectiveActionCreateOrConnectWithoutMonthlyDetailInput | Prisma.KPICorrectiveActionCreateOrConnectWithoutMonthlyDetailInput[]
+  createMany?: Prisma.KPICorrectiveActionCreateManyMonthlyDetailInputEnvelope
+  connect?: Prisma.KPICorrectiveActionWhereUniqueInput | Prisma.KPICorrectiveActionWhereUniqueInput[]
 }
 
-export type KpiCorrectiveActionUncheckedCreateNestedManyWithoutKpiMonthlyResultInput = {
-  create?: Prisma.XOR<Prisma.KpiCorrectiveActionCreateWithoutKpiMonthlyResultInput, Prisma.KpiCorrectiveActionUncheckedCreateWithoutKpiMonthlyResultInput> | Prisma.KpiCorrectiveActionCreateWithoutKpiMonthlyResultInput[] | Prisma.KpiCorrectiveActionUncheckedCreateWithoutKpiMonthlyResultInput[]
-  connectOrCreate?: Prisma.KpiCorrectiveActionCreateOrConnectWithoutKpiMonthlyResultInput | Prisma.KpiCorrectiveActionCreateOrConnectWithoutKpiMonthlyResultInput[]
-  createMany?: Prisma.KpiCorrectiveActionCreateManyKpiMonthlyResultInputEnvelope
-  connect?: Prisma.KpiCorrectiveActionWhereUniqueInput | Prisma.KpiCorrectiveActionWhereUniqueInput[]
+export type KPICorrectiveActionUncheckedCreateNestedManyWithoutMonthlyDetailInput = {
+  create?: Prisma.XOR<Prisma.KPICorrectiveActionCreateWithoutMonthlyDetailInput, Prisma.KPICorrectiveActionUncheckedCreateWithoutMonthlyDetailInput> | Prisma.KPICorrectiveActionCreateWithoutMonthlyDetailInput[] | Prisma.KPICorrectiveActionUncheckedCreateWithoutMonthlyDetailInput[]
+  connectOrCreate?: Prisma.KPICorrectiveActionCreateOrConnectWithoutMonthlyDetailInput | Prisma.KPICorrectiveActionCreateOrConnectWithoutMonthlyDetailInput[]
+  createMany?: Prisma.KPICorrectiveActionCreateManyMonthlyDetailInputEnvelope
+  connect?: Prisma.KPICorrectiveActionWhereUniqueInput | Prisma.KPICorrectiveActionWhereUniqueInput[]
 }
 
-export type KpiCorrectiveActionUpdateManyWithoutKpiMonthlyResultNestedInput = {
-  create?: Prisma.XOR<Prisma.KpiCorrectiveActionCreateWithoutKpiMonthlyResultInput, Prisma.KpiCorrectiveActionUncheckedCreateWithoutKpiMonthlyResultInput> | Prisma.KpiCorrectiveActionCreateWithoutKpiMonthlyResultInput[] | Prisma.KpiCorrectiveActionUncheckedCreateWithoutKpiMonthlyResultInput[]
-  connectOrCreate?: Prisma.KpiCorrectiveActionCreateOrConnectWithoutKpiMonthlyResultInput | Prisma.KpiCorrectiveActionCreateOrConnectWithoutKpiMonthlyResultInput[]
-  upsert?: Prisma.KpiCorrectiveActionUpsertWithWhereUniqueWithoutKpiMonthlyResultInput | Prisma.KpiCorrectiveActionUpsertWithWhereUniqueWithoutKpiMonthlyResultInput[]
-  createMany?: Prisma.KpiCorrectiveActionCreateManyKpiMonthlyResultInputEnvelope
-  set?: Prisma.KpiCorrectiveActionWhereUniqueInput | Prisma.KpiCorrectiveActionWhereUniqueInput[]
-  disconnect?: Prisma.KpiCorrectiveActionWhereUniqueInput | Prisma.KpiCorrectiveActionWhereUniqueInput[]
-  delete?: Prisma.KpiCorrectiveActionWhereUniqueInput | Prisma.KpiCorrectiveActionWhereUniqueInput[]
-  connect?: Prisma.KpiCorrectiveActionWhereUniqueInput | Prisma.KpiCorrectiveActionWhereUniqueInput[]
-  update?: Prisma.KpiCorrectiveActionUpdateWithWhereUniqueWithoutKpiMonthlyResultInput | Prisma.KpiCorrectiveActionUpdateWithWhereUniqueWithoutKpiMonthlyResultInput[]
-  updateMany?: Prisma.KpiCorrectiveActionUpdateManyWithWhereWithoutKpiMonthlyResultInput | Prisma.KpiCorrectiveActionUpdateManyWithWhereWithoutKpiMonthlyResultInput[]
-  deleteMany?: Prisma.KpiCorrectiveActionScalarWhereInput | Prisma.KpiCorrectiveActionScalarWhereInput[]
+export type KPICorrectiveActionUpdateManyWithoutMonthlyDetailNestedInput = {
+  create?: Prisma.XOR<Prisma.KPICorrectiveActionCreateWithoutMonthlyDetailInput, Prisma.KPICorrectiveActionUncheckedCreateWithoutMonthlyDetailInput> | Prisma.KPICorrectiveActionCreateWithoutMonthlyDetailInput[] | Prisma.KPICorrectiveActionUncheckedCreateWithoutMonthlyDetailInput[]
+  connectOrCreate?: Prisma.KPICorrectiveActionCreateOrConnectWithoutMonthlyDetailInput | Prisma.KPICorrectiveActionCreateOrConnectWithoutMonthlyDetailInput[]
+  upsert?: Prisma.KPICorrectiveActionUpsertWithWhereUniqueWithoutMonthlyDetailInput | Prisma.KPICorrectiveActionUpsertWithWhereUniqueWithoutMonthlyDetailInput[]
+  createMany?: Prisma.KPICorrectiveActionCreateManyMonthlyDetailInputEnvelope
+  set?: Prisma.KPICorrectiveActionWhereUniqueInput | Prisma.KPICorrectiveActionWhereUniqueInput[]
+  disconnect?: Prisma.KPICorrectiveActionWhereUniqueInput | Prisma.KPICorrectiveActionWhereUniqueInput[]
+  delete?: Prisma.KPICorrectiveActionWhereUniqueInput | Prisma.KPICorrectiveActionWhereUniqueInput[]
+  connect?: Prisma.KPICorrectiveActionWhereUniqueInput | Prisma.KPICorrectiveActionWhereUniqueInput[]
+  update?: Prisma.KPICorrectiveActionUpdateWithWhereUniqueWithoutMonthlyDetailInput | Prisma.KPICorrectiveActionUpdateWithWhereUniqueWithoutMonthlyDetailInput[]
+  updateMany?: Prisma.KPICorrectiveActionUpdateManyWithWhereWithoutMonthlyDetailInput | Prisma.KPICorrectiveActionUpdateManyWithWhereWithoutMonthlyDetailInput[]
+  deleteMany?: Prisma.KPICorrectiveActionScalarWhereInput | Prisma.KPICorrectiveActionScalarWhereInput[]
 }
 
-export type KpiCorrectiveActionUncheckedUpdateManyWithoutKpiMonthlyResultNestedInput = {
-  create?: Prisma.XOR<Prisma.KpiCorrectiveActionCreateWithoutKpiMonthlyResultInput, Prisma.KpiCorrectiveActionUncheckedCreateWithoutKpiMonthlyResultInput> | Prisma.KpiCorrectiveActionCreateWithoutKpiMonthlyResultInput[] | Prisma.KpiCorrectiveActionUncheckedCreateWithoutKpiMonthlyResultInput[]
-  connectOrCreate?: Prisma.KpiCorrectiveActionCreateOrConnectWithoutKpiMonthlyResultInput | Prisma.KpiCorrectiveActionCreateOrConnectWithoutKpiMonthlyResultInput[]
-  upsert?: Prisma.KpiCorrectiveActionUpsertWithWhereUniqueWithoutKpiMonthlyResultInput | Prisma.KpiCorrectiveActionUpsertWithWhereUniqueWithoutKpiMonthlyResultInput[]
-  createMany?: Prisma.KpiCorrectiveActionCreateManyKpiMonthlyResultInputEnvelope
-  set?: Prisma.KpiCorrectiveActionWhereUniqueInput | Prisma.KpiCorrectiveActionWhereUniqueInput[]
-  disconnect?: Prisma.KpiCorrectiveActionWhereUniqueInput | Prisma.KpiCorrectiveActionWhereUniqueInput[]
-  delete?: Prisma.KpiCorrectiveActionWhereUniqueInput | Prisma.KpiCorrectiveActionWhereUniqueInput[]
-  connect?: Prisma.KpiCorrectiveActionWhereUniqueInput | Prisma.KpiCorrectiveActionWhereUniqueInput[]
-  update?: Prisma.KpiCorrectiveActionUpdateWithWhereUniqueWithoutKpiMonthlyResultInput | Prisma.KpiCorrectiveActionUpdateWithWhereUniqueWithoutKpiMonthlyResultInput[]
-  updateMany?: Prisma.KpiCorrectiveActionUpdateManyWithWhereWithoutKpiMonthlyResultInput | Prisma.KpiCorrectiveActionUpdateManyWithWhereWithoutKpiMonthlyResultInput[]
-  deleteMany?: Prisma.KpiCorrectiveActionScalarWhereInput | Prisma.KpiCorrectiveActionScalarWhereInput[]
+export type KPICorrectiveActionUncheckedUpdateManyWithoutMonthlyDetailNestedInput = {
+  create?: Prisma.XOR<Prisma.KPICorrectiveActionCreateWithoutMonthlyDetailInput, Prisma.KPICorrectiveActionUncheckedCreateWithoutMonthlyDetailInput> | Prisma.KPICorrectiveActionCreateWithoutMonthlyDetailInput[] | Prisma.KPICorrectiveActionUncheckedCreateWithoutMonthlyDetailInput[]
+  connectOrCreate?: Prisma.KPICorrectiveActionCreateOrConnectWithoutMonthlyDetailInput | Prisma.KPICorrectiveActionCreateOrConnectWithoutMonthlyDetailInput[]
+  upsert?: Prisma.KPICorrectiveActionUpsertWithWhereUniqueWithoutMonthlyDetailInput | Prisma.KPICorrectiveActionUpsertWithWhereUniqueWithoutMonthlyDetailInput[]
+  createMany?: Prisma.KPICorrectiveActionCreateManyMonthlyDetailInputEnvelope
+  set?: Prisma.KPICorrectiveActionWhereUniqueInput | Prisma.KPICorrectiveActionWhereUniqueInput[]
+  disconnect?: Prisma.KPICorrectiveActionWhereUniqueInput | Prisma.KPICorrectiveActionWhereUniqueInput[]
+  delete?: Prisma.KPICorrectiveActionWhereUniqueInput | Prisma.KPICorrectiveActionWhereUniqueInput[]
+  connect?: Prisma.KPICorrectiveActionWhereUniqueInput | Prisma.KPICorrectiveActionWhereUniqueInput[]
+  update?: Prisma.KPICorrectiveActionUpdateWithWhereUniqueWithoutMonthlyDetailInput | Prisma.KPICorrectiveActionUpdateWithWhereUniqueWithoutMonthlyDetailInput[]
+  updateMany?: Prisma.KPICorrectiveActionUpdateManyWithWhereWithoutMonthlyDetailInput | Prisma.KPICorrectiveActionUpdateManyWithWhereWithoutMonthlyDetailInput[]
+  deleteMany?: Prisma.KPICorrectiveActionScalarWhereInput | Prisma.KPICorrectiveActionScalarWhereInput[]
 }
 
-export type KpiCorrectiveActionCreateWithoutKpiMonthlyResultInput = {
+export type KPICorrectiveActionCreateWithoutMonthlyDetailInput = {
   id?: string
-  sequenceNo: number
-  rootCauseAnalysis: string
-  improvementGuidelines: string
-  responsiblePersonM365: string
+  times: number
+  rootCause: string
+  guidelines: string
+  responsiblePerson: string
   dueDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type KpiCorrectiveActionUncheckedCreateWithoutKpiMonthlyResultInput = {
+export type KPICorrectiveActionUncheckedCreateWithoutMonthlyDetailInput = {
   id?: string
-  sequenceNo: number
-  rootCauseAnalysis: string
-  improvementGuidelines: string
-  responsiblePersonM365: string
+  times: number
+  rootCause: string
+  guidelines: string
+  responsiblePerson: string
   dueDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type KpiCorrectiveActionCreateOrConnectWithoutKpiMonthlyResultInput = {
-  where: Prisma.KpiCorrectiveActionWhereUniqueInput
-  create: Prisma.XOR<Prisma.KpiCorrectiveActionCreateWithoutKpiMonthlyResultInput, Prisma.KpiCorrectiveActionUncheckedCreateWithoutKpiMonthlyResultInput>
+export type KPICorrectiveActionCreateOrConnectWithoutMonthlyDetailInput = {
+  where: Prisma.KPICorrectiveActionWhereUniqueInput
+  create: Prisma.XOR<Prisma.KPICorrectiveActionCreateWithoutMonthlyDetailInput, Prisma.KPICorrectiveActionUncheckedCreateWithoutMonthlyDetailInput>
 }
 
-export type KpiCorrectiveActionCreateManyKpiMonthlyResultInputEnvelope = {
-  data: Prisma.KpiCorrectiveActionCreateManyKpiMonthlyResultInput | Prisma.KpiCorrectiveActionCreateManyKpiMonthlyResultInput[]
+export type KPICorrectiveActionCreateManyMonthlyDetailInputEnvelope = {
+  data: Prisma.KPICorrectiveActionCreateManyMonthlyDetailInput | Prisma.KPICorrectiveActionCreateManyMonthlyDetailInput[]
   skipDuplicates?: boolean
 }
 
-export type KpiCorrectiveActionUpsertWithWhereUniqueWithoutKpiMonthlyResultInput = {
-  where: Prisma.KpiCorrectiveActionWhereUniqueInput
-  update: Prisma.XOR<Prisma.KpiCorrectiveActionUpdateWithoutKpiMonthlyResultInput, Prisma.KpiCorrectiveActionUncheckedUpdateWithoutKpiMonthlyResultInput>
-  create: Prisma.XOR<Prisma.KpiCorrectiveActionCreateWithoutKpiMonthlyResultInput, Prisma.KpiCorrectiveActionUncheckedCreateWithoutKpiMonthlyResultInput>
+export type KPICorrectiveActionUpsertWithWhereUniqueWithoutMonthlyDetailInput = {
+  where: Prisma.KPICorrectiveActionWhereUniqueInput
+  update: Prisma.XOR<Prisma.KPICorrectiveActionUpdateWithoutMonthlyDetailInput, Prisma.KPICorrectiveActionUncheckedUpdateWithoutMonthlyDetailInput>
+  create: Prisma.XOR<Prisma.KPICorrectiveActionCreateWithoutMonthlyDetailInput, Prisma.KPICorrectiveActionUncheckedCreateWithoutMonthlyDetailInput>
 }
 
-export type KpiCorrectiveActionUpdateWithWhereUniqueWithoutKpiMonthlyResultInput = {
-  where: Prisma.KpiCorrectiveActionWhereUniqueInput
-  data: Prisma.XOR<Prisma.KpiCorrectiveActionUpdateWithoutKpiMonthlyResultInput, Prisma.KpiCorrectiveActionUncheckedUpdateWithoutKpiMonthlyResultInput>
+export type KPICorrectiveActionUpdateWithWhereUniqueWithoutMonthlyDetailInput = {
+  where: Prisma.KPICorrectiveActionWhereUniqueInput
+  data: Prisma.XOR<Prisma.KPICorrectiveActionUpdateWithoutMonthlyDetailInput, Prisma.KPICorrectiveActionUncheckedUpdateWithoutMonthlyDetailInput>
 }
 
-export type KpiCorrectiveActionUpdateManyWithWhereWithoutKpiMonthlyResultInput = {
-  where: Prisma.KpiCorrectiveActionScalarWhereInput
-  data: Prisma.XOR<Prisma.KpiCorrectiveActionUpdateManyMutationInput, Prisma.KpiCorrectiveActionUncheckedUpdateManyWithoutKpiMonthlyResultInput>
+export type KPICorrectiveActionUpdateManyWithWhereWithoutMonthlyDetailInput = {
+  where: Prisma.KPICorrectiveActionScalarWhereInput
+  data: Prisma.XOR<Prisma.KPICorrectiveActionUpdateManyMutationInput, Prisma.KPICorrectiveActionUncheckedUpdateManyWithoutMonthlyDetailInput>
 }
 
-export type KpiCorrectiveActionScalarWhereInput = {
-  AND?: Prisma.KpiCorrectiveActionScalarWhereInput | Prisma.KpiCorrectiveActionScalarWhereInput[]
-  OR?: Prisma.KpiCorrectiveActionScalarWhereInput[]
-  NOT?: Prisma.KpiCorrectiveActionScalarWhereInput | Prisma.KpiCorrectiveActionScalarWhereInput[]
-  id?: Prisma.StringFilter<"KpiCorrectiveAction"> | string
-  sequenceNo?: Prisma.IntFilter<"KpiCorrectiveAction"> | number
-  rootCauseAnalysis?: Prisma.StringFilter<"KpiCorrectiveAction"> | string
-  improvementGuidelines?: Prisma.StringFilter<"KpiCorrectiveAction"> | string
-  responsiblePersonM365?: Prisma.StringFilter<"KpiCorrectiveAction"> | string
-  dueDate?: Prisma.DateTimeFilter<"KpiCorrectiveAction"> | Date | string
-  kpiMonthlyResultId?: Prisma.StringFilter<"KpiCorrectiveAction"> | string
-  createdAt?: Prisma.DateTimeFilter<"KpiCorrectiveAction"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"KpiCorrectiveAction"> | Date | string
+export type KPICorrectiveActionScalarWhereInput = {
+  AND?: Prisma.KPICorrectiveActionScalarWhereInput | Prisma.KPICorrectiveActionScalarWhereInput[]
+  OR?: Prisma.KPICorrectiveActionScalarWhereInput[]
+  NOT?: Prisma.KPICorrectiveActionScalarWhereInput | Prisma.KPICorrectiveActionScalarWhereInput[]
+  id?: Prisma.StringFilter<"KPICorrectiveAction"> | string
+  monthlyDetailId?: Prisma.StringFilter<"KPICorrectiveAction"> | string
+  times?: Prisma.IntFilter<"KPICorrectiveAction"> | number
+  rootCause?: Prisma.StringFilter<"KPICorrectiveAction"> | string
+  guidelines?: Prisma.StringFilter<"KPICorrectiveAction"> | string
+  responsiblePerson?: Prisma.StringFilter<"KPICorrectiveAction"> | string
+  dueDate?: Prisma.DateTimeFilter<"KPICorrectiveAction"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"KPICorrectiveAction"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"KPICorrectiveAction"> | Date | string
 }
 
-export type KpiCorrectiveActionCreateManyKpiMonthlyResultInput = {
+export type KPICorrectiveActionCreateManyMonthlyDetailInput = {
   id?: string
-  sequenceNo: number
-  rootCauseAnalysis: string
-  improvementGuidelines: string
-  responsiblePersonM365: string
+  times: number
+  rootCause: string
+  guidelines: string
+  responsiblePerson: string
   dueDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type KpiCorrectiveActionUpdateWithoutKpiMonthlyResultInput = {
+export type KPICorrectiveActionUpdateWithoutMonthlyDetailInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sequenceNo?: Prisma.IntFieldUpdateOperationsInput | number
-  rootCauseAnalysis?: Prisma.StringFieldUpdateOperationsInput | string
-  improvementGuidelines?: Prisma.StringFieldUpdateOperationsInput | string
-  responsiblePersonM365?: Prisma.StringFieldUpdateOperationsInput | string
+  times?: Prisma.IntFieldUpdateOperationsInput | number
+  rootCause?: Prisma.StringFieldUpdateOperationsInput | string
+  guidelines?: Prisma.StringFieldUpdateOperationsInput | string
+  responsiblePerson?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type KpiCorrectiveActionUncheckedUpdateWithoutKpiMonthlyResultInput = {
+export type KPICorrectiveActionUncheckedUpdateWithoutMonthlyDetailInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sequenceNo?: Prisma.IntFieldUpdateOperationsInput | number
-  rootCauseAnalysis?: Prisma.StringFieldUpdateOperationsInput | string
-  improvementGuidelines?: Prisma.StringFieldUpdateOperationsInput | string
-  responsiblePersonM365?: Prisma.StringFieldUpdateOperationsInput | string
+  times?: Prisma.IntFieldUpdateOperationsInput | number
+  rootCause?: Prisma.StringFieldUpdateOperationsInput | string
+  guidelines?: Prisma.StringFieldUpdateOperationsInput | string
+  responsiblePerson?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type KpiCorrectiveActionUncheckedUpdateManyWithoutKpiMonthlyResultInput = {
+export type KPICorrectiveActionUncheckedUpdateManyWithoutMonthlyDetailInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sequenceNo?: Prisma.IntFieldUpdateOperationsInput | number
-  rootCauseAnalysis?: Prisma.StringFieldUpdateOperationsInput | string
-  improvementGuidelines?: Prisma.StringFieldUpdateOperationsInput | string
-  responsiblePersonM365?: Prisma.StringFieldUpdateOperationsInput | string
+  times?: Prisma.IntFieldUpdateOperationsInput | number
+  rootCause?: Prisma.StringFieldUpdateOperationsInput | string
+  guidelines?: Prisma.StringFieldUpdateOperationsInput | string
+  responsiblePerson?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -600,213 +600,213 @@ export type KpiCorrectiveActionUncheckedUpdateManyWithoutKpiMonthlyResultInput =
 
 
 
-export type KpiCorrectiveActionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+export type KPICorrectiveActionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  sequenceNo?: boolean
-  rootCauseAnalysis?: boolean
-  improvementGuidelines?: boolean
-  responsiblePersonM365?: boolean
+  monthlyDetailId?: boolean
+  times?: boolean
+  rootCause?: boolean
+  guidelines?: boolean
+  responsiblePerson?: boolean
   dueDate?: boolean
-  kpiMonthlyResultId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  kpiMonthlyResult?: boolean | Prisma.KpiMonthlyResultDefaultArgs<ExtArgs>
-}, ExtArgs["result"]["kpiCorrectiveAction"]>
+  monthlyDetail?: boolean | Prisma.KPIMonthlyDetailDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["kPICorrectiveAction"]>
 
-export type KpiCorrectiveActionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+export type KPICorrectiveActionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  sequenceNo?: boolean
-  rootCauseAnalysis?: boolean
-  improvementGuidelines?: boolean
-  responsiblePersonM365?: boolean
+  monthlyDetailId?: boolean
+  times?: boolean
+  rootCause?: boolean
+  guidelines?: boolean
+  responsiblePerson?: boolean
   dueDate?: boolean
-  kpiMonthlyResultId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  kpiMonthlyResult?: boolean | Prisma.KpiMonthlyResultDefaultArgs<ExtArgs>
-}, ExtArgs["result"]["kpiCorrectiveAction"]>
+  monthlyDetail?: boolean | Prisma.KPIMonthlyDetailDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["kPICorrectiveAction"]>
 
-export type KpiCorrectiveActionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+export type KPICorrectiveActionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  sequenceNo?: boolean
-  rootCauseAnalysis?: boolean
-  improvementGuidelines?: boolean
-  responsiblePersonM365?: boolean
+  monthlyDetailId?: boolean
+  times?: boolean
+  rootCause?: boolean
+  guidelines?: boolean
+  responsiblePerson?: boolean
   dueDate?: boolean
-  kpiMonthlyResultId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  kpiMonthlyResult?: boolean | Prisma.KpiMonthlyResultDefaultArgs<ExtArgs>
-}, ExtArgs["result"]["kpiCorrectiveAction"]>
+  monthlyDetail?: boolean | Prisma.KPIMonthlyDetailDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["kPICorrectiveAction"]>
 
-export type KpiCorrectiveActionSelectScalar = {
+export type KPICorrectiveActionSelectScalar = {
   id?: boolean
-  sequenceNo?: boolean
-  rootCauseAnalysis?: boolean
-  improvementGuidelines?: boolean
-  responsiblePersonM365?: boolean
+  monthlyDetailId?: boolean
+  times?: boolean
+  rootCause?: boolean
+  guidelines?: boolean
+  responsiblePerson?: boolean
   dueDate?: boolean
-  kpiMonthlyResultId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type KpiCorrectiveActionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sequenceNo" | "rootCauseAnalysis" | "improvementGuidelines" | "responsiblePersonM365" | "dueDate" | "kpiMonthlyResultId" | "createdAt" | "updatedAt", ExtArgs["result"]["kpiCorrectiveAction"]>
-export type KpiCorrectiveActionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  kpiMonthlyResult?: boolean | Prisma.KpiMonthlyResultDefaultArgs<ExtArgs>
+export type KPICorrectiveActionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "monthlyDetailId" | "times" | "rootCause" | "guidelines" | "responsiblePerson" | "dueDate" | "createdAt" | "updatedAt", ExtArgs["result"]["kPICorrectiveAction"]>
+export type KPICorrectiveActionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  monthlyDetail?: boolean | Prisma.KPIMonthlyDetailDefaultArgs<ExtArgs>
 }
-export type KpiCorrectiveActionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  kpiMonthlyResult?: boolean | Prisma.KpiMonthlyResultDefaultArgs<ExtArgs>
+export type KPICorrectiveActionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  monthlyDetail?: boolean | Prisma.KPIMonthlyDetailDefaultArgs<ExtArgs>
 }
-export type KpiCorrectiveActionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  kpiMonthlyResult?: boolean | Prisma.KpiMonthlyResultDefaultArgs<ExtArgs>
+export type KPICorrectiveActionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  monthlyDetail?: boolean | Prisma.KPIMonthlyDetailDefaultArgs<ExtArgs>
 }
 
-export type $KpiCorrectiveActionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  name: "KpiCorrectiveAction"
+export type $KPICorrectiveActionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  name: "KPICorrectiveAction"
   objects: {
-    kpiMonthlyResult: Prisma.$KpiMonthlyResultPayload<ExtArgs>
+    monthlyDetail: Prisma.$KPIMonthlyDetailPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    sequenceNo: number
-    rootCauseAnalysis: string
-    improvementGuidelines: string
-    responsiblePersonM365: string
+    monthlyDetailId: string
+    times: number
+    rootCause: string
+    guidelines: string
+    responsiblePerson: string
     dueDate: Date
-    kpiMonthlyResultId: string
     createdAt: Date
     updatedAt: Date
-  }, ExtArgs["result"]["kpiCorrectiveAction"]>
+  }, ExtArgs["result"]["kPICorrectiveAction"]>
   composites: {}
 }
 
-export type KpiCorrectiveActionGetPayload<S extends boolean | null | undefined | KpiCorrectiveActionDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$KpiCorrectiveActionPayload, S>
+export type KPICorrectiveActionGetPayload<S extends boolean | null | undefined | KPICorrectiveActionDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$KPICorrectiveActionPayload, S>
 
-export type KpiCorrectiveActionCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> =
-  Omit<KpiCorrectiveActionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-    select?: KpiCorrectiveActionCountAggregateInputType | true
+export type KPICorrectiveActionCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> =
+  Omit<KPICorrectiveActionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+    select?: KPICorrectiveActionCountAggregateInputType | true
   }
 
-export interface KpiCorrectiveActionDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['KpiCorrectiveAction'], meta: { name: 'KpiCorrectiveAction' } }
+export interface KPICorrectiveActionDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['KPICorrectiveAction'], meta: { name: 'KPICorrectiveAction' } }
   /**
-   * Find zero or one KpiCorrectiveAction that matches the filter.
-   * @param {KpiCorrectiveActionFindUniqueArgs} args - Arguments to find a KpiCorrectiveAction
+   * Find zero or one KPICorrectiveAction that matches the filter.
+   * @param {KPICorrectiveActionFindUniqueArgs} args - Arguments to find a KPICorrectiveAction
    * @example
-   * // Get one KpiCorrectiveAction
-   * const kpiCorrectiveAction = await prisma.kpiCorrectiveAction.findUnique({
+   * // Get one KPICorrectiveAction
+   * const kPICorrectiveAction = await prisma.kPICorrectiveAction.findUnique({
    *   where: {
    *     // ... provide filter here
    *   }
    * })
    */
-  findUnique<T extends KpiCorrectiveActionFindUniqueArgs>(args: Prisma.SelectSubset<T, KpiCorrectiveActionFindUniqueArgs<ExtArgs>>): Prisma.Prisma__KpiCorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KpiCorrectiveActionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  findUnique<T extends KPICorrectiveActionFindUniqueArgs>(args: Prisma.SelectSubset<T, KPICorrectiveActionFindUniqueArgs<ExtArgs>>): Prisma.Prisma__KPICorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KPICorrectiveActionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
   /**
-   * Find one KpiCorrectiveAction that matches the filter or throw an error with `error.code='P2025'`
+   * Find one KPICorrectiveAction that matches the filter or throw an error with `error.code='P2025'`
    * if no matches were found.
-   * @param {KpiCorrectiveActionFindUniqueOrThrowArgs} args - Arguments to find a KpiCorrectiveAction
+   * @param {KPICorrectiveActionFindUniqueOrThrowArgs} args - Arguments to find a KPICorrectiveAction
    * @example
-   * // Get one KpiCorrectiveAction
-   * const kpiCorrectiveAction = await prisma.kpiCorrectiveAction.findUniqueOrThrow({
+   * // Get one KPICorrectiveAction
+   * const kPICorrectiveAction = await prisma.kPICorrectiveAction.findUniqueOrThrow({
    *   where: {
    *     // ... provide filter here
    *   }
    * })
    */
-  findUniqueOrThrow<T extends KpiCorrectiveActionFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, KpiCorrectiveActionFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__KpiCorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KpiCorrectiveActionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  findUniqueOrThrow<T extends KPICorrectiveActionFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, KPICorrectiveActionFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__KPICorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KPICorrectiveActionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
-   * Find the first KpiCorrectiveAction that matches the filter.
+   * Find the first KPICorrectiveAction that matches the filter.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {KpiCorrectiveActionFindFirstArgs} args - Arguments to find a KpiCorrectiveAction
+   * @param {KPICorrectiveActionFindFirstArgs} args - Arguments to find a KPICorrectiveAction
    * @example
-   * // Get one KpiCorrectiveAction
-   * const kpiCorrectiveAction = await prisma.kpiCorrectiveAction.findFirst({
+   * // Get one KPICorrectiveAction
+   * const kPICorrectiveAction = await prisma.kPICorrectiveAction.findFirst({
    *   where: {
    *     // ... provide filter here
    *   }
    * })
    */
-  findFirst<T extends KpiCorrectiveActionFindFirstArgs>(args?: Prisma.SelectSubset<T, KpiCorrectiveActionFindFirstArgs<ExtArgs>>): Prisma.Prisma__KpiCorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KpiCorrectiveActionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  findFirst<T extends KPICorrectiveActionFindFirstArgs>(args?: Prisma.SelectSubset<T, KPICorrectiveActionFindFirstArgs<ExtArgs>>): Prisma.Prisma__KPICorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KPICorrectiveActionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
   /**
-   * Find the first KpiCorrectiveAction that matches the filter or
+   * Find the first KPICorrectiveAction that matches the filter or
    * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {KpiCorrectiveActionFindFirstOrThrowArgs} args - Arguments to find a KpiCorrectiveAction
+   * @param {KPICorrectiveActionFindFirstOrThrowArgs} args - Arguments to find a KPICorrectiveAction
    * @example
-   * // Get one KpiCorrectiveAction
-   * const kpiCorrectiveAction = await prisma.kpiCorrectiveAction.findFirstOrThrow({
+   * // Get one KPICorrectiveAction
+   * const kPICorrectiveAction = await prisma.kPICorrectiveAction.findFirstOrThrow({
    *   where: {
    *     // ... provide filter here
    *   }
    * })
    */
-  findFirstOrThrow<T extends KpiCorrectiveActionFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, KpiCorrectiveActionFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__KpiCorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KpiCorrectiveActionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  findFirstOrThrow<T extends KPICorrectiveActionFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, KPICorrectiveActionFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__KPICorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KPICorrectiveActionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
-   * Find zero or more KpiCorrectiveActions that matches the filter.
+   * Find zero or more KPICorrectiveActions that matches the filter.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {KpiCorrectiveActionFindManyArgs} args - Arguments to filter and select certain fields only.
+   * @param {KPICorrectiveActionFindManyArgs} args - Arguments to filter and select certain fields only.
    * @example
-   * // Get all KpiCorrectiveActions
-   * const kpiCorrectiveActions = await prisma.kpiCorrectiveAction.findMany()
+   * // Get all KPICorrectiveActions
+   * const kPICorrectiveActions = await prisma.kPICorrectiveAction.findMany()
    * 
-   * // Get first 10 KpiCorrectiveActions
-   * const kpiCorrectiveActions = await prisma.kpiCorrectiveAction.findMany({ take: 10 })
+   * // Get first 10 KPICorrectiveActions
+   * const kPICorrectiveActions = await prisma.kPICorrectiveAction.findMany({ take: 10 })
    * 
    * // Only select the `id`
-   * const kpiCorrectiveActionWithIdOnly = await prisma.kpiCorrectiveAction.findMany({ select: { id: true } })
+   * const kPICorrectiveActionWithIdOnly = await prisma.kPICorrectiveAction.findMany({ select: { id: true } })
    * 
    */
-  findMany<T extends KpiCorrectiveActionFindManyArgs>(args?: Prisma.SelectSubset<T, KpiCorrectiveActionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KpiCorrectiveActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+  findMany<T extends KPICorrectiveActionFindManyArgs>(args?: Prisma.SelectSubset<T, KPICorrectiveActionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KPICorrectiveActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
   /**
-   * Create a KpiCorrectiveAction.
-   * @param {KpiCorrectiveActionCreateArgs} args - Arguments to create a KpiCorrectiveAction.
+   * Create a KPICorrectiveAction.
+   * @param {KPICorrectiveActionCreateArgs} args - Arguments to create a KPICorrectiveAction.
    * @example
-   * // Create one KpiCorrectiveAction
-   * const KpiCorrectiveAction = await prisma.kpiCorrectiveAction.create({
+   * // Create one KPICorrectiveAction
+   * const KPICorrectiveAction = await prisma.kPICorrectiveAction.create({
    *   data: {
-   *     // ... data to create a KpiCorrectiveAction
+   *     // ... data to create a KPICorrectiveAction
    *   }
    * })
    * 
    */
-  create<T extends KpiCorrectiveActionCreateArgs>(args: Prisma.SelectSubset<T, KpiCorrectiveActionCreateArgs<ExtArgs>>): Prisma.Prisma__KpiCorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KpiCorrectiveActionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  create<T extends KPICorrectiveActionCreateArgs>(args: Prisma.SelectSubset<T, KPICorrectiveActionCreateArgs<ExtArgs>>): Prisma.Prisma__KPICorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KPICorrectiveActionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
-   * Create many KpiCorrectiveActions.
-   * @param {KpiCorrectiveActionCreateManyArgs} args - Arguments to create many KpiCorrectiveActions.
+   * Create many KPICorrectiveActions.
+   * @param {KPICorrectiveActionCreateManyArgs} args - Arguments to create many KPICorrectiveActions.
    * @example
-   * // Create many KpiCorrectiveActions
-   * const kpiCorrectiveAction = await prisma.kpiCorrectiveAction.createMany({
+   * // Create many KPICorrectiveActions
+   * const kPICorrectiveAction = await prisma.kPICorrectiveAction.createMany({
    *   data: [
    *     // ... provide data here
    *   ]
    * })
    *     
    */
-  createMany<T extends KpiCorrectiveActionCreateManyArgs>(args?: Prisma.SelectSubset<T, KpiCorrectiveActionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+  createMany<T extends KPICorrectiveActionCreateManyArgs>(args?: Prisma.SelectSubset<T, KPICorrectiveActionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
-   * Create many KpiCorrectiveActions and returns the data saved in the database.
-   * @param {KpiCorrectiveActionCreateManyAndReturnArgs} args - Arguments to create many KpiCorrectiveActions.
+   * Create many KPICorrectiveActions and returns the data saved in the database.
+   * @param {KPICorrectiveActionCreateManyAndReturnArgs} args - Arguments to create many KPICorrectiveActions.
    * @example
-   * // Create many KpiCorrectiveActions
-   * const kpiCorrectiveAction = await prisma.kpiCorrectiveAction.createManyAndReturn({
+   * // Create many KPICorrectiveActions
+   * const kPICorrectiveAction = await prisma.kPICorrectiveAction.createManyAndReturn({
    *   data: [
    *     // ... provide data here
    *   ]
    * })
    * 
-   * // Create many KpiCorrectiveActions and only return the `id`
-   * const kpiCorrectiveActionWithIdOnly = await prisma.kpiCorrectiveAction.createManyAndReturn({
+   * // Create many KPICorrectiveActions and only return the `id`
+   * const kPICorrectiveActionWithIdOnly = await prisma.kPICorrectiveAction.createManyAndReturn({
    *   select: { id: true },
    *   data: [
    *     // ... provide data here
@@ -816,28 +816,28 @@ export interface KpiCorrectiveActionDelegate<ExtArgs extends runtime.Types.Exten
    * Read more here: https://pris.ly/d/null-undefined
    * 
    */
-  createManyAndReturn<T extends KpiCorrectiveActionCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, KpiCorrectiveActionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KpiCorrectiveActionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+  createManyAndReturn<T extends KPICorrectiveActionCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, KPICorrectiveActionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KPICorrectiveActionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
   /**
-   * Delete a KpiCorrectiveAction.
-   * @param {KpiCorrectiveActionDeleteArgs} args - Arguments to delete one KpiCorrectiveAction.
+   * Delete a KPICorrectiveAction.
+   * @param {KPICorrectiveActionDeleteArgs} args - Arguments to delete one KPICorrectiveAction.
    * @example
-   * // Delete one KpiCorrectiveAction
-   * const KpiCorrectiveAction = await prisma.kpiCorrectiveAction.delete({
+   * // Delete one KPICorrectiveAction
+   * const KPICorrectiveAction = await prisma.kPICorrectiveAction.delete({
    *   where: {
-   *     // ... filter to delete one KpiCorrectiveAction
+   *     // ... filter to delete one KPICorrectiveAction
    *   }
    * })
    * 
    */
-  delete<T extends KpiCorrectiveActionDeleteArgs>(args: Prisma.SelectSubset<T, KpiCorrectiveActionDeleteArgs<ExtArgs>>): Prisma.Prisma__KpiCorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KpiCorrectiveActionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  delete<T extends KPICorrectiveActionDeleteArgs>(args: Prisma.SelectSubset<T, KPICorrectiveActionDeleteArgs<ExtArgs>>): Prisma.Prisma__KPICorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KPICorrectiveActionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
-   * Update one KpiCorrectiveAction.
-   * @param {KpiCorrectiveActionUpdateArgs} args - Arguments to update one KpiCorrectiveAction.
+   * Update one KPICorrectiveAction.
+   * @param {KPICorrectiveActionUpdateArgs} args - Arguments to update one KPICorrectiveAction.
    * @example
-   * // Update one KpiCorrectiveAction
-   * const kpiCorrectiveAction = await prisma.kpiCorrectiveAction.update({
+   * // Update one KPICorrectiveAction
+   * const kPICorrectiveAction = await prisma.kPICorrectiveAction.update({
    *   where: {
    *     // ... provide filter here
    *   },
@@ -847,30 +847,30 @@ export interface KpiCorrectiveActionDelegate<ExtArgs extends runtime.Types.Exten
    * })
    * 
    */
-  update<T extends KpiCorrectiveActionUpdateArgs>(args: Prisma.SelectSubset<T, KpiCorrectiveActionUpdateArgs<ExtArgs>>): Prisma.Prisma__KpiCorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KpiCorrectiveActionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  update<T extends KPICorrectiveActionUpdateArgs>(args: Prisma.SelectSubset<T, KPICorrectiveActionUpdateArgs<ExtArgs>>): Prisma.Prisma__KPICorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KPICorrectiveActionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
-   * Delete zero or more KpiCorrectiveActions.
-   * @param {KpiCorrectiveActionDeleteManyArgs} args - Arguments to filter KpiCorrectiveActions to delete.
+   * Delete zero or more KPICorrectiveActions.
+   * @param {KPICorrectiveActionDeleteManyArgs} args - Arguments to filter KPICorrectiveActions to delete.
    * @example
-   * // Delete a few KpiCorrectiveActions
-   * const { count } = await prisma.kpiCorrectiveAction.deleteMany({
+   * // Delete a few KPICorrectiveActions
+   * const { count } = await prisma.kPICorrectiveAction.deleteMany({
    *   where: {
    *     // ... provide filter here
    *   }
    * })
    * 
    */
-  deleteMany<T extends KpiCorrectiveActionDeleteManyArgs>(args?: Prisma.SelectSubset<T, KpiCorrectiveActionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+  deleteMany<T extends KPICorrectiveActionDeleteManyArgs>(args?: Prisma.SelectSubset<T, KPICorrectiveActionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
-   * Update zero or more KpiCorrectiveActions.
+   * Update zero or more KPICorrectiveActions.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {KpiCorrectiveActionUpdateManyArgs} args - Arguments to update one or more rows.
+   * @param {KPICorrectiveActionUpdateManyArgs} args - Arguments to update one or more rows.
    * @example
-   * // Update many KpiCorrectiveActions
-   * const kpiCorrectiveAction = await prisma.kpiCorrectiveAction.updateMany({
+   * // Update many KPICorrectiveActions
+   * const kPICorrectiveAction = await prisma.kPICorrectiveAction.updateMany({
    *   where: {
    *     // ... provide filter here
    *   },
@@ -880,14 +880,14 @@ export interface KpiCorrectiveActionDelegate<ExtArgs extends runtime.Types.Exten
    * })
    * 
    */
-  updateMany<T extends KpiCorrectiveActionUpdateManyArgs>(args: Prisma.SelectSubset<T, KpiCorrectiveActionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+  updateMany<T extends KPICorrectiveActionUpdateManyArgs>(args: Prisma.SelectSubset<T, KPICorrectiveActionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
-   * Update zero or more KpiCorrectiveActions and returns the data updated in the database.
-   * @param {KpiCorrectiveActionUpdateManyAndReturnArgs} args - Arguments to update many KpiCorrectiveActions.
+   * Update zero or more KPICorrectiveActions and returns the data updated in the database.
+   * @param {KPICorrectiveActionUpdateManyAndReturnArgs} args - Arguments to update many KPICorrectiveActions.
    * @example
-   * // Update many KpiCorrectiveActions
-   * const kpiCorrectiveAction = await prisma.kpiCorrectiveAction.updateManyAndReturn({
+   * // Update many KPICorrectiveActions
+   * const kPICorrectiveAction = await prisma.kPICorrectiveAction.updateManyAndReturn({
    *   where: {
    *     // ... provide filter here
    *   },
@@ -896,8 +896,8 @@ export interface KpiCorrectiveActionDelegate<ExtArgs extends runtime.Types.Exten
    *   ]
    * })
    * 
-   * // Update zero or more KpiCorrectiveActions and only return the `id`
-   * const kpiCorrectiveActionWithIdOnly = await prisma.kpiCorrectiveAction.updateManyAndReturn({
+   * // Update zero or more KPICorrectiveActions and only return the `id`
+   * const kPICorrectiveActionWithIdOnly = await prisma.kPICorrectiveAction.updateManyAndReturn({
    *   select: { id: true },
    *   where: {
    *     // ... provide filter here
@@ -910,56 +910,56 @@ export interface KpiCorrectiveActionDelegate<ExtArgs extends runtime.Types.Exten
    * Read more here: https://pris.ly/d/null-undefined
    * 
    */
-  updateManyAndReturn<T extends KpiCorrectiveActionUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, KpiCorrectiveActionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KpiCorrectiveActionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+  updateManyAndReturn<T extends KPICorrectiveActionUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, KPICorrectiveActionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KPICorrectiveActionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
-   * Create or update one KpiCorrectiveAction.
-   * @param {KpiCorrectiveActionUpsertArgs} args - Arguments to update or create a KpiCorrectiveAction.
+   * Create or update one KPICorrectiveAction.
+   * @param {KPICorrectiveActionUpsertArgs} args - Arguments to update or create a KPICorrectiveAction.
    * @example
-   * // Update or create a KpiCorrectiveAction
-   * const kpiCorrectiveAction = await prisma.kpiCorrectiveAction.upsert({
+   * // Update or create a KPICorrectiveAction
+   * const kPICorrectiveAction = await prisma.kPICorrectiveAction.upsert({
    *   create: {
-   *     // ... data to create a KpiCorrectiveAction
+   *     // ... data to create a KPICorrectiveAction
    *   },
    *   update: {
    *     // ... in case it already exists, update
    *   },
    *   where: {
-   *     // ... the filter for the KpiCorrectiveAction we want to update
+   *     // ... the filter for the KPICorrectiveAction we want to update
    *   }
    * })
    */
-  upsert<T extends KpiCorrectiveActionUpsertArgs>(args: Prisma.SelectSubset<T, KpiCorrectiveActionUpsertArgs<ExtArgs>>): Prisma.Prisma__KpiCorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KpiCorrectiveActionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  upsert<T extends KPICorrectiveActionUpsertArgs>(args: Prisma.SelectSubset<T, KPICorrectiveActionUpsertArgs<ExtArgs>>): Prisma.Prisma__KPICorrectiveActionClient<runtime.Types.Result.GetResult<Prisma.$KPICorrectiveActionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
   /**
-   * Count the number of KpiCorrectiveActions.
+   * Count the number of KPICorrectiveActions.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {KpiCorrectiveActionCountArgs} args - Arguments to filter KpiCorrectiveActions to count.
+   * @param {KPICorrectiveActionCountArgs} args - Arguments to filter KPICorrectiveActions to count.
    * @example
-   * // Count the number of KpiCorrectiveActions
-   * const count = await prisma.kpiCorrectiveAction.count({
+   * // Count the number of KPICorrectiveActions
+   * const count = await prisma.kPICorrectiveAction.count({
    *   where: {
-   *     // ... the filter for the KpiCorrectiveActions we want to count
+   *     // ... the filter for the KPICorrectiveActions we want to count
    *   }
    * })
   **/
-  count<T extends KpiCorrectiveActionCountArgs>(
-    args?: Prisma.Subset<T, KpiCorrectiveActionCountArgs>,
+  count<T extends KPICorrectiveActionCountArgs>(
+    args?: Prisma.Subset<T, KPICorrectiveActionCountArgs>,
   ): Prisma.PrismaPromise<
     T extends runtime.Types.Utils.Record<'select', any>
       ? T['select'] extends true
         ? number
-        : Prisma.GetScalarType<T['select'], KpiCorrectiveActionCountAggregateOutputType>
+        : Prisma.GetScalarType<T['select'], KPICorrectiveActionCountAggregateOutputType>
       : number
   >
 
   /**
-   * Allows you to perform aggregations operations on a KpiCorrectiveAction.
+   * Allows you to perform aggregations operations on a KPICorrectiveAction.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {KpiCorrectiveActionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+   * @param {KPICorrectiveActionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
    * @example
    * // Ordered by age ascending
    * // Where email contains prisma.io
@@ -979,13 +979,13 @@ export interface KpiCorrectiveActionDelegate<ExtArgs extends runtime.Types.Exten
    *   take: 10,
    * })
   **/
-  aggregate<T extends KpiCorrectiveActionAggregateArgs>(args: Prisma.Subset<T, KpiCorrectiveActionAggregateArgs>): Prisma.PrismaPromise<GetKpiCorrectiveActionAggregateType<T>>
+  aggregate<T extends KPICorrectiveActionAggregateArgs>(args: Prisma.Subset<T, KPICorrectiveActionAggregateArgs>): Prisma.PrismaPromise<GetKPICorrectiveActionAggregateType<T>>
 
   /**
-   * Group by KpiCorrectiveAction.
+   * Group by KPICorrectiveAction.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {KpiCorrectiveActionGroupByArgs} args - Group by arguments.
+   * @param {KPICorrectiveActionGroupByArgs} args - Group by arguments.
    * @example
    * // Group by city, order by createdAt, get count
    * const result = await prisma.user.groupBy({
@@ -1000,14 +1000,14 @@ export interface KpiCorrectiveActionDelegate<ExtArgs extends runtime.Types.Exten
    * 
   **/
   groupBy<
-    T extends KpiCorrectiveActionGroupByArgs,
+    T extends KPICorrectiveActionGroupByArgs,
     HasSelectOrTake extends Prisma.Or<
       Prisma.Extends<'skip', Prisma.Keys<T>>,
       Prisma.Extends<'take', Prisma.Keys<T>>
     >,
     OrderByArg extends Prisma.True extends HasSelectOrTake
-      ? { orderBy: KpiCorrectiveActionGroupByArgs['orderBy'] }
-      : { orderBy?: KpiCorrectiveActionGroupByArgs['orderBy'] },
+      ? { orderBy: KPICorrectiveActionGroupByArgs['orderBy'] }
+      : { orderBy?: KPICorrectiveActionGroupByArgs['orderBy'] },
     OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>,
     ByFields extends Prisma.MaybeTupleToUnion<T['by']>,
     ByValid extends Prisma.Has<ByFields, OrderFields>,
@@ -1056,22 +1056,22 @@ export interface KpiCorrectiveActionDelegate<ExtArgs extends runtime.Types.Exten
           ? never
           : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
       }[OrderFields]
-  >(args: Prisma.SubsetIntersection<T, KpiCorrectiveActionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKpiCorrectiveActionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  >(args: Prisma.SubsetIntersection<T, KPICorrectiveActionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKPICorrectiveActionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 /**
- * Fields of the KpiCorrectiveAction model
+ * Fields of the KPICorrectiveAction model
  */
-readonly fields: KpiCorrectiveActionFieldRefs;
+readonly fields: KPICorrectiveActionFieldRefs;
 }
 
 /**
- * The delegate class that acts as a "Promise-like" for KpiCorrectiveAction.
+ * The delegate class that acts as a "Promise-like" for KPICorrectiveAction.
  * Why is this prefixed with `Prisma__`?
  * Because we want to prevent naming conflicts as mentioned in
  * https://github.com/prisma/prisma-client-js/issues/707
  */
-export interface Prisma__KpiCorrectiveActionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+export interface Prisma__KPICorrectiveActionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  kpiMonthlyResult<T extends Prisma.KpiMonthlyResultDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KpiMonthlyResultDefaultArgs<ExtArgs>>): Prisma.Prisma__KpiMonthlyResultClient<runtime.Types.Result.GetResult<Prisma.$KpiMonthlyResultPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  monthlyDetail<T extends Prisma.KPIMonthlyDetailDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KPIMonthlyDetailDefaultArgs<ExtArgs>>): Prisma.Prisma__KPIMonthlyDetailClient<runtime.Types.Result.GetResult<Prisma.$KPIMonthlyDetailPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1098,432 +1098,432 @@ export interface Prisma__KpiCorrectiveActionClient<T, Null = never, ExtArgs exte
 
 
 /**
- * Fields of the KpiCorrectiveAction model
+ * Fields of the KPICorrectiveAction model
  */
-export interface KpiCorrectiveActionFieldRefs {
-  readonly id: Prisma.FieldRef<"KpiCorrectiveAction", 'String'>
-  readonly sequenceNo: Prisma.FieldRef<"KpiCorrectiveAction", 'Int'>
-  readonly rootCauseAnalysis: Prisma.FieldRef<"KpiCorrectiveAction", 'String'>
-  readonly improvementGuidelines: Prisma.FieldRef<"KpiCorrectiveAction", 'String'>
-  readonly responsiblePersonM365: Prisma.FieldRef<"KpiCorrectiveAction", 'String'>
-  readonly dueDate: Prisma.FieldRef<"KpiCorrectiveAction", 'DateTime'>
-  readonly kpiMonthlyResultId: Prisma.FieldRef<"KpiCorrectiveAction", 'String'>
-  readonly createdAt: Prisma.FieldRef<"KpiCorrectiveAction", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"KpiCorrectiveAction", 'DateTime'>
+export interface KPICorrectiveActionFieldRefs {
+  readonly id: Prisma.FieldRef<"KPICorrectiveAction", 'String'>
+  readonly monthlyDetailId: Prisma.FieldRef<"KPICorrectiveAction", 'String'>
+  readonly times: Prisma.FieldRef<"KPICorrectiveAction", 'Int'>
+  readonly rootCause: Prisma.FieldRef<"KPICorrectiveAction", 'String'>
+  readonly guidelines: Prisma.FieldRef<"KPICorrectiveAction", 'String'>
+  readonly responsiblePerson: Prisma.FieldRef<"KPICorrectiveAction", 'String'>
+  readonly dueDate: Prisma.FieldRef<"KPICorrectiveAction", 'DateTime'>
+  readonly createdAt: Prisma.FieldRef<"KPICorrectiveAction", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"KPICorrectiveAction", 'DateTime'>
 }
     
 
 // Custom InputTypes
 /**
- * KpiCorrectiveAction findUnique
+ * KPICorrectiveAction findUnique
  */
-export type KpiCorrectiveActionFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the KpiCorrectiveAction
+   * Select specific fields to fetch from the KPICorrectiveAction
    */
-  select?: Prisma.KpiCorrectiveActionSelect<ExtArgs> | null
+  select?: Prisma.KPICorrectiveActionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the KpiCorrectiveAction
+   * Omit specific fields from the KPICorrectiveAction
    */
-  omit?: Prisma.KpiCorrectiveActionOmit<ExtArgs> | null
+  omit?: Prisma.KPICorrectiveActionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.KpiCorrectiveActionInclude<ExtArgs> | null
+  include?: Prisma.KPICorrectiveActionInclude<ExtArgs> | null
   /**
-   * Filter, which KpiCorrectiveAction to fetch.
+   * Filter, which KPICorrectiveAction to fetch.
    */
-  where: Prisma.KpiCorrectiveActionWhereUniqueInput
+  where: Prisma.KPICorrectiveActionWhereUniqueInput
 }
 
 /**
- * KpiCorrectiveAction findUniqueOrThrow
+ * KPICorrectiveAction findUniqueOrThrow
  */
-export type KpiCorrectiveActionFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the KpiCorrectiveAction
+   * Select specific fields to fetch from the KPICorrectiveAction
    */
-  select?: Prisma.KpiCorrectiveActionSelect<ExtArgs> | null
+  select?: Prisma.KPICorrectiveActionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the KpiCorrectiveAction
+   * Omit specific fields from the KPICorrectiveAction
    */
-  omit?: Prisma.KpiCorrectiveActionOmit<ExtArgs> | null
+  omit?: Prisma.KPICorrectiveActionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.KpiCorrectiveActionInclude<ExtArgs> | null
+  include?: Prisma.KPICorrectiveActionInclude<ExtArgs> | null
   /**
-   * Filter, which KpiCorrectiveAction to fetch.
+   * Filter, which KPICorrectiveAction to fetch.
    */
-  where: Prisma.KpiCorrectiveActionWhereUniqueInput
+  where: Prisma.KPICorrectiveActionWhereUniqueInput
 }
 
 /**
- * KpiCorrectiveAction findFirst
+ * KPICorrectiveAction findFirst
  */
-export type KpiCorrectiveActionFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the KpiCorrectiveAction
+   * Select specific fields to fetch from the KPICorrectiveAction
    */
-  select?: Prisma.KpiCorrectiveActionSelect<ExtArgs> | null
+  select?: Prisma.KPICorrectiveActionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the KpiCorrectiveAction
+   * Omit specific fields from the KPICorrectiveAction
    */
-  omit?: Prisma.KpiCorrectiveActionOmit<ExtArgs> | null
+  omit?: Prisma.KPICorrectiveActionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.KpiCorrectiveActionInclude<ExtArgs> | null
+  include?: Prisma.KPICorrectiveActionInclude<ExtArgs> | null
   /**
-   * Filter, which KpiCorrectiveAction to fetch.
+   * Filter, which KPICorrectiveAction to fetch.
    */
-  where?: Prisma.KpiCorrectiveActionWhereInput
+  where?: Prisma.KPICorrectiveActionWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of KpiCorrectiveActions to fetch.
+   * Determine the order of KPICorrectiveActions to fetch.
    */
-  orderBy?: Prisma.KpiCorrectiveActionOrderByWithRelationInput | Prisma.KpiCorrectiveActionOrderByWithRelationInput[]
+  orderBy?: Prisma.KPICorrectiveActionOrderByWithRelationInput | Prisma.KPICorrectiveActionOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
-   * Sets the position for searching for KpiCorrectiveActions.
+   * Sets the position for searching for KPICorrectiveActions.
    */
-  cursor?: Prisma.KpiCorrectiveActionWhereUniqueInput
+  cursor?: Prisma.KPICorrectiveActionWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` KpiCorrectiveActions from the position of the cursor.
+   * Take `±n` KPICorrectiveActions from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` KpiCorrectiveActions.
+   * Skip the first `n` KPICorrectiveActions.
    */
   skip?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
    * 
-   * Filter by unique combinations of KpiCorrectiveActions.
+   * Filter by unique combinations of KPICorrectiveActions.
    */
-  distinct?: Prisma.KpiCorrectiveActionScalarFieldEnum | Prisma.KpiCorrectiveActionScalarFieldEnum[]
+  distinct?: Prisma.KPICorrectiveActionScalarFieldEnum | Prisma.KPICorrectiveActionScalarFieldEnum[]
 }
 
 /**
- * KpiCorrectiveAction findFirstOrThrow
+ * KPICorrectiveAction findFirstOrThrow
  */
-export type KpiCorrectiveActionFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the KpiCorrectiveAction
+   * Select specific fields to fetch from the KPICorrectiveAction
    */
-  select?: Prisma.KpiCorrectiveActionSelect<ExtArgs> | null
+  select?: Prisma.KPICorrectiveActionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the KpiCorrectiveAction
+   * Omit specific fields from the KPICorrectiveAction
    */
-  omit?: Prisma.KpiCorrectiveActionOmit<ExtArgs> | null
+  omit?: Prisma.KPICorrectiveActionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.KpiCorrectiveActionInclude<ExtArgs> | null
+  include?: Prisma.KPICorrectiveActionInclude<ExtArgs> | null
   /**
-   * Filter, which KpiCorrectiveAction to fetch.
+   * Filter, which KPICorrectiveAction to fetch.
    */
-  where?: Prisma.KpiCorrectiveActionWhereInput
+  where?: Prisma.KPICorrectiveActionWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of KpiCorrectiveActions to fetch.
+   * Determine the order of KPICorrectiveActions to fetch.
    */
-  orderBy?: Prisma.KpiCorrectiveActionOrderByWithRelationInput | Prisma.KpiCorrectiveActionOrderByWithRelationInput[]
+  orderBy?: Prisma.KPICorrectiveActionOrderByWithRelationInput | Prisma.KPICorrectiveActionOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
-   * Sets the position for searching for KpiCorrectiveActions.
+   * Sets the position for searching for KPICorrectiveActions.
    */
-  cursor?: Prisma.KpiCorrectiveActionWhereUniqueInput
+  cursor?: Prisma.KPICorrectiveActionWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` KpiCorrectiveActions from the position of the cursor.
+   * Take `±n` KPICorrectiveActions from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` KpiCorrectiveActions.
+   * Skip the first `n` KPICorrectiveActions.
    */
   skip?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
    * 
-   * Filter by unique combinations of KpiCorrectiveActions.
+   * Filter by unique combinations of KPICorrectiveActions.
    */
-  distinct?: Prisma.KpiCorrectiveActionScalarFieldEnum | Prisma.KpiCorrectiveActionScalarFieldEnum[]
+  distinct?: Prisma.KPICorrectiveActionScalarFieldEnum | Prisma.KPICorrectiveActionScalarFieldEnum[]
 }
 
 /**
- * KpiCorrectiveAction findMany
+ * KPICorrectiveAction findMany
  */
-export type KpiCorrectiveActionFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the KpiCorrectiveAction
+   * Select specific fields to fetch from the KPICorrectiveAction
    */
-  select?: Prisma.KpiCorrectiveActionSelect<ExtArgs> | null
+  select?: Prisma.KPICorrectiveActionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the KpiCorrectiveAction
+   * Omit specific fields from the KPICorrectiveAction
    */
-  omit?: Prisma.KpiCorrectiveActionOmit<ExtArgs> | null
+  omit?: Prisma.KPICorrectiveActionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.KpiCorrectiveActionInclude<ExtArgs> | null
+  include?: Prisma.KPICorrectiveActionInclude<ExtArgs> | null
   /**
-   * Filter, which KpiCorrectiveActions to fetch.
+   * Filter, which KPICorrectiveActions to fetch.
    */
-  where?: Prisma.KpiCorrectiveActionWhereInput
+  where?: Prisma.KPICorrectiveActionWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of KpiCorrectiveActions to fetch.
+   * Determine the order of KPICorrectiveActions to fetch.
    */
-  orderBy?: Prisma.KpiCorrectiveActionOrderByWithRelationInput | Prisma.KpiCorrectiveActionOrderByWithRelationInput[]
+  orderBy?: Prisma.KPICorrectiveActionOrderByWithRelationInput | Prisma.KPICorrectiveActionOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
-   * Sets the position for listing KpiCorrectiveActions.
+   * Sets the position for listing KPICorrectiveActions.
    */
-  cursor?: Prisma.KpiCorrectiveActionWhereUniqueInput
+  cursor?: Prisma.KPICorrectiveActionWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` KpiCorrectiveActions from the position of the cursor.
+   * Take `±n` KPICorrectiveActions from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` KpiCorrectiveActions.
+   * Skip the first `n` KPICorrectiveActions.
    */
   skip?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
    * 
-   * Filter by unique combinations of KpiCorrectiveActions.
+   * Filter by unique combinations of KPICorrectiveActions.
    */
-  distinct?: Prisma.KpiCorrectiveActionScalarFieldEnum | Prisma.KpiCorrectiveActionScalarFieldEnum[]
+  distinct?: Prisma.KPICorrectiveActionScalarFieldEnum | Prisma.KPICorrectiveActionScalarFieldEnum[]
 }
 
 /**
- * KpiCorrectiveAction create
+ * KPICorrectiveAction create
  */
-export type KpiCorrectiveActionCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the KpiCorrectiveAction
+   * Select specific fields to fetch from the KPICorrectiveAction
    */
-  select?: Prisma.KpiCorrectiveActionSelect<ExtArgs> | null
+  select?: Prisma.KPICorrectiveActionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the KpiCorrectiveAction
+   * Omit specific fields from the KPICorrectiveAction
    */
-  omit?: Prisma.KpiCorrectiveActionOmit<ExtArgs> | null
+  omit?: Prisma.KPICorrectiveActionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.KpiCorrectiveActionInclude<ExtArgs> | null
+  include?: Prisma.KPICorrectiveActionInclude<ExtArgs> | null
   /**
-   * The data needed to create a KpiCorrectiveAction.
+   * The data needed to create a KPICorrectiveAction.
    */
-  data: Prisma.XOR<Prisma.KpiCorrectiveActionCreateInput, Prisma.KpiCorrectiveActionUncheckedCreateInput>
+  data: Prisma.XOR<Prisma.KPICorrectiveActionCreateInput, Prisma.KPICorrectiveActionUncheckedCreateInput>
 }
 
 /**
- * KpiCorrectiveAction createMany
+ * KPICorrectiveAction createMany
  */
-export type KpiCorrectiveActionCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * The data used to create many KpiCorrectiveActions.
+   * The data used to create many KPICorrectiveActions.
    */
-  data: Prisma.KpiCorrectiveActionCreateManyInput | Prisma.KpiCorrectiveActionCreateManyInput[]
+  data: Prisma.KPICorrectiveActionCreateManyInput | Prisma.KPICorrectiveActionCreateManyInput[]
   skipDuplicates?: boolean
 }
 
 /**
- * KpiCorrectiveAction createManyAndReturn
+ * KPICorrectiveAction createManyAndReturn
  */
-export type KpiCorrectiveActionCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the KpiCorrectiveAction
+   * Select specific fields to fetch from the KPICorrectiveAction
    */
-  select?: Prisma.KpiCorrectiveActionSelectCreateManyAndReturn<ExtArgs> | null
+  select?: Prisma.KPICorrectiveActionSelectCreateManyAndReturn<ExtArgs> | null
   /**
-   * Omit specific fields from the KpiCorrectiveAction
+   * Omit specific fields from the KPICorrectiveAction
    */
-  omit?: Prisma.KpiCorrectiveActionOmit<ExtArgs> | null
+  omit?: Prisma.KPICorrectiveActionOmit<ExtArgs> | null
   /**
-   * The data used to create many KpiCorrectiveActions.
+   * The data used to create many KPICorrectiveActions.
    */
-  data: Prisma.KpiCorrectiveActionCreateManyInput | Prisma.KpiCorrectiveActionCreateManyInput[]
+  data: Prisma.KPICorrectiveActionCreateManyInput | Prisma.KPICorrectiveActionCreateManyInput[]
   skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.KpiCorrectiveActionIncludeCreateManyAndReturn<ExtArgs> | null
+  include?: Prisma.KPICorrectiveActionIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
- * KpiCorrectiveAction update
+ * KPICorrectiveAction update
  */
-export type KpiCorrectiveActionUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the KpiCorrectiveAction
+   * Select specific fields to fetch from the KPICorrectiveAction
    */
-  select?: Prisma.KpiCorrectiveActionSelect<ExtArgs> | null
+  select?: Prisma.KPICorrectiveActionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the KpiCorrectiveAction
+   * Omit specific fields from the KPICorrectiveAction
    */
-  omit?: Prisma.KpiCorrectiveActionOmit<ExtArgs> | null
+  omit?: Prisma.KPICorrectiveActionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.KpiCorrectiveActionInclude<ExtArgs> | null
+  include?: Prisma.KPICorrectiveActionInclude<ExtArgs> | null
   /**
-   * The data needed to update a KpiCorrectiveAction.
+   * The data needed to update a KPICorrectiveAction.
    */
-  data: Prisma.XOR<Prisma.KpiCorrectiveActionUpdateInput, Prisma.KpiCorrectiveActionUncheckedUpdateInput>
+  data: Prisma.XOR<Prisma.KPICorrectiveActionUpdateInput, Prisma.KPICorrectiveActionUncheckedUpdateInput>
   /**
-   * Choose, which KpiCorrectiveAction to update.
+   * Choose, which KPICorrectiveAction to update.
    */
-  where: Prisma.KpiCorrectiveActionWhereUniqueInput
+  where: Prisma.KPICorrectiveActionWhereUniqueInput
 }
 
 /**
- * KpiCorrectiveAction updateMany
+ * KPICorrectiveAction updateMany
  */
-export type KpiCorrectiveActionUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * The data used to update KpiCorrectiveActions.
+   * The data used to update KPICorrectiveActions.
    */
-  data: Prisma.XOR<Prisma.KpiCorrectiveActionUpdateManyMutationInput, Prisma.KpiCorrectiveActionUncheckedUpdateManyInput>
+  data: Prisma.XOR<Prisma.KPICorrectiveActionUpdateManyMutationInput, Prisma.KPICorrectiveActionUncheckedUpdateManyInput>
   /**
-   * Filter which KpiCorrectiveActions to update
+   * Filter which KPICorrectiveActions to update
    */
-  where?: Prisma.KpiCorrectiveActionWhereInput
+  where?: Prisma.KPICorrectiveActionWhereInput
   /**
-   * Limit how many KpiCorrectiveActions to update.
+   * Limit how many KPICorrectiveActions to update.
    */
   limit?: number
 }
 
 /**
- * KpiCorrectiveAction updateManyAndReturn
+ * KPICorrectiveAction updateManyAndReturn
  */
-export type KpiCorrectiveActionUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the KpiCorrectiveAction
+   * Select specific fields to fetch from the KPICorrectiveAction
    */
-  select?: Prisma.KpiCorrectiveActionSelectUpdateManyAndReturn<ExtArgs> | null
+  select?: Prisma.KPICorrectiveActionSelectUpdateManyAndReturn<ExtArgs> | null
   /**
-   * Omit specific fields from the KpiCorrectiveAction
+   * Omit specific fields from the KPICorrectiveAction
    */
-  omit?: Prisma.KpiCorrectiveActionOmit<ExtArgs> | null
+  omit?: Prisma.KPICorrectiveActionOmit<ExtArgs> | null
   /**
-   * The data used to update KpiCorrectiveActions.
+   * The data used to update KPICorrectiveActions.
    */
-  data: Prisma.XOR<Prisma.KpiCorrectiveActionUpdateManyMutationInput, Prisma.KpiCorrectiveActionUncheckedUpdateManyInput>
+  data: Prisma.XOR<Prisma.KPICorrectiveActionUpdateManyMutationInput, Prisma.KPICorrectiveActionUncheckedUpdateManyInput>
   /**
-   * Filter which KpiCorrectiveActions to update
+   * Filter which KPICorrectiveActions to update
    */
-  where?: Prisma.KpiCorrectiveActionWhereInput
+  where?: Prisma.KPICorrectiveActionWhereInput
   /**
-   * Limit how many KpiCorrectiveActions to update.
+   * Limit how many KPICorrectiveActions to update.
    */
   limit?: number
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.KpiCorrectiveActionIncludeUpdateManyAndReturn<ExtArgs> | null
+  include?: Prisma.KPICorrectiveActionIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
- * KpiCorrectiveAction upsert
+ * KPICorrectiveAction upsert
  */
-export type KpiCorrectiveActionUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the KpiCorrectiveAction
+   * Select specific fields to fetch from the KPICorrectiveAction
    */
-  select?: Prisma.KpiCorrectiveActionSelect<ExtArgs> | null
+  select?: Prisma.KPICorrectiveActionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the KpiCorrectiveAction
+   * Omit specific fields from the KPICorrectiveAction
    */
-  omit?: Prisma.KpiCorrectiveActionOmit<ExtArgs> | null
+  omit?: Prisma.KPICorrectiveActionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.KpiCorrectiveActionInclude<ExtArgs> | null
+  include?: Prisma.KPICorrectiveActionInclude<ExtArgs> | null
   /**
-   * The filter to search for the KpiCorrectiveAction to update in case it exists.
+   * The filter to search for the KPICorrectiveAction to update in case it exists.
    */
-  where: Prisma.KpiCorrectiveActionWhereUniqueInput
+  where: Prisma.KPICorrectiveActionWhereUniqueInput
   /**
-   * In case the KpiCorrectiveAction found by the `where` argument doesn't exist, create a new KpiCorrectiveAction with this data.
+   * In case the KPICorrectiveAction found by the `where` argument doesn't exist, create a new KPICorrectiveAction with this data.
    */
-  create: Prisma.XOR<Prisma.KpiCorrectiveActionCreateInput, Prisma.KpiCorrectiveActionUncheckedCreateInput>
+  create: Prisma.XOR<Prisma.KPICorrectiveActionCreateInput, Prisma.KPICorrectiveActionUncheckedCreateInput>
   /**
-   * In case the KpiCorrectiveAction was found with the provided `where` argument, update it with this data.
+   * In case the KPICorrectiveAction was found with the provided `where` argument, update it with this data.
    */
-  update: Prisma.XOR<Prisma.KpiCorrectiveActionUpdateInput, Prisma.KpiCorrectiveActionUncheckedUpdateInput>
+  update: Prisma.XOR<Prisma.KPICorrectiveActionUpdateInput, Prisma.KPICorrectiveActionUncheckedUpdateInput>
 }
 
 /**
- * KpiCorrectiveAction delete
+ * KPICorrectiveAction delete
  */
-export type KpiCorrectiveActionDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the KpiCorrectiveAction
+   * Select specific fields to fetch from the KPICorrectiveAction
    */
-  select?: Prisma.KpiCorrectiveActionSelect<ExtArgs> | null
+  select?: Prisma.KPICorrectiveActionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the KpiCorrectiveAction
+   * Omit specific fields from the KPICorrectiveAction
    */
-  omit?: Prisma.KpiCorrectiveActionOmit<ExtArgs> | null
+  omit?: Prisma.KPICorrectiveActionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.KpiCorrectiveActionInclude<ExtArgs> | null
+  include?: Prisma.KPICorrectiveActionInclude<ExtArgs> | null
   /**
-   * Filter which KpiCorrectiveAction to delete.
+   * Filter which KPICorrectiveAction to delete.
    */
-  where: Prisma.KpiCorrectiveActionWhereUniqueInput
+  where: Prisma.KPICorrectiveActionWhereUniqueInput
 }
 
 /**
- * KpiCorrectiveAction deleteMany
+ * KPICorrectiveAction deleteMany
  */
-export type KpiCorrectiveActionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Filter which KpiCorrectiveActions to delete
+   * Filter which KPICorrectiveActions to delete
    */
-  where?: Prisma.KpiCorrectiveActionWhereInput
+  where?: Prisma.KPICorrectiveActionWhereInput
   /**
-   * Limit how many KpiCorrectiveActions to delete.
+   * Limit how many KPICorrectiveActions to delete.
    */
   limit?: number
 }
 
 /**
- * KpiCorrectiveAction without action
+ * KPICorrectiveAction without action
  */
-export type KpiCorrectiveActionDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KPICorrectiveActionDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the KpiCorrectiveAction
+   * Select specific fields to fetch from the KPICorrectiveAction
    */
-  select?: Prisma.KpiCorrectiveActionSelect<ExtArgs> | null
+  select?: Prisma.KPICorrectiveActionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the KpiCorrectiveAction
+   * Omit specific fields from the KPICorrectiveAction
    */
-  omit?: Prisma.KpiCorrectiveActionOmit<ExtArgs> | null
+  omit?: Prisma.KPICorrectiveActionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.KpiCorrectiveActionInclude<ExtArgs> | null
+  include?: Prisma.KPICorrectiveActionInclude<ExtArgs> | null
 }

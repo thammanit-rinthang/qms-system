@@ -9,6 +9,8 @@
  *   AZURE_AD_CLIENT_ID, AZURE_AD_CLIENT_SECRET, AZURE_AD_TENANT_ID
  */
 
+import { getGraphToken } from "@/lib/graph-token";
+
 export interface GraphUser {
   id: string;
   displayName: string | null;
@@ -31,36 +33,6 @@ const SELECT_FIELDS = [
   "accountEnabled",
 ].join(",");
 
-async function getAppAccessToken(): Promise<string> {
-  const tenantId = process.env.AZURE_AD_TENANT_ID!;
-  const clientId = process.env.AZURE_AD_CLIENT_ID!;
-  const clientSecret = process.env.AZURE_AD_CLIENT_SECRET!;
-
-  const url = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`;
-  const body = new URLSearchParams({
-    client_id: clientId,
-    client_secret: clientSecret,
-    grant_type: "client_credentials",
-    scope: "https://graph.microsoft.com/.default",
-  });
-
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: body.toString(),
-  });
-
-  if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(`Failed to acquire app-only access token: ${res.status} ${errorText}`);
-  }
-
-  const data = await res.json() as { access_token: string };
-  return data.access_token;
-}
-
 /**
  * Fetch all M365-licensed member accounts from Entra ID.
  *
@@ -72,7 +44,7 @@ async function getAppAccessToken(): Promise<string> {
  * Handles OData pagination via @odata.nextLink automatically.
  */
 export async function fetchAllEntraUsers(): Promise<GraphUser[]> {
-  const token = await getAppAccessToken();
+  const token = await getGraphToken();
 
   const params = new URLSearchParams({
     $select: SELECT_FIELDS,
@@ -128,7 +100,7 @@ export interface GraphGroup {
  * Requires Group.Read.All app permission.
  */
 export async function fetchAllEntraGroups(): Promise<GraphGroup[]> {
-  const token = await getAppAccessToken();
+  const token = await getGraphToken();
 
   const params = new URLSearchParams({
     $select: "id,displayName,mail,description",
@@ -163,6 +135,71 @@ export async function fetchAllEntraGroups(): Promise<GraphGroup[]> {
   return groups;
 }
 
+/**
+ * Search mail-enabled Entra ID groups by displayName or mail (uses $search).
+ * Returns up to 25 results sorted by displayName.
+ */
+export async function searchEntraGroups(query: string): Promise<GraphGroup[]> {
+  if (!query.trim()) return [];
+
+  const token = await getGraphToken();
+
+  const params = new URLSearchParams({
+    $select: "id,displayName,mail,description",
+    $top: "25",
+    $count: "true",
+    $search: `"displayName:${query}" OR "mail:${query}"`,
+  });
+
+  const res = await fetch(`https://graph.microsoft.com/v1.0/groups?${params.toString()}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      ConsistencyLevel: "eventual",
+    },
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Graph searchGroups ${res.status}: ${body}`);
+  }
+
+  const json = (await res.json()) as { value: GraphGroup[] };
+  return json.value;
+}
+
+/**
+ * Search Entra ID users by displayName or mail (uses $search).
+ * Returns up to 25 results sorted by displayName.
+ */
+export async function searchEntraUsers(query: string): Promise<GraphUser[]> {
+  if (!query.trim()) return [];
+
+  const token = await getGraphToken();
+
+  const params = new URLSearchParams({
+    $select: SELECT_FIELDS,
+    $top: "25",
+    $search: `"displayName:${query}" OR "mail:${query}" OR "employeeId:${query}"`,
+    $filter: "accountEnabled eq true and userType eq 'Member'",
+    $orderby: "displayName asc",
+  });
+
+  const res = await fetch(`https://graph.microsoft.com/v1.0/users?${params.toString()}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      ConsistencyLevel: "eventual",
+    },
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Graph API ${res.status}: ${body}`);
+  }
+
+  const json = (await res.json()) as { value: GraphUser[] };
+  return json.value;
+}
+
 export interface PushUserPayload {
   displayName?: string;
   department?: string | null;
@@ -178,7 +215,7 @@ export interface PushUserPayload {
  * Graph PATCH with an empty body is a no-op — caller must ensure at least one field.
  */
 export async function pushUserToEntra(msUserId: string, payload: PushUserPayload): Promise<void> {
-  const token = await getAppAccessToken();
+  const token = await getGraphToken();
 
   const body: Record<string, string | null> = {};
 

@@ -425,14 +425,6 @@ export type DarItemUncheckedUpdateManyWithoutDarMasterNestedInput = {
   deleteMany?: Prisma.DarItemScalarWhereInput | Prisma.DarItemScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type DarItemCreateWithoutDarMasterInput = {
   id?: string
   itemNo: number

@@ -1,37 +1,35 @@
-
-import { z } from "zod";
 import { requireRole } from "@/lib/auth";
-import { db } from "@/lib/db";
-import { NextResponse, type NextRequest } from "next/server";
-import { AppError } from "@/lib/errors";
-import type { ApiResponse } from "@/types/api";
+import { AnnouncementService } from "@/services/announcementService";
+import { createAnnouncementSchema } from "@/schemas/announcementSchema";
+import { sendSuccess } from "@/lib/apiResponse";
+import { handleApiError } from "@/lib/apiErrorHandler";
+import { sendAnnouncementEmail } from "@/services/email";
+import { logger } from "@/lib/logger";
+import { type NextRequest } from "next/server";
 
-const SCROLLING_EXPIRY_DAYS = 7;
+const announcementService = new AnnouncementService();
 
-const createAnnouncementSchema = z.object({
-  title: z.string().min(1, "กรุณาระบุหัวข้อ").max(255),
-  content: z.string().min(1, "กรุณาระบุเนื้อหา").max(5000),
-  sourceSystem: z.string().max(100).optional().default("QMS"),
-  displayType: z.enum(["LIST", "SCROLLING"]).default("LIST"),
-  pushToCompanyCenter: z.boolean().default(false),
-  startDate: z.string().datetime({ offset: true }).optional().nullable(),
-  endDate: z.string().datetime({ offset: true }).optional().nullable(),
-  spItemId: z.string().optional().nullable(),
-  spWebUrl: z.string().url().optional().nullable(),
-  spDownloadUrl: z.string().url().optional().nullable(),
-  fileName: z.string().max(255).optional().nullable(),
-  mimeType: z.string().max(100).optional().nullable(),
-  bgColor: z.string().max(20).optional().nullable(),
-  bgImageUrl: z.string().url().optional().nullable(),
-  bgImageSpId: z.string().optional().nullable(),
-  textColor: z.string().max(20).optional().nullable(),
-});
+export async function GET() {
+  try {
+    await requireRole("QMS", "IT", "MR");
+    const result = await announcementService.listAnnouncements();
+    return sendSuccess(result, "Announcements retrieved successfully");
+  } catch (error) {
+    return handleApiError(error);
+  }
+}
 
-export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse<{ id: string }>>> {
+export async function POST(req: NextRequest) {
   try {
     const session = await requireRole("QMS", "IT", "MR");
-
     const formData = await req.formData();
+
+    const emailGroupMailsRaw = formData.get("emailGroupMails");
+    const emailGroupMails: string[] = emailGroupMailsRaw
+      ? (JSON.parse(emailGroupMailsRaw as string) as string[]).filter(
+          (v): v is string => typeof v === "string" && v.includes("@")
+        )
+      : [];
 
     const rawData = {
       title: formData.get("title"),
@@ -52,44 +50,43 @@ export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse<{
       textColor: formData.get("textColor") || null,
     };
 
-    const parsed = createAnnouncementSchema.safeParse(rawData);
-    if (!parsed.success) {
-      const message = parsed.error.issues[0]?.message ?? "ข้อมูลไม่ถูกต้อง";
-      return NextResponse.json({ data: null, error: message }, { status: 400 });
-    }
+    const validatedData = createAnnouncementSchema.parse(rawData);
 
-    const {
-      title, content, sourceSystem, displayType, pushToCompanyCenter,
-      startDate, endDate, spItemId, spWebUrl, spDownloadUrl, fileName, mimeType,
-      bgColor, bgImageUrl, bgImageSpId, textColor,
-    } = parsed.data;
-
-    const parsedStartDate = startDate ? new Date(startDate) : null;
-    const parsedEndDate = endDate ? new Date(endDate) : null;
+    const parsedStartDate = validatedData.startDate ? new Date(validatedData.startDate) : null;
+    const parsedEndDate = validatedData.endDate ? new Date(validatedData.endDate) : null;
 
     let expiryDate: Date | null = parsedEndDate;
-    if (displayType === "SCROLLING" && !expiryDate) {
+    if (validatedData.displayType === "SCROLLING" && !expiryDate) {
       expiryDate = new Date();
-      expiryDate.setDate(expiryDate.getDate() + SCROLLING_EXPIRY_DAYS);
+      expiryDate.setDate(expiryDate.getDate() + 7); // SCROLLING_EXPIRY_DAYS = 7
     }
 
-    const row = await db.announcement.create({
-      data: {
-        title, content, sourceSystem, displayType, pushToCompanyCenter,
-        startDate: parsedStartDate, endDate: parsedEndDate, expiryDate,
-        spItemId, spWebUrl, spDownloadUrl, fileName, mimeType,
-        bgColor, bgImageUrl, bgImageSpId, textColor,
-        createdById: session.user.id,
+    const result = await announcementService.createAnnouncement(
+      {
+        ...validatedData,
+        startDate: parsedStartDate,
+        endDate: parsedEndDate,
+        expiryDate,
       },
-      select: { id: true },
-    });
+      session.user.id,
+      session.user.authUserId ?? null,
+      session.user.name ?? null,
+    );
 
-    return NextResponse.json({ data: { id: row.id }, error: null }, { status: 201 });
-  } catch (error) {
-    if (error instanceof AppError) {
-      return NextResponse.json({ data: null, error: error.message }, { status: error.statusCode });
+    logger.info("[announcements] debug", { emailGroupMails, hasToken: !!session.user.accessToken, createdByName: session.user.name, userId: session.user.id });
+    if (emailGroupMails.length) {
+      sendAnnouncementEmail({
+        groupEmails: emailGroupMails,
+        title: validatedData.title,
+        content: validatedData.content,
+        sourceSystem: validatedData.sourceSystem ?? "QMS",
+        senderAccessToken: session.user.accessToken,
+        announcementId: result.id,
+      }).catch((err: unknown) => logger.warn("[announcements] Email send failed", { err: err instanceof Error ? err.message : String(err) }));
     }
-    console.error("[POST /api/announcements]", error);
-    return NextResponse.json({ data: null, error: "Failed to create announcement" }, { status: 500 });
+
+    return sendSuccess(result, "Announcement created successfully", 201);
+  } catch (error) {
+    return handleApiError(error);
   }
 }

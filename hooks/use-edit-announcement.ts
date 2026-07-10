@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { AnnouncementRow } from "@/services/announcement";
+import type { AnnouncementRow } from "@/services/announcementService";
+import { getErrorMessage } from "@/lib/error-message";
 
 export type EditFormData = {
   title: string;
@@ -85,8 +86,8 @@ export function useEditAnnouncement(
       const res = await fetch(`/api/announcements/${item.id}`, {
         method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
       });
-      const json = (await res.json()) as { data: unknown; error: string | null };
-      onSaved(res.ok && !json.error, json.error ?? undefined);
+      const json = (await res.json()) as { data: unknown; error: unknown };
+      onSaved(res.ok && !json.error, json.error ? getErrorMessage(json.error) : undefined);
     } catch {
       onSaved(false);
     } finally {

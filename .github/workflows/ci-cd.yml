@@ -1,0 +1,171 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ndc-industrialco/qms-system
+
+jobs:
+  ci:
+    name: CI — Lint / Test / Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Validate & generate Prisma
+        run: |
+          npx prisma validate
+          npx prisma generate
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Check API patterns
+        run: npm run check:api
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        env:
+          DATABASE_URL: postgresql://dummy:dummy@localhost:5432/dummy
+          DIRECT_DATABASE_URL: postgresql://dummy:dummy@localhost:5432/dummy
+          NEXTAUTH_URL: http://localhost:3000
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET || 'dummy-auth-secret-for-ci-build-at-least-32-chars' }}
+        run: npm run build -- --no-lint
+
+  docker:
+    name: Build & Push Docker Image
+    needs: ci
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image_tag: ${{ steps.meta.outputs.version }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,format=short
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    name: CD — Deploy to On-Prem
+    runs-on: [self-hosted, Linux, X64]
+    needs: docker
+    environment: production
+    timeout-minutes: 15
+
+    steps:
+      - name: Login to GHCR
+        run: |
+          echo "${{ secrets.GHCR_PAT }}" | \
+            docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Pull & deploy
+        env:
+          IMAGE_TAG: ${{ needs.docker.outputs.image_tag }}
+        run: |
+            set -e
+            cd /opt/qms-system
+
+            export IMAGE_TAG=${IMAGE_TAG}
+
+            docker compose pull qms-system
+
+            # Run DB migrations before starting the app
+            echo "⏳ Running database migrations..."
+            docker compose run --rm --no-deps \
+              -e DATABASE_URL \
+              -e DIRECT_DATABASE_URL \
+              qms-system \
+              sh -c 'npx prisma migrate deploy' || true
+
+            docker compose up -d --remove-orphans qms-system
+
+            docker image prune -f
+
+            echo "✅ Deploy complete — $IMAGE_TAG"
+      - name: Health check
+        run: |
+          # The self-hosted runner runs on the same host as the Docker container.
+          # Using APP_URL (external hostname) fails due to NAT hairpinning — the server
+          # cannot reach its own external URL from localhost.
+          # Instead, use `docker exec` to call the health endpoint from inside the container,
+          # which bypasses all network routing entirely.
+
+          echo "⏳ Waiting for container to start..."
+          for i in $(seq 1 12); do
+            state=$(docker inspect --format='{{.State.Status}}' qms-system 2>/dev/null || echo "missing")
+            [ "$state" = "running" ] && echo "✅ Container is running" && break
+            echo "  Container state: $state — waiting 5s..."
+            sleep 5
+          done
+
+          echo "⏳ Polling health endpoint via docker exec..."
+          for i in $(seq 1 20); do
+            status=$(docker exec qms-system \
+              wget -qO- --server-response http://localhost:3000/api/health/ready 2>&1 \
+              | awk '/HTTP\//{print $2}' | tail -1 || echo "000")
+            if [ "$status" = "200" ]; then
+              echo "✅ Health check passed on attempt $i (status=$status)"
+              exit 0
+            fi
+            echo "Attempt $i: status=$status — waiting 15s..."
+            sleep 15
+          done
+
+          echo "❌ Health check failed after 5 minutes"
+          echo "--- Container status ---"
+          docker inspect --format='Status: {{.State.Status}} | Health: {{.State.Health.Status}}' qms-system 2>/dev/null || true
+          echo "--- Last 50 lines of container logs ---"
+          docker logs --tail 50 qms-system 2>&1 || true
+          exit 1

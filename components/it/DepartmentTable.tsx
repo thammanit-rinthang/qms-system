@@ -1,14 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { DepartmentRow } from "@/types/department";
 import { useToast } from "@/hooks/use-toast";
 import { useLocale } from "@/lib/locale-context";
 import Toast from "@/components/common/Toast";
 import ConfirmModal from "@/components/common/ConfirmModal";
+import { ActionPillButton } from "@/components/common/ActionButtons";
 import DepartmentModal from "@/components/it/DepartmentModal";
+import DepartmentMembersModal from "@/components/it/DepartmentMembersModal";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import PageHeader from "@/components/common/PageHeader";
+import Pagination from "@/components/common/Pagination";
+import { useUrlFilters } from "@/hooks/use-url-filters";
+import { Plus } from "lucide-react";
 
 type Props = { departments: DepartmentRow[] };
 
@@ -17,10 +25,21 @@ export default function DepartmentTable({ departments }: Props) {
   const { toast, showToast, hideToast } = useToast();
   const router = useRouter();
 
+  // ── URL-bound page ────────────────────────────────────────────────
+  const { params, setParam } = useUrlFilters({
+    keys: ["page"] as const,
+  });
+  const PAGE_SIZE = 20;
+  const currentPage = Math.max(1, parseInt(params.page || "1", 10));
+  const totalPages = Math.max(1, Math.ceil(departments.length / PAGE_SIZE));
+  const safePage = Math.min(currentPage, totalPages);
+  const paginated = departments.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+
   const [modalMode, setModalMode] = useState<"create" | "edit" | null>(null);
   const [selected, setSelected] = useState<DepartmentRow | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [confirmDept, setConfirmDept] = useState<DepartmentRow | null>(null);
+  const [viewingMembersDept, setViewingMembersDept] = useState<DepartmentRow | null>(null);
 
   const t = {
     title: locale === "th" ? "จัดการแผนก" : "Manage Departments",
@@ -109,98 +128,98 @@ export default function DepartmentTable({ departments }: Props) {
 
   return (
     <>
-      <div className="card-premium border border-base-300 rounded-xl shadow-sm px-5 py-4 mb-6 flex items-center justify-between gap-4">
-        <h1 className="text-xl md:text-2xl font-bold text-primary">{t.title}</h1>
-        <button className="btn btn-primary btn-sm" onClick={openCreate}>
-          <PlusIcon />
-          {t.addDept}
-        </button>
-      </div>
+      <PageHeader
+        title={t.title}
+        subtitle={t.description(departments.length)}
+        actions={
+          <Button onClick={openCreate} size="sm" className="gap-1.5">
+            <Plus className="h-4 w-4" />
+            {t.addDept}
+          </Button>
+        }
+      />
 
       {/* Desktop table */}
-      <div className="hidden md:block card-premium overflow-hidden border border-base-300 rounded-xl shadow-sm">
-        <table className="table w-full">
-          <thead>
-            <tr className="bg-base-200 text-xs text-gray-500 border-b border-base-200">
-              <th className="py-3.5 px-4 font-semibold">{t.colName}</th>
-              <th className="py-3.5 px-4 font-semibold">{t.colEmail}</th>
-              <th className="py-3.5 px-4 font-semibold">{t.colUsers}</th>
-              <th className="py-3.5 px-4 font-semibold">{t.colStatus}</th>
-              <th className="py-3.5 px-4 font-semibold">{t.colActions}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {departments.map((dept) => (
-              <tr key={dept.id} className="border-b border-base-200 text-sm hover:bg-base-200 transition-colors duration-100">
-                <td className="py-3.5 px-4">
-                  <Link
-                    href={`/it/departments/${dept.id}`}
-                    className="text-xs md:text-sm font-semibold text-neutral hover:text-primary transition-colors"
+      <div className="hidden md:block card-premium overflow-hidden border border-slate-100 rounded-xl shadow-sm">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-slate-100">
+              <TableHead>{t.colName}</TableHead>
+              <TableHead>{t.colEmail}</TableHead>
+              <TableHead>{t.colUsers}</TableHead>
+              <TableHead>{t.colStatus}</TableHead>
+              <TableHead>{t.colActions}</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {paginated.map((dept) => (
+              <TableRow key={dept.id} className="text-sm hover:bg-slate-100 transition-colors duration-100">
+                <TableCell>
+                  <button
+                    type="button"
+                    onClick={() => setViewingMembersDept(dept)}
+                    className="text-xs md:text-sm font-semibold text-neutral hover:text-primary transition-colors text-left font-sans"
                   >
                     {dept.name}
-                  </Link>
-                </td>
-                <td className="py-3 px-4 text-[11px] md:text-xs text-gray-500 font-mono">
+                  </button>
+                </TableCell>
+                <TableCell className="text-[11px] md:text-xs text-gray-500 font-mono">
                   {dept.emailGroup ? (
                     <span className="truncate max-w-45 block">{dept.emailGroup}</span>
                   ) : (
-                    <span className="text-base-300">—</span>
+                    <span className="text-slate-200">—</span>
                   )}
-                </td>
-                <td className="py-3.5 px-4">
-                  <Link
-                    href={`/it/departments/${dept.id}`}
-                    className="text-[11px] md:text-xs text-gray-500 hover:text-primary transition-colors"
+                </TableCell>
+                <TableCell>
+                  <button
+                    type="button"
+                    onClick={() => setViewingMembersDept(dept)}
+                    className="text-[11px] md:text-xs text-gray-500 hover:text-primary transition-colors text-left"
                   >
                     {t.users(dept._count.users)}
-                  </Link>
-                </td>
-                <td className="py-3.5 px-4">
+                  </button>
+                </TableCell>
+                <TableCell>
                   {dept.isActive ? (
-                    <span className="inline-block px-2.5 py-0.5 text-[11px] rounded-full font-bold bg-success/15 text-success">{t.active}</span>
+                    <Badge variant="default" className="bg-emerald-500 hover:bg-emerald-600">{t.active}</Badge>
                   ) : (
-                    <span className="inline-block px-2.5 py-0.5 text-[11px] rounded-full font-bold bg-base-200 text-neutral">{t.inactive}</span>
+                    <Badge variant="secondary">{t.inactive}</Badge>
                   )}
-                </td>
-                <td className="py-3.5 px-4">
+                </TableCell>
+                <TableCell>
                   <div className="flex items-center gap-2">
-                    <button
-                      className="btn btn-ghost btn-xs text-secondary"
+                    <ActionPillButton
+                      tone="edit"
+                      label={t.edit}
                       onClick={() => openEdit(dept)}
-                    >
-                      {t.edit}
-                    </button>
-                    <button
-                      className="btn btn-ghost btn-xs text-error"
+                    />
+                    <ActionPillButton
+                      tone="delete"
+                      label={t.delete}
                       onClick={() => requestDelete(dept)}
-                      disabled={deletingId === dept.id}
-                    >
-                      {deletingId === dept.id ? (
-                        <span className="loading loading-spinner loading-xs" />
-                      ) : (
-                        t.delete
-                      )}
-                    </button>
+                      loading={deletingId === dept.id}
+                    />
                   </div>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
 
       {/* Mobile cards */}
       <div className="md:hidden flex flex-col gap-3">
-        {departments.map((dept) => (
-          <div key={dept.id} className="card-premium p-4 border border-base-300 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+        {paginated.map((dept) => (
+          <div key={dept.id} className="card-premium p-4 border border-slate-100 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
             <div className="flex items-start justify-between gap-2 mb-2">
               <div>
-                <Link
-                  href={`/it/departments/${dept.id}`}
-                  className="text-xs md:text-sm font-semibold text-neutral hover:text-primary transition-colors"
+                <button
+                  type="button"
+                  onClick={() => setViewingMembersDept(dept)}
+                  className="text-xs md:text-sm font-semibold text-neutral hover:text-primary transition-colors text-left font-sans"
                 >
                   {dept.name}
-                </Link>
+                </button>
                 {dept.emailGroup && (
                   <p className="text-[11px] text-gray-500 font-mono truncate max-w-50">
                     {dept.emailGroup}
@@ -210,23 +229,30 @@ export default function DepartmentTable({ departments }: Props) {
               {dept.isActive ? (
                 <span className="inline-block px-2.5 py-0.5 text-[11px] rounded-full font-bold bg-success/15 text-success shrink-0">{t.active}</span>
               ) : (
-                <span className="inline-block px-2.5 py-0.5 text-[11px] rounded-full font-bold bg-base-200 text-neutral shrink-0">{t.inactive}</span>
+                <span className="inline-block px-2.5 py-0.5 text-[11px] rounded-full font-bold bg-slate-100 text-slate-500 shrink-0">{t.inactive}</span>
               )}
             </div>
-            <Link href={`/it/departments/${dept.id}`} className="text-[11px] md:text-xs text-gray-500 hover:text-primary transition-colors mb-3 block">
+            <button
+              type="button"
+              onClick={() => setViewingMembersDept(dept)}
+              className="text-[11px] md:text-xs text-gray-500 hover:text-primary transition-colors mb-3 block text-left font-sans"
+            >
               {t.usersLink(dept._count.users)}
-            </Link>
+            </button>
             <div className="flex gap-2">
-              <button className="btn btn-ghost btn-xs text-secondary flex-1" onClick={() => openEdit(dept)}>
-                {t.edit}
-              </button>
-              <button
-                className="btn btn-ghost btn-xs text-error flex-1"
+              <ActionPillButton
+                tone="edit"
+                label={t.edit}
+                className="flex-1 justify-center"
+                onClick={() => openEdit(dept)}
+              />
+              <ActionPillButton
+                tone="delete"
+                label={t.delete}
+                className="flex-1 justify-center"
                 onClick={() => requestDelete(dept)}
-                disabled={deletingId === dept.id}
-              >
-                {deletingId === dept.id ? <span className="loading loading-spinner loading-xs" /> : t.delete}
-              </button>
+                loading={deletingId === dept.id}
+              />
             </div>
           </div>
         ))}
@@ -242,6 +268,22 @@ export default function DepartmentTable({ departments }: Props) {
         />
       )}
 
+      {/* Department members list modal */}
+      <DepartmentMembersModal
+        departmentId={viewingMembersDept?.id ?? null}
+        open={!!viewingMembersDept}
+        onClose={() => setViewingMembersDept(null)}
+      />
+
+      {/* Pagination */}
+      <Pagination
+        page={safePage}
+        totalPages={totalPages}
+        total={departments.length}
+        countLabel={locale === "th" ? "แผนก" : "departments"}
+        onPageChange={(p) => setParam("page", String(p))}
+      />
+
       {/* Confirm delete modal */}
       {confirmDept && (
         <ConfirmModal
@@ -256,15 +298,14 @@ export default function DepartmentTable({ departments }: Props) {
         />
       )}
 
-      {toast && <Toast type={toast.type} message={toast.message} onClose={hideToast} />}
+      {toast && (
+        <Toast
+          type={toast.type}
+          message={toast.message}
+          onClose={hideToast}
+          duration={toast.type === "error" ? 0 : 4000}
+        />
+      )}
     </>
-  );
-}
-
-function PlusIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-    </svg>
   );
 }

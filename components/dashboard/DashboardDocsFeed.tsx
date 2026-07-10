@@ -1,23 +1,27 @@
 "use client";
 
 import type { PublicDocument } from "@/generated/prisma/client";
+import { useT } from "@/lib/i18n";
+import { useLocale } from "@/lib/locale-context";
 
-type Props = { docs: PublicDocument[]; isTh: boolean };
+type Props = { docs: PublicDocument[] };
 
-export default function DashboardDocsFeed({ docs, isTh }: Props) {
+export default function DashboardDocsFeed({ docs }: Props) {
+  const t = useT();
+  const locale = useLocale();
+
   if (docs.length === 0) {
     return (
       <div className="px-5 py-10 text-center">
-        <p className="text-sm text-gray-400">{isTh ? "ไม่มีเอกสารอัปเดตล่าสุด" : "No recent document updates"}</p>
+        <p className="text-sm text-gray-400">{t("dashboard.recentDocuments.empty")}</p>
       </div>
     );
   }
 
   return (
-    <div className="divide-y divide-base-200">
+    <div className="divide-y divide-slate-100">
       {docs.map((doc) => (
-        <div key={doc.id} className="flex items-center gap-3 px-5 py-3.5 group hover:bg-base-200/50 transition-colors">
-          {/* File icon */}
+        <div key={doc.id} className="flex items-center gap-3 px-5 py-3.5 group hover:bg-slate-100/50 transition-colors">
           <div className="w-8 h-8 rounded-lg bg-error/10 text-error flex items-center justify-center shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
@@ -39,10 +43,10 @@ export default function DashboardDocsFeed({ docs, isTh }: Props) {
 
           <div className="text-right shrink-0 flex flex-col items-end gap-1">
             <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-success/15 text-success">
-              {isTh ? "ใหม่" : "NEW"}
+              {t("dashboard.recentDocuments.badgeNew")}
             </span>
             <span className="text-[11px] text-gray-400">
-              {new Date(doc.publishedDate).toLocaleDateString(isTh ? "th-TH" : "en-US", { day: "2-digit", month: "short" })}
+              {new Date(doc.publishedDate).toLocaleDateString(locale === "th" ? "th-TH" : "en-US", { day: "2-digit", month: "short" })}
             </span>
           </div>
         </div>

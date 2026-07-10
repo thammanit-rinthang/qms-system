@@ -39,7 +39,13 @@ export type DarMasterMinAggregateOutputType = {
   spWebUrl: string | null
   status: $Enums.DarStatus | null
   requesterId: string | null
+  requesterAuthUserId: string | null
+  requesterName: string | null
+  requesterEmployeeId: string | null
+  requesterEmail: string | null
+  requesterDepartmentName: string | null
   departmentId: string | null
+  authDepartmentId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,7 +65,13 @@ export type DarMasterMaxAggregateOutputType = {
   spWebUrl: string | null
   status: $Enums.DarStatus | null
   requesterId: string | null
+  requesterAuthUserId: string | null
+  requesterName: string | null
+  requesterEmployeeId: string | null
+  requesterEmail: string | null
+  requesterDepartmentName: string | null
   departmentId: string | null
+  authDepartmentId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -79,7 +91,13 @@ export type DarMasterCountAggregateOutputType = {
   spWebUrl: number
   status: number
   requesterId: number
+  requesterAuthUserId: number
+  requesterName: number
+  requesterEmployeeId: number
+  requesterEmail: number
+  requesterDepartmentName: number
   departmentId: number
+  authDepartmentId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -101,7 +119,13 @@ export type DarMasterMinAggregateInputType = {
   spWebUrl?: true
   status?: true
   requesterId?: true
+  requesterAuthUserId?: true
+  requesterName?: true
+  requesterEmployeeId?: true
+  requesterEmail?: true
+  requesterDepartmentName?: true
   departmentId?: true
+  authDepartmentId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -121,7 +145,13 @@ export type DarMasterMaxAggregateInputType = {
   spWebUrl?: true
   status?: true
   requesterId?: true
+  requesterAuthUserId?: true
+  requesterName?: true
+  requesterEmployeeId?: true
+  requesterEmail?: true
+  requesterDepartmentName?: true
   departmentId?: true
+  authDepartmentId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -141,7 +171,13 @@ export type DarMasterCountAggregateInputType = {
   spWebUrl?: true
   status?: true
   requesterId?: true
+  requesterAuthUserId?: true
+  requesterName?: true
+  requesterEmployeeId?: true
+  requesterEmail?: true
+  requesterDepartmentName?: true
   departmentId?: true
+  authDepartmentId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -234,7 +270,13 @@ export type DarMasterGroupByOutputType = {
   spWebUrl: string | null
   status: $Enums.DarStatus
   requesterId: string
+  requesterAuthUserId: string | null
+  requesterName: string | null
+  requesterEmployeeId: string | null
+  requesterEmail: string | null
+  requesterDepartmentName: string | null
   departmentId: string
+  authDepartmentId: string | null
   createdAt: Date
   updatedAt: Date
   _count: DarMasterCountAggregateOutputType | null
@@ -275,15 +317,19 @@ export type DarMasterWhereInput = {
   spWebUrl?: Prisma.StringNullableFilter<"DarMaster"> | string | null
   status?: Prisma.EnumDarStatusFilter<"DarMaster"> | $Enums.DarStatus
   requesterId?: Prisma.StringFilter<"DarMaster"> | string
+  requesterAuthUserId?: Prisma.StringNullableFilter<"DarMaster"> | string | null
+  requesterName?: Prisma.StringNullableFilter<"DarMaster"> | string | null
+  requesterEmployeeId?: Prisma.StringNullableFilter<"DarMaster"> | string | null
+  requesterEmail?: Prisma.StringNullableFilter<"DarMaster"> | string | null
+  requesterDepartmentName?: Prisma.StringNullableFilter<"DarMaster"> | string | null
   departmentId?: Prisma.StringFilter<"DarMaster"> | string
+  authDepartmentId?: Prisma.StringNullableFilter<"DarMaster"> | string | null
   createdAt?: Prisma.DateTimeFilter<"DarMaster"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DarMaster"> | Date | string
-  requester?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  department?: Prisma.XOR<Prisma.DepartmentScalarRelationFilter, Prisma.DepartmentWhereInput>
-  items?: Prisma.DarItemListRelationFilter
-  distributions?: Prisma.DarDistributionListRelationFilter
-  attachments?: Prisma.DarAttachmentListRelationFilter
   approvals?: Prisma.DarApprovalListRelationFilter
+  attachments?: Prisma.DarAttachmentListRelationFilter
+  distributions?: Prisma.DarDistributionListRelationFilter
+  items?: Prisma.DarItemListRelationFilter
   qmsProcessing?: Prisma.XOR<Prisma.QmsProcessingNullableScalarRelationFilter, Prisma.QmsProcessingWhereInput> | null
 }
 
@@ -302,15 +348,19 @@ export type DarMasterOrderByWithRelationInput = {
   spWebUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   requesterId?: Prisma.SortOrder
+  requesterAuthUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  requesterName?: Prisma.SortOrderInput | Prisma.SortOrder
+  requesterEmployeeId?: Prisma.SortOrderInput | Prisma.SortOrder
+  requesterEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  requesterDepartmentName?: Prisma.SortOrderInput | Prisma.SortOrder
   departmentId?: Prisma.SortOrder
+  authDepartmentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  requester?: Prisma.UserOrderByWithRelationInput
-  department?: Prisma.DepartmentOrderByWithRelationInput
-  items?: Prisma.DarItemOrderByRelationAggregateInput
-  distributions?: Prisma.DarDistributionOrderByRelationAggregateInput
-  attachments?: Prisma.DarAttachmentOrderByRelationAggregateInput
   approvals?: Prisma.DarApprovalOrderByRelationAggregateInput
+  attachments?: Prisma.DarAttachmentOrderByRelationAggregateInput
+  distributions?: Prisma.DarDistributionOrderByRelationAggregateInput
+  items?: Prisma.DarItemOrderByRelationAggregateInput
   qmsProcessing?: Prisma.QmsProcessingOrderByWithRelationInput
 }
 
@@ -332,15 +382,19 @@ export type DarMasterWhereUniqueInput = Prisma.AtLeast<{
   spWebUrl?: Prisma.StringNullableFilter<"DarMaster"> | string | null
   status?: Prisma.EnumDarStatusFilter<"DarMaster"> | $Enums.DarStatus
   requesterId?: Prisma.StringFilter<"DarMaster"> | string
+  requesterAuthUserId?: Prisma.StringNullableFilter<"DarMaster"> | string | null
+  requesterName?: Prisma.StringNullableFilter<"DarMaster"> | string | null
+  requesterEmployeeId?: Prisma.StringNullableFilter<"DarMaster"> | string | null
+  requesterEmail?: Prisma.StringNullableFilter<"DarMaster"> | string | null
+  requesterDepartmentName?: Prisma.StringNullableFilter<"DarMaster"> | string | null
   departmentId?: Prisma.StringFilter<"DarMaster"> | string
+  authDepartmentId?: Prisma.StringNullableFilter<"DarMaster"> | string | null
   createdAt?: Prisma.DateTimeFilter<"DarMaster"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DarMaster"> | Date | string
-  requester?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  department?: Prisma.XOR<Prisma.DepartmentScalarRelationFilter, Prisma.DepartmentWhereInput>
-  items?: Prisma.DarItemListRelationFilter
-  distributions?: Prisma.DarDistributionListRelationFilter
-  attachments?: Prisma.DarAttachmentListRelationFilter
   approvals?: Prisma.DarApprovalListRelationFilter
+  attachments?: Prisma.DarAttachmentListRelationFilter
+  distributions?: Prisma.DarDistributionListRelationFilter
+  items?: Prisma.DarItemListRelationFilter
   qmsProcessing?: Prisma.XOR<Prisma.QmsProcessingNullableScalarRelationFilter, Prisma.QmsProcessingWhereInput> | null
 }, "id" | "darNo">
 
@@ -359,7 +413,13 @@ export type DarMasterOrderByWithAggregationInput = {
   spWebUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   requesterId?: Prisma.SortOrder
+  requesterAuthUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  requesterName?: Prisma.SortOrderInput | Prisma.SortOrder
+  requesterEmployeeId?: Prisma.SortOrderInput | Prisma.SortOrder
+  requesterEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  requesterDepartmentName?: Prisma.SortOrderInput | Prisma.SortOrder
   departmentId?: Prisma.SortOrder
+  authDepartmentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.DarMasterCountOrderByAggregateInput
@@ -385,7 +445,13 @@ export type DarMasterScalarWhereWithAggregatesInput = {
   spWebUrl?: Prisma.StringNullableWithAggregatesFilter<"DarMaster"> | string | null
   status?: Prisma.EnumDarStatusWithAggregatesFilter<"DarMaster"> | $Enums.DarStatus
   requesterId?: Prisma.StringWithAggregatesFilter<"DarMaster"> | string
+  requesterAuthUserId?: Prisma.StringNullableWithAggregatesFilter<"DarMaster"> | string | null
+  requesterName?: Prisma.StringNullableWithAggregatesFilter<"DarMaster"> | string | null
+  requesterEmployeeId?: Prisma.StringNullableWithAggregatesFilter<"DarMaster"> | string | null
+  requesterEmail?: Prisma.StringNullableWithAggregatesFilter<"DarMaster"> | string | null
+  requesterDepartmentName?: Prisma.StringNullableWithAggregatesFilter<"DarMaster"> | string | null
   departmentId?: Prisma.StringWithAggregatesFilter<"DarMaster"> | string
+  authDepartmentId?: Prisma.StringNullableWithAggregatesFilter<"DarMaster"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"DarMaster"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"DarMaster"> | Date | string
 }
@@ -404,14 +470,20 @@ export type DarMasterCreateInput = {
   spItemId?: string | null
   spWebUrl?: string | null
   status?: $Enums.DarStatus
+  requesterId: string
+  requesterAuthUserId?: string | null
+  requesterName?: string | null
+  requesterEmployeeId?: string | null
+  requesterEmail?: string | null
+  requesterDepartmentName?: string | null
+  departmentId: string
+  authDepartmentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  requester: Prisma.UserCreateNestedOneWithoutDarMastersInput
-  department: Prisma.DepartmentCreateNestedOneWithoutDarMastersInput
-  items?: Prisma.DarItemCreateNestedManyWithoutDarMasterInput
-  distributions?: Prisma.DarDistributionCreateNestedManyWithoutDarMasterInput
-  attachments?: Prisma.DarAttachmentCreateNestedManyWithoutDarMasterInput
   approvals?: Prisma.DarApprovalCreateNestedManyWithoutDarMasterInput
+  attachments?: Prisma.DarAttachmentCreateNestedManyWithoutDarMasterInput
+  distributions?: Prisma.DarDistributionCreateNestedManyWithoutDarMasterInput
+  items?: Prisma.DarItemCreateNestedManyWithoutDarMasterInput
   qmsProcessing?: Prisma.QmsProcessingCreateNestedOneWithoutDarMasterInput
 }
 
@@ -430,13 +502,19 @@ export type DarMasterUncheckedCreateInput = {
   spWebUrl?: string | null
   status?: $Enums.DarStatus
   requesterId: string
+  requesterAuthUserId?: string | null
+  requesterName?: string | null
+  requesterEmployeeId?: string | null
+  requesterEmail?: string | null
+  requesterDepartmentName?: string | null
   departmentId: string
+  authDepartmentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  items?: Prisma.DarItemUncheckedCreateNestedManyWithoutDarMasterInput
-  distributions?: Prisma.DarDistributionUncheckedCreateNestedManyWithoutDarMasterInput
-  attachments?: Prisma.DarAttachmentUncheckedCreateNestedManyWithoutDarMasterInput
   approvals?: Prisma.DarApprovalUncheckedCreateNestedManyWithoutDarMasterInput
+  attachments?: Prisma.DarAttachmentUncheckedCreateNestedManyWithoutDarMasterInput
+  distributions?: Prisma.DarDistributionUncheckedCreateNestedManyWithoutDarMasterInput
+  items?: Prisma.DarItemUncheckedCreateNestedManyWithoutDarMasterInput
   qmsProcessing?: Prisma.QmsProcessingUncheckedCreateNestedOneWithoutDarMasterInput
 }
 
@@ -454,14 +532,20 @@ export type DarMasterUpdateInput = {
   spItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
+  requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterDepartmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  requester?: Prisma.UserUpdateOneRequiredWithoutDarMastersNestedInput
-  department?: Prisma.DepartmentUpdateOneRequiredWithoutDarMastersNestedInput
-  items?: Prisma.DarItemUpdateManyWithoutDarMasterNestedInput
-  distributions?: Prisma.DarDistributionUpdateManyWithoutDarMasterNestedInput
-  attachments?: Prisma.DarAttachmentUpdateManyWithoutDarMasterNestedInput
   approvals?: Prisma.DarApprovalUpdateManyWithoutDarMasterNestedInput
+  attachments?: Prisma.DarAttachmentUpdateManyWithoutDarMasterNestedInput
+  distributions?: Prisma.DarDistributionUpdateManyWithoutDarMasterNestedInput
+  items?: Prisma.DarItemUpdateManyWithoutDarMasterNestedInput
   qmsProcessing?: Prisma.QmsProcessingUpdateOneWithoutDarMasterNestedInput
 }
 
@@ -480,13 +564,19 @@ export type DarMasterUncheckedUpdateInput = {
   spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterDepartmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  items?: Prisma.DarItemUncheckedUpdateManyWithoutDarMasterNestedInput
-  distributions?: Prisma.DarDistributionUncheckedUpdateManyWithoutDarMasterNestedInput
-  attachments?: Prisma.DarAttachmentUncheckedUpdateManyWithoutDarMasterNestedInput
   approvals?: Prisma.DarApprovalUncheckedUpdateManyWithoutDarMasterNestedInput
+  attachments?: Prisma.DarAttachmentUncheckedUpdateManyWithoutDarMasterNestedInput
+  distributions?: Prisma.DarDistributionUncheckedUpdateManyWithoutDarMasterNestedInput
+  items?: Prisma.DarItemUncheckedUpdateManyWithoutDarMasterNestedInput
   qmsProcessing?: Prisma.QmsProcessingUncheckedUpdateOneWithoutDarMasterNestedInput
 }
 
@@ -505,7 +595,13 @@ export type DarMasterCreateManyInput = {
   spWebUrl?: string | null
   status?: $Enums.DarStatus
   requesterId: string
+  requesterAuthUserId?: string | null
+  requesterName?: string | null
+  requesterEmployeeId?: string | null
+  requesterEmail?: string | null
+  requesterDepartmentName?: string | null
   departmentId: string
+  authDepartmentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -524,6 +620,14 @@ export type DarMasterUpdateManyMutationInput = {
   spItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
+  requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterDepartmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -543,19 +647,15 @@ export type DarMasterUncheckedUpdateManyInput = {
   spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterDepartmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type DarMasterListRelationFilter = {
-  every?: Prisma.DarMasterWhereInput
-  some?: Prisma.DarMasterWhereInput
-  none?: Prisma.DarMasterWhereInput
-}
-
-export type DarMasterOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
 }
 
 export type DarMasterCountOrderByAggregateInput = {
@@ -573,7 +673,13 @@ export type DarMasterCountOrderByAggregateInput = {
   spWebUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
   requesterId?: Prisma.SortOrder
+  requesterAuthUserId?: Prisma.SortOrder
+  requesterName?: Prisma.SortOrder
+  requesterEmployeeId?: Prisma.SortOrder
+  requesterEmail?: Prisma.SortOrder
+  requesterDepartmentName?: Prisma.SortOrder
   departmentId?: Prisma.SortOrder
+  authDepartmentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -593,7 +699,13 @@ export type DarMasterMaxOrderByAggregateInput = {
   spWebUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
   requesterId?: Prisma.SortOrder
+  requesterAuthUserId?: Prisma.SortOrder
+  requesterName?: Prisma.SortOrder
+  requesterEmployeeId?: Prisma.SortOrder
+  requesterEmail?: Prisma.SortOrder
+  requesterDepartmentName?: Prisma.SortOrder
   departmentId?: Prisma.SortOrder
+  authDepartmentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -613,7 +725,13 @@ export type DarMasterMinOrderByAggregateInput = {
   spWebUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
   requesterId?: Prisma.SortOrder
+  requesterAuthUserId?: Prisma.SortOrder
+  requesterName?: Prisma.SortOrder
+  requesterEmployeeId?: Prisma.SortOrder
+  requesterEmail?: Prisma.SortOrder
+  requesterDepartmentName?: Prisma.SortOrder
   departmentId?: Prisma.SortOrder
+  authDepartmentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -621,90 +739,6 @@ export type DarMasterMinOrderByAggregateInput = {
 export type DarMasterScalarRelationFilter = {
   is?: Prisma.DarMasterWhereInput
   isNot?: Prisma.DarMasterWhereInput
-}
-
-export type DarMasterCreateNestedManyWithoutDepartmentInput = {
-  create?: Prisma.XOR<Prisma.DarMasterCreateWithoutDepartmentInput, Prisma.DarMasterUncheckedCreateWithoutDepartmentInput> | Prisma.DarMasterCreateWithoutDepartmentInput[] | Prisma.DarMasterUncheckedCreateWithoutDepartmentInput[]
-  connectOrCreate?: Prisma.DarMasterCreateOrConnectWithoutDepartmentInput | Prisma.DarMasterCreateOrConnectWithoutDepartmentInput[]
-  createMany?: Prisma.DarMasterCreateManyDepartmentInputEnvelope
-  connect?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-}
-
-export type DarMasterUncheckedCreateNestedManyWithoutDepartmentInput = {
-  create?: Prisma.XOR<Prisma.DarMasterCreateWithoutDepartmentInput, Prisma.DarMasterUncheckedCreateWithoutDepartmentInput> | Prisma.DarMasterCreateWithoutDepartmentInput[] | Prisma.DarMasterUncheckedCreateWithoutDepartmentInput[]
-  connectOrCreate?: Prisma.DarMasterCreateOrConnectWithoutDepartmentInput | Prisma.DarMasterCreateOrConnectWithoutDepartmentInput[]
-  createMany?: Prisma.DarMasterCreateManyDepartmentInputEnvelope
-  connect?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-}
-
-export type DarMasterUpdateManyWithoutDepartmentNestedInput = {
-  create?: Prisma.XOR<Prisma.DarMasterCreateWithoutDepartmentInput, Prisma.DarMasterUncheckedCreateWithoutDepartmentInput> | Prisma.DarMasterCreateWithoutDepartmentInput[] | Prisma.DarMasterUncheckedCreateWithoutDepartmentInput[]
-  connectOrCreate?: Prisma.DarMasterCreateOrConnectWithoutDepartmentInput | Prisma.DarMasterCreateOrConnectWithoutDepartmentInput[]
-  upsert?: Prisma.DarMasterUpsertWithWhereUniqueWithoutDepartmentInput | Prisma.DarMasterUpsertWithWhereUniqueWithoutDepartmentInput[]
-  createMany?: Prisma.DarMasterCreateManyDepartmentInputEnvelope
-  set?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  disconnect?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  delete?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  connect?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  update?: Prisma.DarMasterUpdateWithWhereUniqueWithoutDepartmentInput | Prisma.DarMasterUpdateWithWhereUniqueWithoutDepartmentInput[]
-  updateMany?: Prisma.DarMasterUpdateManyWithWhereWithoutDepartmentInput | Prisma.DarMasterUpdateManyWithWhereWithoutDepartmentInput[]
-  deleteMany?: Prisma.DarMasterScalarWhereInput | Prisma.DarMasterScalarWhereInput[]
-}
-
-export type DarMasterUncheckedUpdateManyWithoutDepartmentNestedInput = {
-  create?: Prisma.XOR<Prisma.DarMasterCreateWithoutDepartmentInput, Prisma.DarMasterUncheckedCreateWithoutDepartmentInput> | Prisma.DarMasterCreateWithoutDepartmentInput[] | Prisma.DarMasterUncheckedCreateWithoutDepartmentInput[]
-  connectOrCreate?: Prisma.DarMasterCreateOrConnectWithoutDepartmentInput | Prisma.DarMasterCreateOrConnectWithoutDepartmentInput[]
-  upsert?: Prisma.DarMasterUpsertWithWhereUniqueWithoutDepartmentInput | Prisma.DarMasterUpsertWithWhereUniqueWithoutDepartmentInput[]
-  createMany?: Prisma.DarMasterCreateManyDepartmentInputEnvelope
-  set?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  disconnect?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  delete?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  connect?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  update?: Prisma.DarMasterUpdateWithWhereUniqueWithoutDepartmentInput | Prisma.DarMasterUpdateWithWhereUniqueWithoutDepartmentInput[]
-  updateMany?: Prisma.DarMasterUpdateManyWithWhereWithoutDepartmentInput | Prisma.DarMasterUpdateManyWithWhereWithoutDepartmentInput[]
-  deleteMany?: Prisma.DarMasterScalarWhereInput | Prisma.DarMasterScalarWhereInput[]
-}
-
-export type DarMasterCreateNestedManyWithoutRequesterInput = {
-  create?: Prisma.XOR<Prisma.DarMasterCreateWithoutRequesterInput, Prisma.DarMasterUncheckedCreateWithoutRequesterInput> | Prisma.DarMasterCreateWithoutRequesterInput[] | Prisma.DarMasterUncheckedCreateWithoutRequesterInput[]
-  connectOrCreate?: Prisma.DarMasterCreateOrConnectWithoutRequesterInput | Prisma.DarMasterCreateOrConnectWithoutRequesterInput[]
-  createMany?: Prisma.DarMasterCreateManyRequesterInputEnvelope
-  connect?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-}
-
-export type DarMasterUncheckedCreateNestedManyWithoutRequesterInput = {
-  create?: Prisma.XOR<Prisma.DarMasterCreateWithoutRequesterInput, Prisma.DarMasterUncheckedCreateWithoutRequesterInput> | Prisma.DarMasterCreateWithoutRequesterInput[] | Prisma.DarMasterUncheckedCreateWithoutRequesterInput[]
-  connectOrCreate?: Prisma.DarMasterCreateOrConnectWithoutRequesterInput | Prisma.DarMasterCreateOrConnectWithoutRequesterInput[]
-  createMany?: Prisma.DarMasterCreateManyRequesterInputEnvelope
-  connect?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-}
-
-export type DarMasterUpdateManyWithoutRequesterNestedInput = {
-  create?: Prisma.XOR<Prisma.DarMasterCreateWithoutRequesterInput, Prisma.DarMasterUncheckedCreateWithoutRequesterInput> | Prisma.DarMasterCreateWithoutRequesterInput[] | Prisma.DarMasterUncheckedCreateWithoutRequesterInput[]
-  connectOrCreate?: Prisma.DarMasterCreateOrConnectWithoutRequesterInput | Prisma.DarMasterCreateOrConnectWithoutRequesterInput[]
-  upsert?: Prisma.DarMasterUpsertWithWhereUniqueWithoutRequesterInput | Prisma.DarMasterUpsertWithWhereUniqueWithoutRequesterInput[]
-  createMany?: Prisma.DarMasterCreateManyRequesterInputEnvelope
-  set?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  disconnect?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  delete?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  connect?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  update?: Prisma.DarMasterUpdateWithWhereUniqueWithoutRequesterInput | Prisma.DarMasterUpdateWithWhereUniqueWithoutRequesterInput[]
-  updateMany?: Prisma.DarMasterUpdateManyWithWhereWithoutRequesterInput | Prisma.DarMasterUpdateManyWithWhereWithoutRequesterInput[]
-  deleteMany?: Prisma.DarMasterScalarWhereInput | Prisma.DarMasterScalarWhereInput[]
-}
-
-export type DarMasterUncheckedUpdateManyWithoutRequesterNestedInput = {
-  create?: Prisma.XOR<Prisma.DarMasterCreateWithoutRequesterInput, Prisma.DarMasterUncheckedCreateWithoutRequesterInput> | Prisma.DarMasterCreateWithoutRequesterInput[] | Prisma.DarMasterUncheckedCreateWithoutRequesterInput[]
-  connectOrCreate?: Prisma.DarMasterCreateOrConnectWithoutRequesterInput | Prisma.DarMasterCreateOrConnectWithoutRequesterInput[]
-  upsert?: Prisma.DarMasterUpsertWithWhereUniqueWithoutRequesterInput | Prisma.DarMasterUpsertWithWhereUniqueWithoutRequesterInput[]
-  createMany?: Prisma.DarMasterCreateManyRequesterInputEnvelope
-  set?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  disconnect?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  delete?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  connect?: Prisma.DarMasterWhereUniqueInput | Prisma.DarMasterWhereUniqueInput[]
-  update?: Prisma.DarMasterUpdateWithWhereUniqueWithoutRequesterInput | Prisma.DarMasterUpdateWithWhereUniqueWithoutRequesterInput[]
-  updateMany?: Prisma.DarMasterUpdateManyWithWhereWithoutRequesterInput | Prisma.DarMasterUpdateManyWithWhereWithoutRequesterInput[]
-  deleteMany?: Prisma.DarMasterScalarWhereInput | Prisma.DarMasterScalarWhereInput[]
 }
 
 export type EnumDarStatusFieldUpdateOperationsInput = {
@@ -781,177 +815,6 @@ export type DarMasterUpdateOneRequiredWithoutQmsProcessingNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DarMasterUpdateToOneWithWhereWithoutQmsProcessingInput, Prisma.DarMasterUpdateWithoutQmsProcessingInput>, Prisma.DarMasterUncheckedUpdateWithoutQmsProcessingInput>
 }
 
-export type DarMasterCreateWithoutDepartmentInput = {
-  id?: string
-  darNo?: string | null
-  requestDate?: Date | string
-  objective: string
-  docType: string
-  docTypeOther?: string | null
-  reason: string
-  spFolderId?: string | null
-  spFolderPath?: string | null
-  spDriveId?: string | null
-  spItemId?: string | null
-  spWebUrl?: string | null
-  status?: $Enums.DarStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  requester: Prisma.UserCreateNestedOneWithoutDarMastersInput
-  items?: Prisma.DarItemCreateNestedManyWithoutDarMasterInput
-  distributions?: Prisma.DarDistributionCreateNestedManyWithoutDarMasterInput
-  attachments?: Prisma.DarAttachmentCreateNestedManyWithoutDarMasterInput
-  approvals?: Prisma.DarApprovalCreateNestedManyWithoutDarMasterInput
-  qmsProcessing?: Prisma.QmsProcessingCreateNestedOneWithoutDarMasterInput
-}
-
-export type DarMasterUncheckedCreateWithoutDepartmentInput = {
-  id?: string
-  darNo?: string | null
-  requestDate?: Date | string
-  objective: string
-  docType: string
-  docTypeOther?: string | null
-  reason: string
-  spFolderId?: string | null
-  spFolderPath?: string | null
-  spDriveId?: string | null
-  spItemId?: string | null
-  spWebUrl?: string | null
-  status?: $Enums.DarStatus
-  requesterId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  items?: Prisma.DarItemUncheckedCreateNestedManyWithoutDarMasterInput
-  distributions?: Prisma.DarDistributionUncheckedCreateNestedManyWithoutDarMasterInput
-  attachments?: Prisma.DarAttachmentUncheckedCreateNestedManyWithoutDarMasterInput
-  approvals?: Prisma.DarApprovalUncheckedCreateNestedManyWithoutDarMasterInput
-  qmsProcessing?: Prisma.QmsProcessingUncheckedCreateNestedOneWithoutDarMasterInput
-}
-
-export type DarMasterCreateOrConnectWithoutDepartmentInput = {
-  where: Prisma.DarMasterWhereUniqueInput
-  create: Prisma.XOR<Prisma.DarMasterCreateWithoutDepartmentInput, Prisma.DarMasterUncheckedCreateWithoutDepartmentInput>
-}
-
-export type DarMasterCreateManyDepartmentInputEnvelope = {
-  data: Prisma.DarMasterCreateManyDepartmentInput | Prisma.DarMasterCreateManyDepartmentInput[]
-  skipDuplicates?: boolean
-}
-
-export type DarMasterUpsertWithWhereUniqueWithoutDepartmentInput = {
-  where: Prisma.DarMasterWhereUniqueInput
-  update: Prisma.XOR<Prisma.DarMasterUpdateWithoutDepartmentInput, Prisma.DarMasterUncheckedUpdateWithoutDepartmentInput>
-  create: Prisma.XOR<Prisma.DarMasterCreateWithoutDepartmentInput, Prisma.DarMasterUncheckedCreateWithoutDepartmentInput>
-}
-
-export type DarMasterUpdateWithWhereUniqueWithoutDepartmentInput = {
-  where: Prisma.DarMasterWhereUniqueInput
-  data: Prisma.XOR<Prisma.DarMasterUpdateWithoutDepartmentInput, Prisma.DarMasterUncheckedUpdateWithoutDepartmentInput>
-}
-
-export type DarMasterUpdateManyWithWhereWithoutDepartmentInput = {
-  where: Prisma.DarMasterScalarWhereInput
-  data: Prisma.XOR<Prisma.DarMasterUpdateManyMutationInput, Prisma.DarMasterUncheckedUpdateManyWithoutDepartmentInput>
-}
-
-export type DarMasterScalarWhereInput = {
-  AND?: Prisma.DarMasterScalarWhereInput | Prisma.DarMasterScalarWhereInput[]
-  OR?: Prisma.DarMasterScalarWhereInput[]
-  NOT?: Prisma.DarMasterScalarWhereInput | Prisma.DarMasterScalarWhereInput[]
-  id?: Prisma.StringFilter<"DarMaster"> | string
-  darNo?: Prisma.StringNullableFilter<"DarMaster"> | string | null
-  requestDate?: Prisma.DateTimeFilter<"DarMaster"> | Date | string
-  objective?: Prisma.StringFilter<"DarMaster"> | string
-  docType?: Prisma.StringFilter<"DarMaster"> | string
-  docTypeOther?: Prisma.StringNullableFilter<"DarMaster"> | string | null
-  reason?: Prisma.StringFilter<"DarMaster"> | string
-  spFolderId?: Prisma.StringNullableFilter<"DarMaster"> | string | null
-  spFolderPath?: Prisma.StringNullableFilter<"DarMaster"> | string | null
-  spDriveId?: Prisma.StringNullableFilter<"DarMaster"> | string | null
-  spItemId?: Prisma.StringNullableFilter<"DarMaster"> | string | null
-  spWebUrl?: Prisma.StringNullableFilter<"DarMaster"> | string | null
-  status?: Prisma.EnumDarStatusFilter<"DarMaster"> | $Enums.DarStatus
-  requesterId?: Prisma.StringFilter<"DarMaster"> | string
-  departmentId?: Prisma.StringFilter<"DarMaster"> | string
-  createdAt?: Prisma.DateTimeFilter<"DarMaster"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"DarMaster"> | Date | string
-}
-
-export type DarMasterCreateWithoutRequesterInput = {
-  id?: string
-  darNo?: string | null
-  requestDate?: Date | string
-  objective: string
-  docType: string
-  docTypeOther?: string | null
-  reason: string
-  spFolderId?: string | null
-  spFolderPath?: string | null
-  spDriveId?: string | null
-  spItemId?: string | null
-  spWebUrl?: string | null
-  status?: $Enums.DarStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  department: Prisma.DepartmentCreateNestedOneWithoutDarMastersInput
-  items?: Prisma.DarItemCreateNestedManyWithoutDarMasterInput
-  distributions?: Prisma.DarDistributionCreateNestedManyWithoutDarMasterInput
-  attachments?: Prisma.DarAttachmentCreateNestedManyWithoutDarMasterInput
-  approvals?: Prisma.DarApprovalCreateNestedManyWithoutDarMasterInput
-  qmsProcessing?: Prisma.QmsProcessingCreateNestedOneWithoutDarMasterInput
-}
-
-export type DarMasterUncheckedCreateWithoutRequesterInput = {
-  id?: string
-  darNo?: string | null
-  requestDate?: Date | string
-  objective: string
-  docType: string
-  docTypeOther?: string | null
-  reason: string
-  spFolderId?: string | null
-  spFolderPath?: string | null
-  spDriveId?: string | null
-  spItemId?: string | null
-  spWebUrl?: string | null
-  status?: $Enums.DarStatus
-  departmentId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  items?: Prisma.DarItemUncheckedCreateNestedManyWithoutDarMasterInput
-  distributions?: Prisma.DarDistributionUncheckedCreateNestedManyWithoutDarMasterInput
-  attachments?: Prisma.DarAttachmentUncheckedCreateNestedManyWithoutDarMasterInput
-  approvals?: Prisma.DarApprovalUncheckedCreateNestedManyWithoutDarMasterInput
-  qmsProcessing?: Prisma.QmsProcessingUncheckedCreateNestedOneWithoutDarMasterInput
-}
-
-export type DarMasterCreateOrConnectWithoutRequesterInput = {
-  where: Prisma.DarMasterWhereUniqueInput
-  create: Prisma.XOR<Prisma.DarMasterCreateWithoutRequesterInput, Prisma.DarMasterUncheckedCreateWithoutRequesterInput>
-}
-
-export type DarMasterCreateManyRequesterInputEnvelope = {
-  data: Prisma.DarMasterCreateManyRequesterInput | Prisma.DarMasterCreateManyRequesterInput[]
-  skipDuplicates?: boolean
-}
-
-export type DarMasterUpsertWithWhereUniqueWithoutRequesterInput = {
-  where: Prisma.DarMasterWhereUniqueInput
-  update: Prisma.XOR<Prisma.DarMasterUpdateWithoutRequesterInput, Prisma.DarMasterUncheckedUpdateWithoutRequesterInput>
-  create: Prisma.XOR<Prisma.DarMasterCreateWithoutRequesterInput, Prisma.DarMasterUncheckedCreateWithoutRequesterInput>
-}
-
-export type DarMasterUpdateWithWhereUniqueWithoutRequesterInput = {
-  where: Prisma.DarMasterWhereUniqueInput
-  data: Prisma.XOR<Prisma.DarMasterUpdateWithoutRequesterInput, Prisma.DarMasterUncheckedUpdateWithoutRequesterInput>
-}
-
-export type DarMasterUpdateManyWithWhereWithoutRequesterInput = {
-  where: Prisma.DarMasterScalarWhereInput
-  data: Prisma.XOR<Prisma.DarMasterUpdateManyMutationInput, Prisma.DarMasterUncheckedUpdateManyWithoutRequesterInput>
-}
-
 export type DarMasterCreateWithoutItemsInput = {
   id?: string
   darNo?: string | null
@@ -966,13 +829,19 @@ export type DarMasterCreateWithoutItemsInput = {
   spItemId?: string | null
   spWebUrl?: string | null
   status?: $Enums.DarStatus
+  requesterId: string
+  requesterAuthUserId?: string | null
+  requesterName?: string | null
+  requesterEmployeeId?: string | null
+  requesterEmail?: string | null
+  requesterDepartmentName?: string | null
+  departmentId: string
+  authDepartmentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  requester: Prisma.UserCreateNestedOneWithoutDarMastersInput
-  department: Prisma.DepartmentCreateNestedOneWithoutDarMastersInput
-  distributions?: Prisma.DarDistributionCreateNestedManyWithoutDarMasterInput
-  attachments?: Prisma.DarAttachmentCreateNestedManyWithoutDarMasterInput
   approvals?: Prisma.DarApprovalCreateNestedManyWithoutDarMasterInput
+  attachments?: Prisma.DarAttachmentCreateNestedManyWithoutDarMasterInput
+  distributions?: Prisma.DarDistributionCreateNestedManyWithoutDarMasterInput
   qmsProcessing?: Prisma.QmsProcessingCreateNestedOneWithoutDarMasterInput
 }
 
@@ -991,12 +860,18 @@ export type DarMasterUncheckedCreateWithoutItemsInput = {
   spWebUrl?: string | null
   status?: $Enums.DarStatus
   requesterId: string
+  requesterAuthUserId?: string | null
+  requesterName?: string | null
+  requesterEmployeeId?: string | null
+  requesterEmail?: string | null
+  requesterDepartmentName?: string | null
   departmentId: string
+  authDepartmentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  distributions?: Prisma.DarDistributionUncheckedCreateNestedManyWithoutDarMasterInput
-  attachments?: Prisma.DarAttachmentUncheckedCreateNestedManyWithoutDarMasterInput
   approvals?: Prisma.DarApprovalUncheckedCreateNestedManyWithoutDarMasterInput
+  attachments?: Prisma.DarAttachmentUncheckedCreateNestedManyWithoutDarMasterInput
+  distributions?: Prisma.DarDistributionUncheckedCreateNestedManyWithoutDarMasterInput
   qmsProcessing?: Prisma.QmsProcessingUncheckedCreateNestedOneWithoutDarMasterInput
 }
 
@@ -1030,13 +905,19 @@ export type DarMasterUpdateWithoutItemsInput = {
   spItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
+  requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterDepartmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  requester?: Prisma.UserUpdateOneRequiredWithoutDarMastersNestedInput
-  department?: Prisma.DepartmentUpdateOneRequiredWithoutDarMastersNestedInput
-  distributions?: Prisma.DarDistributionUpdateManyWithoutDarMasterNestedInput
-  attachments?: Prisma.DarAttachmentUpdateManyWithoutDarMasterNestedInput
   approvals?: Prisma.DarApprovalUpdateManyWithoutDarMasterNestedInput
+  attachments?: Prisma.DarAttachmentUpdateManyWithoutDarMasterNestedInput
+  distributions?: Prisma.DarDistributionUpdateManyWithoutDarMasterNestedInput
   qmsProcessing?: Prisma.QmsProcessingUpdateOneWithoutDarMasterNestedInput
 }
 
@@ -1055,12 +936,18 @@ export type DarMasterUncheckedUpdateWithoutItemsInput = {
   spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterDepartmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  distributions?: Prisma.DarDistributionUncheckedUpdateManyWithoutDarMasterNestedInput
-  attachments?: Prisma.DarAttachmentUncheckedUpdateManyWithoutDarMasterNestedInput
   approvals?: Prisma.DarApprovalUncheckedUpdateManyWithoutDarMasterNestedInput
+  attachments?: Prisma.DarAttachmentUncheckedUpdateManyWithoutDarMasterNestedInput
+  distributions?: Prisma.DarDistributionUncheckedUpdateManyWithoutDarMasterNestedInput
   qmsProcessing?: Prisma.QmsProcessingUncheckedUpdateOneWithoutDarMasterNestedInput
 }
 
@@ -1078,13 +965,19 @@ export type DarMasterCreateWithoutDistributionsInput = {
   spItemId?: string | null
   spWebUrl?: string | null
   status?: $Enums.DarStatus
+  requesterId: string
+  requesterAuthUserId?: string | null
+  requesterName?: string | null
+  requesterEmployeeId?: string | null
+  requesterEmail?: string | null
+  requesterDepartmentName?: string | null
+  departmentId: string
+  authDepartmentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  requester: Prisma.UserCreateNestedOneWithoutDarMastersInput
-  department: Prisma.DepartmentCreateNestedOneWithoutDarMastersInput
-  items?: Prisma.DarItemCreateNestedManyWithoutDarMasterInput
-  attachments?: Prisma.DarAttachmentCreateNestedManyWithoutDarMasterInput
   approvals?: Prisma.DarApprovalCreateNestedManyWithoutDarMasterInput
+  attachments?: Prisma.DarAttachmentCreateNestedManyWithoutDarMasterInput
+  items?: Prisma.DarItemCreateNestedManyWithoutDarMasterInput
   qmsProcessing?: Prisma.QmsProcessingCreateNestedOneWithoutDarMasterInput
 }
 
@@ -1103,12 +996,18 @@ export type DarMasterUncheckedCreateWithoutDistributionsInput = {
   spWebUrl?: string | null
   status?: $Enums.DarStatus
   requesterId: string
+  requesterAuthUserId?: string | null
+  requesterName?: string | null
+  requesterEmployeeId?: string | null
+  requesterEmail?: string | null
+  requesterDepartmentName?: string | null
   departmentId: string
+  authDepartmentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  items?: Prisma.DarItemUncheckedCreateNestedManyWithoutDarMasterInput
-  attachments?: Prisma.DarAttachmentUncheckedCreateNestedManyWithoutDarMasterInput
   approvals?: Prisma.DarApprovalUncheckedCreateNestedManyWithoutDarMasterInput
+  attachments?: Prisma.DarAttachmentUncheckedCreateNestedManyWithoutDarMasterInput
+  items?: Prisma.DarItemUncheckedCreateNestedManyWithoutDarMasterInput
   qmsProcessing?: Prisma.QmsProcessingUncheckedCreateNestedOneWithoutDarMasterInput
 }
 
@@ -1142,13 +1041,19 @@ export type DarMasterUpdateWithoutDistributionsInput = {
   spItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
+  requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterDepartmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  requester?: Prisma.UserUpdateOneRequiredWithoutDarMastersNestedInput
-  department?: Prisma.DepartmentUpdateOneRequiredWithoutDarMastersNestedInput
-  items?: Prisma.DarItemUpdateManyWithoutDarMasterNestedInput
-  attachments?: Prisma.DarAttachmentUpdateManyWithoutDarMasterNestedInput
   approvals?: Prisma.DarApprovalUpdateManyWithoutDarMasterNestedInput
+  attachments?: Prisma.DarAttachmentUpdateManyWithoutDarMasterNestedInput
+  items?: Prisma.DarItemUpdateManyWithoutDarMasterNestedInput
   qmsProcessing?: Prisma.QmsProcessingUpdateOneWithoutDarMasterNestedInput
 }
 
@@ -1167,12 +1072,18 @@ export type DarMasterUncheckedUpdateWithoutDistributionsInput = {
   spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterDepartmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  items?: Prisma.DarItemUncheckedUpdateManyWithoutDarMasterNestedInput
-  attachments?: Prisma.DarAttachmentUncheckedUpdateManyWithoutDarMasterNestedInput
   approvals?: Prisma.DarApprovalUncheckedUpdateManyWithoutDarMasterNestedInput
+  attachments?: Prisma.DarAttachmentUncheckedUpdateManyWithoutDarMasterNestedInput
+  items?: Prisma.DarItemUncheckedUpdateManyWithoutDarMasterNestedInput
   qmsProcessing?: Prisma.QmsProcessingUncheckedUpdateOneWithoutDarMasterNestedInput
 }
 
@@ -1190,13 +1101,19 @@ export type DarMasterCreateWithoutAttachmentsInput = {
   spItemId?: string | null
   spWebUrl?: string | null
   status?: $Enums.DarStatus
+  requesterId: string
+  requesterAuthUserId?: string | null
+  requesterName?: string | null
+  requesterEmployeeId?: string | null
+  requesterEmail?: string | null
+  requesterDepartmentName?: string | null
+  departmentId: string
+  authDepartmentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  requester: Prisma.UserCreateNestedOneWithoutDarMastersInput
-  department: Prisma.DepartmentCreateNestedOneWithoutDarMastersInput
-  items?: Prisma.DarItemCreateNestedManyWithoutDarMasterInput
-  distributions?: Prisma.DarDistributionCreateNestedManyWithoutDarMasterInput
   approvals?: Prisma.DarApprovalCreateNestedManyWithoutDarMasterInput
+  distributions?: Prisma.DarDistributionCreateNestedManyWithoutDarMasterInput
+  items?: Prisma.DarItemCreateNestedManyWithoutDarMasterInput
   qmsProcessing?: Prisma.QmsProcessingCreateNestedOneWithoutDarMasterInput
 }
 
@@ -1215,12 +1132,18 @@ export type DarMasterUncheckedCreateWithoutAttachmentsInput = {
   spWebUrl?: string | null
   status?: $Enums.DarStatus
   requesterId: string
+  requesterAuthUserId?: string | null
+  requesterName?: string | null
+  requesterEmployeeId?: string | null
+  requesterEmail?: string | null
+  requesterDepartmentName?: string | null
   departmentId: string
+  authDepartmentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  items?: Prisma.DarItemUncheckedCreateNestedManyWithoutDarMasterInput
-  distributions?: Prisma.DarDistributionUncheckedCreateNestedManyWithoutDarMasterInput
   approvals?: Prisma.DarApprovalUncheckedCreateNestedManyWithoutDarMasterInput
+  distributions?: Prisma.DarDistributionUncheckedCreateNestedManyWithoutDarMasterInput
+  items?: Prisma.DarItemUncheckedCreateNestedManyWithoutDarMasterInput
   qmsProcessing?: Prisma.QmsProcessingUncheckedCreateNestedOneWithoutDarMasterInput
 }
 
@@ -1254,13 +1177,19 @@ export type DarMasterUpdateWithoutAttachmentsInput = {
   spItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
+  requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterDepartmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  requester?: Prisma.UserUpdateOneRequiredWithoutDarMastersNestedInput
-  department?: Prisma.DepartmentUpdateOneRequiredWithoutDarMastersNestedInput
-  items?: Prisma.DarItemUpdateManyWithoutDarMasterNestedInput
-  distributions?: Prisma.DarDistributionUpdateManyWithoutDarMasterNestedInput
   approvals?: Prisma.DarApprovalUpdateManyWithoutDarMasterNestedInput
+  distributions?: Prisma.DarDistributionUpdateManyWithoutDarMasterNestedInput
+  items?: Prisma.DarItemUpdateManyWithoutDarMasterNestedInput
   qmsProcessing?: Prisma.QmsProcessingUpdateOneWithoutDarMasterNestedInput
 }
 
@@ -1279,12 +1208,18 @@ export type DarMasterUncheckedUpdateWithoutAttachmentsInput = {
   spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterDepartmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  items?: Prisma.DarItemUncheckedUpdateManyWithoutDarMasterNestedInput
-  distributions?: Prisma.DarDistributionUncheckedUpdateManyWithoutDarMasterNestedInput
   approvals?: Prisma.DarApprovalUncheckedUpdateManyWithoutDarMasterNestedInput
+  distributions?: Prisma.DarDistributionUncheckedUpdateManyWithoutDarMasterNestedInput
+  items?: Prisma.DarItemUncheckedUpdateManyWithoutDarMasterNestedInput
   qmsProcessing?: Prisma.QmsProcessingUncheckedUpdateOneWithoutDarMasterNestedInput
 }
 
@@ -1302,13 +1237,19 @@ export type DarMasterCreateWithoutApprovalsInput = {
   spItemId?: string | null
   spWebUrl?: string | null
   status?: $Enums.DarStatus
+  requesterId: string
+  requesterAuthUserId?: string | null
+  requesterName?: string | null
+  requesterEmployeeId?: string | null
+  requesterEmail?: string | null
+  requesterDepartmentName?: string | null
+  departmentId: string
+  authDepartmentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  requester: Prisma.UserCreateNestedOneWithoutDarMastersInput
-  department: Prisma.DepartmentCreateNestedOneWithoutDarMastersInput
-  items?: Prisma.DarItemCreateNestedManyWithoutDarMasterInput
-  distributions?: Prisma.DarDistributionCreateNestedManyWithoutDarMasterInput
   attachments?: Prisma.DarAttachmentCreateNestedManyWithoutDarMasterInput
+  distributions?: Prisma.DarDistributionCreateNestedManyWithoutDarMasterInput
+  items?: Prisma.DarItemCreateNestedManyWithoutDarMasterInput
   qmsProcessing?: Prisma.QmsProcessingCreateNestedOneWithoutDarMasterInput
 }
 
@@ -1327,12 +1268,18 @@ export type DarMasterUncheckedCreateWithoutApprovalsInput = {
   spWebUrl?: string | null
   status?: $Enums.DarStatus
   requesterId: string
+  requesterAuthUserId?: string | null
+  requesterName?: string | null
+  requesterEmployeeId?: string | null
+  requesterEmail?: string | null
+  requesterDepartmentName?: string | null
   departmentId: string
+  authDepartmentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  items?: Prisma.DarItemUncheckedCreateNestedManyWithoutDarMasterInput
-  distributions?: Prisma.DarDistributionUncheckedCreateNestedManyWithoutDarMasterInput
   attachments?: Prisma.DarAttachmentUncheckedCreateNestedManyWithoutDarMasterInput
+  distributions?: Prisma.DarDistributionUncheckedCreateNestedManyWithoutDarMasterInput
+  items?: Prisma.DarItemUncheckedCreateNestedManyWithoutDarMasterInput
   qmsProcessing?: Prisma.QmsProcessingUncheckedCreateNestedOneWithoutDarMasterInput
 }
 
@@ -1366,13 +1313,19 @@ export type DarMasterUpdateWithoutApprovalsInput = {
   spItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
+  requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterDepartmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  requester?: Prisma.UserUpdateOneRequiredWithoutDarMastersNestedInput
-  department?: Prisma.DepartmentUpdateOneRequiredWithoutDarMastersNestedInput
-  items?: Prisma.DarItemUpdateManyWithoutDarMasterNestedInput
-  distributions?: Prisma.DarDistributionUpdateManyWithoutDarMasterNestedInput
   attachments?: Prisma.DarAttachmentUpdateManyWithoutDarMasterNestedInput
+  distributions?: Prisma.DarDistributionUpdateManyWithoutDarMasterNestedInput
+  items?: Prisma.DarItemUpdateManyWithoutDarMasterNestedInput
   qmsProcessing?: Prisma.QmsProcessingUpdateOneWithoutDarMasterNestedInput
 }
 
@@ -1391,12 +1344,18 @@ export type DarMasterUncheckedUpdateWithoutApprovalsInput = {
   spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterDepartmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  items?: Prisma.DarItemUncheckedUpdateManyWithoutDarMasterNestedInput
-  distributions?: Prisma.DarDistributionUncheckedUpdateManyWithoutDarMasterNestedInput
   attachments?: Prisma.DarAttachmentUncheckedUpdateManyWithoutDarMasterNestedInput
+  distributions?: Prisma.DarDistributionUncheckedUpdateManyWithoutDarMasterNestedInput
+  items?: Prisma.DarItemUncheckedUpdateManyWithoutDarMasterNestedInput
   qmsProcessing?: Prisma.QmsProcessingUncheckedUpdateOneWithoutDarMasterNestedInput
 }
 
@@ -1414,14 +1373,20 @@ export type DarMasterCreateWithoutQmsProcessingInput = {
   spItemId?: string | null
   spWebUrl?: string | null
   status?: $Enums.DarStatus
+  requesterId: string
+  requesterAuthUserId?: string | null
+  requesterName?: string | null
+  requesterEmployeeId?: string | null
+  requesterEmail?: string | null
+  requesterDepartmentName?: string | null
+  departmentId: string
+  authDepartmentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  requester: Prisma.UserCreateNestedOneWithoutDarMastersInput
-  department: Prisma.DepartmentCreateNestedOneWithoutDarMastersInput
-  items?: Prisma.DarItemCreateNestedManyWithoutDarMasterInput
-  distributions?: Prisma.DarDistributionCreateNestedManyWithoutDarMasterInput
-  attachments?: Prisma.DarAttachmentCreateNestedManyWithoutDarMasterInput
   approvals?: Prisma.DarApprovalCreateNestedManyWithoutDarMasterInput
+  attachments?: Prisma.DarAttachmentCreateNestedManyWithoutDarMasterInput
+  distributions?: Prisma.DarDistributionCreateNestedManyWithoutDarMasterInput
+  items?: Prisma.DarItemCreateNestedManyWithoutDarMasterInput
 }
 
 export type DarMasterUncheckedCreateWithoutQmsProcessingInput = {
@@ -1439,13 +1404,19 @@ export type DarMasterUncheckedCreateWithoutQmsProcessingInput = {
   spWebUrl?: string | null
   status?: $Enums.DarStatus
   requesterId: string
+  requesterAuthUserId?: string | null
+  requesterName?: string | null
+  requesterEmployeeId?: string | null
+  requesterEmail?: string | null
+  requesterDepartmentName?: string | null
   departmentId: string
+  authDepartmentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  items?: Prisma.DarItemUncheckedCreateNestedManyWithoutDarMasterInput
-  distributions?: Prisma.DarDistributionUncheckedCreateNestedManyWithoutDarMasterInput
-  attachments?: Prisma.DarAttachmentUncheckedCreateNestedManyWithoutDarMasterInput
   approvals?: Prisma.DarApprovalUncheckedCreateNestedManyWithoutDarMasterInput
+  attachments?: Prisma.DarAttachmentUncheckedCreateNestedManyWithoutDarMasterInput
+  distributions?: Prisma.DarDistributionUncheckedCreateNestedManyWithoutDarMasterInput
+  items?: Prisma.DarItemUncheckedCreateNestedManyWithoutDarMasterInput
 }
 
 export type DarMasterCreateOrConnectWithoutQmsProcessingInput = {
@@ -1478,14 +1449,20 @@ export type DarMasterUpdateWithoutQmsProcessingInput = {
   spItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
+  requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterDepartmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  requester?: Prisma.UserUpdateOneRequiredWithoutDarMastersNestedInput
-  department?: Prisma.DepartmentUpdateOneRequiredWithoutDarMastersNestedInput
-  items?: Prisma.DarItemUpdateManyWithoutDarMasterNestedInput
-  distributions?: Prisma.DarDistributionUpdateManyWithoutDarMasterNestedInput
-  attachments?: Prisma.DarAttachmentUpdateManyWithoutDarMasterNestedInput
   approvals?: Prisma.DarApprovalUpdateManyWithoutDarMasterNestedInput
+  attachments?: Prisma.DarAttachmentUpdateManyWithoutDarMasterNestedInput
+  distributions?: Prisma.DarDistributionUpdateManyWithoutDarMasterNestedInput
+  items?: Prisma.DarItemUpdateManyWithoutDarMasterNestedInput
 }
 
 export type DarMasterUncheckedUpdateWithoutQmsProcessingInput = {
@@ -1503,185 +1480,19 @@ export type DarMasterUncheckedUpdateWithoutQmsProcessingInput = {
   spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requesterDepartmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  items?: Prisma.DarItemUncheckedUpdateManyWithoutDarMasterNestedInput
-  distributions?: Prisma.DarDistributionUncheckedUpdateManyWithoutDarMasterNestedInput
-  attachments?: Prisma.DarAttachmentUncheckedUpdateManyWithoutDarMasterNestedInput
   approvals?: Prisma.DarApprovalUncheckedUpdateManyWithoutDarMasterNestedInput
-}
-
-export type DarMasterCreateManyDepartmentInput = {
-  id?: string
-  darNo?: string | null
-  requestDate?: Date | string
-  objective: string
-  docType: string
-  docTypeOther?: string | null
-  reason: string
-  spFolderId?: string | null
-  spFolderPath?: string | null
-  spDriveId?: string | null
-  spItemId?: string | null
-  spWebUrl?: string | null
-  status?: $Enums.DarStatus
-  requesterId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type DarMasterUpdateWithoutDepartmentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  darNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requestDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  objective?: Prisma.StringFieldUpdateOperationsInput | string
-  docType?: Prisma.StringFieldUpdateOperationsInput | string
-  docTypeOther?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reason?: Prisma.StringFieldUpdateOperationsInput | string
-  spFolderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spFolderPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spDriveId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  requester?: Prisma.UserUpdateOneRequiredWithoutDarMastersNestedInput
-  items?: Prisma.DarItemUpdateManyWithoutDarMasterNestedInput
-  distributions?: Prisma.DarDistributionUpdateManyWithoutDarMasterNestedInput
-  attachments?: Prisma.DarAttachmentUpdateManyWithoutDarMasterNestedInput
-  approvals?: Prisma.DarApprovalUpdateManyWithoutDarMasterNestedInput
-  qmsProcessing?: Prisma.QmsProcessingUpdateOneWithoutDarMasterNestedInput
-}
-
-export type DarMasterUncheckedUpdateWithoutDepartmentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  darNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requestDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  objective?: Prisma.StringFieldUpdateOperationsInput | string
-  docType?: Prisma.StringFieldUpdateOperationsInput | string
-  docTypeOther?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reason?: Prisma.StringFieldUpdateOperationsInput | string
-  spFolderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spFolderPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spDriveId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
-  requesterId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  items?: Prisma.DarItemUncheckedUpdateManyWithoutDarMasterNestedInput
-  distributions?: Prisma.DarDistributionUncheckedUpdateManyWithoutDarMasterNestedInput
   attachments?: Prisma.DarAttachmentUncheckedUpdateManyWithoutDarMasterNestedInput
-  approvals?: Prisma.DarApprovalUncheckedUpdateManyWithoutDarMasterNestedInput
-  qmsProcessing?: Prisma.QmsProcessingUncheckedUpdateOneWithoutDarMasterNestedInput
-}
-
-export type DarMasterUncheckedUpdateManyWithoutDepartmentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  darNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requestDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  objective?: Prisma.StringFieldUpdateOperationsInput | string
-  docType?: Prisma.StringFieldUpdateOperationsInput | string
-  docTypeOther?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reason?: Prisma.StringFieldUpdateOperationsInput | string
-  spFolderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spFolderPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spDriveId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
-  requesterId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type DarMasterCreateManyRequesterInput = {
-  id?: string
-  darNo?: string | null
-  requestDate?: Date | string
-  objective: string
-  docType: string
-  docTypeOther?: string | null
-  reason: string
-  spFolderId?: string | null
-  spFolderPath?: string | null
-  spDriveId?: string | null
-  spItemId?: string | null
-  spWebUrl?: string | null
-  status?: $Enums.DarStatus
-  departmentId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type DarMasterUpdateWithoutRequesterInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  darNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requestDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  objective?: Prisma.StringFieldUpdateOperationsInput | string
-  docType?: Prisma.StringFieldUpdateOperationsInput | string
-  docTypeOther?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reason?: Prisma.StringFieldUpdateOperationsInput | string
-  spFolderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spFolderPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spDriveId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  department?: Prisma.DepartmentUpdateOneRequiredWithoutDarMastersNestedInput
-  items?: Prisma.DarItemUpdateManyWithoutDarMasterNestedInput
-  distributions?: Prisma.DarDistributionUpdateManyWithoutDarMasterNestedInput
-  attachments?: Prisma.DarAttachmentUpdateManyWithoutDarMasterNestedInput
-  approvals?: Prisma.DarApprovalUpdateManyWithoutDarMasterNestedInput
-  qmsProcessing?: Prisma.QmsProcessingUpdateOneWithoutDarMasterNestedInput
-}
-
-export type DarMasterUncheckedUpdateWithoutRequesterInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  darNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requestDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  objective?: Prisma.StringFieldUpdateOperationsInput | string
-  docType?: Prisma.StringFieldUpdateOperationsInput | string
-  docTypeOther?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reason?: Prisma.StringFieldUpdateOperationsInput | string
-  spFolderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spFolderPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spDriveId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
-  departmentId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  items?: Prisma.DarItemUncheckedUpdateManyWithoutDarMasterNestedInput
   distributions?: Prisma.DarDistributionUncheckedUpdateManyWithoutDarMasterNestedInput
-  attachments?: Prisma.DarAttachmentUncheckedUpdateManyWithoutDarMasterNestedInput
-  approvals?: Prisma.DarApprovalUncheckedUpdateManyWithoutDarMasterNestedInput
-  qmsProcessing?: Prisma.QmsProcessingUncheckedUpdateOneWithoutDarMasterNestedInput
-}
-
-export type DarMasterUncheckedUpdateManyWithoutRequesterInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  darNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requestDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  objective?: Prisma.StringFieldUpdateOperationsInput | string
-  docType?: Prisma.StringFieldUpdateOperationsInput | string
-  docTypeOther?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reason?: Prisma.StringFieldUpdateOperationsInput | string
-  spFolderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spFolderPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spDriveId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  spWebUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumDarStatusFieldUpdateOperationsInput | $Enums.DarStatus
-  departmentId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.DarItemUncheckedUpdateManyWithoutDarMasterNestedInput
 }
 
 
@@ -1690,17 +1501,17 @@ export type DarMasterUncheckedUpdateManyWithoutRequesterInput = {
  */
 
 export type DarMasterCountOutputType = {
-  items: number
-  distributions: number
-  attachments: number
   approvals: number
+  attachments: number
+  distributions: number
+  items: number
 }
 
 export type DarMasterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  items?: boolean | DarMasterCountOutputTypeCountItemsArgs
-  distributions?: boolean | DarMasterCountOutputTypeCountDistributionsArgs
-  attachments?: boolean | DarMasterCountOutputTypeCountAttachmentsArgs
   approvals?: boolean | DarMasterCountOutputTypeCountApprovalsArgs
+  attachments?: boolean | DarMasterCountOutputTypeCountAttachmentsArgs
+  distributions?: boolean | DarMasterCountOutputTypeCountDistributionsArgs
+  items?: boolean | DarMasterCountOutputTypeCountItemsArgs
 }
 
 /**
@@ -1716,15 +1527,8 @@ export type DarMasterCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ex
 /**
  * DarMasterCountOutputType without action
  */
-export type DarMasterCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.DarItemWhereInput
-}
-
-/**
- * DarMasterCountOutputType without action
- */
-export type DarMasterCountOutputTypeCountDistributionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.DarDistributionWhereInput
+export type DarMasterCountOutputTypeCountApprovalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DarApprovalWhereInput
 }
 
 /**
@@ -1737,8 +1541,15 @@ export type DarMasterCountOutputTypeCountAttachmentsArgs<ExtArgs extends runtime
 /**
  * DarMasterCountOutputType without action
  */
-export type DarMasterCountOutputTypeCountApprovalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.DarApprovalWhereInput
+export type DarMasterCountOutputTypeCountDistributionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DarDistributionWhereInput
+}
+
+/**
+ * DarMasterCountOutputType without action
+ */
+export type DarMasterCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DarItemWhereInput
 }
 
 
@@ -1757,15 +1568,19 @@ export type DarMasterSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   spWebUrl?: boolean
   status?: boolean
   requesterId?: boolean
+  requesterAuthUserId?: boolean
+  requesterName?: boolean
+  requesterEmployeeId?: boolean
+  requesterEmail?: boolean
+  requesterDepartmentName?: boolean
   departmentId?: boolean
+  authDepartmentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  requester?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
-  items?: boolean | Prisma.DarMaster$itemsArgs<ExtArgs>
-  distributions?: boolean | Prisma.DarMaster$distributionsArgs<ExtArgs>
-  attachments?: boolean | Prisma.DarMaster$attachmentsArgs<ExtArgs>
   approvals?: boolean | Prisma.DarMaster$approvalsArgs<ExtArgs>
+  attachments?: boolean | Prisma.DarMaster$attachmentsArgs<ExtArgs>
+  distributions?: boolean | Prisma.DarMaster$distributionsArgs<ExtArgs>
+  items?: boolean | Prisma.DarMaster$itemsArgs<ExtArgs>
   qmsProcessing?: boolean | Prisma.DarMaster$qmsProcessingArgs<ExtArgs>
   _count?: boolean | Prisma.DarMasterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["darMaster"]>
@@ -1785,11 +1600,15 @@ export type DarMasterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   spWebUrl?: boolean
   status?: boolean
   requesterId?: boolean
+  requesterAuthUserId?: boolean
+  requesterName?: boolean
+  requesterEmployeeId?: boolean
+  requesterEmail?: boolean
+  requesterDepartmentName?: boolean
   departmentId?: boolean
+  authDepartmentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  requester?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["darMaster"]>
 
 export type DarMasterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1807,11 +1626,15 @@ export type DarMasterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   spWebUrl?: boolean
   status?: boolean
   requesterId?: boolean
+  requesterAuthUserId?: boolean
+  requesterName?: boolean
+  requesterEmployeeId?: boolean
+  requesterEmail?: boolean
+  requesterDepartmentName?: boolean
   departmentId?: boolean
+  authDepartmentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  requester?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["darMaster"]>
 
 export type DarMasterSelectScalar = {
@@ -1829,40 +1652,36 @@ export type DarMasterSelectScalar = {
   spWebUrl?: boolean
   status?: boolean
   requesterId?: boolean
+  requesterAuthUserId?: boolean
+  requesterName?: boolean
+  requesterEmployeeId?: boolean
+  requesterEmail?: boolean
+  requesterDepartmentName?: boolean
   departmentId?: boolean
+  authDepartmentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DarMasterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "darNo" | "requestDate" | "objective" | "docType" | "docTypeOther" | "reason" | "spFolderId" | "spFolderPath" | "spDriveId" | "spItemId" | "spWebUrl" | "status" | "requesterId" | "departmentId" | "createdAt" | "updatedAt", ExtArgs["result"]["darMaster"]>
+export type DarMasterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "darNo" | "requestDate" | "objective" | "docType" | "docTypeOther" | "reason" | "spFolderId" | "spFolderPath" | "spDriveId" | "spItemId" | "spWebUrl" | "status" | "requesterId" | "requesterAuthUserId" | "requesterName" | "requesterEmployeeId" | "requesterEmail" | "requesterDepartmentName" | "departmentId" | "authDepartmentId" | "createdAt" | "updatedAt", ExtArgs["result"]["darMaster"]>
 export type DarMasterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  requester?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
-  items?: boolean | Prisma.DarMaster$itemsArgs<ExtArgs>
-  distributions?: boolean | Prisma.DarMaster$distributionsArgs<ExtArgs>
-  attachments?: boolean | Prisma.DarMaster$attachmentsArgs<ExtArgs>
   approvals?: boolean | Prisma.DarMaster$approvalsArgs<ExtArgs>
+  attachments?: boolean | Prisma.DarMaster$attachmentsArgs<ExtArgs>
+  distributions?: boolean | Prisma.DarMaster$distributionsArgs<ExtArgs>
+  items?: boolean | Prisma.DarMaster$itemsArgs<ExtArgs>
   qmsProcessing?: boolean | Prisma.DarMaster$qmsProcessingArgs<ExtArgs>
   _count?: boolean | Prisma.DarMasterCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type DarMasterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  requester?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
-}
-export type DarMasterIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  requester?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
-}
+export type DarMasterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type DarMasterIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $DarMasterPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DarMaster"
   objects: {
-    requester: Prisma.$UserPayload<ExtArgs>
-    department: Prisma.$DepartmentPayload<ExtArgs>
-    items: Prisma.$DarItemPayload<ExtArgs>[]
-    distributions: Prisma.$DarDistributionPayload<ExtArgs>[]
-    attachments: Prisma.$DarAttachmentPayload<ExtArgs>[]
     approvals: Prisma.$DarApprovalPayload<ExtArgs>[]
+    attachments: Prisma.$DarAttachmentPayload<ExtArgs>[]
+    distributions: Prisma.$DarDistributionPayload<ExtArgs>[]
+    items: Prisma.$DarItemPayload<ExtArgs>[]
     qmsProcessing: Prisma.$QmsProcessingPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1880,7 +1699,13 @@ export type $DarMasterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     spWebUrl: string | null
     status: $Enums.DarStatus
     requesterId: string
+    requesterAuthUserId: string | null
+    requesterName: string | null
+    requesterEmployeeId: string | null
+    requesterEmail: string | null
+    requesterDepartmentName: string | null
     departmentId: string
+    authDepartmentId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["darMaster"]>
@@ -2277,12 +2102,10 @@ readonly fields: DarMasterFieldRefs;
  */
 export interface Prisma__DarMasterClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  requester<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  department<T extends Prisma.DepartmentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DepartmentDefaultArgs<ExtArgs>>): Prisma.Prisma__DepartmentClient<runtime.Types.Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  items<T extends Prisma.DarMaster$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DarMaster$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DarItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  distributions<T extends Prisma.DarMaster$distributionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DarMaster$distributionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DarDistributionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  attachments<T extends Prisma.DarMaster$attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DarMaster$attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DarAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   approvals<T extends Prisma.DarMaster$approvalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DarMaster$approvalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DarApprovalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  attachments<T extends Prisma.DarMaster$attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DarMaster$attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DarAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  distributions<T extends Prisma.DarMaster$distributionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DarMaster$distributionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DarDistributionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  items<T extends Prisma.DarMaster$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DarMaster$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DarItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   qmsProcessing<T extends Prisma.DarMaster$qmsProcessingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DarMaster$qmsProcessingArgs<ExtArgs>>): Prisma.Prisma__QmsProcessingClient<runtime.Types.Result.GetResult<Prisma.$QmsProcessingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2327,7 +2150,13 @@ export interface DarMasterFieldRefs {
   readonly spWebUrl: Prisma.FieldRef<"DarMaster", 'String'>
   readonly status: Prisma.FieldRef<"DarMaster", 'DarStatus'>
   readonly requesterId: Prisma.FieldRef<"DarMaster", 'String'>
+  readonly requesterAuthUserId: Prisma.FieldRef<"DarMaster", 'String'>
+  readonly requesterName: Prisma.FieldRef<"DarMaster", 'String'>
+  readonly requesterEmployeeId: Prisma.FieldRef<"DarMaster", 'String'>
+  readonly requesterEmail: Prisma.FieldRef<"DarMaster", 'String'>
+  readonly requesterDepartmentName: Prisma.FieldRef<"DarMaster", 'String'>
   readonly departmentId: Prisma.FieldRef<"DarMaster", 'String'>
+  readonly authDepartmentId: Prisma.FieldRef<"DarMaster", 'String'>
   readonly createdAt: Prisma.FieldRef<"DarMaster", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"DarMaster", 'DateTime'>
 }
@@ -2584,10 +2413,6 @@ export type DarMasterCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    */
   data: Prisma.DarMasterCreateManyInput | Prisma.DarMasterCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DarMasterIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2658,10 +2483,6 @@ export type DarMasterUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * Limit how many DarMasters to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DarMasterIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2731,51 +2552,27 @@ export type DarMasterDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
- * DarMaster.items
+ * DarMaster.approvals
  */
-export type DarMaster$itemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DarMaster$approvalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the DarItem
+   * Select specific fields to fetch from the DarApproval
    */
-  select?: Prisma.DarItemSelect<ExtArgs> | null
+  select?: Prisma.DarApprovalSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the DarItem
+   * Omit specific fields from the DarApproval
    */
-  omit?: Prisma.DarItemOmit<ExtArgs> | null
+  omit?: Prisma.DarApprovalOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DarItemInclude<ExtArgs> | null
-  where?: Prisma.DarItemWhereInput
-  orderBy?: Prisma.DarItemOrderByWithRelationInput | Prisma.DarItemOrderByWithRelationInput[]
-  cursor?: Prisma.DarItemWhereUniqueInput
+  include?: Prisma.DarApprovalInclude<ExtArgs> | null
+  where?: Prisma.DarApprovalWhereInput
+  orderBy?: Prisma.DarApprovalOrderByWithRelationInput | Prisma.DarApprovalOrderByWithRelationInput[]
+  cursor?: Prisma.DarApprovalWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.DarItemScalarFieldEnum | Prisma.DarItemScalarFieldEnum[]
-}
-
-/**
- * DarMaster.distributions
- */
-export type DarMaster$distributionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the DarDistribution
-   */
-  select?: Prisma.DarDistributionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the DarDistribution
-   */
-  omit?: Prisma.DarDistributionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DarDistributionInclude<ExtArgs> | null
-  where?: Prisma.DarDistributionWhereInput
-  orderBy?: Prisma.DarDistributionOrderByWithRelationInput | Prisma.DarDistributionOrderByWithRelationInput[]
-  cursor?: Prisma.DarDistributionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.DarDistributionScalarFieldEnum | Prisma.DarDistributionScalarFieldEnum[]
+  distinct?: Prisma.DarApprovalScalarFieldEnum | Prisma.DarApprovalScalarFieldEnum[]
 }
 
 /**
@@ -2803,27 +2600,51 @@ export type DarMaster$attachmentsArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
- * DarMaster.approvals
+ * DarMaster.distributions
  */
-export type DarMaster$approvalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DarMaster$distributionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the DarApproval
+   * Select specific fields to fetch from the DarDistribution
    */
-  select?: Prisma.DarApprovalSelect<ExtArgs> | null
+  select?: Prisma.DarDistributionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the DarApproval
+   * Omit specific fields from the DarDistribution
    */
-  omit?: Prisma.DarApprovalOmit<ExtArgs> | null
+  omit?: Prisma.DarDistributionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DarApprovalInclude<ExtArgs> | null
-  where?: Prisma.DarApprovalWhereInput
-  orderBy?: Prisma.DarApprovalOrderByWithRelationInput | Prisma.DarApprovalOrderByWithRelationInput[]
-  cursor?: Prisma.DarApprovalWhereUniqueInput
+  include?: Prisma.DarDistributionInclude<ExtArgs> | null
+  where?: Prisma.DarDistributionWhereInput
+  orderBy?: Prisma.DarDistributionOrderByWithRelationInput | Prisma.DarDistributionOrderByWithRelationInput[]
+  cursor?: Prisma.DarDistributionWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.DarApprovalScalarFieldEnum | Prisma.DarApprovalScalarFieldEnum[]
+  distinct?: Prisma.DarDistributionScalarFieldEnum | Prisma.DarDistributionScalarFieldEnum[]
+}
+
+/**
+ * DarMaster.items
+ */
+export type DarMaster$itemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DarItem
+   */
+  select?: Prisma.DarItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DarItem
+   */
+  omit?: Prisma.DarItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DarItemInclude<ExtArgs> | null
+  where?: Prisma.DarItemWhereInput
+  orderBy?: Prisma.DarItemOrderByWithRelationInput | Prisma.DarItemOrderByWithRelationInput[]
+  cursor?: Prisma.DarItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DarItemScalarFieldEnum | Prisma.DarItemScalarFieldEnum[]
 }
 
 /**

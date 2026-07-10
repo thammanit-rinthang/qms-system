@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useLocale } from "@/lib/locale-context";
 import th from "@/messages/th.json";
 import en from "@/messages/en.json";
@@ -106,7 +107,11 @@ const legacyKeyMap = {
 
 export type TranslationKey = keyof typeof legacyKeyMap | (string & {});
 
-export function t(key: TranslationKey, locale: Locale): string {
+export function t(
+  key: TranslationKey,
+  locale: Locale,
+  params?: Record<string, string | number>,
+): string {
   const mappedKey = (legacyKeyMap as Record<string, string>)[key] || key;
   const segments = mappedKey.split(".");
   let current: Record<string, unknown> = messages[locale] as Record<string, unknown>;
@@ -117,7 +122,12 @@ export function t(key: TranslationKey, locale: Locale): string {
       if (next !== null && typeof next === "object") {
         current = next as Record<string, unknown>;
       } else {
-        return typeof next === "string" ? next : key;
+        if (typeof next !== "string") return key;
+        if (!params) return next;
+        return next.replace(/\{(\w+)\}/g, (_, paramKey: string) => {
+          const value = params[paramKey];
+          return value === undefined ? `{${paramKey}}` : String(value);
+        });
       }
     } else {
       return key;
@@ -130,5 +140,5 @@ export function t(key: TranslationKey, locale: Locale): string {
 /** React hook — use inside client components */
 export function useT() {
   const locale = useLocale();
-  return (key: TranslationKey) => t(key, locale);
+  return useCallback((key: TranslationKey, params?: Record<string, string | number>) => t(key, locale, params), [locale]);
 }

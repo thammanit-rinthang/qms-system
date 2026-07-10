@@ -1,0 +1,30 @@
+import { requireAuth } from "@/lib/auth";
+import { sendSuccess } from "@/lib/apiResponse";
+import { handleApiError } from "@/lib/apiErrorHandler";
+import { auditPlanDepartmentsSchema } from "@/lib/validations/audit";
+import { AuditPlanService } from "@/services/audit/auditPlanService";
+import { type NextRequest } from "next/server";
+
+const svc = new AuditPlanService();
+
+export async function POST(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await requireAuth();
+    const { id } = await params;
+    const body = await req.json();
+    const input = auditPlanDepartmentsSchema.parse(body);
+
+    const departments = await svc.setDepartments(id, input, {
+      userId: session.user.id,
+      authUserId: session.user.authUserId,
+      role: session.user.role,
+    });
+
+    return sendSuccess(departments, "Departments updated");
+  } catch (err) {
+    return handleApiError(err);
+  }
+}

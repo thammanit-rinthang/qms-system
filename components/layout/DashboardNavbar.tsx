@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { UserRole } from "@/generated/prisma/client";
@@ -80,15 +81,13 @@ export default function DashboardNavbar({ role, name, email, image, locale, onLo
             </svg>
           </button>
         )}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo/logo.webp" alt="NDC Industrial" className="h-8 w-auto brightness-0 invert object-contain" />
+        <Image src="/logo/logo.webp" alt="NDC Industrial" width={120} height={32} className="h-8 w-auto brightness-0 invert object-contain" />
       </div>
 
       {/* Desktop: Left — Logo */}
       <div className="hidden md:flex items-center shrink-0 w-52">
         <Link href="/" className="hover:opacity-80 transition-opacity">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo/logo.webp" alt="NDC Industrial" className="h-10 w-auto brightness-0 invert object-contain" />
+          <Image src="/logo/logo.webp" alt="NDC Industrial" width={150} height={40} className="h-10 w-auto brightness-0 invert object-contain" />
         </Link>
       </div>
 
@@ -141,8 +140,7 @@ export default function DashboardNavbar({ role, name, email, image, locale, onLo
             className="flex items-center gap-2 pl-1 pr-2 py-1 rounded-lg hover:bg-white/10 transition-colors duration-150 group"
           >
             {image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={image} alt={name} className="w-7 h-7 rounded-full object-cover ring-2 ring-white/30" />
+              <Image src={image} alt={name} width={28} height={28} className="w-7 h-7 rounded-full object-cover ring-2 ring-white/30" />
             ) : (
               <div className="w-7 h-7 rounded-full bg-white/20 text-white flex items-center justify-center text-[11px] font-bold ring-2 ring-white/30">
                 {name.charAt(0).toUpperCase()}
@@ -157,12 +155,11 @@ export default function DashboardNavbar({ role, name, email, image, locale, onLo
           </button>
 
           {/* Dropdown panel */}
-          <div tabIndex={0} className="dropdown-content z-50 mt-1.5 w-64 bg-base-100 rounded-xl border border-base-300 shadow-lg overflow-hidden">
+          <div tabIndex={0} className="dropdown-content z-50 mt-1.5 w-64 bg-white rounded-xl border border-slate-100 shadow-lg overflow-hidden">
             {/* User block */}
-            <div className="px-4 py-3.5 flex items-center gap-3 border-b border-base-300">
+            <div className="px-4 py-3.5 flex items-center gap-3 border-b border-slate-100">
               {image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={image} alt={name} className="w-10 h-10 rounded-full object-cover shrink-0 ring-2 ring-base-300" />
+                <Image src={image} alt={name} width={40} height={40} className="w-10 h-10 rounded-full object-cover shrink-0 ring-2 ring-slate-100" />
               ) : (
                 <div className="w-10 h-10 rounded-full bg-primary text-primary-content flex items-center justify-center text-[14px] font-bold shrink-0">
                   {name.charAt(0).toUpperCase()}
@@ -211,19 +208,17 @@ export default function DashboardNavbar({ role, name, email, image, locale, onLo
             className="flex items-center gap-1.5 pl-1 pr-1.5 py-1 rounded-lg hover:bg-white/10 transition-colors duration-150"
           >
             {image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={image} alt={name} className="w-7 h-7 rounded-full object-cover ring-2 ring-white/30" />
+              <Image src={image} alt={name} width={28} height={28} className="w-7 h-7 rounded-full object-cover ring-2 ring-white/30" />
             ) : (
               <div className="w-7 h-7 rounded-full bg-white/20 text-white flex items-center justify-center text-[11px] font-bold ring-2 ring-white/30">
                 {name.charAt(0).toUpperCase()}
               </div>
             )}
           </button>
-          <div tabIndex={0} className="dropdown-content z-50 mt-1.5 w-56 bg-base-100 rounded-xl border border-base-300 shadow-lg overflow-hidden">
-            <div className="px-4 py-3 flex items-center gap-3 border-b border-base-300">
+          <div tabIndex={0} className="dropdown-content z-50 mt-1.5 w-56 bg-white rounded-xl border border-slate-100 shadow-lg overflow-hidden">
+            <div className="px-4 py-3 flex items-center gap-3 border-b border-slate-100">
               {image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={image} alt={name} className="w-9 h-9 rounded-full object-cover shrink-0 ring-2 ring-base-300" />
+                <Image src={image} alt={name} width={36} height={36} className="w-9 h-9 rounded-full object-cover shrink-0 ring-2 ring-slate-100" />
               ) : (
                 <div className="w-9 h-9 rounded-full bg-primary text-primary-content flex items-center justify-center text-[13px] font-bold shrink-0">
                   {name.charAt(0).toUpperCase()}

@@ -2,8 +2,11 @@
 
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { ChevronLeft, ExternalLink, FileText, FolderOpen, RefreshCw, X } from "lucide-react";
 import type { SpFile } from "@/lib/sharepoint";
 import { useT } from "@/lib/i18n";
+import { ActionIconButton } from "@/components/common/ActionButtons";
+import { Button } from "@/components/ui/button";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -53,24 +56,16 @@ function FileTypeBadge({ mime }: { mime: string }) {
   if (mime.includes("word")) return <span className="inline-block px-2 py-0.5 text-[10px] rounded-full font-bold bg-info/15 text-info">DOC</span>;
   if (mime.includes("excel") || mime.includes("spreadsheet")) return <span className="inline-block px-2 py-0.5 text-[10px] rounded-full font-bold bg-success/15 text-success">XLS</span>;
   if (mime.includes("powerpoint") || mime.includes("presentation")) return <span className="inline-block px-2 py-0.5 text-[10px] rounded-full font-bold bg-warning/15 text-warning">PPT</span>;
-  if (!mime) return <span className="inline-block px-2 py-0.5 text-[10px] rounded-full font-bold bg-base-200 text-neutral">DIR</span>;
-  return <span className="inline-block px-2 py-0.5 text-[10px] rounded-full font-bold bg-base-200 text-neutral">FILE</span>;
+  if (!mime) return <span className="inline-block px-2 py-0.5 text-[10px] rounded-full font-bold bg-slate-100 text-slate-500">DIR</span>;
+  return <span className="inline-block px-2 py-0.5 text-[10px] rounded-full font-bold bg-slate-100 text-slate-500">FILE</span>;
 }
 
 function FolderIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-warning shrink-0" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M3 7a2 2 0 012-2h3.586a1 1 0 01.707.293L10.707 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
-    </svg>
-  );
+  return <FolderOpen className="w-5 h-5 text-warning shrink-0" />;
 }
 
 function FileDocIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-neutral shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-    </svg>
-  );
+  return <FileText className="w-5 h-5 text-neutral shrink-0" />;
 }
 
 // ── Breadcrumb ────────────────────────────────────────────────────────────────
@@ -129,7 +124,7 @@ function DeleteModal({
   const isFolder = !!file.folder;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-base-content/20 p-4">
-      <div className="bg-base-100 rounded-xl shadow-lg border border-base-300 w-full max-w-sm p-6 flex flex-col gap-4">
+      <div className="bg-white rounded-xl shadow-lg border border-slate-100 w-full max-w-sm p-6 flex flex-col gap-4">
         <h3 className="text-sm md:text-base font-bold text-primary">
           {t("spConfirmDelete")}
         </h3>
@@ -140,12 +135,12 @@ function DeleteModal({
         </p>
         <p className="text-[11px] text-error">{t("irreversible")}</p>
         <div className="flex justify-end gap-2 mt-2">
-          <button type="button" className="btn btn-ghost btn-sm" onClick={onCancel} disabled={deleting}>
+          <Button variant="ghost" size="sm" onClick={onCancel} disabled={deleting}>
             {t("cancel")}
-          </button>
-          <button type="button" className="btn btn-error btn-sm" onClick={onConfirm} disabled={deleting}>
-            {deleting ? <span className="loading loading-spinner loading-xs" /> : t("spDeleteBtn")}
-          </button>
+          </Button>
+          <Button size="sm" onClick={onConfirm} disabled={deleting} className="bg-rose-600 text-white hover:bg-rose-700">
+            {deleting ? <div className="w-3 h-3 rounded-full border-2 border-white/30 border-t-white animate-spin" /> : t("spDeleteBtn")}
+          </Button>
         </div>
       </div>
     </div>
@@ -171,12 +166,12 @@ function PreviewModal({
       onClick={onClose}
     >
       <div
-        className="bg-base-100 rounded-xl shadow-lg border border-base-300 w-full flex flex-col overflow-hidden"
+        className="bg-white rounded-xl shadow-lg border border-slate-100 w-full flex flex-col overflow-hidden"
         style={{ maxWidth: 960, maxHeight: "92vh" }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-base-200 shrink-0">
+        <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-slate-100 shrink-0">
           <div className="flex items-center gap-2 min-w-0">
             <FileTypeBadge mime={mimeOf(file)} />
             <span className="text-xs md:text-sm font-semibold text-neutral truncate">{file.name}</span>
@@ -185,33 +180,25 @@ function PreviewModal({
             )}
           </div>
           <div className="flex items-center gap-2 shrink-0">
-            <a
-              href={file.webUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-ghost btn-xs gap-1 text-neutral"
-              title={t("spOpenSP")}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-              SharePoint
-            </a>
-            <button type="button" className="btn btn-ghost btn-sm btn-square" onClick={onClose}>
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
+            <Button variant="ghost" size="sm" asChild className="gap-1 text-neutral px-2 h-7 text-xs">
+              <a href={file.webUrl} target="_blank" rel="noopener noreferrer" title={t("spOpenSP")}>
+                <ExternalLink className="w-3.5 h-3.5" />
+                SharePoint
+              </a>
+            </Button>
+            <Button variant="ghost" size="icon" className="h-9 w-9" onClick={onClose} aria-label={t("close")}>
+              <X className="w-4 h-4" />
+            </Button>
           </div>
         </div>
 
         {/* Body */}
         <div
-          className="flex-1 overflow-auto bg-base-200 flex items-center justify-center"
+          className="flex-1 overflow-auto bg-slate-100 flex items-center justify-center"
           style={{ minHeight: 420 }}
         >
           {preview.kind === "loading" && (
-            <span className="loading loading-spinner loading-lg text-primary" />
+            <div className="w-8 h-8 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
           )}
 
           {preview.kind === "image" && (
@@ -253,28 +240,22 @@ function PreviewModal({
             <div className="flex flex-col items-center gap-4 p-10 text-center">
               <FileTypeBadge mime={mimeOf(file)} />
               <p className="text-[14px] text-neutral">{t("spNoPreview")}</p>
-              <a
-                href={file.webUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary btn-sm"
-              >
-                {t("spOpenSP")}
-              </a>
+              <Button asChild size="sm">
+                <a href={file.webUrl} target="_blank" rel="noopener noreferrer">
+                  {t("spOpenSP")}
+                </a>
+              </Button>
             </div>
           )}
 
           {preview.kind === "error" && (
             <div className="flex flex-col items-center gap-3 p-10 text-center">
               <span className="text-error text-[14px]">{preview.message}</span>
-              <a
-                href={file.webUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-ghost btn-sm"
-              >
-                {t("spOpenSP")}
-              </a>
+              <Button variant="ghost" size="sm" asChild>
+                <a href={file.webUrl} target="_blank" rel="noopener noreferrer">
+                  {t("spOpenSP")}
+                </a>
+              </Button>
             </div>
           )}
         </div>
@@ -298,13 +279,17 @@ export default function SharePointBrowserPage() {
   // Track blob URLs created for PDF previews so we can revoke them on close
   const pdfBlobRef = useRef<string | null>(null);
 
+  useEffect(() => {
+    document.title = "SharePoint Files — QMS System";
+  }, []);
+
   const loadFolder = useCallback(async (path: string) => {
     setLoading(true);
     setListError(null);
     try {
       const res = await fetch(`/api/sharepoint/list-files?folderPath=${encodeURIComponent(path || "root")}`);
       const json = await res.json();
-      if (!res.ok || json.error) { setListError(json.error ?? t("spLoadFail")); return; }
+      if (!res.ok || json.error) { setListError(json.error?.message ?? json.error ?? t("spLoadFail")); return; }
       setFiles((json.data as SpFile[]).sort((a, b) => {
         // folders first, then alphabetical
         const aFolder = a.folder ? 0 : 1;
@@ -391,7 +376,7 @@ export default function SharePointBrowserPage() {
       );
       const json = await res.json();
       if (!res.ok || json.error) {
-        alert(json.error ?? t("spDeleteFail"));
+        alert(json.error?.message ?? json.error ?? t("spDeleteFail"));
         return;
       }
       setFiles((prev) => prev.filter((f) => f.id !== confirmDelete.id));
@@ -406,16 +391,17 @@ export default function SharePointBrowserPage() {
   return (
     <div className="max-w-350 mx-auto px-4 md:px-8 flex flex-col gap-4">
       {/* Page header */}
-      <div className="card-premium border border-base-300 rounded-xl shadow-sm px-5 py-4 mb-6 flex items-center justify-between gap-4">
+      <div className="card-premium border border-slate-100 rounded-xl shadow-sm px-5 py-4 mb-6 flex items-center justify-between gap-4">
         <h1 className="text-xl md:text-2xl font-bold text-primary">{t("spTitle")}</h1>
       </div>
 
       {/* Toolbar */}
-      <div className="card-premium px-5 py-4 border border-base-300 rounded-xl shadow-sm flex items-center gap-3">
+      <div className="card-premium px-5 py-4 border border-slate-100 rounded-xl shadow-sm flex items-center gap-3">
         {/* Back button */}
-        <button
-          type="button"
-          className="btn btn-ghost btn-sm btn-square"
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-9 w-9"
           disabled={!listPath}
           onClick={() => {
             const parts = listPath.split("/");
@@ -424,38 +410,35 @@ export default function SharePointBrowserPage() {
           }}
           title={t("spGoBack")}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
+          <ChevronLeft className="w-4 h-4" />
+        </Button>
 
         <div className="flex-1 min-w-0">
           <Breadcrumb path={listPath} onNavigate={navigateTo} />
         </div>
 
-        <button
-          type="button"
-          className="btn btn-ghost btn-sm btn-square"
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-9 w-9"
           onClick={() => loadFolder(listPath)}
           disabled={loading}
           title={t("spRefresh")}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-        </button>
+          <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
+        </Button>
       </div>
 
       {/* File list */}
-      <div className="card-premium overflow-hidden border border-base-300 rounded-xl shadow-sm">
+      <div className="card-premium overflow-hidden border border-slate-100 rounded-xl shadow-sm">
         {loading ? (
           <div className="flex items-center justify-center py-16">
-            <span className="loading loading-spinner loading-md text-primary" />
+            <div className="w-6 h-6 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
           </div>
         ) : listError ? (
           <div className="flex flex-col items-center gap-3 py-16">
             <p className="text-error text-[14px]">{listError}</p>
-            <button className="btn btn-ghost btn-sm" onClick={() => loadFolder(listPath)}>{t("retry")}</button>
+            <Button variant="ghost" size="sm" onClick={() => loadFolder(listPath)}>{t("retry")}</Button>
           </div>
         ) : files.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-16">
@@ -467,7 +450,7 @@ export default function SharePointBrowserPage() {
             <div className="hidden md:block">
               <table className="table w-full">
                 <thead>
-                  <tr className="border-b border-base-200">
+                  <tr className="border-b border-slate-100">
                     <th className="th-pro w-12"></th>
                     <th className="th-pro">{t("spColName")}</th>
                     <th className="th-pro w-24">{t("spColType")}</th>
@@ -481,7 +464,7 @@ export default function SharePointBrowserPage() {
                     const mime = mimeOf(file);
                     const isDir = !!file.folder;
                     return (
-                      <tr key={file.id} className="border-b border-base-200 hover:bg-base-200 transition-colors duration-100">
+                      <tr key={file.id} className="border-b border-slate-100 hover:bg-slate-100 transition-colors duration-100">
                         <td className="py-3.5 px-4">
                           {isDir ? <FolderIcon /> : <FileDocIcon />}
                         </td>
@@ -508,39 +491,22 @@ export default function SharePointBrowserPage() {
                         <td className="py-3.5 px-4">
                           <div className="flex items-center gap-1 justify-end">
                             {!isDir && (
-                              <button
-                                type="button"
-                                className="btn btn-ghost btn-xs text-neutral"
+                              <ActionIconButton
+                                tone="view"
+                                label={t("spPreview")}
                                 onClick={() => openPreview(file)}
-                                title={t("spPreview")}
-                              >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                              </button>
+                              />
                             )}
-                            <a
-                              href={file.webUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="btn btn-ghost btn-xs text-neutral"
-                              title={t("spOpenSP")}
-                            >
-                              <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                              </svg>
-                            </a>
-                            <button
-                              type="button"
-                              className="btn btn-ghost btn-xs text-error"
+                            <Button variant="ghost" size="sm" asChild className="h-7 w-7 p-0 text-neutral" title={t("spOpenSP")}>
+                              <a href={file.webUrl} target="_blank" rel="noopener noreferrer">
+                                <ExternalLink className="w-3.5 h-3.5" />
+                              </a>
+                            </Button>
+                            <ActionIconButton
+                              tone="delete"
+                              label={t("spDeleteBtn")}
                               onClick={() => setConfirmDelete(file)}
-                              title={t("spDeleteBtn")}
-                            >
-                              <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                              </svg>
-                            </button>
+                            />
                           </div>
                         </td>
                       </tr>
@@ -551,7 +517,7 @@ export default function SharePointBrowserPage() {
             </div>
 
             {/* Mobile card list */}
-            <div className="flex flex-col divide-y divide-base-200 md:hidden">
+            <div className="flex flex-col divide-y divide-slate-100 md:hidden">
               {files.map((file) => {
                 const mime = mimeOf(file);
                 const isDir = !!file.folder;
@@ -574,16 +540,11 @@ export default function SharePointBrowserPage() {
                     </div>
                     <div className="flex items-center gap-1 shrink-0">
                       {!isDir && <FileTypeBadge mime={mime} />}
-                      <button
-                        type="button"
-                        className="btn btn-ghost btn-xs text-error"
+                      <ActionIconButton
+                        tone="delete"
+                        label={t("spDeleteBtn")}
                         onClick={() => setConfirmDelete(file)}
-                        title={t("spDeleteBtn")}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                      </button>
+                      />
                     </div>
                   </div>
                 );

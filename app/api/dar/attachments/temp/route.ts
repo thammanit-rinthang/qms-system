@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 import { requireAuth } from "@/lib/auth";
 import { AppError } from "@/lib/errors";
+import { logger } from "@/lib/logger";
 import { uploadFileToTemp } from "@/services/sharepoint";
 import type { ApiResponse } from "@/types/api";
 
@@ -75,7 +76,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse<T
     if (err instanceof AppError) {
       return NextResponse.json({ data: null, error: err.message }, { status: err.statusCode });
     }
-    console.error("[POST /api/dar/attachments/temp]", err);
+    logger.error("[POST /api/dar/attachments/temp]", err);
     return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 });
   }
 }

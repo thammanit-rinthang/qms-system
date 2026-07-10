@@ -30,7 +30,7 @@ export default function DarObjectiveSection({
             <span className="label-text text-[14px]">{t("fieldObjective")} <span className="text-error">*</span></span>
           </label>
           <select
-            className={`select select-bordered select-sm w-full text-[14px] ${errors?.objective ? "select-error" : ""}`}
+            className={`w-full h-8 px-3 py-1 text-[14px] rounded-md border bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500 ${errors?.objective ? "border-rose-500" : "border-slate-300"}`}
             value={objective}
             onChange={(e) => onObjectiveChange(e.target.value as DarObjective)}
           >
@@ -47,7 +47,7 @@ export default function DarObjectiveSection({
             <span className="label-text text-[14px]">{t("fieldDocType")} <span className="text-error">*</span></span>
           </label>
           <select
-            className={`select select-bordered select-sm w-full text-[14px] ${errors?.docType ? "select-error" : ""}`}
+            className={`w-full h-8 px-3 py-1 text-[14px] rounded-md border bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500 ${errors?.docType ? "border-rose-500" : "border-slate-300"}`}
             value={docType}
             onChange={(e) => onDocTypeChange(e.target.value as DarDocType)}
           >
@@ -66,7 +66,7 @@ export default function DarObjectiveSection({
             </label>
             <input
               type="text"
-              className={`input input-bordered input-sm w-full text-[14px] ${errors?.docTypeOther ? "input-error" : ""}`}
+              className={`flex h-8 w-full rounded-md border bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${errors?.docTypeOther ? "border-rose-500" : "border-input"}`}
               placeholder={t("phSpecifyDocType")}
               value={docTypeOther}
               onChange={(e) => onDocTypeOtherChange(e.target.value)}
