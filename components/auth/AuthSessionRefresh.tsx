@@ -17,7 +17,9 @@ export default function AuthSessionRefresh() {
           cache: "no-store",
         });
         if (response.status === 401) {
-          window.location.assign("/unauthorized?reason=session_expired");
+          const cb = window.location.pathname + window.location.search;
+          const loginUrl = `/auth/login?callbackUrl=${encodeURIComponent(cb)}`;
+          window.location.assign(`/api/auth/signout?callbackUrl=${encodeURIComponent(loginUrl)}`);
         }
       } catch {
         // A transient network failure should not log the user out; the next poll retries.

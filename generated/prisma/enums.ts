@@ -69,6 +69,7 @@ export const ApprovalModule = {
   DAR: 'DAR',
   KPI: 'KPI',
   KPI_MONTHLY: 'KPI_MONTHLY',
+  KPI_MONTHLY_SUMMARY: 'KPI_MONTHLY_SUMMARY',
   CAR: 'CAR',
   AUDIT: 'AUDIT'
 } as const

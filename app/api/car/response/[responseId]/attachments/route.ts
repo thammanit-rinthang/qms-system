@@ -6,6 +6,7 @@ import { CarAttachmentRepository } from "@/repositories/carAttachmentRepository"
 import { uploadFileToCarResponse, deleteSpItem } from "@/services/sharepoint";
 import { getUserSnapshot } from "@/lib/userSnapshotCache";
 import { logger } from "@/lib/logger";
+import { hasValidMagicBytes } from "@/lib/fileValidation";
 
 const repo = new CarAttachmentRepository();
 
@@ -63,6 +64,9 @@ export async function POST(
     const safeFile = new File([file], fileName, { type: file.type });
 
     const buffer = new Uint8Array(await safeFile.arrayBuffer());
+    if (!hasValidMagicBytes(buffer, safeFile.type)) {
+      throw new ValidationError("File signature does not match its type");
+    }
     const sp = await uploadFileToCarResponse({
       fileBuffer: buffer,
       fileName: safeFile.name,

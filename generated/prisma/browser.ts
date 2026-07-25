@@ -118,6 +118,11 @@ export type KPIObjective = Prisma.KPIObjectiveModel
  */
 export type KPIMonthlyReport = Prisma.KPIMonthlyReportModel
 /**
+ * Model KPIMonthlySummaryReview
+ * 
+ */
+export type KPIMonthlySummaryReview = Prisma.KPIMonthlySummaryReviewModel
+/**
  * Model KPIMonthlyDetail
  * 
  */

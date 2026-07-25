@@ -71,6 +71,7 @@ export const ModelName = {
   KPI: 'KPI',
   KPIObjective: 'KPIObjective',
   KPIMonthlyReport: 'KPIMonthlyReport',
+  KPIMonthlySummaryReview: 'KPIMonthlySummaryReview',
   KPIMonthlyDetail: 'KPIMonthlyDetail',
   KPICorrectiveAction: 'KPICorrectiveAction',
   DocumentControl: 'DocumentControl',
@@ -495,6 +496,30 @@ export const KPIMonthlyReportScalarFieldEnum = {
 } as const
 
 export type KPIMonthlyReportScalarFieldEnum = (typeof KPIMonthlyReportScalarFieldEnum)[keyof typeof KPIMonthlyReportScalarFieldEnum]
+
+
+export const KPIMonthlySummaryReviewScalarFieldEnum = {
+  id: 'id',
+  year: 'year',
+  status: 'status',
+  prepareBy: 'prepareBy',
+  reviewerUserId: 'reviewerUserId',
+  reviewerAuthUserId: 'reviewerAuthUserId',
+  reviewerName: 'reviewerName',
+  reviewerEmail: 'reviewerEmail',
+  approverUserId: 'approverUserId',
+  approverAuthUserId: 'approverAuthUserId',
+  approverName: 'approverName',
+  approverEmail: 'approverEmail',
+  emailGroupMails: 'emailGroupMails',
+  emailGroupMailsCc: 'emailGroupMailsCc',
+  submittedAt: 'submittedAt',
+  approvedAt: 'approvedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KPIMonthlySummaryReviewScalarFieldEnum = (typeof KPIMonthlySummaryReviewScalarFieldEnum)[keyof typeof KPIMonthlySummaryReviewScalarFieldEnum]
 
 
 export const KPIMonthlyDetailScalarFieldEnum = {

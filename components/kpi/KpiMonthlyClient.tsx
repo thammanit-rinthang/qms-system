@@ -384,16 +384,30 @@ export default function KpiMonthlyClient({ userRole, userId, monthlyFormDocName 
         title={t("kpi.monthly.title")}
         subtitle={t("kpi.monthly.subtitle")}
         actions={(
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="rounded-xl border-slate-200"
-            onClick={handleExport}
-          >
-            <Download className="mr-1.5 h-4 w-4" />
-            Export Excel
-          </Button>
+          <div className="flex items-center gap-2">
+            {isPrivileged(userRole) && (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="rounded-xl border-slate-200"
+                onClick={() => window.open(`/print/qms/kpi/monthly?year=${year}`, "_blank")}
+              >
+                <ShieldCheck className="mr-1.5 h-4 w-4" />
+                Review
+              </Button>
+            )}
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="rounded-xl border-slate-200"
+              onClick={handleExport}
+            >
+              <Download className="mr-1.5 h-4 w-4" />
+              Export Excel
+            </Button>
+          </div>
         )}
       />
 

@@ -404,6 +404,7 @@ export const ModelName = {
   KPI: 'KPI',
   KPIObjective: 'KPIObjective',
   KPIMonthlyReport: 'KPIMonthlyReport',
+  KPIMonthlySummaryReview: 'KPIMonthlySummaryReview',
   KPIMonthlyDetail: 'KPIMonthlyDetail',
   KPICorrectiveAction: 'KPICorrectiveAction',
   DocumentControl: 'DocumentControl',
@@ -457,7 +458,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "systemConfig" | "localRoleGrant" | "departmentCode" | "kpiDept" | "docControlDept" | "userPreference" | "announcement" | "darMaster" | "darItem" | "darDistribution" | "darAttachment" | "darAttachmentAction" | "darApproval" | "darRejectionHistory" | "approvalSignature" | "qmsProcessing" | "publicDocument" | "kPI" | "kPIObjective" | "kPIMonthlyReport" | "kPIMonthlyDetail" | "kPICorrectiveAction" | "documentControl" | "documentCategory" | "documentControlRevision" | "documentDistribution" | "documentDistributionTarget" | "auditLog" | "notificationLog" | "notification" | "actionToken" | "carMaster" | "carResponse" | "carVerification" | "carMrSignature" | "carAttachment" | "carMrResponseReview" | "carNotificationLog" | "auditAppointment" | "auditAppointmentMember" | "auditAppointmentSignoff" | "auditSessionPlan" | "auditSessionRow" | "auditSessionTeamMember" | "auditGanttRow" | "auditPlan" | "auditStandard" | "auditPlanDepartment" | "auditAuditorAssignment" | "auditSchedule" | "auditScheduleTeamMember" | "auditAttachment" | "auditAnnouncement" | "auditFinding" | "auditCorrectiveAction" | "auditVerification" | "auditSignoff" | "auditReport"
+    modelProps: "systemConfig" | "localRoleGrant" | "departmentCode" | "kpiDept" | "docControlDept" | "userPreference" | "announcement" | "darMaster" | "darItem" | "darDistribution" | "darAttachment" | "darAttachmentAction" | "darApproval" | "darRejectionHistory" | "approvalSignature" | "qmsProcessing" | "publicDocument" | "kPI" | "kPIObjective" | "kPIMonthlyReport" | "kPIMonthlySummaryReview" | "kPIMonthlyDetail" | "kPICorrectiveAction" | "documentControl" | "documentCategory" | "documentControlRevision" | "documentDistribution" | "documentDistributionTarget" | "auditLog" | "notificationLog" | "notification" | "actionToken" | "carMaster" | "carResponse" | "carVerification" | "carMrSignature" | "carAttachment" | "carMrResponseReview" | "carNotificationLog" | "auditAppointment" | "auditAppointmentMember" | "auditAppointmentSignoff" | "auditSessionPlan" | "auditSessionRow" | "auditSessionTeamMember" | "auditGanttRow" | "auditPlan" | "auditStandard" | "auditPlanDepartment" | "auditAuditorAssignment" | "auditSchedule" | "auditScheduleTeamMember" | "auditAttachment" | "auditAnnouncement" | "auditFinding" | "auditCorrectiveAction" | "auditVerification" | "auditSignoff" | "auditReport"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1938,6 +1939,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.KPIMonthlyReportCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.KPIMonthlyReportCountAggregateOutputType> | number
+        }
+      }
+    }
+    KPIMonthlySummaryReview: {
+      payload: Prisma.$KPIMonthlySummaryReviewPayload<ExtArgs>
+      fields: Prisma.KPIMonthlySummaryReviewFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KPIMonthlySummaryReviewFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KPIMonthlySummaryReviewFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewPayload>
+        }
+        findFirst: {
+          args: Prisma.KPIMonthlySummaryReviewFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KPIMonthlySummaryReviewFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewPayload>
+        }
+        findMany: {
+          args: Prisma.KPIMonthlySummaryReviewFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewPayload>[]
+        }
+        create: {
+          args: Prisma.KPIMonthlySummaryReviewCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewPayload>
+        }
+        createMany: {
+          args: Prisma.KPIMonthlySummaryReviewCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KPIMonthlySummaryReviewCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewPayload>[]
+        }
+        delete: {
+          args: Prisma.KPIMonthlySummaryReviewDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewPayload>
+        }
+        update: {
+          args: Prisma.KPIMonthlySummaryReviewUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewPayload>
+        }
+        deleteMany: {
+          args: Prisma.KPIMonthlySummaryReviewDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KPIMonthlySummaryReviewUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KPIMonthlySummaryReviewUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewPayload>[]
+        }
+        upsert: {
+          args: Prisma.KPIMonthlySummaryReviewUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewPayload>
+        }
+        aggregate: {
+          args: Prisma.KPIMonthlySummaryReviewAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKPIMonthlySummaryReview>
+        }
+        groupBy: {
+          args: Prisma.KPIMonthlySummaryReviewGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KPIMonthlySummaryReviewGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KPIMonthlySummaryReviewCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KPIMonthlySummaryReviewCountAggregateOutputType> | number
         }
       }
     }
@@ -5162,6 +5237,30 @@ export const KPIMonthlyReportScalarFieldEnum = {
 export type KPIMonthlyReportScalarFieldEnum = (typeof KPIMonthlyReportScalarFieldEnum)[keyof typeof KPIMonthlyReportScalarFieldEnum]
 
 
+export const KPIMonthlySummaryReviewScalarFieldEnum = {
+  id: 'id',
+  year: 'year',
+  status: 'status',
+  prepareBy: 'prepareBy',
+  reviewerUserId: 'reviewerUserId',
+  reviewerAuthUserId: 'reviewerAuthUserId',
+  reviewerName: 'reviewerName',
+  reviewerEmail: 'reviewerEmail',
+  approverUserId: 'approverUserId',
+  approverAuthUserId: 'approverAuthUserId',
+  approverName: 'approverName',
+  approverEmail: 'approverEmail',
+  emailGroupMails: 'emailGroupMails',
+  emailGroupMailsCc: 'emailGroupMailsCc',
+  submittedAt: 'submittedAt',
+  approvedAt: 'approvedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KPIMonthlySummaryReviewScalarFieldEnum = (typeof KPIMonthlySummaryReviewScalarFieldEnum)[keyof typeof KPIMonthlySummaryReviewScalarFieldEnum]
+
+
 export const KPIMonthlyDetailScalarFieldEnum = {
   id: 'id',
   monthlyReportId: 'monthlyReportId',
@@ -6484,6 +6583,7 @@ export type GlobalOmitConfig = {
   kPI?: Prisma.KPIOmit
   kPIObjective?: Prisma.KPIObjectiveOmit
   kPIMonthlyReport?: Prisma.KPIMonthlyReportOmit
+  kPIMonthlySummaryReview?: Prisma.KPIMonthlySummaryReviewOmit
   kPIMonthlyDetail?: Prisma.KPIMonthlyDetailOmit
   kPICorrectiveAction?: Prisma.KPICorrectiveActionOmit
   documentControl?: Prisma.DocumentControlOmit

@@ -17,6 +17,18 @@ const AUTH_LIMIT = { limit: 60, windowMs: 60_000 };
 const API_LIMIT = { limit: 300, windowMs: 60_000 };
 
 const PUBLIC_PATHS = ["/auth/login", "/auth/error", "/unauthorized"];
+const PUBLIC_API_PATHS = [
+  "/api/health",
+  "/api/health/live",
+  "/api/health/ready",
+];
+
+function isPublicApiPath(path: string): boolean {
+  return path === "/api/health" ||
+    path === "/api/health/live" ||
+    path === "/api/health/ready" ||
+    path.startsWith("/api/cron/");
+}
 
 function getClientIp(req: NextRequest): string {
   return (
@@ -69,6 +81,14 @@ export default auth(async (req) => {
   requestHeaders.set("x-request-id", requestId);
 
   if (path.startsWith("/api/")) {
+    // These handlers authenticate independently: health probes are public and
+    // cron endpoints use their own bearer secret. They must not require a
+    // browser session or consume the normal API rate-limit bucket.
+    if (PUBLIC_API_PATHS.includes(path) || isPublicApiPath(path)) {
+      logRequest(req.method, path, 200, ip, requestId);
+      return withRequestId(NextResponse.next({ request: { headers: requestHeaders } }), requestId);
+    }
+
     // API consumers (including PDF iframes) must receive a machine-readable
     // 401 instead of being redirected to the app root/Auth Center HTML page.
     if (!session?.user) {
@@ -157,7 +177,7 @@ export default auth(async (req) => {
   if (isAuthCenterAccessTokenExpired(session.user.accessTokenExpiresAt, undefined, session.user.accessToken)) {
     logRequest(req.method, path, 401, ip, requestId, session.user.id);
     const signOutUrl = new URL("/api/auth/signout", req.url);
-    signOutUrl.searchParams.set("callbackUrl", `/unauthorized?reason=session_expired&callbackUrl=${encodeURIComponent(path + nextUrl.search)}`);
+    signOutUrl.searchParams.set("callbackUrl", `/auth/login?callbackUrl=${encodeURIComponent(path + nextUrl.search)}`);
     return withRequestId(NextResponse.redirect(signOutUrl), requestId);
   }
 

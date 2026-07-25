@@ -90,7 +90,9 @@ export function NotificationBell() {
           error?: { code?: string };
         } | null;
         if (payload?.error?.code === "SESSION_EXPIRED") {
-          window.location.assign("/unauthorized?reason=session_expired");
+          const cb = window.location.pathname + window.location.search;
+          const loginUrl = `/auth/login?callbackUrl=${encodeURIComponent(cb)}`;
+          window.location.assign(`/api/auth/signout?callbackUrl=${encodeURIComponent(loginUrl)}`);
         }
         throw new Error("Session expired");
       }

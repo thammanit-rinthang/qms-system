@@ -406,6 +406,29 @@ model KPIMonthlyReport {
   @@map("kpi_monthly_reports")
 }
 
+model KPIMonthlySummaryReview {
+  id                 String        @id @default(uuid())
+  year               Int           @unique
+  status             MonthlyStatus @default(DRAFT)
+  prepareBy          String?       @map("prepare_by")
+  reviewerUserId     String?       @map("reviewer_user_id")
+  reviewerAuthUserId String?       @map("reviewer_auth_user_id")
+  reviewerName       String?       @map("reviewer_name")
+  reviewerEmail      String?       @map("reviewer_email")
+  approverUserId     String?       @map("approver_user_id")
+  approverAuthUserId String?       @map("approver_auth_user_id")
+  approverName       String?       @map("approver_name")
+  approverEmail      String?       @map("approver_email")
+  emailGroupMails    String[]      @default([]) @map("email_group_mails")
+  emailGroupMailsCc  String[]      @default([]) @map("email_group_mails_cc")
+  submittedAt        DateTime?     @map("submitted_at")
+  approvedAt         DateTime?     @map("approved_at")
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  @@map("kpi_monthly_summary_reviews")
+}
+
 model KPIMonthlyDetail {
   id                String                @id @default(uuid())
   monthlyReportId   String                @map("monthly_report_id")
@@ -483,6 +506,7 @@ enum ApprovalModule {
   DAR
   KPI
   KPI_MONTHLY
+  KPI_MONTHLY_SUMMARY
   CAR
   AUDIT
 }

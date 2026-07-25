@@ -6,19 +6,7 @@ import { AppError } from "@/lib/errors";
 import { logger } from "@/lib/logger";
 import { uploadFileToTemp } from "@/services/sharepoint";
 import type { ApiResponse } from "@/types/api";
-
-const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20 MB
-const ALLOWED_MIME = new Set([
-  "application/pdf",
-  "application/msword",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  "application/vnd.ms-excel",
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  "image/png",
-  "image/jpeg",
-  "image/gif",
-  "image/webp",
-]);
+import { ALLOWED_MIME, MAX_FILE_SIZE, hasValidMagicBytes } from "@/lib/fileValidation";
 
 export interface TempAttachmentResponse {
   spItemId: string;
@@ -66,6 +54,9 @@ export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse<T
     }
 
     const buffer = new Uint8Array(await file.arrayBuffer());
+    if (!hasValidMagicBytes(buffer, file.type)) {
+      return NextResponse.json({ data: null, error: "File signature does not match its type" }, { status: 400 });
+    }
     const sp = await uploadFileToTemp({ fileBuffer: buffer, fileName, mimeType: file.type, tempId });
 
     return NextResponse.json({

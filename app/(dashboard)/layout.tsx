@@ -10,7 +10,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     session = await requireAuth();
   } catch (error) {
     if (error instanceof SessionExpiredError) {
-      redirect("/unauthorized?reason=session_expired");
+      redirect(`/api/auth/signout?callbackUrl=${encodeURIComponent("/auth/login")}`);
     }
     throw error;
   }

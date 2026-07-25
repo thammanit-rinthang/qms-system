@@ -11,6 +11,32 @@
 
 import { redis } from "@/lib/redis";
 
+type LocalBucket = { count: number; resetAt: number };
+const localBuckets = new Map<string, LocalBucket>();
+let lastRedisWarningAt = 0;
+
+function localRateLimit(key: string, config: RateLimitConfig): RateLimitResult {
+  const now = Date.now();
+  const existing = localBuckets.get(key);
+  const bucket = existing && existing.resetAt > now
+    ? { count: existing.count + 1, resetAt: existing.resetAt }
+    : { count: 1, resetAt: now + config.windowMs };
+
+  localBuckets.set(key, bucket);
+  if (localBuckets.size > 10_000) {
+    for (const [bucketKey, value] of localBuckets) {
+      if (value.resetAt <= now) localBuckets.delete(bucketKey);
+    }
+  }
+
+  return {
+    allowed: bucket.count <= config.limit,
+    limit: config.limit,
+    remaining: Math.max(0, config.limit - bucket.count),
+    resetAt: bucket.resetAt,
+  };
+}
+
 export interface RateLimitConfig {
   limit: number;
   windowMs: number;
@@ -51,13 +77,14 @@ export async function rateLimit(
       resetAt,
     };
   } catch (err) {
-    // Redis unavailable — fail open to avoid blocking all users
-    console.error("[rate-limit] Redis error, failing open:", err);
-    return {
-      allowed: true,
-      limit: config.limit,
-      remaining: config.limit,
-      resetAt: Date.now() + config.windowMs,
-    };
+    // Redis is shared across instances, but a bounded local fallback keeps
+    // rate limiting effective during a Redis outage instead of disabling the
+    // control entirely. It is intentionally not treated as a replacement for
+    // Redis in normal operation.
+    if (Date.now() - lastRedisWarningAt > 30_000) {
+      lastRedisWarningAt = Date.now();
+      console.error("[rate-limit] Redis unavailable, using local fallback", err);
+    }
+    return localRateLimit(key, config);
   }
 }

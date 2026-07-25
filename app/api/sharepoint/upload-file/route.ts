@@ -4,6 +4,7 @@ import { requireRoleEdge } from "@/lib/auth";
 import { uploadFile } from "@/lib/sharepoint";
 import { AppError } from "@/lib/errors";
 import { logger } from "@/lib/logger";
+import { ALLOWED_MIME, MAX_FILE_SIZE, hasValidMagicBytes } from "@/lib/fileValidation";
 
 export async function POST(req: NextRequest) {
   try {
@@ -14,6 +15,12 @@ export async function POST(req: NextRequest) {
 
     if (!file) {
       return NextResponse.json({ data: null, error: "No file provided" }, { status: 400 });
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      return NextResponse.json({ data: null, error: "File exceeds 20 MB" }, { status: 400 });
+    }
+    if (!ALLOWED_MIME.has(file.type)) {
+      return NextResponse.json({ data: null, error: "File type is not allowed" }, { status: 400 });
     }
 
     const rawFilename = (formData.get("filename") as string | null) || file.name;
@@ -27,6 +34,9 @@ export async function POST(req: NextRequest) {
     }
 
     const buffer = new Uint8Array(await file.arrayBuffer());
+    if (!hasValidMagicBytes(buffer, file.type)) {
+      return NextResponse.json({ data: null, error: "File signature does not match its type" }, { status: 400 });
+    }
 
     const uploaded = await uploadFile(fileName, buffer, folderPath);
 
