@@ -405,6 +405,7 @@ export const ModelName = {
   KPIObjective: 'KPIObjective',
   KPIMonthlyReport: 'KPIMonthlyReport',
   KPIMonthlySummaryReview: 'KPIMonthlySummaryReview',
+  KPIMonthlySummaryReviewHistory: 'KPIMonthlySummaryReviewHistory',
   KPIMonthlyDetail: 'KPIMonthlyDetail',
   KPICorrectiveAction: 'KPICorrectiveAction',
   DocumentControl: 'DocumentControl',
@@ -458,7 +459,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "systemConfig" | "localRoleGrant" | "departmentCode" | "kpiDept" | "docControlDept" | "userPreference" | "announcement" | "darMaster" | "darItem" | "darDistribution" | "darAttachment" | "darAttachmentAction" | "darApproval" | "darRejectionHistory" | "approvalSignature" | "qmsProcessing" | "publicDocument" | "kPI" | "kPIObjective" | "kPIMonthlyReport" | "kPIMonthlySummaryReview" | "kPIMonthlyDetail" | "kPICorrectiveAction" | "documentControl" | "documentCategory" | "documentControlRevision" | "documentDistribution" | "documentDistributionTarget" | "auditLog" | "notificationLog" | "notification" | "actionToken" | "carMaster" | "carResponse" | "carVerification" | "carMrSignature" | "carAttachment" | "carMrResponseReview" | "carNotificationLog" | "auditAppointment" | "auditAppointmentMember" | "auditAppointmentSignoff" | "auditSessionPlan" | "auditSessionRow" | "auditSessionTeamMember" | "auditGanttRow" | "auditPlan" | "auditStandard" | "auditPlanDepartment" | "auditAuditorAssignment" | "auditSchedule" | "auditScheduleTeamMember" | "auditAttachment" | "auditAnnouncement" | "auditFinding" | "auditCorrectiveAction" | "auditVerification" | "auditSignoff" | "auditReport"
+    modelProps: "systemConfig" | "localRoleGrant" | "departmentCode" | "kpiDept" | "docControlDept" | "userPreference" | "announcement" | "darMaster" | "darItem" | "darDistribution" | "darAttachment" | "darAttachmentAction" | "darApproval" | "darRejectionHistory" | "approvalSignature" | "qmsProcessing" | "publicDocument" | "kPI" | "kPIObjective" | "kPIMonthlyReport" | "kPIMonthlySummaryReview" | "kPIMonthlySummaryReviewHistory" | "kPIMonthlyDetail" | "kPICorrectiveAction" | "documentControl" | "documentCategory" | "documentControlRevision" | "documentDistribution" | "documentDistributionTarget" | "auditLog" | "notificationLog" | "notification" | "actionToken" | "carMaster" | "carResponse" | "carVerification" | "carMrSignature" | "carAttachment" | "carMrResponseReview" | "carNotificationLog" | "auditAppointment" | "auditAppointmentMember" | "auditAppointmentSignoff" | "auditSessionPlan" | "auditSessionRow" | "auditSessionTeamMember" | "auditGanttRow" | "auditPlan" | "auditStandard" | "auditPlanDepartment" | "auditAuditorAssignment" | "auditSchedule" | "auditScheduleTeamMember" | "auditAttachment" | "auditAnnouncement" | "auditFinding" | "auditCorrectiveAction" | "auditVerification" | "auditSignoff" | "auditReport"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2013,6 +2014,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.KPIMonthlySummaryReviewCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.KPIMonthlySummaryReviewCountAggregateOutputType> | number
+        }
+      }
+    }
+    KPIMonthlySummaryReviewHistory: {
+      payload: Prisma.$KPIMonthlySummaryReviewHistoryPayload<ExtArgs>
+      fields: Prisma.KPIMonthlySummaryReviewHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewHistoryPayload>
+        }
+        update: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KPIMonthlySummaryReviewHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKPIMonthlySummaryReviewHistory>
+        }
+        groupBy: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KPIMonthlySummaryReviewHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KPIMonthlySummaryReviewHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KPIMonthlySummaryReviewHistoryCountAggregateOutputType> | number
         }
       }
     }
@@ -5242,6 +5317,8 @@ export const KPIMonthlySummaryReviewScalarFieldEnum = {
   year: 'year',
   status: 'status',
   prepareBy: 'prepareBy',
+  prepareByName: 'prepareByName',
+  prepareByEmail: 'prepareByEmail',
   reviewerUserId: 'reviewerUserId',
   reviewerAuthUserId: 'reviewerAuthUserId',
   reviewerName: 'reviewerName',
@@ -5252,6 +5329,7 @@ export const KPIMonthlySummaryReviewScalarFieldEnum = {
   approverEmail: 'approverEmail',
   emailGroupMails: 'emailGroupMails',
   emailGroupMailsCc: 'emailGroupMailsCc',
+  cycleNo: 'cycleNo',
   submittedAt: 'submittedAt',
   approvedAt: 'approvedAt',
   createdAt: 'createdAt',
@@ -5259,6 +5337,25 @@ export const KPIMonthlySummaryReviewScalarFieldEnum = {
 } as const
 
 export type KPIMonthlySummaryReviewScalarFieldEnum = (typeof KPIMonthlySummaryReviewScalarFieldEnum)[keyof typeof KPIMonthlySummaryReviewScalarFieldEnum]
+
+
+export const KPIMonthlySummaryReviewHistoryScalarFieldEnum = {
+  id: 'id',
+  year: 'year',
+  cycleNo: 'cycleNo',
+  status: 'status',
+  prepareBy: 'prepareBy',
+  reviewerName: 'reviewerName',
+  reviewerEmail: 'reviewerEmail',
+  approverName: 'approverName',
+  approverEmail: 'approverEmail',
+  submittedAt: 'submittedAt',
+  closedAt: 'closedAt',
+  signatures: 'signatures',
+  createdAt: 'createdAt'
+} as const
+
+export type KPIMonthlySummaryReviewHistoryScalarFieldEnum = (typeof KPIMonthlySummaryReviewHistoryScalarFieldEnum)[keyof typeof KPIMonthlySummaryReviewHistoryScalarFieldEnum]
 
 
 export const KPIMonthlyDetailScalarFieldEnum = {
@@ -5953,19 +6050,19 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const NullableJsonNullValueInput = {
   DbNull: DbNull,
   JsonNull: JsonNull
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
-
-
-export const JsonNullValueInput = {
-  JsonNull: JsonNull
-} as const
-
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -6175,6 +6272,20 @@ export type ListEnumMonthlyStatusFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
  * Reference to a field of type 'AchievedStatus'
  */
 export type EnumAchievedStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AchievedStatus'>
@@ -6199,20 +6310,6 @@ export type EnumDocControlStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'DocControlStatus[]'
  */
 export type ListEnumDocControlStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DocControlStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -6584,6 +6681,7 @@ export type GlobalOmitConfig = {
   kPIObjective?: Prisma.KPIObjectiveOmit
   kPIMonthlyReport?: Prisma.KPIMonthlyReportOmit
   kPIMonthlySummaryReview?: Prisma.KPIMonthlySummaryReviewOmit
+  kPIMonthlySummaryReviewHistory?: Prisma.KPIMonthlySummaryReviewHistoryOmit
   kPIMonthlyDetail?: Prisma.KPIMonthlyDetailOmit
   kPICorrectiveAction?: Prisma.KPICorrectiveActionOmit
   documentControl?: Prisma.DocumentControlOmit

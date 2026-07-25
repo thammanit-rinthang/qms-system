@@ -28,10 +28,12 @@ export type AggregateKPIMonthlySummaryReview = {
 
 export type KPIMonthlySummaryReviewAvgAggregateOutputType = {
   year: number | null
+  cycleNo: number | null
 }
 
 export type KPIMonthlySummaryReviewSumAggregateOutputType = {
   year: number | null
+  cycleNo: number | null
 }
 
 export type KPIMonthlySummaryReviewMinAggregateOutputType = {
@@ -39,6 +41,8 @@ export type KPIMonthlySummaryReviewMinAggregateOutputType = {
   year: number | null
   status: $Enums.MonthlyStatus | null
   prepareBy: string | null
+  prepareByName: string | null
+  prepareByEmail: string | null
   reviewerUserId: string | null
   reviewerAuthUserId: string | null
   reviewerName: string | null
@@ -47,6 +51,7 @@ export type KPIMonthlySummaryReviewMinAggregateOutputType = {
   approverAuthUserId: string | null
   approverName: string | null
   approverEmail: string | null
+  cycleNo: number | null
   submittedAt: Date | null
   approvedAt: Date | null
   createdAt: Date | null
@@ -58,6 +63,8 @@ export type KPIMonthlySummaryReviewMaxAggregateOutputType = {
   year: number | null
   status: $Enums.MonthlyStatus | null
   prepareBy: string | null
+  prepareByName: string | null
+  prepareByEmail: string | null
   reviewerUserId: string | null
   reviewerAuthUserId: string | null
   reviewerName: string | null
@@ -66,6 +73,7 @@ export type KPIMonthlySummaryReviewMaxAggregateOutputType = {
   approverAuthUserId: string | null
   approverName: string | null
   approverEmail: string | null
+  cycleNo: number | null
   submittedAt: Date | null
   approvedAt: Date | null
   createdAt: Date | null
@@ -77,6 +85,8 @@ export type KPIMonthlySummaryReviewCountAggregateOutputType = {
   year: number
   status: number
   prepareBy: number
+  prepareByName: number
+  prepareByEmail: number
   reviewerUserId: number
   reviewerAuthUserId: number
   reviewerName: number
@@ -87,6 +97,7 @@ export type KPIMonthlySummaryReviewCountAggregateOutputType = {
   approverEmail: number
   emailGroupMails: number
   emailGroupMailsCc: number
+  cycleNo: number
   submittedAt: number
   approvedAt: number
   createdAt: number
@@ -97,10 +108,12 @@ export type KPIMonthlySummaryReviewCountAggregateOutputType = {
 
 export type KPIMonthlySummaryReviewAvgAggregateInputType = {
   year?: true
+  cycleNo?: true
 }
 
 export type KPIMonthlySummaryReviewSumAggregateInputType = {
   year?: true
+  cycleNo?: true
 }
 
 export type KPIMonthlySummaryReviewMinAggregateInputType = {
@@ -108,6 +121,8 @@ export type KPIMonthlySummaryReviewMinAggregateInputType = {
   year?: true
   status?: true
   prepareBy?: true
+  prepareByName?: true
+  prepareByEmail?: true
   reviewerUserId?: true
   reviewerAuthUserId?: true
   reviewerName?: true
@@ -116,6 +131,7 @@ export type KPIMonthlySummaryReviewMinAggregateInputType = {
   approverAuthUserId?: true
   approverName?: true
   approverEmail?: true
+  cycleNo?: true
   submittedAt?: true
   approvedAt?: true
   createdAt?: true
@@ -127,6 +143,8 @@ export type KPIMonthlySummaryReviewMaxAggregateInputType = {
   year?: true
   status?: true
   prepareBy?: true
+  prepareByName?: true
+  prepareByEmail?: true
   reviewerUserId?: true
   reviewerAuthUserId?: true
   reviewerName?: true
@@ -135,6 +153,7 @@ export type KPIMonthlySummaryReviewMaxAggregateInputType = {
   approverAuthUserId?: true
   approverName?: true
   approverEmail?: true
+  cycleNo?: true
   submittedAt?: true
   approvedAt?: true
   createdAt?: true
@@ -146,6 +165,8 @@ export type KPIMonthlySummaryReviewCountAggregateInputType = {
   year?: true
   status?: true
   prepareBy?: true
+  prepareByName?: true
+  prepareByEmail?: true
   reviewerUserId?: true
   reviewerAuthUserId?: true
   reviewerName?: true
@@ -156,6 +177,7 @@ export type KPIMonthlySummaryReviewCountAggregateInputType = {
   approverEmail?: true
   emailGroupMails?: true
   emailGroupMailsCc?: true
+  cycleNo?: true
   submittedAt?: true
   approvedAt?: true
   createdAt?: true
@@ -254,6 +276,8 @@ export type KPIMonthlySummaryReviewGroupByOutputType = {
   year: number
   status: $Enums.MonthlyStatus
   prepareBy: string | null
+  prepareByName: string | null
+  prepareByEmail: string | null
   reviewerUserId: string | null
   reviewerAuthUserId: string | null
   reviewerName: string | null
@@ -264,6 +288,7 @@ export type KPIMonthlySummaryReviewGroupByOutputType = {
   approverEmail: string | null
   emailGroupMails: string[]
   emailGroupMailsCc: string[]
+  cycleNo: number
   submittedAt: Date | null
   approvedAt: Date | null
   createdAt: Date
@@ -298,6 +323,8 @@ export type KPIMonthlySummaryReviewWhereInput = {
   year?: Prisma.IntFilter<"KPIMonthlySummaryReview"> | number
   status?: Prisma.EnumMonthlyStatusFilter<"KPIMonthlySummaryReview"> | $Enums.MonthlyStatus
   prepareBy?: Prisma.StringNullableFilter<"KPIMonthlySummaryReview"> | string | null
+  prepareByName?: Prisma.StringNullableFilter<"KPIMonthlySummaryReview"> | string | null
+  prepareByEmail?: Prisma.StringNullableFilter<"KPIMonthlySummaryReview"> | string | null
   reviewerUserId?: Prisma.StringNullableFilter<"KPIMonthlySummaryReview"> | string | null
   reviewerAuthUserId?: Prisma.StringNullableFilter<"KPIMonthlySummaryReview"> | string | null
   reviewerName?: Prisma.StringNullableFilter<"KPIMonthlySummaryReview"> | string | null
@@ -308,6 +335,7 @@ export type KPIMonthlySummaryReviewWhereInput = {
   approverEmail?: Prisma.StringNullableFilter<"KPIMonthlySummaryReview"> | string | null
   emailGroupMails?: Prisma.StringNullableListFilter<"KPIMonthlySummaryReview">
   emailGroupMailsCc?: Prisma.StringNullableListFilter<"KPIMonthlySummaryReview">
+  cycleNo?: Prisma.IntFilter<"KPIMonthlySummaryReview"> | number
   submittedAt?: Prisma.DateTimeNullableFilter<"KPIMonthlySummaryReview"> | Date | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"KPIMonthlySummaryReview"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"KPIMonthlySummaryReview"> | Date | string
@@ -319,6 +347,8 @@ export type KPIMonthlySummaryReviewOrderByWithRelationInput = {
   year?: Prisma.SortOrder
   status?: Prisma.SortOrder
   prepareBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  prepareByName?: Prisma.SortOrderInput | Prisma.SortOrder
+  prepareByEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewerUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewerAuthUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewerName?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -329,6 +359,7 @@ export type KPIMonthlySummaryReviewOrderByWithRelationInput = {
   approverEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   emailGroupMails?: Prisma.SortOrder
   emailGroupMailsCc?: Prisma.SortOrder
+  cycleNo?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -343,6 +374,8 @@ export type KPIMonthlySummaryReviewWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.KPIMonthlySummaryReviewWhereInput | Prisma.KPIMonthlySummaryReviewWhereInput[]
   status?: Prisma.EnumMonthlyStatusFilter<"KPIMonthlySummaryReview"> | $Enums.MonthlyStatus
   prepareBy?: Prisma.StringNullableFilter<"KPIMonthlySummaryReview"> | string | null
+  prepareByName?: Prisma.StringNullableFilter<"KPIMonthlySummaryReview"> | string | null
+  prepareByEmail?: Prisma.StringNullableFilter<"KPIMonthlySummaryReview"> | string | null
   reviewerUserId?: Prisma.StringNullableFilter<"KPIMonthlySummaryReview"> | string | null
   reviewerAuthUserId?: Prisma.StringNullableFilter<"KPIMonthlySummaryReview"> | string | null
   reviewerName?: Prisma.StringNullableFilter<"KPIMonthlySummaryReview"> | string | null
@@ -353,6 +386,7 @@ export type KPIMonthlySummaryReviewWhereUniqueInput = Prisma.AtLeast<{
   approverEmail?: Prisma.StringNullableFilter<"KPIMonthlySummaryReview"> | string | null
   emailGroupMails?: Prisma.StringNullableListFilter<"KPIMonthlySummaryReview">
   emailGroupMailsCc?: Prisma.StringNullableListFilter<"KPIMonthlySummaryReview">
+  cycleNo?: Prisma.IntFilter<"KPIMonthlySummaryReview"> | number
   submittedAt?: Prisma.DateTimeNullableFilter<"KPIMonthlySummaryReview"> | Date | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"KPIMonthlySummaryReview"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"KPIMonthlySummaryReview"> | Date | string
@@ -364,6 +398,8 @@ export type KPIMonthlySummaryReviewOrderByWithAggregationInput = {
   year?: Prisma.SortOrder
   status?: Prisma.SortOrder
   prepareBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  prepareByName?: Prisma.SortOrderInput | Prisma.SortOrder
+  prepareByEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewerUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewerAuthUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewerName?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -374,6 +410,7 @@ export type KPIMonthlySummaryReviewOrderByWithAggregationInput = {
   approverEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   emailGroupMails?: Prisma.SortOrder
   emailGroupMailsCc?: Prisma.SortOrder
+  cycleNo?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -393,6 +430,8 @@ export type KPIMonthlySummaryReviewScalarWhereWithAggregatesInput = {
   year?: Prisma.IntWithAggregatesFilter<"KPIMonthlySummaryReview"> | number
   status?: Prisma.EnumMonthlyStatusWithAggregatesFilter<"KPIMonthlySummaryReview"> | $Enums.MonthlyStatus
   prepareBy?: Prisma.StringNullableWithAggregatesFilter<"KPIMonthlySummaryReview"> | string | null
+  prepareByName?: Prisma.StringNullableWithAggregatesFilter<"KPIMonthlySummaryReview"> | string | null
+  prepareByEmail?: Prisma.StringNullableWithAggregatesFilter<"KPIMonthlySummaryReview"> | string | null
   reviewerUserId?: Prisma.StringNullableWithAggregatesFilter<"KPIMonthlySummaryReview"> | string | null
   reviewerAuthUserId?: Prisma.StringNullableWithAggregatesFilter<"KPIMonthlySummaryReview"> | string | null
   reviewerName?: Prisma.StringNullableWithAggregatesFilter<"KPIMonthlySummaryReview"> | string | null
@@ -403,6 +442,7 @@ export type KPIMonthlySummaryReviewScalarWhereWithAggregatesInput = {
   approverEmail?: Prisma.StringNullableWithAggregatesFilter<"KPIMonthlySummaryReview"> | string | null
   emailGroupMails?: Prisma.StringNullableListFilter<"KPIMonthlySummaryReview">
   emailGroupMailsCc?: Prisma.StringNullableListFilter<"KPIMonthlySummaryReview">
+  cycleNo?: Prisma.IntWithAggregatesFilter<"KPIMonthlySummaryReview"> | number
   submittedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"KPIMonthlySummaryReview"> | Date | string | null
   approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"KPIMonthlySummaryReview"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"KPIMonthlySummaryReview"> | Date | string
@@ -414,6 +454,8 @@ export type KPIMonthlySummaryReviewCreateInput = {
   year: number
   status?: $Enums.MonthlyStatus
   prepareBy?: string | null
+  prepareByName?: string | null
+  prepareByEmail?: string | null
   reviewerUserId?: string | null
   reviewerAuthUserId?: string | null
   reviewerName?: string | null
@@ -424,6 +466,7 @@ export type KPIMonthlySummaryReviewCreateInput = {
   approverEmail?: string | null
   emailGroupMails?: Prisma.KPIMonthlySummaryReviewCreateemailGroupMailsInput | string[]
   emailGroupMailsCc?: Prisma.KPIMonthlySummaryReviewCreateemailGroupMailsCcInput | string[]
+  cycleNo?: number
   submittedAt?: Date | string | null
   approvedAt?: Date | string | null
   createdAt?: Date | string
@@ -435,6 +478,8 @@ export type KPIMonthlySummaryReviewUncheckedCreateInput = {
   year: number
   status?: $Enums.MonthlyStatus
   prepareBy?: string | null
+  prepareByName?: string | null
+  prepareByEmail?: string | null
   reviewerUserId?: string | null
   reviewerAuthUserId?: string | null
   reviewerName?: string | null
@@ -445,6 +490,7 @@ export type KPIMonthlySummaryReviewUncheckedCreateInput = {
   approverEmail?: string | null
   emailGroupMails?: Prisma.KPIMonthlySummaryReviewCreateemailGroupMailsInput | string[]
   emailGroupMailsCc?: Prisma.KPIMonthlySummaryReviewCreateemailGroupMailsCcInput | string[]
+  cycleNo?: number
   submittedAt?: Date | string | null
   approvedAt?: Date | string | null
   createdAt?: Date | string
@@ -456,6 +502,8 @@ export type KPIMonthlySummaryReviewUpdateInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumMonthlyStatusFieldUpdateOperationsInput | $Enums.MonthlyStatus
   prepareBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prepareByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prepareByEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -466,6 +514,7 @@ export type KPIMonthlySummaryReviewUpdateInput = {
   approverEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailGroupMails?: Prisma.KPIMonthlySummaryReviewUpdateemailGroupMailsInput | string[]
   emailGroupMailsCc?: Prisma.KPIMonthlySummaryReviewUpdateemailGroupMailsCcInput | string[]
+  cycleNo?: Prisma.IntFieldUpdateOperationsInput | number
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -477,6 +526,8 @@ export type KPIMonthlySummaryReviewUncheckedUpdateInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumMonthlyStatusFieldUpdateOperationsInput | $Enums.MonthlyStatus
   prepareBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prepareByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prepareByEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -487,6 +538,7 @@ export type KPIMonthlySummaryReviewUncheckedUpdateInput = {
   approverEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailGroupMails?: Prisma.KPIMonthlySummaryReviewUpdateemailGroupMailsInput | string[]
   emailGroupMailsCc?: Prisma.KPIMonthlySummaryReviewUpdateemailGroupMailsCcInput | string[]
+  cycleNo?: Prisma.IntFieldUpdateOperationsInput | number
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -498,6 +550,8 @@ export type KPIMonthlySummaryReviewCreateManyInput = {
   year: number
   status?: $Enums.MonthlyStatus
   prepareBy?: string | null
+  prepareByName?: string | null
+  prepareByEmail?: string | null
   reviewerUserId?: string | null
   reviewerAuthUserId?: string | null
   reviewerName?: string | null
@@ -508,6 +562,7 @@ export type KPIMonthlySummaryReviewCreateManyInput = {
   approverEmail?: string | null
   emailGroupMails?: Prisma.KPIMonthlySummaryReviewCreateemailGroupMailsInput | string[]
   emailGroupMailsCc?: Prisma.KPIMonthlySummaryReviewCreateemailGroupMailsCcInput | string[]
+  cycleNo?: number
   submittedAt?: Date | string | null
   approvedAt?: Date | string | null
   createdAt?: Date | string
@@ -519,6 +574,8 @@ export type KPIMonthlySummaryReviewUpdateManyMutationInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumMonthlyStatusFieldUpdateOperationsInput | $Enums.MonthlyStatus
   prepareBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prepareByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prepareByEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -529,6 +586,7 @@ export type KPIMonthlySummaryReviewUpdateManyMutationInput = {
   approverEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailGroupMails?: Prisma.KPIMonthlySummaryReviewUpdateemailGroupMailsInput | string[]
   emailGroupMailsCc?: Prisma.KPIMonthlySummaryReviewUpdateemailGroupMailsCcInput | string[]
+  cycleNo?: Prisma.IntFieldUpdateOperationsInput | number
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -540,6 +598,8 @@ export type KPIMonthlySummaryReviewUncheckedUpdateManyInput = {
   year?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumMonthlyStatusFieldUpdateOperationsInput | $Enums.MonthlyStatus
   prepareBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prepareByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prepareByEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -550,6 +610,7 @@ export type KPIMonthlySummaryReviewUncheckedUpdateManyInput = {
   approverEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailGroupMails?: Prisma.KPIMonthlySummaryReviewUpdateemailGroupMailsInput | string[]
   emailGroupMailsCc?: Prisma.KPIMonthlySummaryReviewUpdateemailGroupMailsCcInput | string[]
+  cycleNo?: Prisma.IntFieldUpdateOperationsInput | number
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -569,6 +630,8 @@ export type KPIMonthlySummaryReviewCountOrderByAggregateInput = {
   year?: Prisma.SortOrder
   status?: Prisma.SortOrder
   prepareBy?: Prisma.SortOrder
+  prepareByName?: Prisma.SortOrder
+  prepareByEmail?: Prisma.SortOrder
   reviewerUserId?: Prisma.SortOrder
   reviewerAuthUserId?: Prisma.SortOrder
   reviewerName?: Prisma.SortOrder
@@ -579,6 +642,7 @@ export type KPIMonthlySummaryReviewCountOrderByAggregateInput = {
   approverEmail?: Prisma.SortOrder
   emailGroupMails?: Prisma.SortOrder
   emailGroupMailsCc?: Prisma.SortOrder
+  cycleNo?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -587,6 +651,7 @@ export type KPIMonthlySummaryReviewCountOrderByAggregateInput = {
 
 export type KPIMonthlySummaryReviewAvgOrderByAggregateInput = {
   year?: Prisma.SortOrder
+  cycleNo?: Prisma.SortOrder
 }
 
 export type KPIMonthlySummaryReviewMaxOrderByAggregateInput = {
@@ -594,6 +659,8 @@ export type KPIMonthlySummaryReviewMaxOrderByAggregateInput = {
   year?: Prisma.SortOrder
   status?: Prisma.SortOrder
   prepareBy?: Prisma.SortOrder
+  prepareByName?: Prisma.SortOrder
+  prepareByEmail?: Prisma.SortOrder
   reviewerUserId?: Prisma.SortOrder
   reviewerAuthUserId?: Prisma.SortOrder
   reviewerName?: Prisma.SortOrder
@@ -602,6 +669,7 @@ export type KPIMonthlySummaryReviewMaxOrderByAggregateInput = {
   approverAuthUserId?: Prisma.SortOrder
   approverName?: Prisma.SortOrder
   approverEmail?: Prisma.SortOrder
+  cycleNo?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -613,6 +681,8 @@ export type KPIMonthlySummaryReviewMinOrderByAggregateInput = {
   year?: Prisma.SortOrder
   status?: Prisma.SortOrder
   prepareBy?: Prisma.SortOrder
+  prepareByName?: Prisma.SortOrder
+  prepareByEmail?: Prisma.SortOrder
   reviewerUserId?: Prisma.SortOrder
   reviewerAuthUserId?: Prisma.SortOrder
   reviewerName?: Prisma.SortOrder
@@ -621,6 +691,7 @@ export type KPIMonthlySummaryReviewMinOrderByAggregateInput = {
   approverAuthUserId?: Prisma.SortOrder
   approverName?: Prisma.SortOrder
   approverEmail?: Prisma.SortOrder
+  cycleNo?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -629,6 +700,7 @@ export type KPIMonthlySummaryReviewMinOrderByAggregateInput = {
 
 export type KPIMonthlySummaryReviewSumOrderByAggregateInput = {
   year?: Prisma.SortOrder
+  cycleNo?: Prisma.SortOrder
 }
 
 export type KPIMonthlySummaryReviewCreateemailGroupMailsInput = {
@@ -656,6 +728,8 @@ export type KPIMonthlySummaryReviewSelect<ExtArgs extends runtime.Types.Extensio
   year?: boolean
   status?: boolean
   prepareBy?: boolean
+  prepareByName?: boolean
+  prepareByEmail?: boolean
   reviewerUserId?: boolean
   reviewerAuthUserId?: boolean
   reviewerName?: boolean
@@ -666,6 +740,7 @@ export type KPIMonthlySummaryReviewSelect<ExtArgs extends runtime.Types.Extensio
   approverEmail?: boolean
   emailGroupMails?: boolean
   emailGroupMailsCc?: boolean
+  cycleNo?: boolean
   submittedAt?: boolean
   approvedAt?: boolean
   createdAt?: boolean
@@ -677,6 +752,8 @@ export type KPIMonthlySummaryReviewSelectCreateManyAndReturn<ExtArgs extends run
   year?: boolean
   status?: boolean
   prepareBy?: boolean
+  prepareByName?: boolean
+  prepareByEmail?: boolean
   reviewerUserId?: boolean
   reviewerAuthUserId?: boolean
   reviewerName?: boolean
@@ -687,6 +764,7 @@ export type KPIMonthlySummaryReviewSelectCreateManyAndReturn<ExtArgs extends run
   approverEmail?: boolean
   emailGroupMails?: boolean
   emailGroupMailsCc?: boolean
+  cycleNo?: boolean
   submittedAt?: boolean
   approvedAt?: boolean
   createdAt?: boolean
@@ -698,6 +776,8 @@ export type KPIMonthlySummaryReviewSelectUpdateManyAndReturn<ExtArgs extends run
   year?: boolean
   status?: boolean
   prepareBy?: boolean
+  prepareByName?: boolean
+  prepareByEmail?: boolean
   reviewerUserId?: boolean
   reviewerAuthUserId?: boolean
   reviewerName?: boolean
@@ -708,6 +788,7 @@ export type KPIMonthlySummaryReviewSelectUpdateManyAndReturn<ExtArgs extends run
   approverEmail?: boolean
   emailGroupMails?: boolean
   emailGroupMailsCc?: boolean
+  cycleNo?: boolean
   submittedAt?: boolean
   approvedAt?: boolean
   createdAt?: boolean
@@ -719,6 +800,8 @@ export type KPIMonthlySummaryReviewSelectScalar = {
   year?: boolean
   status?: boolean
   prepareBy?: boolean
+  prepareByName?: boolean
+  prepareByEmail?: boolean
   reviewerUserId?: boolean
   reviewerAuthUserId?: boolean
   reviewerName?: boolean
@@ -729,13 +812,14 @@ export type KPIMonthlySummaryReviewSelectScalar = {
   approverEmail?: boolean
   emailGroupMails?: boolean
   emailGroupMailsCc?: boolean
+  cycleNo?: boolean
   submittedAt?: boolean
   approvedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type KPIMonthlySummaryReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "year" | "status" | "prepareBy" | "reviewerUserId" | "reviewerAuthUserId" | "reviewerName" | "reviewerEmail" | "approverUserId" | "approverAuthUserId" | "approverName" | "approverEmail" | "emailGroupMails" | "emailGroupMailsCc" | "submittedAt" | "approvedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["kPIMonthlySummaryReview"]>
+export type KPIMonthlySummaryReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "year" | "status" | "prepareBy" | "prepareByName" | "prepareByEmail" | "reviewerUserId" | "reviewerAuthUserId" | "reviewerName" | "reviewerEmail" | "approverUserId" | "approverAuthUserId" | "approverName" | "approverEmail" | "emailGroupMails" | "emailGroupMailsCc" | "cycleNo" | "submittedAt" | "approvedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["kPIMonthlySummaryReview"]>
 
 export type $KPIMonthlySummaryReviewPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "KPIMonthlySummaryReview"
@@ -745,6 +829,8 @@ export type $KPIMonthlySummaryReviewPayload<ExtArgs extends runtime.Types.Extens
     year: number
     status: $Enums.MonthlyStatus
     prepareBy: string | null
+    prepareByName: string | null
+    prepareByEmail: string | null
     reviewerUserId: string | null
     reviewerAuthUserId: string | null
     reviewerName: string | null
@@ -755,6 +841,7 @@ export type $KPIMonthlySummaryReviewPayload<ExtArgs extends runtime.Types.Extens
     approverEmail: string | null
     emailGroupMails: string[]
     emailGroupMailsCc: string[]
+    cycleNo: number
     submittedAt: Date | null
     approvedAt: Date | null
     createdAt: Date
@@ -1186,6 +1273,8 @@ export interface KPIMonthlySummaryReviewFieldRefs {
   readonly year: Prisma.FieldRef<"KPIMonthlySummaryReview", 'Int'>
   readonly status: Prisma.FieldRef<"KPIMonthlySummaryReview", 'MonthlyStatus'>
   readonly prepareBy: Prisma.FieldRef<"KPIMonthlySummaryReview", 'String'>
+  readonly prepareByName: Prisma.FieldRef<"KPIMonthlySummaryReview", 'String'>
+  readonly prepareByEmail: Prisma.FieldRef<"KPIMonthlySummaryReview", 'String'>
   readonly reviewerUserId: Prisma.FieldRef<"KPIMonthlySummaryReview", 'String'>
   readonly reviewerAuthUserId: Prisma.FieldRef<"KPIMonthlySummaryReview", 'String'>
   readonly reviewerName: Prisma.FieldRef<"KPIMonthlySummaryReview", 'String'>
@@ -1196,6 +1285,7 @@ export interface KPIMonthlySummaryReviewFieldRefs {
   readonly approverEmail: Prisma.FieldRef<"KPIMonthlySummaryReview", 'String'>
   readonly emailGroupMails: Prisma.FieldRef<"KPIMonthlySummaryReview", 'String[]'>
   readonly emailGroupMailsCc: Prisma.FieldRef<"KPIMonthlySummaryReview", 'String[]'>
+  readonly cycleNo: Prisma.FieldRef<"KPIMonthlySummaryReview", 'Int'>
   readonly submittedAt: Prisma.FieldRef<"KPIMonthlySummaryReview", 'DateTime'>
   readonly approvedAt: Prisma.FieldRef<"KPIMonthlySummaryReview", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"KPIMonthlySummaryReview", 'DateTime'>

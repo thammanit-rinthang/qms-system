@@ -44,6 +44,9 @@ function getActionPath(item: NotificationItem): string | null {
     if (item.resourceType === "KPI_MONTHLY_REVIEWER") return `/approve/kpi/${item.resourceId}/reviewer?type=kpi-monthly`;
     if (item.resourceType === "KPI_MONTHLY_APPROVER") return `/approve/kpi/${item.resourceId}/approver?type=kpi-monthly`;
     if (item.resourceType === "KPI_MONTHLY") return `/qms/kpi/monthly`;
+    if (item.resourceType === "KPI_MONTHLY_SUMMARY_REVIEWER") return `/approve/kpi-monthly-summary/${item.resourceId}/reviewer`;
+    if (item.resourceType === "KPI_MONTHLY_SUMMARY_APPROVER") return `/approve/kpi-monthly-summary/${item.resourceId}/approver`;
+    if (item.resourceType === "KPI_MONTHLY_SUMMARY") return `/print/qms/kpi/monthly?year=${item.resourceId}`;
     return `/qms/kpi/${item.resourceId}`;
   }
   if (item.module === "AUDIT") {

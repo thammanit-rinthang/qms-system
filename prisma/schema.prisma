@@ -411,6 +411,8 @@ model KPIMonthlySummaryReview {
   year               Int           @unique
   status             MonthlyStatus @default(DRAFT)
   prepareBy          String?       @map("prepare_by")
+  prepareByName      String?       @map("prepare_by_name")
+  prepareByEmail     String?       @map("prepare_by_email")
   reviewerUserId     String?       @map("reviewer_user_id")
   reviewerAuthUserId String?       @map("reviewer_auth_user_id")
   reviewerName       String?       @map("reviewer_name")
@@ -421,12 +423,32 @@ model KPIMonthlySummaryReview {
   approverEmail      String?       @map("approver_email")
   emailGroupMails    String[]      @default([]) @map("email_group_mails")
   emailGroupMailsCc  String[]      @default([]) @map("email_group_mails_cc")
+  cycleNo            Int           @default(1) @map("cycle_no")
   submittedAt        DateTime?     @map("submitted_at")
   approvedAt         DateTime?     @map("approved_at")
   createdAt          DateTime      @default(now())
   updatedAt          DateTime      @updatedAt
 
   @@map("kpi_monthly_summary_reviews")
+}
+
+model KPIMonthlySummaryReviewHistory {
+  id            String        @id @default(uuid())
+  year          Int
+  cycleNo       Int           @map("cycle_no")
+  status        MonthlyStatus
+  prepareBy     String?       @map("prepare_by")
+  reviewerName  String?       @map("reviewer_name")
+  reviewerEmail String?       @map("reviewer_email")
+  approverName  String?       @map("approver_name")
+  approverEmail String?       @map("approver_email")
+  submittedAt   DateTime?     @map("submitted_at")
+  closedAt      DateTime      @default(now()) @map("closed_at")
+  signatures    Json
+  createdAt     DateTime      @default(now())
+
+  @@index([year])
+  @@map("kpi_monthly_summary_review_history")
 }
 
 model KPIMonthlyDetail {

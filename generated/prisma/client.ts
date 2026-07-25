@@ -147,6 +147,11 @@ export type KPIMonthlyReport = Prisma.KPIMonthlyReportModel
  */
 export type KPIMonthlySummaryReview = Prisma.KPIMonthlySummaryReviewModel
 /**
+ * Model KPIMonthlySummaryReviewHistory
+ * 
+ */
+export type KPIMonthlySummaryReviewHistory = Prisma.KPIMonthlySummaryReviewHistoryModel
+/**
  * Model KPIMonthlyDetail
  * 
  */

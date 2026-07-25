@@ -11,6 +11,46 @@ export class KpiMonthlySummaryReviewRepository extends BaseRepository<KPIMonthly
     return this.getClient(tx).kPIMonthlySummaryReview.findUnique({ where: { year } });
   }
 
+  async countPendingReviewByUser(userId: string, authUserId?: string | null) {
+    return this.getClient().kPIMonthlySummaryReview.count({
+      where: {
+        status: "PENDING_REVIEW",
+        OR: [{ reviewerUserId: userId }, ...(authUserId ? [{ reviewerAuthUserId: authUserId }] : [])],
+      },
+    });
+  }
+
+  async countPendingApproveByUser(userId: string, authUserId?: string | null) {
+    return this.getClient().kPIMonthlySummaryReview.count({
+      where: {
+        status: "PENDING_APPROVAL",
+        OR: [{ approverUserId: userId }, ...(authUserId ? [{ approverAuthUserId: authUserId }] : [])],
+      },
+    });
+  }
+
+  async findPendingReviewByUser(userId: string, authUserId?: string | null, limit = 10) {
+    return this.getClient().kPIMonthlySummaryReview.findMany({
+      where: {
+        status: "PENDING_REVIEW",
+        OR: [{ reviewerUserId: userId }, ...(authUserId ? [{ reviewerAuthUserId: authUserId }] : [])],
+      },
+      orderBy: { submittedAt: "desc" },
+      take: limit,
+    });
+  }
+
+  async findPendingApproveByUser(userId: string, authUserId?: string | null, limit = 10) {
+    return this.getClient().kPIMonthlySummaryReview.findMany({
+      where: {
+        status: "PENDING_APPROVAL",
+        OR: [{ approverUserId: userId }, ...(authUserId ? [{ approverAuthUserId: authUserId }] : [])],
+      },
+      orderBy: { submittedAt: "desc" },
+      take: limit,
+    });
+  }
+
   async findOrCreate(year: number, tx?: Prisma.TransactionClient) {
     const client = this.getClient(tx);
     return client.kPIMonthlySummaryReview.upsert({
@@ -26,6 +66,8 @@ export class KpiMonthlySummaryReviewRepository extends BaseRepository<KPIMonthly
     expectedStatus: MonthlyStatus,
     data: Partial<{
       prepareBy: string;
+      prepareByName: string | null;
+      prepareByEmail: string | null;
       reviewerUserId: string | null;
       reviewerAuthUserId: string | null;
       reviewerName: string | null;
@@ -36,8 +78,9 @@ export class KpiMonthlySummaryReviewRepository extends BaseRepository<KPIMonthly
       approverEmail: string | null;
       emailGroupMails: string[];
       emailGroupMailsCc: string[];
-      submittedAt: Date;
-      approvedAt: Date;
+      cycleNo: number;
+      submittedAt: Date | null;
+      approvedAt: Date | null;
     }>,
     tx: Prisma.TransactionClient,
   ) {

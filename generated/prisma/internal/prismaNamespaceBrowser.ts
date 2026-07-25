@@ -72,6 +72,7 @@ export const ModelName = {
   KPIObjective: 'KPIObjective',
   KPIMonthlyReport: 'KPIMonthlyReport',
   KPIMonthlySummaryReview: 'KPIMonthlySummaryReview',
+  KPIMonthlySummaryReviewHistory: 'KPIMonthlySummaryReviewHistory',
   KPIMonthlyDetail: 'KPIMonthlyDetail',
   KPICorrectiveAction: 'KPICorrectiveAction',
   DocumentControl: 'DocumentControl',
@@ -503,6 +504,8 @@ export const KPIMonthlySummaryReviewScalarFieldEnum = {
   year: 'year',
   status: 'status',
   prepareBy: 'prepareBy',
+  prepareByName: 'prepareByName',
+  prepareByEmail: 'prepareByEmail',
   reviewerUserId: 'reviewerUserId',
   reviewerAuthUserId: 'reviewerAuthUserId',
   reviewerName: 'reviewerName',
@@ -513,6 +516,7 @@ export const KPIMonthlySummaryReviewScalarFieldEnum = {
   approverEmail: 'approverEmail',
   emailGroupMails: 'emailGroupMails',
   emailGroupMailsCc: 'emailGroupMailsCc',
+  cycleNo: 'cycleNo',
   submittedAt: 'submittedAt',
   approvedAt: 'approvedAt',
   createdAt: 'createdAt',
@@ -520,6 +524,25 @@ export const KPIMonthlySummaryReviewScalarFieldEnum = {
 } as const
 
 export type KPIMonthlySummaryReviewScalarFieldEnum = (typeof KPIMonthlySummaryReviewScalarFieldEnum)[keyof typeof KPIMonthlySummaryReviewScalarFieldEnum]
+
+
+export const KPIMonthlySummaryReviewHistoryScalarFieldEnum = {
+  id: 'id',
+  year: 'year',
+  cycleNo: 'cycleNo',
+  status: 'status',
+  prepareBy: 'prepareBy',
+  reviewerName: 'reviewerName',
+  reviewerEmail: 'reviewerEmail',
+  approverName: 'approverName',
+  approverEmail: 'approverEmail',
+  submittedAt: 'submittedAt',
+  closedAt: 'closedAt',
+  signatures: 'signatures',
+  createdAt: 'createdAt'
+} as const
+
+export type KPIMonthlySummaryReviewHistoryScalarFieldEnum = (typeof KPIMonthlySummaryReviewHistoryScalarFieldEnum)[keyof typeof KPIMonthlySummaryReviewHistoryScalarFieldEnum]
 
 
 export const KPIMonthlyDetailScalarFieldEnum = {
@@ -1214,19 +1237,19 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const NullableJsonNullValueInput = {
   DbNull: DbNull,
   JsonNull: JsonNull
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
-
-
-export const JsonNullValueInput = {
-  JsonNull: JsonNull
-} as const
-
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

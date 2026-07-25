@@ -33,7 +33,7 @@ type PendingKpiItem = {
   month: string | null;
   year: number;
   status: string;
-  source: "OBJECTIVE" | "MONTHLY";
+  source: "OBJECTIVE" | "MONTHLY" | "SUMMARY";
 };
 
 type PendingCarItem = {
@@ -196,18 +196,20 @@ export default function ApprovePageClient({ userRole }: Props) {
     }
 
     for (const item of data.pendingKpiReviewItems) {
-      const departmentLabel = resolveKpiDepartmentLabel(item.department);
+      const departmentLabel = item.source === "SUMMARY" ? item.department : resolveKpiDepartmentLabel(item.department);
       items.push({
         id: `kpi-review-${item.id}`,
         module: "kpi",
         role: "review",
         title: departmentLabel,
-        subtitle: item.source === "OBJECTIVE" ? t("approve.typeObjective") : t("approve.typeMonthly"),
+        subtitle: item.source === "OBJECTIVE" ? t("approve.typeObjective") : item.source === "SUMMARY" ? "Monthly Summary" : t("approve.typeMonthly"),
         description: item.month ? `${item.month} ${item.year}` : String(item.year),
         href:
           item.source === "OBJECTIVE"
             ? `/approve/kpi/${item.kpiId}/reviewer`
-            : `/approve/kpi/${item.id}/reviewer?type=kpi-monthly&kpiId=${item.kpiId}&year=${item.year}${item.month ? `&month=${item.month}` : ""}`,
+            : item.source === "SUMMARY"
+              ? `/approve/kpi-monthly-summary/${item.year}/reviewer`
+              : `/approve/kpi/${item.id}/reviewer?type=kpi-monthly&kpiId=${item.kpiId}&year=${item.year}${item.month ? `&month=${item.month}` : ""}`,
         sortDate: `${item.year}-${item.month ? String(item.month).padStart(2, "0") : "12"}-01T00:00:00.000Z`,
         meta: [
           { label: t("approve.department"), value: departmentLabel },
@@ -217,18 +219,20 @@ export default function ApprovePageClient({ userRole }: Props) {
     }
 
     for (const item of data.pendingKpiApproveItems) {
-      const departmentLabel = resolveKpiDepartmentLabel(item.department);
+      const departmentLabel = item.source === "SUMMARY" ? item.department : resolveKpiDepartmentLabel(item.department);
       items.push({
         id: `kpi-approve-${item.id}`,
         module: "kpi",
         role: "approval",
         title: departmentLabel,
-        subtitle: item.source === "OBJECTIVE" ? t("approve.typeObjective") : t("approve.typeMonthly"),
+        subtitle: item.source === "OBJECTIVE" ? t("approve.typeObjective") : item.source === "SUMMARY" ? "Monthly Summary" : t("approve.typeMonthly"),
         description: item.month ? `${item.month} ${item.year}` : String(item.year),
         href:
           item.source === "OBJECTIVE"
             ? `/approve/kpi/${item.kpiId}/approver`
-            : `/approve/kpi/${item.id}/approver?type=kpi-monthly&kpiId=${item.kpiId}&year=${item.year}${item.month ? `&month=${item.month}` : ""}`,
+            : item.source === "SUMMARY"
+              ? `/approve/kpi-monthly-summary/${item.year}/approver`
+              : `/approve/kpi/${item.id}/approver?type=kpi-monthly&kpiId=${item.kpiId}&year=${item.year}${item.month ? `&month=${item.month}` : ""}`,
         sortDate: `${item.year}-${item.month ? String(item.month).padStart(2, "0") : "12"}-01T00:00:00.000Z`,
         meta: [
           { label: t("approve.department"), value: departmentLabel },

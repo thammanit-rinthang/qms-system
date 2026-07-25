@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
           title: "สรุปผล KPI รายเดือนถูกเรียกคืน",
           body: `KPI Monthly Summary ปี ${year} ถูกเรียกคืน`,
           module: "KPI",
-          resourceId: updated.id,
+          resourceId: String(year),
           resourceType: "KPI_MONTHLY_SUMMARY",
         },
       ).catch(() => { /* logged inside NotificationService */ });

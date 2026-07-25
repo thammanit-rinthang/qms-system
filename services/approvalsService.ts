@@ -2,6 +2,7 @@ import { DarRepository } from "@/repositories/darRepository";
 import { CarRepository } from "@/repositories/carRepository";
 import { KpiMonthlyReportRepository } from "@/repositories/kpiMonthlyReportRepository";
 import { KpiRepository } from "@/repositories/kpiRepository";
+import { KpiMonthlySummaryReviewRepository } from "@/repositories/kpiMonthlySummaryReviewRepository";
 import { AuditPlanRepository } from "@/repositories/audit/auditPlanRepository";
 import { AuditAppointmentRepository } from "@/repositories/audit/auditAppointmentRepository";
 import type { UserRole } from "@/generated/prisma/client";
@@ -22,7 +23,7 @@ type PendingKpiItem = {
   month: string | null;
   year: number;
   status: string;
-  source: "OBJECTIVE" | "MONTHLY";
+  source: "OBJECTIVE" | "MONTHLY" | "SUMMARY";
 };
 
 type PendingCarItem = {
@@ -83,6 +84,7 @@ export class ApprovalsService {
   private carRepo = new CarRepository();
   private kpiMonthlyRepo = new KpiMonthlyReportRepository();
   private kpiRepo = new KpiRepository();
+  private kpiMonthlySummaryRepo = new KpiMonthlySummaryReviewRepository();
   private auditPlanRepo = new AuditPlanRepository();
   private auditApptRepo = new AuditAppointmentRepository();
 
@@ -105,6 +107,10 @@ export class ApprovalsService {
       pendingKpiObjectiveApproveCount,
       pendingKpiObjectiveReviewRaw,
       pendingKpiObjectiveApproveRaw,
+      pendingKpiSummaryReviewCount,
+      pendingKpiSummaryApproveCount,
+      pendingKpiSummaryReviewRaw,
+      pendingKpiSummaryApproveRaw,
       pendingCarReviewCount,
       pendingCarSignCount,
       pendingCarReviewItemsRaw,
@@ -128,6 +134,10 @@ export class ApprovalsService {
       this.kpiRepo.countPendingApproveByUser(userId, authUserId),
       this.kpiRepo.findPendingReviewByUser(userId, authUserId, 10),
       this.kpiRepo.findPendingApproveByUser(userId, authUserId, 10),
+      this.kpiMonthlySummaryRepo.countPendingReviewByUser(userId, authUserId),
+      this.kpiMonthlySummaryRepo.countPendingApproveByUser(userId, authUserId),
+      this.kpiMonthlySummaryRepo.findPendingReviewByUser(userId, authUserId, 10),
+      this.kpiMonthlySummaryRepo.findPendingApproveByUser(userId, authUserId, 10),
       shouldLoadMrQueue ? this.carRepo.countPendingMrResponseReviews() : Promise.resolve(0),
       shouldLoadMrQueue ? this.carRepo.countPendingMrSignatures() : Promise.resolve(0),
       shouldLoadMrQueue ? this.carRepo.findPendingMrResponseReviews(10) : Promise.resolve([]),
@@ -191,8 +201,28 @@ export class ApprovalsService {
       source: "OBJECTIVE",
     }));
 
-    const pendingKpiReviewItems = [...objectiveReviewItems, ...monthlyReviewItems];
-    const pendingKpiApproveItems = [...objectiveApproveItems, ...monthlyApproveItems];
+    const summaryReviewItems: PendingKpiItem[] = pendingKpiSummaryReviewRaw.map((row) => ({
+      id: row.id,
+      kpiId: "",
+      department: "สรุปผล KPI รายเดือน / Monthly KPI Summary",
+      month: null,
+      year: row.year,
+      status: row.status,
+      source: "SUMMARY",
+    }));
+
+    const summaryApproveItems: PendingKpiItem[] = pendingKpiSummaryApproveRaw.map((row) => ({
+      id: row.id,
+      kpiId: "",
+      department: "สรุปผล KPI รายเดือน / Monthly KPI Summary",
+      month: null,
+      year: row.year,
+      status: row.status,
+      source: "SUMMARY",
+    }));
+
+    const pendingKpiReviewItems = [...objectiveReviewItems, ...monthlyReviewItems, ...summaryReviewItems];
+    const pendingKpiApproveItems = [...objectiveApproveItems, ...monthlyApproveItems, ...summaryApproveItems];
 
     const pendingCarReviewItems: PendingCarItem[] = pendingCarReviewItemsRaw.map((row) => ({
       id: row.id,
@@ -218,8 +248,8 @@ export class ApprovalsService {
       actionType: "MR_SIGN",
     }));
 
-    const pendingKpiReviewCount = pendingKpiObjectiveReviewCount + pendingKpiMonthlyReviewCount;
-    const pendingKpiApproveCount = pendingKpiObjectiveApproveCount + pendingKpiMonthlyApproveCount;
+    const pendingKpiReviewCount = pendingKpiObjectiveReviewCount + pendingKpiMonthlyReviewCount + pendingKpiSummaryReviewCount;
+    const pendingKpiApproveCount = pendingKpiObjectiveApproveCount + pendingKpiMonthlyApproveCount + pendingKpiSummaryApproveCount;
 
     const pendingAuditReviewItems: PendingAuditItem[] = pendingAuditReviewRaw.map((row) => ({
       id: row.id,

@@ -419,6 +419,96 @@ export function buildFmMr01PrintHtml(data: FmMr01PrintData): string {
   return `<div style="font-family:'Sarabun','Segoe UI',Arial,sans-serif;color:#000;">${headerHtml}${objectivesHtml}${signatureHtml}${footerHtml}</div>`;
 }
 
+// ─── KPI Monthly Summary Review: embeddable print-style block (matches /print/qms/kpi/monthly) ───
+
+export interface KpiMonthlySummaryPrintRow {
+  no: number;
+  objective: string;
+  target: string;
+  frequency: string;
+  team: string;
+  months: Array<{ key: string; value: string; status: "achieved" | "failed" | "pending" }>;
+  average: string;
+}
+
+export interface KpiMonthlySummaryPrintData {
+  year: number;
+  yearBE: number;
+  rows: KpiMonthlySummaryPrintRow[];
+  reviewerName?: string | null;
+  approverName?: string | null;
+}
+
+const MONTHLY_SUMMARY_STATUS_BG: Record<string, string> = {
+  achieved: "#92D050",
+  failed: "#FF5050",
+  pending: "#FFFF00",
+};
+
+export function buildKpiMonthlySummaryPrintHtml(data: KpiMonthlySummaryPrintData): string {
+  const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  const rowsHtml = data.rows.length
+    ? data.rows
+        .map(
+          (row) => `
+      <tr>
+        <td style="border:0.5pt solid #000;padding:4px 6px;text-align:center">${row.no}</td>
+        <td style="border:0.5pt solid #000;padding:4px 6px">${esc(row.objective)}</td>
+        <td style="border:0.5pt solid #000;padding:4px 6px;text-align:center">${esc(row.target)}</td>
+        <td style="border:0.5pt solid #000;padding:4px 6px;text-align:center">${esc(row.frequency)}</td>
+        <td style="border:0.5pt solid #000;padding:4px 6px;text-align:center">${esc(row.team)}</td>
+        ${row.months
+          .map(
+            (m) => `<td style="border:0.5pt solid #000;padding:4px 6px;text-align:center;background-color:${MONTHLY_SUMMARY_STATUS_BG[m.status]};color:${m.status === "failed" ? "#fff" : "#000"}">${m.status === "pending" ? "" : esc(m.value)}</td>`
+          )
+          .join("")}
+        <td style="border:0.5pt solid #000;padding:4px 6px;text-align:center;font-weight:bold">${esc(row.average)}</td>
+      </tr>`
+        )
+        .join("")
+    : `<tr><td colspan="18" style="border:0.5pt solid #000;text-align:center;padding:16px;color:#94a3b8">ไม่มีข้อมูลสำหรับปีนี้ / No data for this year</td></tr>`;
+
+  const signatureHtml = `
+  <table style="width:100%;border-collapse:collapse;table-layout:fixed;margin-top:10px;font-size:9px;">
+    <tbody>
+      <tr>
+        <td style="width:33.3%;border:0.5pt solid #000;padding:6px;text-align:center">
+          <div style="font-weight:bold">ผู้ตรวจสอบ / Reviewed By</div>
+          <div style="margin-top:8px">${esc(data.reviewerName || "-")}</div>
+        </td>
+        <td style="width:33.3%;border:0.5pt solid #000;padding:6px;text-align:center">
+          <div style="font-weight:bold">ผู้อนุมัติ / Approved By</div>
+          <div style="margin-top:8px">${esc(data.approverName || "-")}</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>`;
+
+  return `
+  <div style="font-family:'Sarabun','Segoe UI',Arial,sans-serif;color:#000;">
+    <div style="text-align:center;margin-bottom:8px">
+      <div style="font-weight:bold;font-size:13px">สรุปผลการดำเนินงานตามวัตถุประสงค์คุณภาพ ประจำปี ${data.yearBE}</div>
+      <div style="font-weight:600;font-size:11px">Summary of Key Performance Results Year ${data.year}</div>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:8px;">
+      <thead>
+        <tr style="background-color:#0F1059;color:#fff;">
+          <th style="border:0.5pt solid #000;padding:4px 6px">No.</th>
+          <th style="border:0.5pt solid #000;padding:4px 6px">Quality Objectives and Indicators</th>
+          <th style="border:0.5pt solid #000;padding:4px 6px">Target</th>
+          <th style="border:0.5pt solid #000;padding:4px 6px">Frequency</th>
+          <th style="border:0.5pt solid #000;padding:4px 6px">Team</th>
+          ${monthLabels.map((m) => `<th style="border:0.5pt solid #000;padding:4px 6px">${m}</th>`).join("")}
+          <th style="border:0.5pt solid #000;padding:4px 6px">Average</th>
+        </tr>
+      </thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>
+    ${signatureHtml}
+  </div>`;
+}
+
 function makeObjectivesTable(objectives: KpiObjectiveRow[]): string {
   if (objectives.length === 0) return "";
   

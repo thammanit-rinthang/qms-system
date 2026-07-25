@@ -4,12 +4,14 @@ import { sendSuccess } from "@/lib/apiResponse";
 import { handleApiError } from "@/lib/apiErrorHandler";
 import { requireAuth } from "@/lib/auth";
 import { KpiMonthlySummaryService } from "@/services/kpiMonthlySummaryService";
+import { KpiExportService } from "@/services/kpiExportService";
 import { NotificationService } from "@/services/notificationService";
-import { sendMail, makeBilingualMail } from "@/services/email";
+import { sendMail, makeBilingualMail, buildKpiMonthlySummaryPrintHtml } from "@/services/email";
 import { listAuthCenterAppMembers } from "@/lib/auth-center-admin-client";
 import { ForbiddenError, ValidationError } from "@/lib/errors";
 
 const service = new KpiMonthlySummaryService();
+const exportService = new KpiExportService();
 
 const personSchema = z.object({
   id: z.string(),
@@ -49,6 +51,8 @@ export async function POST(req: NextRequest) {
       authUserId: session.user.authUserId,
       role: session.user.role,
       accessToken: session.user.accessToken,
+      name: session.user.name ?? undefined,
+      email: session.user.email ?? undefined,
     }, {
       signatureDataUrl: body.signatureDataUrl,
        reviewer: { id: reviewer.id, name: reviewer.displayName ?? body.reviewer.name, email: reviewer.email ?? null },
@@ -58,23 +62,33 @@ export async function POST(req: NextRequest) {
     });
 
     if (body.reviewer.email) {
-      const url = `${(process.env.NEXTAUTH_URL ?? "").replace(/\/+$/, "")}/print/qms/kpi/monthly?year=${body.year}`;
+      const url = `${(process.env.NEXTAUTH_URL ?? "").replace(/\/+$/, "")}/approve/kpi-monthly-summary/${body.year}/reviewer`;
+      const preview = await exportService.getYearlyPreview({ year: body.year });
+      const printHtml = buildKpiMonthlySummaryPrintHtml({
+        year: preview.year,
+        yearBE: preview.yearBE,
+        rows: preview.rows,
+        reviewerName: reviewer.displayName ?? body.reviewer.name,
+        approverName: approver.displayName ?? body.approver.name,
+      });
+      const emailBody = makeBilingualMail({
+        titleTh: `สรุปผล KPI รายเดือน ปี ${body.year} รอตรวจสอบ`,
+        titleEn: `Monthly KPI Summary ${body.year} Pending Review`,
+        facts: [
+          { labelTh: "ผู้ตรวจสอบ", labelEn: "Reviewer", value: body.reviewer.name },
+          { labelTh: "ปี", labelEn: "Year", value: String(body.year) },
+        ],
+        extraHtml: printHtml,
+        actionLabelTh: "ตรวจสอบ",
+        actionLabelEn: "Review",
+        actionUrl: url,
+      });
       await NotificationService.sendEmailOnce(
         `KPI_MONTHLY_SUMMARY:${record.id}:SUBMITTED:${record.updatedAt.getTime()}:reviewer:${body.reviewer.id}`,
         () => sendMail({
           to: [{ name: body.reviewer.name, email: body.reviewer.email || "" }],
           subject: `[KPI] Monthly Summary Review Required - Year ${body.year}`,
-          bodyHtml: makeBilingualMail({
-            titleTh: `สรุปผล KPI รายเดือน ปี ${body.year} รอตรวจสอบ`,
-            titleEn: `Monthly KPI Summary ${body.year} Pending Review`,
-            facts: [
-              { labelTh: "ผู้ตรวจสอบ", labelEn: "Reviewer", value: body.reviewer.name },
-              { labelTh: "ปี", labelEn: "Year", value: String(body.year) },
-            ],
-            actionLabelTh: "ตรวจสอบ",
-            actionLabelEn: "Review",
-            actionUrl: url,
-          }),
+          bodyHtml: emailBody,
           senderAccessToken: session.user.accessToken,
         }),
         body.reviewer.email,
@@ -83,19 +97,9 @@ export async function POST(req: NextRequest) {
         {
           title: "มีสรุปผล KPI รายเดือนรอการตรวจสอบ",
           body: `KPI Monthly Summary ปี ${body.year}`,
-          htmlBody: makeBilingualMail({
-            titleTh: `สรุปผล KPI รายเดือน ปี ${body.year} รอตรวจสอบ`,
-            titleEn: `Monthly KPI Summary ${body.year} Pending Review`,
-            facts: [
-              { labelTh: "ผู้ตรวจสอบ", labelEn: "Reviewer", value: body.reviewer.name },
-              { labelTh: "ปี", labelEn: "Year", value: String(body.year) },
-            ],
-            actionLabelTh: "ตรวจสอบ",
-            actionLabelEn: "Review",
-            actionUrl: url,
-          }),
+          htmlBody: emailBody,
           module: "KPI",
-          resourceId: record.id,
+          resourceId: String(body.year),
           resourceType: "KPI_MONTHLY_SUMMARY_REVIEWER",
         },
       ).catch(() => { /* logged inside NotificationService */ });
