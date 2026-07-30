@@ -1,6 +1,7 @@
 "use client";
 
 import { useT } from "@/lib/i18n";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   message?: string;
@@ -35,9 +36,9 @@ export default function ErrorComponent({ message, onRetry }: Props) {
       </div>
 
       {onRetry && (
-        <button onClick={onRetry} className="btn btn-ghost btn-sm mt-1">
+        <Button onClick={onRetry} variant="ghost" size="sm" className="mt-1">
           {t("errorRetryBtn")}
-        </button>
+        </Button>
       )}
     </div>
   );

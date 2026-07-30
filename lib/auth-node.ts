@@ -1,82 +1,108 @@
-﻿import NextAuth from "next-auth";
-import { db } from "@/lib/db";
+import NextAuth from "next-auth";
 import { authConfig } from "@/lib/auth.config";
+import { verifyAuthCenterToken, pickRole } from "@/lib/auth-center-token";
+import type { LegacyQmsRole } from "@/lib/qms-roles";
 
-async function syncDepartment(userId: string, deptName: string | null | undefined): Promise<string | null> {
-  if (!deptName?.trim()) {
-    await db.user.update({ where: { id: userId }, data: { departmentId: null } });
-    return null;
+/**
+ * Fetch richer profile from Auth Center /api/auth/me using the access token.
+ * Returns email, displayName, and department name.
+ * Failure is non-fatal and login still proceeds.
+ */
+async function fetchAuthCenterProfile(
+  accessToken: string,
+  appId: string,
+): Promise<{ email: string | null; displayName: string | null; department: string | null; jobTitle: string | null }> {
+  const base = (process.env.AUTH_CENTER_URL ?? "").replace(/\/$/, "");
+  if (!base) return { email: null, displayName: null, department: null, jobTitle: null };
+
+  try {
+    const res = await fetch(
+      `${base}/api/auth/me?appId=${encodeURIComponent(appId)}`,
+      { headers: { Authorization: `Bearer ${accessToken}` } },
+    );
+    if (!res.ok) return { email: null, displayName: null, department: null, jobTitle: null };
+
+    const json = await res.json() as {
+      data?: {
+        email?: string | null;
+        displayName?: string | null;
+        department?: string | null;
+        jobTitle?: string | null;
+      };
+    };
+    const data = json.data ?? {};
+    return {
+      email: data.email ?? null,
+      displayName: data.displayName ?? null,
+      department: data.department ?? null,
+      jobTitle: data.jobTitle ?? null,
+    };
+  } catch {
+    return { email: null, displayName: null, department: null, jobTitle: null };
   }
+}
 
-  const dept = await db.department.upsert({
-    where: { name: deptName },
-    update: {},
-    create: { name: deptName },
-    select: { id: true },
-  });
+/**
+ * Auth Center callback: verify JWT, cache snapshot, return identity.
+ * Called from /api/auth/center/callback.
+ */
+export async function handleAuthCenterCallback(rawToken: string): Promise<{
+  id: string;
+  authUserId: string;
+  email: string | null;
+  name: string | null;
+  jobTitle: string | null;
+  employeeId: string | null;
+  departmentId: string | null;
+  authDepartmentId: string | null;
+  appRoles: string[];
+  role: LegacyQmsRole;
+  jti: string;
+  m365Linked: boolean;
+  expiresAt: string;
+}> {
+  const appId = process.env.AUTH_CENTER_APP_ID ?? "qms";
+  const claims = await verifyAuthCenterToken(rawToken, appId);
+  const profile = await fetchAuthCenterProfile(rawToken, appId);
 
-  await db.user.update({ where: { id: userId }, data: { departmentId: dept.id } });
-  return dept.id;
+  // Cache user snapshot in Redis for services that need identity data
+  const { setUserSnapshot } = await import("@/lib/userSnapshotCache");
+  await setUserSnapshot(claims.userId, {
+    authUserId: claims.userId,
+    name: profile.displayName ?? null,
+    email: profile.email ?? null,
+    employeeId: claims.employeeId,
+    departmentId: claims.departmentId ?? null,
+    departmentName: profile.department ?? null,
+    m365Linked: claims.m365Linked ?? false,
+  }).catch(() => {});
+
+  return {
+    id: claims.userId,
+    authUserId: claims.userId,
+    email: profile.email ?? null,
+    name: profile.displayName ?? null,
+    jobTitle: profile.jobTitle ?? null,
+    employeeId: claims.employeeId,
+    departmentId: claims.departmentId ?? null,
+    authDepartmentId: claims.departmentId ?? null,
+    appRoles: claims.appRoles,
+    role: pickRole(claims.appRoles),
+    jti: claims.sessionId,
+    m365Linked: claims.m365Linked ?? false,
+    expiresAt: new Date(claims.exp * 1000).toISOString(),
+  };
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   session: { strategy: "jwt" },
   callbacks: {
-    async jwt({ token, user, account, profile }) {
-      if (account?.provider === "microsoft-entra-id" && user?.email) {
-        const msUserId = (profile?.oid ?? profile?.sub) as string | undefined;
-
-        let msDepartment: string | null = null;
-        let msEmployeeId: string | null = null;
-        if (account.access_token) {
-          try {
-            const res = await fetch(
-              "https://graph.microsoft.com/v1.0/me?$select=id,displayName,givenName,surname,userPrincipalName,mail,businessPhones,jobTitle,officeLocation,preferredLanguage,mobilePhone,employeeId,department,identities,streetAddress,city,state,postalCode,country",
-              { headers: { Authorization: `Bearer ${account.access_token}` } },
-            );
-            if (res.ok) {
-              const data = await res.json() as { department?: string | null; employeeId?: string | null };
-              msDepartment = data.department ?? null;
-              msEmployeeId = data.employeeId ?? null;
-            }
-          } catch {
-            // Graph unavailable — synced on next login
-          }
-        }
-
-        const dbUser = await db.user.upsert({
-          where: { email: user.email },
-          update: {
-            msUserId,
-            name: user.name,
-            image: user.image,
-            ...(msEmployeeId ? { employeeId: msEmployeeId } : {}),
-          },
-          create: {
-            email: user.email,
-            name: user.name,
-            image: user.image,
-            msUserId,
-            role: "USER",
-          },
-          select: { id: true, role: true, msUserId: true, employeeId: true, departmentId: true },
-        });
-
-        const departmentId = await syncDepartment(dbUser.id, msDepartment);
-
-        token.id = dbUser.id;
-        token.role = dbUser.role;
-        token.msUserId = dbUser.msUserId ?? undefined;
-        token.m365Verified = true;
-        token.employeeId = dbUser.employeeId ?? undefined;
-        token.departmentId = departmentId ?? undefined;
-        token.accessToken = account.access_token;
-        token.refreshToken = account.refresh_token;
-        token.accessTokenExpires = account.expires_at ? account.expires_at * 1000 : undefined;
+    async jwt({ token }) {
+      if (token.authCenterVerified) {
+        return token;
       }
       return token;
     },
   },
 });
-

@@ -28,7 +28,7 @@ export default function DarDistributionSection({ departments, selected, onChange
             <label key={dept.id} className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
-                className="checkbox checkbox-sm checkbox-primary"
+                className="w-4 h-4 text-emerald-600 bg-slate-100 border-slate-300 rounded focus:ring-emerald-500"
                 checked={selected.includes(dept.id)}
                 onChange={() => toggle(dept.id)}
               />

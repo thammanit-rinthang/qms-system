@@ -1,11 +1,12 @@
 
-import { NextResponse, type NextRequest } from "next/server";
+import { type NextRequest } from "next/server";
 import { z } from "zod";
 import { requireRole } from "@/lib/auth";
-import { AppError } from "@/lib/errors";
-import { getAllDepartments, createDepartment } from "@/services/department";
-import type { ApiResponse } from "@/types/api";
-import type { DepartmentRow } from "@/types/department";
+import { DepartmentService } from "@/services/departmentService";
+import { sendSuccess } from "@/lib/apiResponse";
+import { handleApiError } from "@/lib/apiErrorHandler";
+
+const deptService = new DepartmentService();
 
 const createSchema = z.object({
   name: z.string().min(1, "ชื่อแผนกต้องไม่ว่างเปล่า").max(100),
@@ -13,38 +14,24 @@ const createSchema = z.object({
   isActive: z.boolean().optional(),
 });
 
-export async function GET(): Promise<NextResponse<ApiResponse<DepartmentRow[]>>> {
+export async function GET() {
   try {
-    await requireRole("IT");
-    const departments = await getAllDepartments();
-    return NextResponse.json({ data: departments, error: null });
+    const session = await requireRole("IT");
+    const departments = await deptService.getAllDepartments(session.user.accessToken);
+    return sendSuccess(departments, "Departments retrieved successfully");
   } catch (err) {
-    if (err instanceof AppError) {
-      return NextResponse.json({ data: null, error: err.message }, { status: err.statusCode });
-    }
-    console.error("[GET /api/it/departments]", err);
-    return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 });
+    return handleApiError(err);
   }
 }
 
-export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse<DepartmentRow>>> {
+export async function POST(req: NextRequest) {
   try {
-    await requireRole("IT");
+    const session = await requireRole("IT");
     const body = await req.json();
-    const parsed = createSchema.safeParse(body);
-    if (!parsed.success) {
-      return NextResponse.json(
-        { data: null, error: parsed.error.issues[0]?.message ?? "Invalid body" },
-        { status: 400 },
-      );
-    }
-    const dept = await createDepartment(parsed.data);
-    return NextResponse.json({ data: dept, error: null }, { status: 201 });
+    const validated = createSchema.parse(body);
+    const dept = await deptService.createDepartment(validated, session.user.accessToken);
+    return sendSuccess(dept, "Department created successfully", 201);
   } catch (err) {
-    if (err instanceof AppError) {
-      return NextResponse.json({ data: null, error: err.message }, { status: err.statusCode });
-    }
-    console.error("[POST /api/it/departments]", err);
-    return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 });
+    return handleApiError(err);
   }
 }

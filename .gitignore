@@ -27,6 +27,18 @@
 .DS_Store
 *.pem
 
+# kilo AI - runtime data (config files themselves are committed)
+.kilo/node_modules/
+.kilo/data/
+.kilo/sessions/
+.kilo/worktrees/
+.kilo/cache/
+.kilo/package.json
+.kilo/package-lock.json
+
+# kilo AI - built-in agent skills (not project source)
+.agents/
+
 # debug
 npm-debug.log*
 yarn-debug.log*
@@ -44,8 +56,4 @@ yarn-error.log*
 next-env.d.ts
 
 /app/generated/prisma
-
-.claude
-CLAUDE.md
-AGENTS.md
-
+.tokensave/

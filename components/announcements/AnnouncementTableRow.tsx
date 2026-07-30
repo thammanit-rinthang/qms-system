@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { Home, Link as LinkIcon, List, Zap } from "lucide-react";
 import { useT } from "@/lib/i18n";
-import type { AnnouncementRow } from "@/services/announcement";
+import type { AnnouncementRow } from "@/services/announcementService";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { ActionIconButton } from "@/components/common/ActionButtons";
 
 type Props = {
   row: AnnouncementRow;
@@ -13,17 +16,16 @@ type Props = {
 };
 
 const SYSTEM_COLORS: Record<string, string> = {
-  QMS: "bg-primary/10 text-primary",
-  IT: "bg-secondary/10 text-secondary",
-  HR: "bg-violet-100 text-violet-700",
-  GA: "bg-amber-100 text-amber-700",
-  SAFETY: "bg-red-100 text-red-700",
+  QMS: "bg-[#0F1059]/10 text-[#0F1059]",
+  IT: "bg-sky-50 text-sky-600",
+  HR: "bg-emerald-50 text-emerald-600",
+  GA: "bg-amber-50 text-amber-600",
+  SAFETY: "bg-rose-50 text-rose-600",
 };
 
 export default function AnnouncementTableRow({ row: a, onView, onEdit, onDelete, onToggle }: Props) {
   const t = useT();
   const isActive = a.status === "ACTIVE";
-
   const [toggling, setToggling] = useState(false);
 
   async function handleToggle(e: React.ChangeEvent<HTMLInputElement>) {
@@ -36,7 +38,7 @@ export default function AnnouncementTableRow({ row: a, onView, onEdit, onDelete,
     }
   }
 
-  const systemColor = SYSTEM_COLORS[a.sourceSystem] ?? "bg-base-200 text-neutral";
+  const systemColor = SYSTEM_COLORS[a.sourceSystem] ?? "bg-slate-100 text-slate-500";
 
   function formatDate(d: Date | null) {
     if (!d) return null;
@@ -44,175 +46,112 @@ export default function AnnouncementTableRow({ row: a, onView, onEdit, onDelete,
   }
 
   return (
-    <tr
-      className="hover:bg-base-50 transition-colors duration-100 cursor-pointer group"
-      onClick={() => onView(a)}
-    >
-      {/* Title */}
-      <td className="py-3.5 px-4 max-w-[220px]">
+    <TableRow className="cursor-pointer group" onClick={() => onView(a)}>
+      <TableCell className="max-w-56">
         <div className="flex items-start gap-2.5">
-          {/* Color swatch from bgColor */}
-          <div
-            className="w-2.5 h-2.5 rounded-full shrink-0 mt-1"
-            style={{ backgroundColor: a.bgColor ?? "#0F1059" }}
-          />
+          <div className="w-2.5 h-2.5 rounded-full shrink-0 mt-1" style={{ backgroundColor: a.bgColor ?? "#0F1059" }} />
           <div>
-            <p className="text-xs font-semibold text-neutral leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+            <p className="text-sm font-medium text-[#0F1059] leading-snug line-clamp-2 group-hover:text-[#161875] transition-colors">
               {a.title}
             </p>
             {a.pushToCompanyCenter && (
-              <span className="inline-flex items-center gap-1 mt-1 text-[10px] font-medium text-secondary">
-                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
+              <span className="inline-flex items-center gap-1 mt-1 text-xs text-sky-600">
+                <Home className="w-3 h-3" />
                 หน้าหลัก
               </span>
             )}
           </div>
         </div>
-      </td>
+      </TableCell>
 
-      {/* System badge */}
-      <td className="py-3.5 px-4">
-        <span className={`inline-block px-2.5 py-0.5 rounded-md text-[11px] font-bold ${systemColor}`}>
+      <TableCell>
+        <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold ${systemColor}`}>
           {a.sourceSystem}
         </span>
-      </td>
+      </TableCell>
 
-      {/* Display type */}
-      <td className="py-3.5 px-4">
+      <TableCell>
         {a.displayType === "SCROLLING" ? (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-info/10 text-info">
-            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sky-50 text-sky-600">
+            <Zap className="w-3 h-3" />
             Scrolling
           </span>
         ) : (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-base-200 text-gray-500">
-            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-            </svg>
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-500">
+            <List className="w-3 h-3" />
             List
           </span>
         )}
-      </td>
+      </TableCell>
 
-      {/* Date range */}
-      <td className="py-3.5 px-4">
-        <div className="flex flex-col gap-0.5">
-          <span className="text-[11px] text-neutral">
-            {formatDate(a.startDate) ?? (
-              <span className="text-gray-400">{t("announcement.dateAlways")}</span>
-            )}
+      <TableCell className="text-center">
+        <div className="flex flex-col gap-0.5 items-center">
+          <span className="text-xs font-mono text-slate-600">
+            {formatDate(a.startDate) ?? <span className="text-slate-400 not-italic">{t("announcement.dateAlways")}</span>}
           </span>
-          <span className="text-[10px] text-gray-400 flex items-center gap-1">
-            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-            {formatDate(a.endDate) ?? (
-              <span className="italic">{t("announcement.dateNoEnd")}</span>
-            )}
+          <span className="text-xs font-mono text-slate-400">
+            {formatDate(a.endDate) ?? <span className="italic text-slate-400">{t("announcement.dateNoEnd")}</span>}
           </span>
         </div>
-      </td>
+      </TableCell>
 
-      {/* Attachment */}
-      <td className="py-3.5 px-4">
+      <TableCell>
         {a.fileName && a.spWebUrl ? (
           <a
             href={a.spWebUrl}
             target="_blank"
             rel="noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="inline-flex items-center gap-1.5 text-secondary hover:text-primary transition-colors text-[11px] font-medium hover:underline"
+            className="inline-flex items-center gap-1.5 text-sky-700 hover:underline text-xs font-medium"
           >
-            <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-            </svg>
-            <span className="truncate max-w-[80px]">{a.fileName}</span>
+            <LinkIcon className="w-3.5 h-3.5 shrink-0" />
+            <span className="truncate max-w-20">{a.fileName}</span>
           </a>
         ) : (
-          <span className="text-gray-300 text-[11px]">—</span>
+          <span className="text-slate-300 text-xs">—</span>
         )}
-      </td>
+      </TableCell>
 
-      {/* Created by */}
-      <td className="py-3.5 px-4">
+      <TableCell>
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-            <span className="text-[10px] font-bold text-primary">
-              {(a.createdBy.name ?? "?").charAt(0).toUpperCase()}
+          <div className="w-6 h-6 rounded-full bg-[#0F1059]/10 flex items-center justify-center shrink-0">
+            <span className="text-[10px] font-bold text-[#0F1059]">
+              {(a.createdByName ?? "?").charAt(0).toUpperCase()}
             </span>
           </div>
-          <span className="text-[11px] text-neutral truncate max-w-[100px]">{a.createdBy.name}</span>
+          <span className="text-sm text-slate-600 truncate max-w-24">{a.createdByName}</span>
         </div>
-      </td>
+      </TableCell>
 
-      {/* Status toggle */}
-      <td className="py-3.5 px-4">
-        <div
-          className="flex items-center gap-2"
-          onClick={(e) => e.stopPropagation()}
-        >
+      <TableCell onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center gap-2">
           {toggling ? (
-            <span className="loading loading-spinner loading-xs text-gray-400" />
+            <div className="w-4 h-4 rounded-full border-2 border-slate-200 border-t-[#0F1059] animate-spin" />
           ) : (
-            <input
-              type="checkbox"
-              className="toggle toggle-sm toggle-success"
-              checked={isActive}
-              onChange={handleToggle}
-              aria-label={isActive ? t("announcement.statusActive") : t("announcement.statusInactive")}
-            />
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                className="sr-only peer"
+                checked={isActive}
+                onChange={handleToggle}
+                aria-label={isActive ? t("announcement.statusActive") : t("announcement.statusInactive")}
+              />
+              <div className="w-9 h-5 bg-slate-200 peer-checked:bg-emerald-500 rounded-full relative transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:w-4 after:h-4 after:bg-white after:rounded-full after:transition-transform peer-checked:after:translate-x-4" />
+            </label>
           )}
-          <span className={`text-[11px] font-semibold ${isActive ? "text-success" : "text-gray-400"}`}>
+          <span className={`text-xs font-medium ${isActive ? "text-emerald-600" : "text-slate-400"}`}>
             {isActive ? t("announcement.statusActive") : t("announcement.statusInactive")}
           </span>
         </div>
-      </td>
+      </TableCell>
 
-      {/* Actions */}
-      <td className="py-3.5 px-4">
-        <div
-          className="flex items-center justify-end gap-0.5"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <button
-            onClick={() => onView(a)}
-            className="btn btn-ghost btn-xs btn-circle text-secondary hover:bg-secondary/10"
-            title={t("common.view")}
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-            </svg>
-          </button>
-          <button
-            onClick={() => onEdit(a)}
-            className="btn btn-ghost btn-xs btn-circle text-warning hover:bg-warning/10"
-            title={t("common.edit")}
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-            </svg>
-          </button>
-          <button
-            onClick={() => onDelete(a)}
-            className="btn btn-ghost btn-xs btn-circle text-error hover:bg-error/10"
-            title={t("common.delete")}
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
-          </button>
+      <TableCell onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-end gap-1">
+          <ActionIconButton tone="view" label={t("common.view")} onClick={() => onView(a)} />
+          <ActionIconButton tone="edit" label={t("common.edit")} onClick={() => onEdit(a)} />
+          <ActionIconButton tone="delete" label={t("common.delete")} onClick={() => onDelete(a)} />
         </div>
-      </td>
-    </tr>
+      </TableCell>
+    </TableRow>
   );
 }

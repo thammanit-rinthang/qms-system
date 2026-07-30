@@ -5,6 +5,7 @@ import type { UserRole } from "@/generated/prisma/client";
 import { LocaleContext } from "@/lib/locale-context";
 import DashboardHeader from "./DashboardHeader";
 import DashboardSidebar from "./DashboardSidebar";
+import AuthSessionRefresh from "@/components/auth/AuthSessionRefresh";
 
 type Props = {
   role: UserRole;
@@ -20,7 +21,8 @@ export default function DashboardShell({ role, name, email, image, children }: P
 
   return (
     <LocaleContext.Provider value={locale}>
-      <div className="flex h-screen overflow-hidden bg-base-200">
+      <AuthSessionRefresh />
+      <div className="flex h-screen overflow-hidden bg-slate-100">
         {/* Sidebar: persistent on desktop, drawer on mobile */}
         <DashboardSidebar
           role={role}

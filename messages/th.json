@@ -12,6 +12,7 @@
     "search": "ค้นหา",
     "filter": "กรอง",
     "noData": "ไม่พบข้อมูล",
+    "noItems": "ไม่พบรายการ",
     "confirm": "ยืนยัน",
     "back": "กลับ",
     "next": "ถัดไป",
@@ -19,14 +20,18 @@
     "close": "ปิด",
     "success": "สำเร็จ",
     "irreversible": "การกระทำนี้ไม่สามารถย้อนกลับได้",
-    "serverError": "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้"
+    "serverError": "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้",
+    "optional": "(ไม่บังคับ)"
   },
   "nav": {
     "dar": "คำขอเอกสาร (DAR)",
     "qmsDar": "จัดการ DAR",
     "sharepoint": "SharePoint Files",
     "users": "จัดการผู้ใช้",
-    "departments": "จัดการแผนก"
+    "departments": "จัดการแผนก",
+    "myWork": "งานของฉัน",
+    "itAdmin": "IT Admin",
+    "closeSidebar": "ปิดแถบด้านข้าง"
   },
   "roles": {
     "USER": "ผู้ใช้งาน",
@@ -52,6 +57,9 @@
   "dar": {
     "title": "คำขอเอกสาร",
     "new": "สร้างคำขอใหม่",
+    "editTitle": "แก้ไขคำขอเอกสาร",
+    "noDepartmentTitle": "ไม่สามารถสร้างคำขอได้",
+    "noDepartmentDesc": "บัญชีของคุณยังไม่ได้ผูกกับแผนก กรุณาติดต่อ IT",
     "status": {
       "DRAFT": "ร่าง",
       "SUBMITTED": "รอดำเนินการ",
@@ -89,8 +97,10 @@
       "docNum": "เลขที่เอกสาร",
       "docName": "ชื่อเอกสาร",
       "revision": "Revision",
+      "effectiveDate": "วันที่มีผลบังคับใช้",
       "darNo": "เลขที่คำขอ",
-      "darNoDraft": "ยังไม่มีเลขที่ (ฉบับร่าง)"
+      "darNoDraft": "ยังไม่มีเลขที่ (ฉบับร่าง)",
+      "status": "สถานะ"
     },
     "placeholder": {
       "reason": "ระบุเหตุผลในการขอเอกสาร",
@@ -99,13 +109,15 @@
       "specifyDocType": "ระบุประเภทเอกสาร",
       "docNum": "เช่น QMS-SOP-001",
       "docName": "ชื่อเอกสาร",
-      "revision": "00"
+      "revision": "00",
+      "effectiveDate": "วว/ดด/ปปปป"
     },
     "table": {
       "colNo": "ลำดับ",
       "colDocNum": "เลขที่เอกสาร",
       "colDocName": "ชื่อเอกสาร",
       "colRevision": "Revision",
+      "colEffectiveDate": "วันที่มีผลบังคับใช้",
       "emptyItems": "กดปุ่ม เพิ่มรายการ เพื่อเพิ่มเอกสาร",
       "addItem": "เพิ่มรายการ",
       "emptyItemsTable": "ไม่มีรายการเอกสาร"
@@ -121,14 +133,178 @@
       "confirmDeleteDraft": "ยืนยันลบฉบับร่าง",
       "deleteDraftMsg": "คำขอนี้และไฟล์แนบทั้งหมดจะถูกลบถาวร ไม่สามารถกู้คืนได้",
       "confirmDelete": "ยืนยันลบ"
+    },
+    "approval": {
+      "title": "ขั้นตอนการอนุมัติ",
+      "stepPreparer": "ผู้จัดทำ",
+      "stepReviewer": "ผู้ตรวจสอบ",
+      "stepApproverMr": "ผู้แทนฝ่ายบริหาร",
+      "actionApproved": "อนุมัติแล้ว",
+      "actionRejected": "ส่งคืน",
+      "actionPending": "รออนุมัติ",
+      "commentLabel": "ความคิดเห็น",
+      "commentPlaceholder": "เพิ่มความคิดเห็นหรือข้อสังเกต...",
+      "commentOptional": "(ไม่บังคับ)",
+      "rejectReasonLabel": "เหตุผลในการส่งคืน",
+      "rejectReasonPlaceholder": "ระบุเหตุผล...",
+      "signatureLabel": "ลายมือชื่ออนุมัติ",
+      "preparerSignTitle": "ลงลายมือชื่อยืนยัน (ผู้จัดทำ)",
+      "yourStep": "ขั้นตอนของคุณ",
+      "btnApprove": "อนุมัติ",
+      "btnReject": "ส่งคืน",
+      "btnConfirmApprove": "ยืนยันอนุมัติ",
+      "btnConfirmReject": "ยืนยันส่งคืน",
+      "btnConfirmSign": "ยืนยันลายมือชื่อ",
+      "btnAssignReviewer": "กำหนดผู้ตรวจสอบ",
+      "selectReviewer": "เลือกผู้ตรวจสอบ",
+      "selectReviewerPlaceholder": "-- เลือกผู้ตรวจสอบ --",
+      "successFlash": "ดำเนินการสำเร็จ",
+      "errorGeneric": "เกิดข้อผิดพลาด",
+      "savedSigLabel": "ใช้ลายมือชื่อที่บันทึกไว้",
+      "btnUseSavedSig": "ใช้เลย",
+      "saveSigCheckbox": "บันทึกลายมือชื่อนี้ไว้สำหรับครั้งถัดไป",
+      "sigModeDrawLabel": "วาดลายมือชื่อ",
+      "sigModeTypeLabel": "พิมพ์ชื่อ",
+      "sigModeImageLabel": "อัปโหลดรูป",
+      "sigFontScript": "สคริปต์",
+      "sigFontStyle": "สไตล์",
+      "sigFontCursive": "ตัวเอียง",
+      "sigTypePlaceholder": "พิมพ์ชื่อของคุณ",
+      "sigTypeSample": "ตัวอย่าง",
+      "sigImageUploadLabel": "คลิกเพื่ออัปโหลดรูปลายมือชื่อ",
+      "sigImageUploadHint": "PNG, JPG — ไม่เกิน 2MB",
+      "sigImageSizeError": "ไฟล์ต้องมีขนาดไม่เกิน 2MB",
+      "sigClear": "ล้างลายมือชื่อ",
+      "sigAlt": "ลายมือชื่อ",
+      "sigSavedAlt": "ลายมือชื่อที่บันทึก",
+      "sigImageAlt": "รูปลายมือชื่อ"
+    },
+    "review": {
+      "bannerTitle": "คุณได้รับมอบหมายให้ตรวจสอบคำขอนี้",
+      "bannerDesc": "กรุณาตรวจสอบรายละเอียดทั้งหมดด้านล่าง จากนั้นลงลายมือชื่อเพื่ออนุมัติหรือส่งคืนผู้จัดทำ",
+      "breadcrumb": "ตรวจสอบ",
+      "floatPending": "รอการดำเนินการของคุณ",
+      "floatAction": "ดำเนินการ"
+    },
+    "approve": {
+      "bannerTitle": "คุณได้รับคำขออนุมัติจากผู้ตรวจสอบ",
+      "bannerDesc": "กรุณาตรวจสอบรายละเอียดทั้งหมดด้านล่าง จากนั้นลงลายมือชื่อเพื่ออนุมัติหรือส่งคืน",
+      "breadcrumb": "อนุมัติ"
+    },
+    "reviewerSelect": {
+      "title": "เลือกผู้ตรวจสอบ",
+      "subtitle": "ค้นหาและเลือกผู้ตรวจสอบสำหรับคำขอนี้",
+      "searchPlaceholder": "ค้นหาชื่อ, อีเมล หรือรหัสพนักงาน...",
+      "allDepartments": "ทุกแผนก",
+      "allTitles": "ทุกตำแหน่ง",
+      "sortBy": "เรียงตาม",
+      "sortName": "ชื่อ",
+      "sortDepartment": "แผนก",
+      "sortJobTitle": "ตำแหน่ง",
+      "loadingError": "ไม่สามารถโหลดรายชื่อผู้ใช้ได้ กรุณาลองใหม่",
+      "noMatch": "ไม่พบผู้ใช้ที่ตรงกัน",
+      "selectedReviewer": "ผู้ตรวจสอบที่เลือก",
+      "resultCount": "{displayed} / {total} รายการ",
+      "back": "ย้อนกลับ",
+      "send": "ส่งคำขอ"
+    },
+    "signModal": {
+      "title": "ลงลายมือชื่อยืนยันคำขอ",
+      "subtitle": "กรุณาลงลายมือชื่อของคุณก่อนส่งคำขอ DAR"
+    },
+    "drawer": {
+      "title": "สร้างคำขอเอกสาร (DAR)",
+      "subtitle": "กรอกรายละเอียดคำขอเอกสารด้านล่าง",
+      "depsError": "โหลดข้อมูลไม่สำเร็จ",
+      "tryAgain": "ลองใหม่"
+    },
+    "editDrawer": {
+      "title": "แก้ไขคำขอเอกสาร (DAR)",
+      "draft": "ฉบับร่าง",
+      "darNoPrefix": "เลขที่",
+      "deleteLabel": "ลบคำขอ",
+      "loadError": "โหลดข้อมูลไม่สำเร็จ",
+      "deleteConfirmTitle": "ยืนยันการลบ",
+      "deleteIrreversible": "คำขอนี้จะถูกลบถาวร ไม่สามารถกู้คืนได้",
+      "deleteForever": "ลบถาวร"
+    },
+    "list": {
+      "title": "จัดการคำขอเอกสาร (DAR)",
+      "subtitle": "ภาพรวมคำขอเอกสารทั้งหมดในระบบ",
+      "search": "ค้นหา DAR No., ประเภท, สถานะ...",
+      "filterStatus": "สถานะ",
+      "allStatuses": "ทุกสถานะ",
+      "filterObjective": "วัตถุประสงค์",
+      "allObjectives": "ทุกวัตถุประสงค์",
+      "clearFilters": "ล้างตัวกรอง",
+      "sortDateLabel": "วันที่ขอ",
+      "sortDarNo": "เลขที่ DAR",
+      "sortStatus": "สถานะ",
+      "sortAsc": "น้อย → มาก",
+      "sortDesc": "มาก → น้อย",
+      "emptyTitle": "ยังไม่มีคำขอเอกสาร",
+      "emptyDesc": "คำขอที่ผู้ใช้ส่งมาจะแสดงที่นี่",
+      "filteredEmptyTitle": "ไม่พบผลลัพธ์",
+      "filteredEmptyDesc": "ลองปรับตัวกรองหรือคำค้นหา",
+      "filteredEmptyClear": "ล้างตัวกรอง",
+      "deleteConfirmTitle": "ลบคำขอ {darNo}?",
+      "deleteConfirmMsg": "การลบคำขอเอกสารนี้จะลบข้อมูลทั้งหมดรวมถึงไฟล์แนบ และไม่สามารถกู้คืนได้",
+      "deleteConfirmYes": "ยืนยันลบ",
+      "deleteSuccess": "ลบคำขอสำเร็จ",
+      "countLabel": "รายการ",
+      "statusPendingReview": "รอตรวจสอบ",
+      "statusPendingApprove": "รออนุมัติ",
+      "statusQmsProcessing": "QMS ดำเนินการ",
+      "statusCompleted": "เสร็จสิ้น",
+      "statusCancelled": "ยกเลิก",
+      "statusDraft": "ฉบับร่าง"
+    },
+    "attachment": {
+      "download": "ดาวน์โหลด",
+      "preview": "ดูตัวอย่าง",
+      "deleteFile": "ลบไฟล์",
+      "confirmDelete": "ยืนยันลบไฟล์นี้?",
+      "uploadFail": "อัปโหลดล้มเหลว",
+      "deleteFail": "ลบไม่สำเร็จ",
+      "pendingLabel": "รอบันทึก",
+      "empty": "ยังไม่มีไฟล์แนบ",
+      "dropZoneLabel": "คลิกหรือลากไฟล์มาวางที่นี่",
+      "dropZoneHint": "PDF, Word, Excel, รูปภาพ — ไม่เกิน {max} MB ต่อไฟล์",
+      "fileSizeError": "\"{name}\" มีขนาดเกิน {max} MB",
+      "browserNoPdf": "เบราว์เซอร์ไม่รองรับ PDF viewer",
+      "browserNoPreview": "ไม่รองรับการแสดงผลในเบราว์เซอร์",
+      "openSharePoint": "SharePoint"
     }
   },
   "it": {
+    "auditLog": {
+      "title": "บันทึกการตรวจสอบ",
+      "subtitle": "{count} รายการ",
+      "exportExcel": "ส่งออก Excel",
+      "exporting": "กำลังส่งออก...",
+      "colDateTime": "วันที่ / เวลา",
+      "colActor": "ผู้ดำเนินการ",
+      "colRole": "Role",
+      "colAction": "การดำเนินการ",
+      "colResourceType": "ประเภททรัพยากร",
+      "colResourceId": "ID ทรัพยากร",
+      "colDetails": "รายละเอียด",
+      "filterAction": "การดำเนินการ",
+      "filterResource": "ทรัพยากร",
+      "filterDateFrom": "ตั้งแต่",
+      "filterDateTo": "ถึง",
+      "allActions": "ทุกการดำเนินการ",
+      "allResources": "ทุกทรัพยากร",
+      "empty": "ไม่มีบันทึกการตรวจสอบ",
+      "emptyDesc": "ไม่มีรายการที่ตรงกับตัวกรองที่เลือก",
+      "navLabel": "บันทึกการตรวจสอบ"
+    },
     "users": {
       "title": "จัดการผู้ใช้",
       "sync": "ซิงค์จาก M365",
       "empty": "ยังไม่มีผู้ใช้ในระบบ",
-      "emptyDesc": "กด «ซิงค์ผู้ใช้จาก M365» เพื่อนำเข้าข้อมูลจาก Microsoft Entra ID"
+      "emptyDesc": "กด «ซิงค์ผู้ใช้จาก M365» เพื่อนำเข้าข้อมูลจาก Microsoft Entra ID",
+      "subtitle": "ผู้ใช้ทั้งหมดที่ลงชื่อเข้าใช้ผ่าน Microsoft 365 ({count})"
     },
     "departments": {
       "title": "จัดการแผนก",
@@ -136,7 +312,28 @@
       "manage": "จัดการแผนก",
       "noDepts": "ยังไม่มีแผนกในระบบ",
       "empty": "ยังไม่มีแผนก",
-      "emptyDesc": "เพิ่มแผนกแรกโดยกดปุ่มด้านบน"
+      "emptyDesc": "เพิ่มแผนกแรกโดยกดปุ่มด้านบน",
+      "noGroupEmail": "ไม่มีอีเมลกลุ่ม",
+      "active": "ใช้งาน",
+      "inactive": "ปิดใช้งาน",
+      "membersAll": "สมาชิกทั้งหมด",
+      "membersAllUnit": "คน",
+      "connectedM365": "เชื่อม M365",
+      "hasEmpId": "มีรหัสพนักงาน",
+      "specialRole": "Role พิเศษ",
+      "specialRoleHint": "คน (QMS / MR / IT)",
+      "emptyMembers": "ยังไม่มีสมาชิกในแผนกนี้",
+      "emptyMembersDesc": "ไปที่หน้าจัดการผู้ใช้เพื่อกำหนดแผนกให้ผู้ใช้",
+      "goToUsers": "ไปหน้าผู้ใช้",
+      "colName": "ชื่อ",
+      "colEmail": "อีเมล",
+      "colEmpId": "รหัสพนักงาน",
+      "colRole": "Role",
+      "colM365": "M365",
+      "connected": "เชื่อมแล้ว",
+      "notConnected": "ยังไม่เชื่อม",
+      "empIdPrefix": "รหัส",
+      "m365Prefix": "M365"
     },
     "syncBtn": "ซิงค์ผู้ใช้จาก M365",
     "syncBtnShort": "ซิงค์จาก M365",
@@ -197,10 +394,10 @@
     "fieldTitle": "หัวข้อ",
     "fieldContent": "เนื้อหา",
     "fieldSourceSystem": "ระบบที่มาจาก",
-    "fieldDisplayType": "ประเภทการแสดงผล",
+    "fieldDisplayType": "ตำแหน่งแสดงผลใน QMS",
     "fieldStartDate": "วันที่เริ่มต้น",
     "fieldEndDate": "วันที่สิ้นสุด",
-    "fieldPushToCompany": "แสดงบนหน้าหลัก",
+    "fieldPushToCompany": "ส่งไปยังศูนย์กลางบริษัท",
     "fieldAttachment": "ไฟล์แนบ",
     "fieldStatus": "สถานะ",
     "fieldCreatedBy": "ผู้สร้าง",
@@ -209,17 +406,901 @@
     "publish": "เผยแพร่",
     "createSuccess": "เผยแพร่ประกาศสำเร็จ",
     "createFail": "เผยแพร่ประกาศไม่สำเร็จ",
-    "displayTypeNormal": "ปกติ (แสดงเฉพาะรายการ)",
-    "displayTypeMain": "หลัก (แสดงทุกที่)",
-    "pushToCompanyHint": "แสดงบนหน้าหลักของระบบ",
+    "displayTypeNormal": "การ์ดใน Dashboard",
+    "displayTypeMain": "แถบข้อความวิ่ง (ทุกหน้า)",
+    "pushToCompanyHint": "เผยแพร่ประกาศนี้ไปยังระบบ Auth Center ของบริษัทด้วย",
     "endDateHint": "เว้นว่างหากไม่มีวันหมดอายุ",
     "updateSuccess": "อัปเดตประกาศสำเร็จ",
     "deleteSuccess": "ลบประกาศสำเร็จ",
     "updateFail": "อัปเดตประกาศไม่สำเร็จ",
-    "deleteFail": "ลบประกาศไม่สำเร็จ"
+    "deleteFail": "ลบประกาศไม่สำเร็จ",
+    "details": "รายละเอียดประกาศ",
+    "placeholderTitle": "กรอกหัวข้อประกาศ",
+    "placeholderContent": "กรอกเนื้อหาประกาศ...",
+    "publishBtn": "เผยแพร่ประกาศ",
+    "emptyDesc": "สร้างประกาศแรกเพื่อเริ่มต้นใช้งาน",
+    "displayTypeList": "การ์ดใน Dashboard",
+    "displayTypeScrolling": "แถบข้อความวิ่ง (ทุกหน้า)",
+    "unauthorized": "ไม่มีสิทธิ์เข้าถึง",
+    "uploadFail": "อัปเดตไฟล์แนบไม่สำเร็จ",
+    "saveFail": "บันทึกประกาศไม่สำเร็จ",
+    "createDescription": "กรอกรายละเอียดประกาศด้านล่าง",
+    "allTitle": "ประกาศทั้งหมด",
+    "fieldEmailGroups": "ส่งอีเมลแจ้งกลุ่ม (MS365)",
+    "emailGroupsPlaceholder": "ค้นหากลุ่ม Email MS365...",
+    "emailGroupsHint": "เว้นว่างหากไม่ต้องการส่งอีเมล",
+    "bg": {
+      "background": "พื้นหลัง",
+      "colorTab": "สี",
+      "imageTab": "รูปภาพ",
+      "noImage": "ยังไม่มีรูปภาพ",
+      "textColor": "สีตัวอักษร",
+      "previewText": "ตัวอย่างข้อความ"
+    }
+  },
+  "profile": {
+    "title": "โปรไฟล์ของฉัน",
+    "subtitle": "ดูและแก้ไขข้อมูลโปรไฟล์",
+    "infoSection": "ข้อมูลโปรไฟล์",
+    "sigSection": "ลายมือชื่อที่บันทึก",
+    "sigSectionDesc": "ลายมือชื่อของคุณจะถูกโหลดล่วงหน้าเมื่อลงนามคำขอ DAR",
+    "fieldName": "ชื่อ-นามสกุล",
+    "fieldEmpId": "รหัสพนักงาน",
+    "fieldDept": "แผนก",
+    "fieldPosition": "ตำแหน่ง",
+    "placeholderPosition": "เช่น วิศวกรอาวุโส",
+    "btnSave": "บันทึกการแก้ไข",
+    "nameRequired": "กรุณากรอกชื่อ",
+    "saveSuccess": "บันทึกโปรไฟล์สำเร็จ",
+    "saveFail": "บันทึกโปรไฟล์ไม่สำเร็จ",
+    "sigSaved": "บันทึกลายมือชื่อสำเร็จ",
+    "sigSaveFail": "บันทึกลายมือชื่อไม่สำเร็จ",
+    "sigRemoved": "ลบลายมือชื่อสำเร็จ",
+    "sigRemoveFail": "ลบลายมือชื่อไม่สำเร็จ",
+    "sigCurrentLabel": "ลายมือชื่อที่บันทึก",
+    "sigCurrentType": "ประเภท",
+    "btnChange": "เปลี่ยน",
+    "btnRemove": "ลบ",
+    "btnSaveSig": "บันทึกลายมือชื่อ",
+    "tabDraw": "วาด",
+    "tabType": "พิมพ์",
+    "tabImage": "อัปโหลด"
   },
   "error": {
     "title": "เกิดข้อผิดพลาด",
-    "retryBtn": "ลองใหม่อีกครั้ง"
+    "desc": "กรุณาลองใหม่อีกครั้ง หากปัญหายังคงอยู่ กรุณาติดต่อผู้ดูแลระบบ",
+    "retryBtn": "ลองอีกครั้ง",
+    "goHome": "กลับหน้าหลัก"
+  },
+  "kpi": {
+    "metaCard": {
+      "title": "รายละเอียด KPI",
+      "assigned": "มอบหมายแล้ว",
+      "submittedAt": "ส่งเมื่อ"
+    },
+    "rolePrivilegedDesc": "มีสิทธิ์ CRUD ไม่จำกัดสำหรับรายการ KPI ทั้งหมดตลอดเวลา",
+    "roleUserDesc": "คุณสามารถสร้างและแก้ไขวัตถุประสงค์ได้เฉพาะเมื่อสถานะ KPI เป็น Draft หรือ Rejected เท่านั้น การดำเนินการจะถูกล็อกเมื่ออนุมัติแล้ว",
+    "roleUserApprovedDesc": "KPI นี้ได้รับการอนุมัติครบถ้วนแล้ว การ CRUD ถูกล็อกสำหรับบทบาทของคุณ",
+    "roleUserWrongDeptDesc": "คุณไม่มีสิทธิ์แก้ไข KPI นี้ แผนกของคุณไม่ตรงกับ KPI นี้",
+    "reference": {
+      "title": "ระบบ KPI",
+      "add": "เพิ่ม KPI",
+      "searchPlaceholder": "ค้นหาแผนก...",
+      "confirmDeleteTitle": "ลบ KPI",
+      "confirmDeleteMessage": "คุณแน่ใจหรือไม่ว่าต้องการลบ KPI นี้? การกระทำนี้ไม่สามารถย้อนกลับได้",
+      "table": {
+        "year": "ปี",
+        "department": "แผนก",
+        "empty": "ไม่พบข้อมูล KPI",
+        "totalItems": "รายการ"
+      },
+      "action": {
+        "edit": "แก้ไข",
+        "delete": "ลบ"
+      },
+      "departments": {
+        "title": "จัดการแผนก",
+        "add": "เพิ่มแผนก",
+        "editTitle": "แก้ไขแผนก",
+        "addTitle": "เพิ่มแผนกใหม่",
+        "labelName": "ชื่อแผนก",
+        "placeholderName": "เช่น IT, QMS, HR",
+        "confirmDeleteTitle": "ลบแผนก",
+        "confirmDeleteMsg": "ลบแผนก \"{name}\"? การกระทำนี้ไม่สามารถย้อนกลับได้",
+        "cantDelete": "ไม่สามารถลบแผนกที่มีผู้ใช้ {n} คน",
+        "addSuccess": "เพิ่มแผนกสำเร็จ",
+        "editSuccess": "อัปเดตแผนกสำเร็จ",
+        "deleteSuccess": "ลบแผนกสำเร็จ",
+        "users": "{n} คน",
+        "colUsers": "ผู้ใช้",
+        "colStatus": "สถานะ",
+        "active": "ใช้งาน",
+        "inactive": "ปิดใช้งาน",
+        "labelActive": "แผนกนี้ใช้งานอยู่"
+      }
+    },
+    "tabs": {
+      "setup": "ตั้งค่า KPI",
+      "monthly": "รายงานรายเดือน"
+    },
+    "form": {
+      "year": "ปี",
+      "department": "แผนก",
+      "departmentPlaceholder": "เช่น IT Programmer",
+      "prepare": "ผู้จัดทำ",
+      "reviewer": "ผู้ตรวจทาน",
+      "approver": "ผู้อนุมัติ",
+      "target": "ค่าเป้าหมาย",
+      "unit": "หน่วย",
+      "unitPlaceholder": "เลือกหน่วย...",
+      "unitCustomPlaceholder": "ระบุหน่วยอื่นๆ...",
+      "objectiveDetails": "รายละเอียดวัตถุประสงค์",
+      "measurementFrequency": "ความถี่ในการวัดผล",
+      "frequencyMonthly": "ทุกเดือน",
+      "frequencyQuarterly": "รายไตรมาส",
+      "frequencyYearly": "รายปี",
+      "calculationFormula": "สูตรการคำนวณ",
+      "actionPlanGuidelines": "แนวทางแผนการดำเนินงาน",
+      "referenceDocuments": "เอกสารอ้างอิง",
+      "responsiblePerson": "ผู้รับผิดชอบ",
+      "responsiblePersonPlaceholder": "เลือกผู้รับผิดชอบ...",
+      "responsiblePersonRequired": "กรุณาเลือกผู้รับผิดชอบ",
+      "responsibleEmailRequired": "กรุณากรอกอีเมลผู้รับผิดชอบ"
+    },
+    "messages": {
+      "createSuccess": "สร้าง KPI สำเร็จ",
+      "updateSuccess": "อัปเดต KPI สำเร็จ",
+      "deleteSuccess": "ลบ KPI สำเร็จ"
+    },
+    "action": {
+      "edit": "แก้ไข",
+      "delete": "ลบ"
+    },
+    "objective": {
+      "createTitle": "เพิ่มวัตถุประสงค์",
+      "editTitle": "แก้ไขวัตถุประสงค์",
+      "table": {
+        "objective": "วัตถุประสงค์",
+        "target": "เป้าหมาย",
+        "frequency": "ความถี่",
+        "empty": "ไม่พบวัตถุประสงค์"
+      },
+      "emptyHint": "ใช้ปุ่มเพิ่มวัตถุประสงค์ด้านบนเพื่อเริ่มต้น"
+    },
+    "submit": {
+      "button": "ส่งตรวจสอบ",
+      "signatureTitle": "ลายเซ็นผู้จัดทำ",
+      "assignTitle": "มอบหมายผู้ตรวจสอบและผู้อนุมัติ",
+      "success": "ส่งวัตถุประสงค์ KPI เพื่อตรวจสอบเรียบร้อยแล้ว"
+    },
+    "recall": {
+      "button": "เรียกคืน",
+      "confirmTitle": "เรียกคืนการส่ง",
+      "confirmMessage": "คุณแน่ใจหรือไม่ว่าต้องการเรียกคืนการส่ง KPI นี้? สถานะจะถูกรีเซ็ตเป็น Draft และลายมือชื่อที่กำหนดทั้งหมดจะถูกลบออก",
+      "success": "เรียกคืนการส่ง KPI สำเร็จ"
+    },
+    "review": {
+      "button": "ตรวจสอบและลงนาม",
+      "signatureTitle": "ลายเซ็นผู้ตรวจสอบ",
+      "success": "ตรวจสอบ KPI สำเร็จ"
+    },
+    "approve": {
+      "button": "อนุมัติและลงนาม",
+      "signatureTitle": "ลายเซ็นผู้อนุมัติ",
+      "success": "อนุมัติ KPI สำเร็จ"
+    },
+    "reject": {
+      "button": "ปฏิเสธ",
+      "confirmTitle": "ปฏิเสธ KPI",
+      "confirmMessage": "คุณแน่ใจหรือไม่ว่าต้องการปฏิเสธ KPI นี้? สถานะจะถูกเปลี่ยนเป็น Rejected และผู้จัดทำจะได้รับการแจ้งเตือน",
+      "success": "ปฏิเสธ KPI สำเร็จ"
+    },
+    "monthly": {
+      "title": "รายงาน KPI รายเดือน",
+      "subtitle": "ติดตามและจัดการรายงาน KPI รายเดือนตามแผนก",
+      "createReport": "สร้างรายงาน",
+      "filter": {
+        "allMonths": "ทุกเดือน",
+        "allStatuses": "ทุกสถานะ",
+        "selectKpi": "เลือก KPI"
+      },
+      "table": {
+        "month": "เดือน",
+        "department": "แผนก",
+        "objectives": "วัตถุประสงค์",
+        "ok": "ผ่าน",
+        "notOk": "ไม่ผ่าน",
+        "status": "สถานะ",
+        "target": "เป้าหมาย",
+        "actual": "ผลจริง",
+        "empty": "ไม่พบรายงานรายเดือน"
+      },
+      "status": {
+        "DRAFT": "แบบร่าง",
+        "PENDING_REVIEW": "รอตรวจสอบ",
+        "PENDING_APPROVAL": "รออนุมัติ",
+        "APPROVED": "อนุมัติแล้ว",
+        "REJECTED": "ถูกปฏิเสธ"
+      },
+      "achieved": {
+        "OK": "ผ่าน",
+        "NOT_OK": "ไม่ผ่าน",
+        "PENDING": "รอดำเนินการ"
+      },
+      "drawer": {
+        "title": "รายละเอียดรายงานรายเดือน",
+        "objectives": "วัตถุประสงค์",
+        "actualValue": "ผลจริง",
+        "rejectionPlaceholder": "ระบุเหตุผลการปฏิเสธ..."
+      },
+      "actions": {
+        "submit": "ส่งรายงาน",
+        "saveResults": "บันทึกผล",
+        "review": "ตรวจสอบแล้ว",
+        "approve": "อนุมัติ",
+        "reject": "ปฏิเสธ",
+        "cancel": "ยกเลิก"
+      },
+      "messages": {
+        "createSuccess": "สร้างรายงานรายเดือนสำเร็จ",
+        "updateSuccess": "บันทึกผลสำเร็จ",
+        "submitSuccess": "ส่งรายงานสำเร็จ",
+        "reviewSuccess": "ตรวจสอบรายงานสำเร็จ",
+        "approveSuccess": "อนุมัติรายงานสำเร็จ",
+        "rejectSuccess": "ปฏิเสธรายงานสำเร็จ",
+        "deleteCorrectiveSuccess": "ลบการดำเนินการแก้ไขสำเร็จ"
+      },
+      "section": {
+        "objectives": "วัตถุประสงค์และผลการดำเนินงาน",
+        "remarkAttachment": "หมายเหตุและไฟล์แนบ",
+        "correctiveActions": "การดำเนินการแก้ไข / ปรับปรุง"
+      },
+      "field": {
+        "target": "เป้าหมาย",
+        "actualResult": "ผลจริง",
+        "remark": "หมายเหตุ",
+        "remarkPlaceholder": "เพิ่มหมายเหตุ...",
+        "attachment": "ไฟล์แนบ",
+        "noAttachment": "ไม่มีไฟล์แนบ",
+        "uploadFile": "อัปโหลดไฟล์"
+      },
+      "correctiveAction": {
+        "addNew": "เพิ่มการดำเนินการแก้ไข",
+        "noneRequired": "วัตถุประสงค์ทั้งหมดบรรลุเป้าหมาย — ไม่จำเป็นต้องดำเนินการแก้ไข",
+        "noneFailed": "ไม่มีวัตถุประสงค์ที่ไม่ผ่านเกณฑ์ — ไม่จำเป็นต้องดำเนินการแก้ไข",
+        "times": "ครั้งที่",
+        "rootCause": "การวิเคราะห์สาเหตุ",
+        "guidelines": "แนวทางแก้ไขปรับปรุง",
+        "responsible": "ผู้รับผิดชอบ",
+        "dueDate": "กำหนดเสร็จ",
+        "deleteConfirm": "ลบการดำเนินการแก้ไขนี้?"
+      }
+    },
+    "unit": {
+      "percent": "%",
+      "times": "ครั้ง",
+      "count": "จำนวน",
+      "days": "วัน",
+      "hours": "ชั่วโมง",
+      "other": "อื่นๆ"
+    }
+  },
+  "documentCategory": {
+    "title": "หมวดหมู่เอกสาร",
+    "new": "หมวดหมู่ใหม่",
+    "editTitle": "แก้ไขหมวดหมู่",
+    "list": "รายการหมวดหมู่",
+    "empty": "ไม่พบหมวดหมู่",
+    "emptyDesc": "สร้างหมวดหมู่ใหม่เพื่อเริ่มต้น",
+    "deleteConfirm": "ลบหมวดหมู่",
+    "deleteMsg": "คุณแน่ใจหรือว่าต้องการลบหมวดหมู่นี้ ไม่สามารถเลิกทำการกระทำนี้ได้",
+    "field": {
+      "name": "ชื่อหมวดหมู่",
+      "description": "คำอธิบาย",
+      "order": "ลำดับแสดงผล"
+    },
+    "placeholder": {
+      "name": "เช่น SOP, คู่มือ, แบบฟอร์ม",
+      "description": "คำอธิบาย (ไม่บังคับ)",
+      "search": "ค้นหาหมวดหมู่..."
+    },
+    "button": {
+      "add": "เพิ่มหมวดหมู่"
+    },
+    "messages": {
+      "createSuccess": "สร้างหมวดหมู่สำเร็จ",
+      "updateSuccess": "อัปเดตหมวดหมู่สำเร็จ",
+      "deleteSuccess": "ลบหมวดหมู่สำเร็จ"
+    },
+    "countLabel": "หมวดหมู่"
+  },
+  "documentControl": {
+    "title": "ควบคุมเอกสาร",
+    "new": "เอกสารใหม่",
+    "editTitle": "แก้ไขเอกสาร",
+    "viewTitle": "ดูเอกสาร",
+    "list": "รายการเอกสาร",
+    "empty": "ไม่พบเอกสาร",
+    "emptyDesc": "สร้างเอกสารใหม่เพื่อเริ่มต้น",
+    "deleteConfirm": "ลบเอกสาร",
+    "deleteMsg": "คุณแน่ใจหรือว่าต้องการลบเอกสารนี้ ไม่สามารถเลิกทำการกระทำนี้ได้",
+    "status": {
+      "DRAFT": "ร่าง",
+      "ACTIVE": "ใช้งาน",
+      "CANCELLED": "ยกเลิก",
+      "OBSOLETE": "ไม่ใช้แล้ว"
+    },
+    "docType": {
+      "MANUAL": "คู่มือ",
+      "FORMAT": "แบบฟอร์ม",
+      "DRAWING": "ภาพวาด",
+      "PROCEDURE": "ขั้นตอน",
+      "SOP": "SOP",
+      "SIP": "SIP",
+      "IPQC": "IPQC",
+      "WORK_INSTRUCTION": "คำสั่งการทำงาน",
+      "OTHER": "อื่น ๆ"
+    },
+    "field": {
+      "docNumber": "เลขที่เอกสาร",
+      "docName": "ชื่อเอกสาร",
+      "revision": "ฉบับแก้ไข",
+      "category": "หมวดหมู่",
+      "description": "คำอธิบาย",
+      "docType": "ประเภทเอกสาร",
+      "status": "สถานะ",
+      "distribution": "การแจกจ่าย",
+      "effectiveDate": "วันที่มีผลบังคับใช้",
+      "fileName": "ชื่อไฟล์",
+      "fileSize": "ขนาดไฟล์",
+      "mimeType": "ประเภทไฟล์",
+      "createdBy": "สร้างโดย",
+      "createdAt": "วันที่สร้าง",
+      "updatedBy": "แก้ไขล่าสุดโดย",
+      "updatedAt": "วันที่แก้ไขล่าสุด"
+    },
+    "placeholder": {
+      "search": "ค้นหาด้วยเลขที่เอกสารหรือชื่อเอกสาร...",
+      "category": "ป้อนหมวดหมู่",
+      "description": "ป้อนคำอธิบายเอกสาร",
+      "docNumber": "เช่น FM-IT-01"
+    },
+    "button": {
+      "create": "สร้างเอกสาร",
+      "edit": "แก้ไข",
+      "delete": "ลบ",
+      "preview": "ดูตัวอย่าง",
+      "download": "ดาวน์โหลด",
+      "upload": "อัปโหลดไฟล์",
+      "replace": "แทนที่ไฟล์",
+      "uploadRevision": "อัปโหลดฉบับแก้ไข"
+    },
+    "messages": {
+      "createSuccess": "สร้างเอกสารสำเร็จ",
+      "updateSuccess": "อัปเดตเอกสารสำเร็จ",
+      "deleteSuccess": "ลบเอกสารสำเร็จ",
+      "uploadSuccess": "อัปโหลดไฟล์สำเร็จ",
+      "docNumberExists": "เลขที่เอกสารนี้มีอยู่แล้ว",
+      "invalidFile": "ไฟล์ไม่ถูกต้อง โปรดตรวจสอบประเภทและขนาดไฟล์",
+      "fileRequired": "ต้องมีไฟล์"
+    },
+    "table": {
+      "colNumber": "เลขที่",
+      "colName": "ชื่อเอกสาร",
+      "colType": "ประเภท",
+      "colStatus": "สถานะ",
+      "colCreated": "สร้าง",
+      "colActions": "การกระทำ"
+    },
+    "filterBar": {
+      "search": "ค้นหาเอกสาร",
+      "docType": "ประเภทเอกสาร",
+      "status": "สถานะ",
+      "allTypes": "ทั้งหมด",
+      "allStatuses": "สถานะทั้งหมด"
+    },
+    "section": {
+      "metadata": "ข้อมูลการบันทึก",
+      "fileInfo": "ข้อมูลไฟล์",
+      "revisionHistory": "ประวัติการแก้ไข",
+      "noRevisions": "ไม่มีประวัติการอัปโหลดไฟล์"
+    },
+    "uploadRevisionDesc": "อัปโหลดไฟล์เอกสารและระบุรายละเอียดฉบับแก้ไขด้านล่าง",
+    "fileHint": "PDF, Word, Excel, รูปภาพ — สูงสุด 20 MB",
+    "pagination": {
+      "page": "หน้า",
+      "of": "จาก",
+      "items": "รายการ"
+    },
+    "sort": {
+      "label": "จัดเรียงตาม",
+      "displayOrder": "ลำดับแสดงผล",
+      "nameAsc": "ชื่อ (ก-ฮ)",
+      "nameDesc": "ชื่อ (ฮ-ก)",
+      "categoriesDesc": "จำนวนหมวดหมู่ (มาก-น้อย)",
+      "documentsDesc": "จำนวนเอกสาร (มาก-น้อย)",
+      "latestCreated": "วันที่สร้างล่าสุด",
+      "docNumberAsc": "เลขที่เอกสาร (ก-ฮ)",
+      "docNumberDesc": "เลขที่เอกสาร (ฮ-ก)",
+      "docNameAsc": "ชื่อเอกสาร (ก-ฮ)",
+      "docNameDesc": "ชื่อเอกสาร (ฮ-ก)",
+      "effectiveDateDesc": "วันที่มีผลบังคับใช้ (ใหม่-เก่า)",
+      "effectiveDateAsc": "วันที่มีผลบังคับใช้ (เก่า-ใหม่)"
+    }
+  },
+  "documentDepartment": {
+    "title": "แผนกเอกสาร",
+    "new": "แผนกใหม่",
+    "editTitle": "แก้ไขแผนก",
+    "list": "รายการแผนก",
+    "empty": "ไม่พบแผนก",
+    "emptyDesc": "สร้างแผนกใหม่เพื่อเริ่มต้น",
+    "deleteConfirm": "ลบแผนก",
+    "deleteMsg": "คุณแน่ใจหรือว่าต้องการลบแผนกนี้? การกระทำนี้ไม่สามารถย้อนกลับได้",
+    "field": {
+      "name": "ชื่อแผนก",
+      "emailGroup": "อีเมลกลุ่ม",
+      "isActive": "สถานะการใช้งาน"
+    },
+    "placeholder": {
+      "name": "เช่น Production, QA, HR",
+      "emailGroup": "เช่น production-dept@company.com",
+      "search": "ค้นหาแผนก..."
+    },
+    "button": {
+      "add": "เพิ่มแผนก"
+    },
+    "messages": {
+      "createSuccess": "สร้างแผนกสำเร็จ",
+      "updateSuccess": "อัปเดตแผนกสำเร็จ",
+      "deleteSuccess": "ลบแผนกสำเร็จ"
+    },
+    "countLabel": "แผนก"
+  },
+  "approve": {
+    "title": "คิวการอนุมัติ",
+    "subtitle": "ภาพรวมของรายการที่รอการดำเนินการอนุมัติของคุณ",
+    "totalPending": "รอดำเนินการทั้งหมด",
+    "pendingDar": "DAR รอดำเนินการ",
+    "pendingKpi": "KPI รอดำเนินการ",
+    "pendingDarList": "DAR ที่รอการดำเนินการของคุณ",
+    "pendingKpiReviewList": "KPI ที่รอการตรวจสอบของคุณ",
+    "pendingKpiApproveList": "KPI ที่รอการอนุมัติของคุณ",
+    "requester": "ผู้ขอ",
+    "date": "วันที่",
+    "department": "แผนก",
+    "type": "ประเภท",
+    "typeObjective": "วัตถุประสงค์ KPI",
+    "typeMonthly": "KPI รายเดือน",
+    "period": "ช่วงเวลา",
+    "status": "สถานะ",
+    "actual": "ผลจริง",
+    "action": "การดำเนินการ",
+    "openAction": "เปิด",
+    "successTitle": "ดำเนินการสำเร็จ",
+    "successDesc": "บันทึกการดำเนินการอนุมัติเรียบร้อยแล้ว",
+    "backToQueue": "กลับไปยังคิวการอนุมัติ",
+    "empty": "ไม่มีรายการ DAR ที่รอดำเนินการ",
+    "emptyKpiReview": "ไม่มีรายการ KPI ที่รอตรวจสอบ",
+    "emptyKpiApprove": "ไม่มีรายการ KPI ที่รออนุมัติ",
+    "role": "บทบาท",
+    "stepReview": "ตรวจสอบ",
+    "stepApprove": "อนุมัติ",
+    "accessLevel": "ระดับการเข้าถึง",
+    "fullAccess": "เข้าถึงเต็มรูปแบบ",
+    "rolePrivilegedDesc": "มีสิทธิ์ CRUD ไม่จำกัดสำหรับรายการอนุมัติทั้งหมดตลอดเวลา",
+    "roleUserDesc": "คุณสามารถดำเนินการกับรายการที่ได้รับมอบหมายเท่านั้น การดำเนินการจะถูกจำกัดเมื่อการอนุมัติของแผนกคุณเสร็จสมบูรณ์แล้ว"
+  },
+  "qms": {
+    "approval": {
+      "title": "ตั้งค่าผู้อนุมัติ DAR",
+      "subtitle": "กำหนดผู้ใช้สำหรับ MR และ QMS signer จากหน้าเดียว",
+      "mrLabel": "ผู้อนุมัติ MR (CURRENT_MR_USER_ID)",
+      "qmsLabel": "ผู้อนุมัติ QMS ขั้นสุดท้าย (CURRENT_QMS_USER_ID)",
+      "notSet": "ไม่กำหนด",
+      "saveFail": "บันทึกไม่สำเร็จ",
+      "saveSuccess": "บันทึกการตั้งค่าเรียบร้อยแล้ว",
+      "connectionError": "เกิดข้อผิดพลาดในการเชื่อมต่อ",
+      "savingLabel": "กำลังบันทึก...",
+      "saveButton": "บันทึกการตั้งค่า"
+    },
+    "mr": {
+      "title": "กำหนดผู้แทนฝ่ายบริหาร (MR)",
+      "subtitle": "กำหนดสิทธิ์ MR ให้กับผู้ใช้ในระบบ",
+      "currentMr": "MR ปัจจุบัน",
+      "userCount": "คน",
+      "highlightTitle": "ผู้แทนฝ่ายบริหาร (MR) ปัจจุบัน",
+      "search": "ค้นหาชื่อ, อีเมล, แผนก...",
+      "empty": "ไม่พบผู้ใช้",
+      "mobileRole": "ผู้แทนฝ่ายบริหาร",
+      "mobileRoleUser": "ผู้ใช้งาน",
+      "colName": "ชื่อ",
+      "colEmail": "อีเมล",
+      "colDept": "แผนก",
+      "colAction": "การจัดการ",
+      "countLabel": "คน",
+      "removeLabel": "ยกเลิก MR",
+      "setLabel": "ตั้งเป็น MR",
+      "protected": "ไม่สามารถเปลี่ยนได้"
+    }
+  },
+  "dashboard": {
+    "departments": {
+      "title": "แผนกที่ใช้งานเอกสาร",
+      "viewAll": "ดูทั้งหมด",
+      "allDepartments": "ทุกแผนก",
+      "searchPlaceholder": "ค้นหาแผนก...",
+      "documentsUnit": "เอกสาร",
+      "emptySearch": "ไม่พบแผนกที่ค้นหา"
+    },
+    "announcements": {
+      "title": "ข่าวสารและประกาศ",
+      "manage": "จัดการ",
+      "viewAll": "ดูทั้งหมด",
+      "empty": "ไม่มีข่าวสารในขณะนี้"
+    },
+    "recentDocuments": {
+      "title": "เอกสารเปลี่ยนแปลงล่าสุด",
+      "empty": "ไม่มีเอกสารอัปเดตล่าสุด",
+      "badgeNew": "ใหม่"
+    },
+    "kpi": {
+      "title": "KPI รายเดือน",
+      "indicatorsUnit": "ตัวชี้วัด",
+      "stripTotal": "ตัวชี้วัดทั้งหมด",
+      "stripMonth": "ประจำเดือน",
+      "stripPassed": "ผ่านแล้ว",
+      "stripFailed": "ไม่ผ่าน",
+      "stripPending": "รอดำเนินการ",
+      "stripInReview": "รอผล",
+      "widgetTitle": "ผลการดำเนินงาน KPI",
+      "widgetNoData": "ไม่มีข้อมูล",
+      "widgetTotal": "ทั้งหมด",
+      "widgetPending": "รอ",
+      "viewAll": "ดูทั้งหมด",
+      "monthlyTitle": "สถานะ KPI รายเดือน ปี",
+      "noKpiWarning": "แผนกต่อไปนี้ยังไม่กำหนด KPI ปี",
+      "notSubmittedThisMonth": "ยังไม่ส่ง KPI เดือน",
+      "ngThisMonth": "KPI ไม่ผ่านเกณฑ์ (NG) เดือน",
+      "colDepartment": "แผนก",
+      "noApprovedKpi": "ไม่มีแผนกที่อนุมัติ KPI แล้วในปี",
+      "statusDraft": "ยังไม่ส่ง",
+      "statusPendingReview": "รออนุมัติ",
+      "statusPendingApproval": "รออนุมัติขั้นสุดท้าย",
+      "statusApproved": "อนุมัติแล้ว",
+      "statusRejected": "ถูกปฏิเสธ",
+      "statusNoData": "ไม่มีข้อมูล",
+      "deptUnit": "แผนก",
+      "viewKpi": "ดู KPI",
+      "monthlyWidgetTitle": "ผลการดำเนินงานประจำเดือน",
+      "widgetAllOk": "ทุกแผนกผ่านเกณฑ์"
+    },
+    "carWidget": {
+      "production": "แผนกผลิต",
+      "quality": "แผนกคุณภาพ",
+      "dueLabel": "ครบกำหนด",
+      "openStatus": "รอแก้ไข",
+      "comingSoon": "กำลังพัฒนา",
+      "recentDocsTitle": "เอกสารล่าสุด",
+      "recentDocsEmpty": "ไม่มีเอกสารล่าสุด"
+    },
+    "quickActions": {
+      "newDar": "สร้างคำขอ",
+      "docRequest": "คำขออนุมัติเอกสาร",
+      "trackDar": "ติดตามคำขอ",
+      "myRequests": "สถานะคำขอของฉัน",
+      "manageDar": "จัดการ DAR",
+      "reviewApprove": "ตรวจสอบและอนุมัติ",
+      "documents": "คลังเอกสาร",
+      "sharepointFiles": "SharePoint Files",
+      "announcements": "จัดการประกาศ",
+      "manageNews": "เพิ่มและแก้ไขข่าวสาร",
+      "mr": "กำหนด MR",
+      "mgmtRep": "ผู้แทนฝ่ายบริหาร",
+      "users": "จัดการผู้ใช้",
+      "userAccounts": "บัญชีผู้ใช้งาน",
+      "departments": "จัดการแผนก",
+      "organization": "โครงสร้างองค์กร",
+      "myCar": "ดู CAR",
+      "correctiveAction": "คำขอการแก้ไข"
+    },
+    "heroBanner": {
+      "viewDetails": "ดูรายละเอียด",
+      "empty": "ยังไม่มีประกาศ"
+    }
+  },
+  "car": {
+    "page": {
+      "title": "CAR — คำขอการแก้ไข",
+      "subtitle": "Corrective Action Requests",
+      "userTitle": "CAR ของแผนก",
+      "userSubtitle": "คำขอการแก้ไขที่เกี่ยวข้องกับแผนกของคุณ",
+      "noDeptWarning": "บัญชีของคุณยังไม่ได้ผูกกับแผนก",
+      "allCarsTitle": "CAR ทั้งหมด",
+      "allCarsSubtitle": "Corrective Action Requests จากทุกแผนก"
+    },
+    "list": {
+      "empty": "ไม่พบ CAR",
+      "emptyAll": "ไม่มี CAR ในระบบ",
+      "searchPlaceholder": "ค้นหา CAR No., รายละเอียด, แผนก...",
+      "filterStatus": "สถานะ",
+      "filterType": "ประเภท",
+      "allStatuses": "ทุกสถานะ",
+      "allTypes": "ทุกประเภท",
+      "countLabel": "รายการ",
+      "colCarNo": "เลขที่ CAR",
+      "colType": "ประเภท",
+      "colDept": "แผนก",
+      "colDetail": "รายละเอียด",
+      "colStatus": "สถานะ",
+      "colIssuedAt": "วันที่ออก",
+      "colDueAt": "ครบกำหนด",
+      "mobileDepartment": "แผนก",
+      "mobileIssuer": "ผู้ออก",
+      "mobileIssuedAt": "วันที่ออก",
+      "mobileDueAt": "ครบกำหนด"
+    },
+    "status": {
+      "DRAFT": "ฉบับร่าง",
+      "ISSUED": "ออก CAR แล้ว",
+      "RESPONDED": "ตอบกลับแล้ว",
+      "VERIFY_1": "รอการตรวจสอบรอบ 1",
+      "VERIFY_2": "รอการตรวจสอบรอบ 2",
+      "CLOSED": "ปิด CAR แล้ว",
+      "RE_CAR": "Re-CAR",
+      "CANCELLED": "ยกเลิก"
+    },
+    "source": {
+      "I": "การตรวจสอบภายใน",
+      "C": "ข้อร้องเรียนจากลูกค้า",
+      "N": "ผลิตภัณฑ์ไม่เป็นไปตามข้อกำหนด",
+      "O": "อื่นๆ"
+    },
+    "detail": {
+      "reCarBadge": "Re-CAR",
+      "refLabel": "อ้างอิง:",
+      "btnEdit": "แก้ไข",
+      "btnVerify": "บันทึกการตรวจสอบ",
+      "btnCreatingReCar": "กำลังสร้าง...",
+      "btnCreateReCar": "สร้าง Re-CAR",
+      "respondPrompt": "แผนกของคุณต้องตอบกลับ CAR นี้",
+      "btnRespond": "ตอบกลับ CAR",
+      "verifyTitle": "บันทึกการตรวจสอบ รอบที่ {round}",
+      "respondFormTitle": "ตอบกลับ CAR",
+      "verifyFormTitle": "ผลการตรวจสอบ",
+      "timelineTitle": "Timeline",
+      "responseTitle": "การตอบกลับของแผนก",
+      "labelType": "ประเภท",
+      "labelTargetDept": "แผนกเป้าหมาย",
+      "labelIssuer": "ผู้ออก CAR",
+      "labelIso": "ISO Standards",
+      "labelIssuedAt": "วันที่ออก CAR",
+      "labelDueAt": "กำหนดตอบกลับ",
+      "labelDefect": "รายละเอียดข้อบกพร่อง",
+      "labelNonConformance": "อ้างอิงข้อไม่สอดคล้อง",
+      "labelResponder": "ผู้ตอบ",
+      "labelRespondedAt": "ตอบกลับเมื่อ",
+      "labelPlannedDate": "วันที่วางแผน",
+      "labelWhyAnalysis": "5 Why Analysis",
+      "labelRootCause": "สรุปสาเหตุที่แท้จริง",
+      "labelImmediateAction": "การแก้ไขเบื้องต้น",
+      "labelPreventiveAction": "การป้องกัน",
+      "verify2DateTitle": "กำหนดวันแล้วเสร็จรอบที่สอง",
+      "verify2DateDesc": "QMS บันทึกผลการตรวจสอบรอบแรกเป็นไม่ผ่าน กรุณากำหนดวันเสร็จสิ้นของการติดตามรอบที่สอง",
+      "verify2DateLabel": "วันเสร็จสิ้นตามกำหนด",
+      "verify2DateBtnSave": "บันทึกวันที่",
+      "verify2DateBtnSaving": "กำลังบันทึก...",
+      "verify2DateSuccess": "บันทึกกำหนดวันแล้วเสร็จรอบที่สองเรียบร้อยแล้ว",
+      "verify2DateError": "ไม่สามารถบันทึกกำหนดวันแล้วเสร็จรอบที่สองได้"
+    },
+    "form": {
+      "createTitle": "สร้าง CAR ใหม่",
+      "editTitle": "แก้ไข CAR {carNo}",
+      "btnCreate": "สร้าง CAR ใหม่",
+      "section1": "ส่วนที่ 1 — ประเภทและแหล่งที่มา",
+      "section2": "ส่วนที่ 2 — ISO Standards",
+      "section3": "ส่วนที่ 3 — รายละเอียด",
+      "section4": "ส่วนที่ 4 — ผู้ออก CAR",
+      "section5": "ส่วนที่ 5 — แผนก",
+      "sourceDetailPlaceholder": "รายละเอียดเพิ่มเติม...",
+      "reCarCheckbox": "Re-CAR (อ้างอิง CAR เดิม)",
+      "reCarRefLabel": "เลขที่ CAR ที่อ้างอิง",
+      "reCarRefPlaceholder": "CAR ID...",
+      "defectLabel": "รายละเอียดข้อบกพร่อง / แนวโน้มปัญหา *",
+      "nonConformanceLabel": "ข้อไม่สอดคล้องกับข้อกำหนด *",
+      "issuerPickerLabel": "ผู้ออก CAR (เลือกจาก Microsoft 365)",
+      "issuerPickerPlaceholder": "ค้นหาชื่อพนักงาน หรืออีเมล...",
+      "issuerPositionLabel": "ตำแหน่งผู้ออก *",
+      "issuerPositionPlaceholder": "ตำแหน่ง (auto-fill จาก MS365 หรือกรอกเอง)",
+      "deptLabel": "แผนกที่รับผิดชอบแก้ไข *",
+      "deptPlaceholder": "-- เลือกแผนกที่รับผิดชอบแก้ไข --",
+      "relatedDeptLabel": "แผนกที่เกี่ยวข้อง (ถ้ามี)",
+      "relatedDeptPlaceholder": "เลือกแผนกที่เกี่ยวข้อง",
+      "groupPickerLabel": "Email Group (MS365 — การแจ้งเตือน)",
+      "groupPickerPlaceholder": "ค้นหากลุ่มอีเมล MS365...",
+      "groupMailHint": "จะส่งอีเมลถึง:",
+      "issuerRequired": "กรุณาเลือกผู้ออก CAR",
+      "btnSave": "บันทึกการแก้ไข",
+      "btnSaving": "กำลังบันทึก...",
+      "btnCreate2": "สร้าง CAR"
+    },
+    "issue": {
+      "btnIssue": "ออก CAR",
+      "confirmTitle": "ยืนยันการออก CAR",
+      "confirmMsg": "ต้องการออก CAR เลขที่ {carNo} ใช่หรือไม่?",
+      "confirmEmailNote": "ระบบจะส่งอีเมลแจ้งเตือนไปยังแผนกทันที",
+      "btnConfirm": "ยืนยันการออก CAR",
+      "btnConfirming": "กำลังดำเนินการ..."
+    },
+    "respond": {
+      "sectionAnalysis": "การวิเคราะห์สาเหตุ",
+      "whyLabel": "5 Why Analysis *",
+      "whyPlaceholder": "วิเคราะห์สาเหตุโดยใช้ 5 Why...",
+      "otherToolLabel": "เครื่องมืออื่น (ถ้ามี)",
+      "otherToolPlaceholder": "หากใช้เครื่องมืออื่นนอกจาก 5 Why กรุณาระบุรายละเอียด...",
+      "sectionRootCause": "Root Cause",
+      "rootCauseSummaryLabel": "สรุปสาเหตุที่แท้จริง *",
+      "sectionActions": "การดำเนินการ",
+      "immediateLabel": "การแก้ไขเบื้องต้น *",
+      "preventiveLabel": "การป้องกัน *",
+      "plannedDateLabel": "วันที่วางแผนเสร็จ *",
+      "sectionResponder": "ผู้ตอบกลับ",
+      "positionLabel": "ตำแหน่ง *",
+      "positionPlaceholder": "ตำแหน่งของคุณ",
+      "btnSubmit": "ส่งการตอบกลับ",
+      "btnSubmitting": "กำลังส่ง...",
+      "successMsg": "ส่งการตอบกลับสำเร็จ"
+    },
+    "verify": {
+      "findingsLabel": "ผลการตรวจสอบ *",
+      "findingsPlaceholder": "บันทึกผลการตรวจสอบ...",
+      "resultLabel": "ผลการตรวจสอบ *",
+      "resultPassed": "ดำเนินการแก้ไขครบถ้วนตามแผน → ปิด CAR",
+      "resultFailed1": "ไม่สามารถดำเนินการแก้ไขได้ → ติดตามรอบ 2",
+      "resultFailed2": "ไม่สามารถดำเนินการแก้ไขได้ → Re-CAR",
+      "nextDueDateLabel": "กำหนดติดตามรอบ 2 *",
+      "reCarWarning": "CAR นี้จะถูกเปลี่ยนสถานะเป็น RE_CAR และ QMS ต้องสร้าง Re-CAR ใหม่",
+      "verifierPositionLabel": "ตำแหน่งผู้ตรวจสอบ *",
+      "verifierPositionPlaceholder": "ตำแหน่งของคุณ",
+      "btnSave": "บันทึกการตรวจสอบรอบที่ {round}",
+      "btnSaving": "กำลังบันทึก...",
+      "successMsg": "บันทึกการตรวจสอบสำเร็จ"
+    },
+    "timeline": {
+      "stepIssued": "ออก CAR",
+      "stepResponded": "ตอบกลับแล้ว",
+      "stepMrReview": "MR ตรวจสอบแผนแก้ไข",
+      "stepVerify1": "ตรวจสอบรอบที่ 1",
+      "stepVerify2": "ตรวจสอบรอบที่ 2",
+      "stepMrSigned": "MR ลงนามปิด CAR",
+      "labelIssuedBy": "ออกโดย",
+      "labelNo": "เลขที่",
+      "labelPlannedDate": "วันที่วางแผน:",
+      "labelResult": "ผล:",
+      "labelPassed": "ผ่าน",
+      "labelFailed": "ไม่ผ่าน",
+      "labelNextDue": "กำหนดรอบ 2:",
+      "reCarTitle": "Re-CAR ที่เกี่ยวข้อง:"
+    }
+  },
+  "notifications": {
+    "title": "การแจ้งเตือน",
+    "subtitle": "การแจ้งเตือนระบบ QMS",
+    "deleteSelected": "ลบที่เลือก",
+    "allSystems": "ทุกระบบ",
+    "unread": "ยังไม่อ่าน",
+    "markAllRead": "อ่านทั้งหมด",
+    "empty": "ไม่มีการแจ้งเตือน",
+    "selectAll": "เลือกทั้งหมด ({count})",
+    "selectToView": "เลือกการแจ้งเตือนเพื่อดูรายละเอียด",
+    "openItem": "เปิดรายการ",
+    "delete": "ลบ",
+    "justNow": "เมื่อกี้",
+    "minutesAgo": "{count} นาทีที่แล้ว",
+    "hoursAgo": "{count} ชั่วโมงที่แล้ว",
+    "daysAgo": "{count} วันที่แล้ว"
+  },
+  "FooterConfig": {
+    "pageTitle": "ตั้งค่า Footer (ชื่อเอกสาร)",
+    "pageSubtitle": "แก้ไข Prefix และข้อความ Label ของเอกสารเมื่อพิมพ์ PDF",
+    "save": "บันทึก",
+    "saving": "กำลังบันทึก...",
+    "prefixLabel": "Prefix (รหัสนำหน้า)",
+    "preview": "ตัวอย่างการแสดงผล",
+    "labelLabel": "Label (ชื่อเอกสาร)",
+    "loadError": "ไม่สามารถโหลดการตั้งค่าได้",
+    "saveSuccess": "บันทึก {module} เรียบร้อย",
+    "saveError": "บันทึกการตั้งค่าล้มเหลว",
+    "modules": {
+      "DAR": {
+        "title": "ใบคำร้องเกี่ยวกับเอกสาร (DAR)",
+        "prefixPlaceholder": "เช่น FM-DC-01",
+        "labelPlaceholder": "เช่น ใบคำร้องเกี่ยวกับเอกสาร (DAR)"
+      },
+      "CAR": {
+        "title": "ใบคำร้องให้แก้ไขข้อบกพร่อง (CAR)",
+        "prefixPlaceholder": "เช่น FM-QMS-02",
+        "labelPlaceholder": "เช่น ใบคำร้องให้แก้ไขข้อบกพร่อง (CAR)"
+      },
+      "KPI_ANNUAL": {
+        "title": "KPI ประจำปี",
+        "prefixPlaceholder": "เช่น FM-KPI-01",
+        "labelPlaceholder": "เช่น ดัชนีชี้วัดผลงานประจำปี"
+      },
+      "KPI_MONTHLY": {
+        "title": "รายงาน KPI รายเดือน",
+        "prefixPlaceholder": "เช่น FM-KPI-02",
+        "labelPlaceholder": "เช่น รายงาน KPI รายเดือน"
+      },
+      "DOC_CONTROL": {
+        "title": "ทะเบียนควบคุมเอกสาร (Master List)",
+        "prefixPlaceholder": "เช่น FM-DC-03",
+        "labelPlaceholder": "เช่น ทะเบียนควบคุมเอกสาร (Master List)"
+      },
+      "AUDIT_APPT": {
+        "title": "หนังสือแต่งตั้งผู้ตรวจติดตาม",
+        "prefixPlaceholder": "เช่น FM-IA-00",
+        "labelPlaceholder": "เช่น หนังสือแต่งตั้งผู้ตรวจติดตามภายใน"
+      },
+      "AUDIT_PLAN": {
+        "title": "แผนการตรวจติดตาม",
+        "prefixPlaceholder": "เช่น FM-IA-01",
+        "labelPlaceholder": "เช่น แผนการตรวจติดตามคุณภาพภายใน"
+      },
+      "AUDITOR": {
+        "title": "ทะเบียนผู้ตรวจติดตาม",
+        "prefixPlaceholder": "เช่น FM-IA-02",
+        "labelPlaceholder": "เช่น ทะเบียนรายชื่อผู้ตรวจติดตามภายใน"
+      }
+    }
+  }
+,
+  "approvalConfig": {
+    "pageTitle": "การตั้งค่าผู้อนุมัติรายโมดูล",
+    "pageSubtitle": "กำหนด QMS Reviewer และ MR Approver สำหรับกระบวนการอนุมัติของแต่ละโมดูล",
+    "labelQmsReviewer": "QMS Reviewer (ผู้ตรวจสอบ QMS)",
+    "labelMrApprover": "MR Approver (ผู้อนุมัติ MR)",
+    "placeholderFallback": "ใช้ค่าเริ่มต้น / Auth Center",
+    "btnSave": "บันทึก",
+    "btnSaving": "กำลังบันทึก...",
+    "successSaved": "บันทึกการตั้งค่า {module} เรียบร้อยแล้ว",
+    "errorSaveFailed": "ไม่สามารถบันทึกการตั้งค่าได้",
+    "errorLoadFailed": "ไม่สามารถโหลดการตั้งค่าการอนุมัติได้",
+    "modules": {
+      "DAR": { "label": "DAR", "description": "คำขอเอกสาร (Document Action Request)" },
+      "CAR": { "label": "CAR", "description": "คำขอปฏิบัติการแก้ไข (Corrective Action Request)" },
+      "KPI": { "label": "KPI", "description": "การอนุมัติ KPI ประจำปี" },
+      "KPI_MONTHLY": { "label": "KPI รายเดือน", "description": "การอนุมัติรายงาน KPI ประจำเดือน" },
+      "AUDIT_APPOINTMENT": { "label": "การแต่งตั้งผู้ตรวจ", "description": "การอนุมัติการแต่งตั้งผู้ตรวจสอบ" },
+      "AUDIT": { "label": "แผนการตรวจ", "description": "การอนุมัติแผนการตรวจติดตาม" }
+    }
+  },
+  "audit": {
+    "tabs": {
+      "overview": "ภาพรวม",
+      "schedule": "ตารางเวลา",
+      "departments": "แผนก",
+      "findings": "ข้อค้นพบ",
+      "attachments": "ไฟล์แนบ",
+      "reportSign": "รายงาน & ลงนาม"
+    },
+    "labels": {
+      "planNo": "เลขที่แผน",
+      "auditType": "ประเภทการตรวจสอบ",
+      "mode": "โหมด",
+      "standards": "มาตรฐาน",
+      "preparedBy": "ผู้จัดทำ",
+      "status": "สถานะ",
+      "sourceOrganization": "หน่วยงานตรวจสอบภายนอก",
+      "scope": "ขอบข่าย",
+      "objective": "วัตถุประสงค์",
+      "report": "รายงาน",
+      "auditorTeam": "ทีมผู้ตรวจสอบ",
+      "departments": "แผนกที่กำหนด",
+      "findings": "ข้อค้นพบ",
+      "attachments": "ไฟล์แนบ",
+      "signatures": "ลายเซ็น",
+      "closePlan": "ปิดแผนการตรวจสอบ"
+    }
   }
 }

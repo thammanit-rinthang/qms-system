@@ -12,6 +12,12 @@ COPY . .
 # Generate Prisma client now that schema.prisma is present
 RUN npx prisma generate
 
+# Accept Git SHA and Build Time as build args to embed in Next.js static output
+ARG NEXT_PUBLIC_GIT_COMMIT_SHA
+ARG NEXT_PUBLIC_BUILD_TIME
+ENV NEXT_PUBLIC_GIT_COMMIT_SHA=$NEXT_PUBLIC_GIT_COMMIT_SHA
+ENV NEXT_PUBLIC_BUILD_TIME=$NEXT_PUBLIC_BUILD_TIME
+
 # Build Next.js (npm run build already calls set-runtime.js internally)
 RUN NEXT_TELEMETRY_DISABLED=1 npm run build -- --no-lint
 
@@ -39,7 +45,7 @@ USER nextjs
 
 EXPOSE 3000
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-  CMD wget -qO- http://localhost:3000/api/health || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+  CMD wget -qO- http://localhost:3000/api/health/ready || exit 1
 
-CMD ["node", "server.js"]
+CMD ["node", "--enable-source-maps", "server.js"]

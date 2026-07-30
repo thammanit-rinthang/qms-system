@@ -1,0 +1,2298 @@
+[
+  {
+    "id": "124",
+    "titleTh": "Audit: ปรับปรุงการแสดงตำแหน่งของผู้จัดทำ ผู้ตรวจสอบ และผู้อนุมัติในหน้ารายละเอียดและนำออก Excel แผนตรวจติดตาม",
+    "titleEn": "Audit: resolved job title positions dynamically from Auth Center for session plan print page and Excel export",
+    "date": "2026-07-13",
+    "type": "fix",
+    "commit": "fix/audit-session-plan-signoff-positions",
+    "detailsTh": [
+      "app/print/audit/plan/[id]/page.tsx: ปรับปรุงการดึงตำแหน่งงานของผู้จัดทำ ผู้ตรวจสอบ และผู้อนุมัติจาก Auth Center โดยครอบคลุมกรณีที่ใช้ข้อมูลจาก appointment",
+      "app/print/audit/session-plan/[id]/page.tsx: ปรับปรุงการดึงข้อมูลตำแหน่งงานของ owner, reviewer, approver และ signoffs จาก Auth Center ให้ครอบคลุมกรณีที่ไม่มี auditPlan (fallback ไปยัง appointment)",
+      "app/api/audit/session-plans/[planId]/export/route.ts: ย้ายและปรับปรุงระบบค้นหาข้อมูลตำแหน่งงานจาก Auth Center ให้ใช้ได้ทั้งแบบมีและไม่มี auditPlan"
+    ],
+    "detailsEn": [
+      "app/print/audit/plan/[id]/page.tsx: updated job titles lookup for plan preparer, reviewer, and approver to dynamically query from Auth Center, falling back to appointment values correctly",
+      "app/print/audit/session-plan/[id]/page.tsx: updated profile lookup to query job titles from Auth Center for owner, reviewer, approver, and signoffs, falling back to appointment users when auditPlan is null",
+      "app/api/audit/session-plans/[planId]/export/route.ts: refactored job title lookup logic from Auth Center to function correctly for both direct appointments and audit plan session exports"
+    ]
+  },
+  {
+    "id": "123",
+    "titleTh": "Audit: แก้ไขหน้าพิมพ์แผนการตรวจ (Audit Plan Print) ให้แสดงโดยใช้ AuditSessionPlanPrintTemplate แทนเทมเพลตเก่า",
+    "titleEn": "Audit: updated Audit Plan print page to render AuditSessionPlanPrintTemplate instead of the old print template",
+    "date": "2026-07-13",
+    "type": "fix",
+    "commit": "fix/audit-plan-print-use-session-template",
+    "detailsTh": [
+      "app/print/audit/plan/[id]/page.tsx: เปลี่ยนโครงสร้างหน้าพิมพ์แผนการตรวจให้ไปดึงข้อมูลแผนรายเซสชัน (AuditSessionPlan) และแสดงผลผ่าน AuditSessionPlanPrintTemplate แทน AuditPlanPrintTemplate"
+    ],
+    "detailsEn": [
+      "app/print/audit/plan/[id]/page.tsx: restructured Audit Plan print page to query AuditSessionPlan and render it using AuditSessionPlanPrintTemplate instead of AuditPlanPrintTemplate"
+    ]
+  },
+  {
+    "id": "122",
+    "titleTh": "Audit: แก้ไขผู้จัดทำในแผนกำหนดการตรวจ (Session Plan) ให้ดึงข้อมูลจาก PREPARER signoff แทนข้อมูลเจ้าของในใบแต่งตั้ง (Appointment)",
+    "titleEn": "Audit: updated prepared by section in Session Plan print and Excel templates to use PREPARER signoff instead of Appointment owner",
+    "date": "2026-07-13",
+    "type": "fix",
+    "commit": "fix/audit-session-plan-preparer-signoff",
+    "detailsTh": [
+      "components/audit/AuditSessionPlanPrintTemplate.tsx: ปรับปรุงส่วน Prepared by และ Date ให้ดึงรูปภาพลายเซ็น ชื่อ และวันที่เซ็นจาก preparerSignoff ของ Audit Plan แทน owner จาก Appointment",
+      "app/api/audit/session-plans/[planId]/export/route.ts: ปรับปรุงการส่งออก Excel ทั้ง FM-MR-06 และ FM-MR-07 ในส่วนผู้จัดทำและวันที่ให้ดึงจาก preparerSignoff"
+    ],
+    "detailsEn": [
+      "components/audit/AuditSessionPlanPrintTemplate.tsx: updated Prepared by and Date sections to display signature image, name, and sign date from preparerSignoff of Audit Plan instead of owner of Appointment",
+      "app/api/audit/session-plans/[planId]/export/route.ts: updated Excel export signature blocks for both FM-MR-06 and FM-MR-07 sheets to fetch name and date from preparerSignoff"
+    ]
+  },
+  {
+    "id": "121",
+    "titleTh": "Audit: รวมทุกแท็บในหน้ารายละเอียดแผนการตรวจสอบเข้าเป็นแท็บเดียว (Overview Tab)",
+    "titleEn": "Audit: consolidated all tabs in Audit Plan detail view into a single Overview tab",
+    "date": "2026-07-11",
+    "type": "feature",
+    "commit": "feat/audit-plan-detail-single-tab-consolidation",
+    "detailsTh": [
+      "components/audit/AuditPlanDetailClient.tsx: รวมทั้งหมด 6 แท็บ (Overview, Schedule, Departments, Findings, Attachments, Report & Sign) เข้าเป็นแท็บเดียว Overview Tab โดยยกเลิกการใช้งาน TabKey type และ TABS array ลบการนำเข้า Calendar, PenLine, Send ที่ไม่ถูกใช้งาน และตrox state activeTab ที่ไม่มีความจำเป็น"
+    ],
+    "detailsEn": [
+      "components/audit/AuditPlanDetailClient.tsx: consolidated all 6 tabs (Overview, Schedule, Departments, Findings, Attachments, Report & Sign) into a single Overview tab by removing TabKey type and TABS array, removing unused imports (Calendar, PenLine, Send), and removing the activeTab state that is no longer needed"
+    ]
+  },
+  {
+    "id": "120",
+    "titleTh": "Audit: เพิ่ม fallback logic แสดงตำแหน่งใน Audit Session Plan Print Template จาก role-based default เมื่อไม่มี position จาก Auth Center",
+    "titleEn": "Audit: added fallback logic to show role-based default positions in Audit Session Plan Print Template when position is not available from Auth Center",
+    "date": "2026-07-11",
+    "type": "fix",
+    "commit": "fix/audit-session-plan-position-fallback",
+    "detailsTh": [
+      "components/audit/AuditSessionPlanPrintTemplate.tsx: เพิ่มฟังก์ชัน getPositionDisplay เพื่อให้แสดงตำแหน่งจาก Auth Center (signoff.position) แล้ว fallback ไปยัง signedRole หรือค่า default (QMS Officer/Management Representative/Managing Director) ตามบทบาท"
+    ],
+    "detailsEn": [
+      "components/audit/AuditSessionPlanPrintTemplate.tsx: added getPositionDisplay helper function to show position from Auth Center (signoff.position), falling back to signedRole or role-based defaults (QMS Officer/Management Representative/Managing Director) depending on the signoff role"
+    ]
+  },
+  {
+    "id": "119",
+    "titleTh": "Audit: ดึงตำแหน่ง (jobTitle) ของ Prepare/Reviewer/Approver จาก Auth Center แสดงในใบประกาศ FM-MR-06/07 และ Excel export แทนข้อความคงที่",
+    "titleEn": "Audit: fetch position (jobTitle) of Prepare/Reviewer/Approver from Auth Center for FM-MR-06/07 print and Excel export instead of hardcoded labels",
+    "date": "2026-07-11",
+    "type": "fix",
+    "commit": "fix/audit-session-plan-position-from-auth-center",
+    "detailsTh": [
+      "components/audit/AuditSessionPlanPrintTemplate.tsx: เพิ่มฟิลด์ signedByAuthUserId และ position ใน signoff type, เปลี่ยนตำแหน่ง Prepare/Reviewer/Approver ให้แสดง jobTitle จาก Auth Center แทนข้อความ 'QMS Officer'/'Management Representative'/'Managing Director' คงที่",
+      "app/print/audit/session-plan/[id]/page.tsx: ดึง jobTitle ของผู้ใช้จาก Auth Center (getAuthCenterUserProfile) และส่งผ่านใน signoff.position",
+      "app/api/audit/session-plans/[planId]/export/route.ts: ดึง jobTitle ของผู้ใช้จาก Auth Center และใช้ในตำแหน่งท้ายเอกสาร Excel ของทั้ง FM-MR-06 และ FM-MR-07"
+    ],
+    "detailsEn": [
+      "components/audit/AuditSessionPlanPrintTemplate.tsx: added signedByAuthUserId and position fields to signoff type, replaced hardcoded 'QMS Officer'/'Management Representative'/'Managing Director' with jobTitle fetched from Auth Center",
+      "app/print/audit/session-plan/[id]/page.tsx: fetch jobTitle from Auth Center (getAuthCenterUserProfile) and pass via signoff.position",
+      "app/api/audit/session-plans/[planId]/export/route.ts: fetch jobTitle from Auth Center and use it in Excel document footer for both FM-MR-06 and FM-MR-07"
+    ]
+  },
+  {
+    "id": "118",
+    "titleTh": "Audit: แก้ไขข้อความตำแหน่งใน Audit Session Plan Print Template ให้แสดงตำแหน่งของผู้จัดทำจาก signoff PREPARER แทน QMS Officer หรือ Management Representative คงที่",
+    "titleEn": "Audit: fixed role labels in Audit Session Plan Print Template to show actual role from PREPARER signoff instead of hardcoded QMS Officer",
+    "date": "2026-07-11",
+    "type": "fix",
+    "commit": "fix/audit-session-plan-role-label-dynamic",
+    "detailsTh": [
+      "components/audit/AuditSessionPlanPrintTemplate.tsx: เพิ่มการค้นหา preparerSignoff จาก signoffs array และแสดง signedRole ของผู้จัดทำแทนข้อความ QMS Officer คงที่",
+      "app/api/audit/session-plans/[planId]/export/route.ts: เพิ่มการค้นหา preparerSignoff และอัปเดตทั้งสองตำแหน่ง Gantt (FM-MR-06) และ Session (FM-MR-07) ใน Excel export ให้ใช้ signedRole จาก PREPARER signoff"
+    ],
+    "detailsEn": [
+      "components/audit/AuditSessionPlanPrintTemplate.tsx: added preparerSignoff lookup and display the signedRole from signoff instead of hardcoded 'QMS Officer'",
+      "app/api/audit/session-plans/[planId]/export/route.ts: added preparerSignoff lookup and updated both Gantt (FM-MR-06) and Session (FM-MR-07) Excel export sections to use signedRole from PREPARER signoff"
+    ]
+  },
+  {
+    "id": "117",
+    "titleTh": "Audit: แก้ไข PDF/Excel Template — Owner → Prepare และอ้างอิง ownerEmail จากระบบจริง",
+    "titleEn": "Audit: fixed PDF/Excel templates — renamed Owner to Prepare with real ownerEmail",
+    "date": "2026-07-11",
+    "type": "fix",
+    "commit": "fix/audit-plan-prepare-real-data",
+    "detailsTh": [
+      "types/audit.ts: เพิ่ม ownerEmail ใน AuditPlanSummary type",
+      "app/print/audit/plan/[id]/page.tsx: เพิ่ม ownerEmail ในการ serialize ข้อมูล",
+      "components/audit/AuditPlanPrintTemplate.tsx: เปลี่ยน Owner → Prepare (ผู้จัดทำ) พร้อม email fallback",
+      "app/api/audit/plans/export/route.ts: เปลี่ยน Owner → Prepare (ผู้จัดทำ)",
+      "components/audit/AuditPlanDetailClient.tsx: เปลี่ยน \"เจ้าของแผน\" → \"ผู้จัดทำ\""
+    ],
+    "detailsEn": [
+      "types/audit.ts: added ownerEmail to AuditPlanSummary type",
+      "app/print/audit/plan/[id]/page.tsx: added ownerEmail to serialization",
+      "components/audit/AuditPlanPrintTemplate.tsx: renamed Owner → Prepare (ผู้จัดทำ) with email fallback",
+      "app/api/audit/plans/export/route.ts: renamed Owner column to Prepare (ผู้จัดทำ)",
+      "components/audit/AuditPlanDetailClient.tsx: renamed \"เจ้าของแผน\" → \"ผู้จัดทำ\""
+    ]
+  },
+  {
+    "id": "116",
+    "titleTh": "Audit: ปรับการแสดงผลรหัสควบคุมเอกสารและช่องลงชื่อของตัวดาวน์โหลด Excel ให้ตรงตามใบประกาศ (doc-no-config) และ 3 คอลัมน์",
+    "titleEn": "Audit: updated Excel exporter doc-no value to use dynamic doc control config and aligned layout to 3 signature columns",
+    "date": "2026-07-11",
+    "type": "fix",
+    "commit": "fix/audit-excel-doc-config-and-layout",
+    "detailsTh": [
+      "app/api/audit/session-plans/[planId]/export/route.ts: ปรับการดึง docPrefix ให้ใช้ค่าคอนฟิกส่วนท้ายเอกสาร AUDIT_PLAN และจัดผังลายเซ็นสำหรับ FM-MR-06 และ FM-MR-07 ใน Excel ให้เหลือ 3 ช่องความกว้างเท่าๆ กันไม่มีตราประทับ"
+    ],
+    "detailsEn": [
+      "app/api/audit/session-plans/[planId]/export/route.ts: integrated AUDIT_PLAN footer configuration docPrefix into Excel bottom labels and restructured both FM-MR-06 and FM-MR-07 layouts to exactly 3 signature columns."
+    ]
+  },
+  {
+    "id": "115",
+    "titleTh": "Audit: แก้ไขบั๊กการดึงลายเซ็นลงนามของแผนการตรวจติดตาม ให้ดึงจากข้อมูลของแผนแทนข้อมูลจากจดหมายแต่งตั้ง (Appointment)",
+    "titleEn": "Audit: fixed signature resolution bug for session plans to fetch from AuditPlan instead of the AuditAppointment",
+    "date": "2026-07-11",
+    "type": "fix",
+    "commit": "fix/audit-session-plan-signatures-source",
+    "detailsTh": [
+      "app/print/audit/session-plan/[id]/page.tsx: แก้ไขการดึงข้อมูลลายเซ็นของแผน (Prepared/Reviewed/Approved) ให้ดึงโดยตรงจาก AuditPlan และความพึงพอใจลายเซ็นของผู้ใช้ (UserPreference) ของเจ้าของแผน",
+      "app/api/audit/session-plans/[planId]/export/route.ts: ทำการปรับแก้การแสดงผลลายเซ็นในตัวดาวน์โหลด Excel ให้ดึงจาก AuditPlan ในตรรกะแบบเดียวกัน"
+    ],
+    "detailsEn": [
+      "app/print/audit/session-plan/[id]/page.tsx: updated signature and signoffs mapping to use the actual AuditPlan and UserPreference of the plan owner, preventing leaking published appointment signatures.",
+      "app/api/audit/session-plans/[planId]/export/route.ts: mirrored signature and signoffs lookup for the Excel export flow to correctly fetch from the AuditPlan boundary."
+    ]
+  },
+  {
+    "id": "114",
+    "titleTh": "Audit: นำส่วนของตราประทับบริษัท (Company Stamp) ออกจากหน้าพิมพ์แบบฟอร์มการตรวจทั้งหมด",
+    "titleEn": "Audit: removed Company Stamp column and visual SVG components from all printable Audit templates",
+    "date": "2026-07-11",
+    "type": "fix",
+    "commit": "fix/audit-remove-company-stamp",
+    "detailsTh": [
+      "components/audit/AuditAppointmentPrintTemplate.tsx: ลบคอลัมน์และคอมโพเนนต์ Company Stamp SVG ออก ปรับสัดส่วนเป็น 3 คอลัมน์กว้าง 33.33% เท่ากัน",
+      "components/audit/AuditSessionPlanPrintTemplate.tsx: ปรับแก้ไขตารางลงลายมือชื่อแถว Date ให้มี 3 คอลัมน์ให้ตรงกันกับแถวลายเซ็นด้านบน"
+    ],
+    "detailsEn": [
+      "components/audit/AuditAppointmentPrintTemplate.tsx: deleted CompanyStampSvg component and column, adjusting the remaining 3 columns to 33.33% width each.",
+      "components/audit/AuditSessionPlanPrintTemplate.tsx: corrected signature table Date row by removing the 4th column, aligning perfectly with the 3 signature columns above."
+    ]
+  },
+  {
+    "id": "113",
+    "titleTh": "Audit: ปรับฟิลด์ผู้รับการตรวจ (Auditee) ให้ดึงข้อมูลเป็นรายชื่อพนักงานประจำแผนกหากไม่มีระบุผู้รับการตรวจตรงตัว",
+    "titleEn": "Audit: set Auditee cell values to default to bilingual Department Staff if no explicit auditees are assigned",
+    "date": "2026-07-11",
+    "type": "fix",
+    "commit": "fix/audit-plan-auditee-default-fallback",
+    "detailsTh": [
+      "components/audit/AuditSessionPlanPrintTemplate.tsx: ปรับตัวแปร auditeeDisplay ในตารางตรวจให้ใช้ข้อความรูปแบบ 'พนักงานแผนก [ชื่อแผนก] / [ชื่อแผนก] Staff' แทนสัญลักษณ์ขีด (-) เมื่อไม่มีการกำหนดรายชื่อผู้รับการตรวจเจาะจง",
+      "app/api/audit/session-plans/[planId]/export/route.ts: ปรับการแสดงผลฟิลด์ผู้รับการตรวจในไฟล์ Excel ในตรรกะแบบเดียวกัน"
+    ],
+    "detailsEn": [
+      "components/audit/AuditSessionPlanPrintTemplate.tsx: updated auditeeDisplay variable fallback value to output 'พนักงานแผนก [Dept] / [Dept] Staff' instead of dash (-) when no explicit auditee members are found.",
+      "app/api/audit/session-plans/[planId]/export/route.ts: mirrored auditeeDisplay default fallback logic within the Excel worksheets exporter."
+    ]
+  },
+  {
+    "id": "112",
+    "titleTh": "Audit: พิมพ์และส่งออกประกาศการตรวจ (FM-MR-07) โดยใช้ข้อมูลและคอนฟิกส่วนท้ายกระดาษจากแผนการตรวจ (Audit Plan / AUDIT_PLAN)",
+    "titleEn": "Audit: updated FM-MR-07 print/export routes to load and map AuditPlan schedules dynamically and load AUDIT_PLAN footer config",
+    "date": "2026-07-11",
+    "type": "fix",
+    "commit": "fix/audit-plan-dynamic-schedules-mapping",
+    "detailsTh": [
+      "app/print/audit/session-plan/[id]/page.tsx: ปรับปรุงให้ดึงค่า FooterConfig คีย์ AUDIT_PLAN เสมอสำหรับแบบฟอร์ม FM-MR-07 และทำการแปลงข้อมูลตารางเวลา (schedules) จากแผนการตรวจ (Audit Plan) มาเขียนทับลงใน sessions โดยอัตโนมัติ",
+      "app/api/audit/session-plans/[planId]/export/route.ts: ปรับให้ใช้ ExportNamingMeta คีย์ AUDIT_PLAN และดึง/แผนผังข้อมูล schedules จาก Audit Plan มาแสดงแทน และแก้ไขโดยเอา as any casting ออกโดยใช้ Object.assign",
+      "repositories/audit/auditPlanRepository.ts: เพิ่มเมธอด findByAppointmentId สำหรับค้นหาแผนตรวจจากรหัสการแต่งตั้ง"
+    ],
+    "detailsEn": [
+      "app/print/audit/session-plan/[id]/page.tsx: updated printable view to consistently load AUDIT_PLAN footer config and dynamically override sessions list by mapping schedules from the associated AuditPlan.",
+      "app/api/audit/session-plans/[planId]/export/route.ts: set naming metadata to AUDIT_PLAN and integrated AuditPlan schedules dynamic mapping for Excel exports, resolving explicit as any casting with Object.assign.",
+      "repositories/audit/auditPlanRepository.ts: added findByAppointmentId query helper."
+    ]
+  },
+  {
+    "id": "111",
+    "titleTh": "Audit: ปรับเปลี่ยนรูปแบบปุ่มดาวน์โหลดเอกสารแผนการตรวจในหน้ารายละเอียดเป็นแบบฟอร์มประกาศโปรแกรมการตรวจ FM-MR-07 แทน FM-MR-06",
+    "titleEn": "Audit: updated export actions in Audit Plan detail view to use FM-MR-07 (Session Program) instead of FM-MR-06",
+    "date": "2026-07-11",
+    "type": "feature",
+    "commit": "feat/audit-plan-switch-export-to-mr07",
+    "detailsTh": [
+      "components/audit/AuditPlanDetailClient.tsx: อัปเดตลิงก์ปุ่ม Export PDF และ Export Excel ในหน้ารายละเอียดแผนตรวจให้ชี้ไปยังประเภท session เพื่อส่งออกข้อมูลแบบฟอร์ม FM-MR-07 (ประกาศโปรแกรมการตรวจติดตามภายในประจำปี)"
+    ],
+    "detailsEn": [
+      "components/audit/AuditPlanDetailClient.tsx: updated query parameter of Export PDF and Export Excel action buttons to type=session to render the FM-MR-07 (Session Announcement) layout."
+    ]
+  },
+  {
+    "id": "110",
+    "titleTh": "Audit: ปรับปรุงปุ่มพิมพ์และส่งออกเอกสารแผนการตรวจในหน้ารายละเอียดแผนงาน เป็น Export PDF และ Export Excel แบบฟอร์ม FM-MR-06",
+    "titleEn": "Audit: refactored print and export buttons in Audit Plan detail view to Export PDF and Export Excel using FM-MR-06 layout",
+    "date": "2026-07-11",
+    "type": "feature",
+    "commit": "feat/audit-plan-refactor-export-to-mr06",
+    "detailsTh": [
+      "components/audit/AuditPlanDetailClient.tsx: แทนที่ปุ่ม Print เดิม และ พิมพ์เอกสารผู้ตรวจ (Auditor Doc) เป็นปุ่ม 'Export PDF' และ 'Export Excel' สำหรับแบบฟอร์ม FM-MR-06 (Gantt Plan) โดยตรง",
+      "app/print/audit/session-plan/[id]/page.tsx: ปรับปรุงกลไก resolveSessionPlan เพื่อค้นหาแผนตรวจผ่าน appointmentId และสร้างตารางแบบร่าง (draft) ให้โดยอัตโนมัติหากไม่มีอยู่ในระบบ",
+      "app/api/audit/session-plans/[planId]/export/route.ts: ปรับปรุงการตรวจสอบและดึงแผนตรวจผ่าน parameter appointmentId เพื่อรองรับการสั่งดาวน์โหลด Excel ได้ทันทีแม้ไม่มีการเปิดหน้าแก้ไขแผนงานมาก่อน"
+    ],
+    "detailsEn": [
+      "components/audit/AuditPlanDetailClient.tsx: replaced default Print and Auditor Doc buttons with direct 'Export PDF' and 'Export Excel' entries pointing to the FM-MR-06 Gantt layout.",
+      "app/print/audit/session-plan/[id]/page.tsx: refactored resolveSessionPlan to locate plans by appointmentId and automatically generate draft data on the fly if missing.",
+      "app/api/audit/session-plans/[planId]/export/route.ts: upgraded parameter resolution to locate session plan data by appointmentId dynamically during Excel export triggers."
+    ]
+  },
+  {
+    "id": "109",
+    "titleTh": "Audit: เพิ่มปุ่มสั่งพิมพ์และปุ่มส่งออก Excel ของแผน Gantt (FM-MR-06) และประกาศการตรวจ (FM-MR-07) ในหน้ารายละเอียดแผนการตรวจ",
+    "titleEn": "Audit: added print and excel export action entries for FM-MR-06 and FM-MR-07 in Audit Plan detail view page",
+    "date": "2026-07-11",
+    "type": "feature",
+    "commit": "feat/audit-plan-detail-session-export-integration",
+    "detailsTh": [
+      "components/audit/AuditPlanDetailClient.tsx: เพิ่มปุ่มสำหรับพิมพ์และส่งออก Excel สำหรับแผน Gantt (FM-MR-06) และประกาศตรวจ (FM-MR-07) เมื่อพบแผนงานตรวจที่เชื่อมโยงอยู่",
+      "app/(dashboard)/audit/plans/[id]/page.tsx: ปรับปรุงการดึงและแนบข้อมูล ID แผนโปรแกรมตรวจ (sessionPlanId) ลงใน serialized data ของแผนการตรวจ",
+      "types/audit.ts: ขยายโครงสร้างไทป์ AuditPlanDetail เพิ่มคุณสมบัติ sessionPlanId"
+    ],
+    "detailsEn": [
+      "components/audit/AuditPlanDetailClient.tsx: integrated print and export actions for Gantt (FM-MR-06) and Session Program (FM-MR-07) layouts inside the Audit Plan actions card.",
+      "app/(dashboard)/audit/plans/[id]/page.tsx: resolved and attached corresponding sessionPlanId to the serialized Audit Plan payload.",
+      "types/audit.ts: extended AuditPlanDetail type definition with optional sessionPlanId property."
+    ]
+  },
+  {
+    "id": "108",
+    "titleTh": "Audit: พัฒนาปุ่มพิมพ์เอกสารและส่งออก Excel สำหรับแผนความก้าวหน้าโครงการ (FM-MR-06) และประกาศโปรแกรมการตรวจ (FM-MR-07)",
+    "titleEn": "Audit: added print layouts and Excel exports for Annual Gantt Plan (FM-MR-06) and Session Program Announcement (FM-MR-07)",
+    "date": "2026-07-11",
+    "type": "feature",
+    "commit": "feat/audit-session-plan-print-and-export",
+    "detailsTh": [
+      "components/audit/AuditSessionPlanPrintTemplate.tsx: พัฒนาเทมเพลตสำหรับพิมพ์เอกสารบนเบราว์เซอร์ (HTML Print View) ขนาด A4 Landscape สำหรับทั้ง FM-MR-06 และ FM-MR-07 พร้อมส่วนหัวและท้ายเอกสารลายมือชื่อ",
+      "app/print/audit/session-plan/[id]/page.tsx: สร้างหน้าเพจสำหรับการพิมพ์แผนงานแบบกำหนดประเภท (type=gantt หรือ type=session)",
+      "app/api/audit/session-plans/[planId]/export/route.ts: สร้าง API ส่งออกตารางเวลาแผนงานและรายชื่อทีมผู้ตรวจในรูปแบบไฟล์ Excel (.xlsx) ตามรูปแบบเอกสารมาตรฐาน QMS",
+      "components/audit/AuditSessionPlanClient.tsx: เพิ่มปุ่มกดพิมพ์แผน และปุ่มส่งออก Excel ของทั้งสองแบบฟอร์มเพื่อเรียกใช้งานในหน้าจัดการแผนตรวจและ Gantt Chart",
+      "repositories/audit/auditSessionPlanRepository.ts: อัปเดตเมธอด findDetailById เพื่อดึงข้อมูลรายชื่อคณะทำงาน (members) และรายการลงนาม (signoffs) เพื่อนำมาใช้ในเอกสารพิมพ์"
+    ],
+    "detailsEn": [
+      "components/audit/AuditSessionPlanPrintTemplate.tsx: developed A4 Landscape HTML print layouts for both FM-MR-06 (Gantt) and FM-MR-07 (Session Announcement) forms with bilingual support and signature footers.",
+      "app/print/audit/session-plan/[id]/page.tsx: created standalone print routes supporting gantt and session announcement query modes.",
+      "app/api/audit/session-plans/[planId]/export/route.ts: implemented standalone excel exports (.xlsx) for Gantt chart rows and auditor team compilation arrays.",
+      "components/audit/AuditSessionPlanClient.tsx: integrated print and excel download buttons inside the session plan management header view.",
+      "repositories/audit/auditSessionPlanRepository.ts: updated findDetailById to include appointment members and signoffs for document footer signatures compilation."
+    ]
+  },
+  {
+    "id": "107",
+    "titleTh": "Audit: แก้ไขการแสดงผลชื่อผู้ตรวจสอบ (Reviewer) และผู้อนุมัติ (Approver) เป็น ID แทนชื่อ",
+    "titleEn": "Audit: fix Reviewer and Approver display showing as IDs instead of names",
+    "date": "2026-07-11",
+    "type": "fix",
+    "commit": "fix/audit-plan-reviewer-approver-name-display",
+    "detailsTh": [
+      "app/api/dar/role-users/route.ts: ปรับปรุงการดึงข้อมูลรายชื่อผู้ตรวจสอบ/ผู้อนุมัติ หากข้อมูล snapshot ในแคชเป็นว่าง ให้ทำการดึงข้อมูลชื่อและอีเมลจริงจาก Auth Center แทนการใช้ ID (authUserId)",
+      "app/api/ms-graph/users/search/route.ts: ปรับแต่งให้ค้นหาแบบระบุ ID ตรงตัวได้ (Case-insensitive matching) เพื่อรองรับการ Prefill ข้อมูลผู้ตรวจสอบ/ผู้อนุมัติเก่าในหน้าจอต่างๆ"
+    ],
+    "detailsEn": [
+      "app/api/dar/role-users/route.ts: fallback to fetching display names and emails from Auth Center if cached snapshot is empty, preventing ID fallback",
+      "app/api/ms-graph/users/search/route.ts: added case-insensitive direct ID matching in Entra/Auth Center user search filters to support user lookups by ID during pre-filling"
+    ]
+  },
+  {
+    "id": "106",
+    "titleTh": "Auth: จัดการข้อผิดพลาด UnauthorizedError (401) ใน Server Components และเปลี่ยนเส้นทางไปยังหน้าลงชื่อออก",
+    "titleEn": "Auth: handle UnauthorizedError (401) in Server Components and redirect to signout page",
+    "date": "2026-07-11",
+    "type": "fix",
+    "commit": "fix/auth-center-unauthorized-redirect",
+    "detailsTh": [
+      "app/(dashboard)/it/departments/page.tsx: ครอบการดึงข้อมูลหน่วยงานด้วย try/catch และเปลี่ยนเส้นทางไปยัง signout หากพบข้อผิดพลาด UnauthorizedError เพื่อให้ผู้ใช้ล็อกอินใหม่เพื่อรับโทเค็นใหม่",
+      "app/(dashboard)/it/users/page.tsx: เพิ่ม try/catch สำหรับการดึงข้อมูลผู้ใช้และสิทธิ์หน่วยงานจาก Auth Center และทำการเปลี่ยนเส้นทางไปยังหน้า signout เมื่อโทเค็นหมดอายุ",
+      "app/(dashboard)/qms/department-codes/page.tsx: ป้องกันหน้าพังเมื่อโทเค็นไม่ถูกต้องโดยเพิ่มการเปลี่ยนเส้นทางไปยังหน้า signout",
+      "app/(dashboard)/(user)/car/page.tsx: ปรับปรุงการตรวจสอบโทเค็นขณะดึงข้อมูลและแสดงรายละเอียดหน้า CAR ของแผนก",
+      "app/(dashboard)/qms/car/page.tsx: ป้องกันปัญหาการเข้าถึงโดยไม่ได้รับอนุญาตในหน้าจัดการ CAR ของ QMS",
+      "app/(dashboard)/profile/page.tsx: เปลี่ยนเส้นทางไปยังหน้าล็อกเอาต์หากโทเค็นหมดอายุระหว่างดึงข้อมูลผู้ใช้จาก Auth Center"
+    ],
+    "detailsEn": [
+      "app/(dashboard)/it/departments/page.tsx: wrapped department fetching in try/catch to redirect to signout on UnauthorizedError so users can re-authenticate for a fresh token",
+      "app/(dashboard)/it/users/page.tsx: added try/catch block around Auth Center user and role grants fetch, redirecting to signout upon UnauthorizedError",
+      "app/(dashboard)/qms/department-codes/page.tsx: prevented page crash by redirecting to signout when token is invalid or expired",
+      "app/(dashboard)/(user)/car/page.tsx: enhanced try/catch handling for Auth Center profile and department data retrieval",
+      "app/(dashboard)/qms/car/page.tsx: handled UnauthorizedError to redirect users to signout cleanly",
+      "app/(dashboard)/profile/page.tsx: added try/catch block to redirect user to logout page if token expired during profile load"
+    ]
+  },
+  {
+    "id": "105",
+    "titleTh": "Audit: เพิ่มตัวเลือกเลือกแสดง/ซ่อนลายเซ็นบริษัทในเทมเพลตประกาศแต่งตั้งผู้ตรวจ",
+    "titleEn": "Audit: add option to show/hide company stamp in auditor appointment letter template",
+    "date": "2026-07-10",
+    "type": "feat",
+    "commit": "feat/audit-appointment-company-stamp-option",
+"detailsTh": [
+      "prisma/schema.prisma: เพิ่มฟิลด์ showCompanyStamp (Boolean, default true) ไปยังโมเดล audit_appointments",
+      "lib/validations/audit.ts: เพิ่ม showCompanyStamp ไปยู่ auditAppointmentCreateSchema",
+      "services/audit/auditEmailService.ts: เพิ่มพารามิเตอร์ showCompanyStamp ไปยู่ buildBilingualAppointmentLetterHtml, buildAppointmentPublishedHtml และ sendAppointmentPublishedEmail เพื่อควบคุมการแสดงผลลายเซ็นบริษัท",
+      "services/audit/auditAppointmentService.ts: ปรับปรุง create, update, approve methods ให้รองรับและส่งพารามิเตอร์ showCompanyStamp",
+      "types/audit.ts: เพิ่ม showCompanyStamp ไปยู่ AuditAppointmentRow type เพื่อให้ Print Template สามารถตรวจสอบค่าได้",
+      "components/audit/AuditAppointmentPrintTemplate.tsx: ปรับให้ตรวจสอบ showCompanyStamp !== false ร่วมกับ status === PUBLISHED ก่อนแสดงลายเซ็นบริษัท"
+    ],
+    "detailsEn": [
+      "prisma/schema.prisma: added showCompanyStamp Boolean field (default true) to audit_appointments model",
+      "lib/validations/audit.ts: added showCompanyStamp to auditAppointmentCreateSchema",
+      "services/audit/auditEmailService.ts: added showCompanyStamp parameter to buildBilingualAppointmentLetterHtml, buildAppointmentPublishedHtml, and sendAppointmentPublishedEmail to control company stamp visibility",
+      "services/audit/auditAppointmentService.ts: updated create, update, and approve methods to support and pass showCompanyStamp parameter",
+      "types/audit.ts: added showCompanyStamp to AuditAppointmentRow type so Print Template can read the value",
+      "components/audit/AuditAppointmentPrintTemplate.tsx: updated to check showCompanyStamp !== false alongside status === PUBLISHED before rendering the company stamp"
+    ]
+  },
+  {
+    "id": "104",
+    "titleTh": "Audit: ปรับปรุงเทมเพลตอีเมลและ Notification ของประกาศแต่งตั้งผู้ตรวจให้เหมือน PDF",
+    "titleEn": "Audit: update auditor appointment emails and notifications to match PDF template",
+    "date": "2026-07-10",
+    "type": "feat",
+    "commit": "feat/audit-appointment-email-pdf-style",
+    "detailsTh": [
+      "services/audit/auditEmailService.ts, services/audit/auditAppointmentService.ts: เพิ่มฟังก์ชันสรุปโครงสร้างประกาศแต่งตั้งผู้ตรวจสไตล์แบบฟอร์ม FM-DC-06 และนำไปใช้กับอีเมลขออนุมัติ, อีเมลเผยแพร่ และระบบแจ้งเตือนแบบ In-app"
+    ],
+    "detailsEn": [
+      "services/audit/auditEmailService.ts, services/audit/auditAppointmentService.ts: implemented a shared FM-DC-06 bilingual builder for the auditor appointment letters and integrated it into signature request emails, publication announcements, and in-app notifications"
+    ]
+  },
+  {
+    "id": "103",
+    "titleTh": "Audit: นำปุ่มส่งออก Excel ของประกาศแต่งตั้งและผู้ตรวจการในหน้าแสดงรายการออก",
+    "titleEn": "Audit: remove Excel export buttons from the auditor appointments list view",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/audit-appointment-remove-excel-export",
+    "detailsTh": [
+      "components/audit/AuditAppointmentListClient.tsx: นำปุ่มส่งออกตาราง (Excel) และปุ่มส่งออกผู้ตรวจ (Excel) ออกตามข้อกำหนด เพื่อให้เหลือเฉพาะการส่งออกประกาศเป็นไฟล์ PDF"
+    ],
+    "detailsEn": [
+      "components/audit/AuditAppointmentListClient.tsx: removed Excel export buttons from the appointments page, keeping only the PDF export action"
+    ]
+  },
+  {
+    "id": "102",
+    "titleTh": "Audit: เพิ่มปุ่มส่งออกประกาศเป็น PDF ในหน้าแสดงรายการหลัก /audit/appointments",
+    "titleEn": "Audit: add PDF export and print buttons directly to the list view in /audit/appointments",
+    "date": "2026-07-10",
+    "type": "feat",
+    "commit": "feat/audit-appointment-list-pdf-export",
+    "detailsTh": [
+      "components/audit/AuditAppointmentListClient.tsx: เพิ่มปุ่ม 'พิมพ์ประกาศ (PDF)' บนการ์ดประกาศแต่ละรายการ และปรับปรุงปุ่ม 'ส่งออกประกาศ' ด้านบนให้สามารถพิมพ์ประกาศล่าสุดเป็นรูปแบบ PDF ได้โดยตรง"
+    ],
+    "detailsEn": [
+      "components/audit/AuditAppointmentListClient.tsx: added a 'พิมพ์ประกาศ (PDF)' button on individual appointment cards and updated the top global export button to directly print/export the latest published appointment to PDF"
+    ]
+  },
+  {
+    "id": "101",
+    "titleTh": "Audit: ปรับปรุงเทมเพลตสำหรับพิมพ์ประกาศแต่งตั้งผู้ตรวจติดตามภายในเป็นรูปแบบ PDF ให้ตรงกับเอกสารมาตรฐาน",
+    "titleEn": "Audit: update internal auditor appointment print template to match the standard PDF layout",
+    "date": "2026-07-10",
+    "type": "feat",
+    "commit": "feat/audit-appointment-print-pdf-template",
+    "detailsTh": [
+      "components/audit/AuditAppointmentPrintTemplate.tsx: แก้ไขโครงสร้างตารางหัวเอกสาร, ส่วนลงลายมือชื่อ, ตรายางบริษัท (SVG), ย่อหน้าวัตถุประสงค์ตามมาตรฐานแบบสองภาษา และจัดกลุ่มรายชื่อคณะผู้ตรวจตามฝ่ายสังกัดให้สอดคล้องกับแบบฟอร์ม FM-DC-06"
+    ],
+    "detailsEn": [
+      "components/audit/AuditAppointmentPrintTemplate.tsx: redesigned document headers, signature grids, inline company stamp SVG, bilingual objectives paragraph, and grouped auditor lists by department to exactly match form FM-DC-06 template"
+    ]
+  },
+  {
+    "id": "100",
+    "titleTh": "KPI: ปรับชื่อไฟล์ default ของ annual export ให้สั้นเป็น FM-MR-01 และปล่อยให้ผู้ใช้เปลี่ยนชื่อเองตอนบันทึก",
+    "titleEn": "KPI: simplify annual export default filenames to FM-MR-01 and leave final naming to the user",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/kpi-annual-export-default-filenames",
+    "detailsTh": [
+      "app/api/kpi/export/fm-mr-01/route.ts, services/kpiService.ts: เปลี่ยนชื่อไฟล์ default ของ annual Excel/PDF export เป็น FM-MR-01.xlsx และ FM-MR-01.pdf เพื่อให้ผู้ใช้ตั้งชื่อปลายทางเองได้สะดวกตอน save"
+    ],
+    "detailsEn": [
+      "app/api/kpi/export/fm-mr-01/route.ts and services/kpiService.ts now use FM-MR-01.xlsx and FM-MR-01.pdf as the default annual export filenames so users can rename the files themselves at save time"
+    ]
+  },
+  {
+    "id": "99",
+    "titleTh": "KPI: แก้ annual PDF และ Excel export ให้ไฮไลต์เฉพาะ objective ที่ diff จริง ไม่อิง flag revise ค้างในฐานข้อมูล",
+    "titleEn": "KPI: fix annual PDF and Excel exports to highlight only true objective diffs instead of persisted revise flags",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/kpi-annual-export-diff-highlighting",
+    "detailsTh": [
+      "app/api/kpi/export/fm-mr-01/route.ts, services/kpiService.ts, components/kpi/FmMr01PrintTemplate.tsx: เปลี่ยน annual export และ PDF generator ให้ใช้ revisionChangeType จาก getKpiById แทนการอิง isRevised/isAdded ตรง ๆ จึงไม่ไฮไลต์ objective ทุกตัวในรอบ revise อีกต่อไป",
+      "app/api/kpi/export/fm-mr-01/route.ts, services/kpiService.ts: เพิ่มการแสดง removed objectives ใน annual Excel/PDF export ด้วยพื้นหลังแดงอ่อนและข้อความ Deleted"
+    ],
+    "detailsEn": [
+      "app/api/kpi/export/fm-mr-01/route.ts, services/kpiService.ts, and components/kpi/FmMr01PrintTemplate.tsx now drive annual highlighting from revisionChangeType returned by getKpiById instead of raw isRevised or isAdded flags so only true diffs are emphasized",
+      "app/api/kpi/export/fm-mr-01/route.ts and services/kpiService.ts now include removed objectives in annual Excel and PDF exports with red deleted styling"
+    ]
+  },
+  {
+    "id": "98",
+    "titleTh": "KPI: แก้ไขการแสดงสถานะแก้ไข (isRevised) ของวัตถุประสงค์ที่ไม่เกี่ยวข้องในรอบ Revise",
+    "titleEn": "KPI: fix untouched objectives being marked as revised in revision cycles",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/kpi-objective-revision-flag-scoping",
+    "detailsTh": [
+      "services/kpiService.ts: แก้ไขให้เคลียร์สถานะแก้ไขและเพิ่มเดิมเมื่อเริ่มต้นรอบ Revise ใหม่ และแก้ไขไม่ให้ตั้งค่าเป็นวัตถุประสงค์ถูกแก้ไขทั้งหมดหากไม่ได้ระบุ พร้อมปรับปรุงให้ตั้งค่า isRevised เป็นจริงเมื่อผ่านการแก้ไขผ่านบริการ (updateObjective) เฉพาะตัวที่ถูกแก้ไขจริงเท่านั้น"
+    ],
+    "detailsEn": [
+      "services/kpiService.ts: reset all objectives' revision and addition flags when starting a new revision cycle, scoped initial marking to only passed objectiveIds, and updated updateObjective to automatically flag an objective as revised only when it is actually updated."
+    ]
+  },
+  {
+    "id": "98",
+    "titleTh": "KPI: ปรับ Revision history บนหน้า KPI detail จาก card เป็นตารางให้อ่านย้อนหลังง่ายขึ้น",
+    "titleEn": "KPI: convert revision history on the KPI detail page from cards to a table layout",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/kpi-revision-history-table-layout",
+    "detailsTh": [
+      "components/kpi/KpiDepartmentDetailClient.tsx: เปลี่ยนส่วน Revision history จาก card หลายชั้นเป็นตารางเดียว โดยคงข้อมูล revision รอบ เวลา เหตุผล และรายละเอียด objective เดิมไว้ครบเพื่อให้ layout สอดคล้องกับตารางวัตถุประสงค์ด้านบน"
+    ],
+    "detailsEn": [
+      "components/kpi/KpiDepartmentDetailClient.tsx now renders revision history as a single table instead of stacked cards while preserving revision round, timestamp, reason, and objective snapshot details in a layout that matches the objectives table above"
+    ]
+  },
+  {
+    "id": "97",
+    "titleTh": "KPI: แสดงความต่างของ revise บนหน้า reviewer/approver ด้วยสีเขียวสำหรับเพิ่มหรือแก้ไข และสีแดงสำหรับรายการที่ลบ",
+    "titleEn": "KPI: show revise diffs on reviewer and approver pages with green added or updated items and red deleted items",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/kpi-review-approval-revision-diff-highlights",
+    "detailsTh": [
+      "app/(dashboard)/approve/kpi/[id]/reviewer/page.tsx, app/(dashboard)/approve/kpi/[id]/approver/page.tsx, app/print/qms/kpi/fm-mr-01/page.tsx: เปลี่ยนหน้า FM-MR-01 ให้โหลดข้อมูล KPI รายแผนกผ่าน getKpiById เพื่อดึง revisionChangeType และ removedObjectives มาใช้แสดงผล",
+      "components/kpi/FmMr01PrintTemplate.tsx, components/approve/KpiApproveActionClient.tsx: เพิ่มการไฮไลต์วัตถุประสงค์ที่เพิ่มหรือแก้ไขด้วยตัวหนาเอียงพื้นหลังสีเขียว และแสดงรายการที่ถูกลบด้วยตัวอักษรสีแดงพื้นหลังแดงอ่อนบนหน้า reviewer/approver"
+    ],
+    "detailsEn": [
+      "app/(dashboard)/approve/kpi/[id]/reviewer/page.tsx, app/(dashboard)/approve/kpi/[id]/approver/page.tsx, and app/print/qms/kpi/fm-mr-01/page.tsx now load department KPIs through getKpiById so revisionChangeType and removedObjectives are available to the annual review and approval surfaces",
+      "components/kpi/FmMr01PrintTemplate.tsx and components/approve/KpiApproveActionClient.tsx now render added or updated objectives in bold italic green highlights and render deleted objectives in red on the reviewer and approver pages"
+    ]
+  },
+  {
+    "id": "96",
+    "titleTh": "KPI: แก้ approve token และ in-app notification ให้ยึด auth user id กับ session เดียวกัน",
+    "titleEn": "KPI: align approval tokens and in-app notifications with auth user ids",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/kpi-token-and-notification-auth-alignment",
+    "detailsTh": [
+      "services/actionTokenService.ts, app/(dashboard)/approve/page.tsx: ปรับ owner check ของ approve token ให้ตรวจได้ทั้ง local session user id และ auth user id เพื่อให้ลิงก์จากอีเมลและ notification ใช้งานได้จริง",
+      "services/kpiService.ts: ปรับ KPI submit/review notification ให้สร้าง in-app notification ไปยัง reviewer/approver auth user id ก่อน ลดปัญหาแจ้งเตือนสร้างสำเร็จแต่ผู้รับไม่เห็นใน feed"
+    ],
+    "detailsEn": [
+      "services/actionTokenService.ts and app/(dashboard)/approve/page.tsx now validate approval tokens against both the local session user id and auth user id so approval links no longer fail on owner mismatches",
+      "services/kpiService.ts now targets reviewer and approver auth user ids first when creating KPI in-app notifications so successful notification writes appear in the recipient feed"
+    ]
+  },
+  {
+    "id": "95",
+    "titleTh": "KPI: เพิ่มการ export แผนวัตถุประสงค์คุณภาพประจำปี FM-MR-01 เป็นรูปแบบ Excel",
+    "titleEn": "KPI: add FM-MR-01 annual quality objectives export to Excel format",
+    "date": "2026-07-10",
+    "type": "feat",
+    "commit": "feat/kpi-export-fm-mr-01-excel",
+    "detailsTh": [
+      "app/api/kpi/export/fm-mr-01/route.ts: เพิ่ม API endpoint ในการแปลงแผนวัตถุประสงค์คุณภาพประจำปี FM-MR-01 เป็นไฟล์ Excel โดยจัดรูปแบบตาม print template รวมถึงมีแถบหัวข้อ การรวมกลุ่มฝ่าย การไฮไลท์การแก้ไข และช่องลงนามแบบดิจิทัล",
+      "components/kpi/KpiObjectivesClient.tsx, components/kpi/FmMr01PrintTemplate.tsx: เพิ่มปุ่ม Export Excel ในหน้ารายการวัตถุประสงค์ KPI และหน้าแสดงตัวอย่างก่อนพิมพ์ของ FM-MR-01"
+    ],
+    "detailsEn": [
+      "app/api/kpi/export/fm-mr-01/route.ts: created Excel export endpoint for FM-MR-01 that generates styled workbooks replicating the print template layout, department cell merges, revision highlighting, and digital signature boxes",
+      "components/kpi/KpiObjectivesClient.tsx, components/kpi/FmMr01PrintTemplate.tsx: integrated Export Excel action buttons alongside the Print/PDF button in KPI objectives and FM-MR-01 preview screens"
+    ]
+  },
+  {
+    "id": "94",
+    "titleTh": "KPI: แก้ pending approval และปุ่ม reviewer/approver ให้มองเห็นจากทั้ง local user id และ auth user id",
+    "titleEn": "KPI: restore pending approval visibility and reviewer/approver actions for both local user ids and auth user ids",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/kpi-pending-approval-user-id-mapping",
+    "detailsTh": [
+      "repositories/kpiRepository.ts, services/approvalsService.ts: ปรับ pending review/approve query ของ KPI ให้จับคู่ได้ทั้ง reviewer/approver local user id และ auth user id เพื่อให้ notification queue และหน้า Approve แสดงรายการได้ตรงกับผู้รับจริง",
+      "app/(dashboard)/qms/kpi/[departmentId]/page.tsx, components/kpi/KpiDepartmentDetailClient.tsx: ส่ง auth user id เข้า detail page และแก้เงื่อนไขปุ่ม Approve/Reject ให้ approver ทำงานบนสถานะ PENDING_APPROVAL ตาม flow จริง"
+    ],
+    "detailsEn": [
+      "repositories/kpiRepository.ts and services/approvalsService.ts now match KPI pending review and approval items by either the local user id or auth user id so pending queues and notifications resolve to the actual assignee",
+      "app/(dashboard)/qms/kpi/[departmentId]/page.tsx and components/kpi/KpiDepartmentDetailClient.tsx now pass the auth user id into the detail page and align approver action visibility with the real PENDING_APPROVAL workflow"
+    ]
+  },
+  {
+    "id": "93",
+    "titleTh": "KPI: ผูกเลข Rev ของ FM-MR-01 กับรอบ revise/master review ใหม่ทั้ง print preview email และ system master",
+    "titleEn": "KPI: bind FM-MR-01 revision labels to master revise cycles across print preview email and system master",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/kpi-master-revision-cycle-labels",
+    "detailsTh": [
+      "services/kpiService.ts, app/print/qms/kpi/fm-mr-01/page.tsx, components/kpi/FmMr01PrintTemplate.tsx, components/kpi/KpiMasterReviewDialog.tsx, app/api/kpi/master-review/route.ts, services/email.ts: เพิ่มการคำนวณเลข revision ของ FM-MR-01 ตามรอบ revise/master review ใหม่ และแสดง Rev.00/01/02 ให้ตรงกันทั้งหัวกระดาษด้านขวา footer preview email และ PDF/print ของ system master",
+      "services/kpiService.ts: เมื่อ revise KPI รายแผนกหลัง master ถูกอนุมัติหรือประกาศแล้ว จะ reset SYSTEM_MASTER กลับเป็น DRAFT เพื่อบังคับให้ส่งอนุมัติ master ใหม่ในรอบ revision ถัดไป"
+    ],
+    "detailsEn": [
+      "services/kpiService.ts, app/print/qms/kpi/fm-mr-01/page.tsx, components/kpi/FmMr01PrintTemplate.tsx, components/kpi/KpiMasterReviewDialog.tsx, app/api/kpi/master-review/route.ts, services/email.ts: added FM-MR-01 revision-cycle calculation so Rev.00/01/02 stays aligned across the right header block, footer, preview, email, and system-master PDF/print output",
+      "services/kpiService.ts: revising a department KPI after the master is approved or announced now resets SYSTEM_MASTER back to DRAFT so the master document must be submitted for approval again in the next revision cycle"
+    ]
+  },
+  {
+    "id": "92",
+    "titleTh": "KPI: เปิดให้กดส่งประกาศใช้ซ้ำได้เมื่อสถานะเป็น ANNOUNCED แล้ว",
+    "titleEn": "KPI: allow resending announcement when status is already ANNOUNCED",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/kpi-master-announce-resend-allowed",
+    "detailsTh": [
+      "components/kpi/FmMr01PrintTemplate.tsx: อนุญาตให้ปุ่มประกาศแสดงค้างอยู่โดยเปลี่ยนป้ายข้อความเปลี่ยนเป็น 'ส่งประกาศอีกครั้ง' เมื่อสถานะเป็น ANNOUNCED"
+    ],
+    "detailsEn": [
+      "components/kpi/FmMr01PrintTemplate.tsx: kept the Announce button visible in ANNOUNCED status but relabeled it to 'Resend' to allow re-announcements"
+    ]
+  },
+  {
+    "id": "91",
+    "titleTh": "KPI: เปลี่ยนการแนบไฟล์ประกาศใช้ FM-MR-01 เป็น PDF แทนนามสกุล Excel",
+    "titleEn": "KPI: switch FM-MR-01 announcement attachment from Excel to PDF",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/kpi-master-announce-pdf-attachment",
+    "detailsTh": [
+      "services/kpiService.ts: เพิ่มการสร้างและแปลงหน้าเอกสาร FM-MR-01 เป็น PDF โดยใช้ Puppeteer สำหรับแนบในอีเมลประกาศ",
+      "components/kpi/KpiMasterAnnounceDialog.tsx: ปรับปรุงคำอธิบายเตือนการแนบไฟล์แสดงสถานะแบบ PDF แทน Excel Export"
+    ],
+    "detailsEn": [
+      "services/kpiService.ts: implemented server-side PDF generation of FM-MR-01 using Puppeteer for the announcement attachment",
+      "components/kpi/KpiMasterAnnounceDialog.tsx: updated description message to alert the user of a PDF attachment instead of Excel Export"
+    ]
+  },
+  {
+    "id": "90",
+    "titleTh": "KPI: แก้สถานะการประกาศใช้โดยตรงจาก APPROVED ไปยัง ANNOUNCED ใน State Machine",
+    "titleEn": "KPI: permit state transition from APPROVED directly to ANNOUNCED in the state machine",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/kpi-state-machine-approved-to-announced",
+    "detailsTh": [
+      "lib/kpi-state-machine.ts: อนุญาตให้สถานะ APPROVED สามารถเปลี่ยนผ่านไปยัง ANNOUNCED ได้โดยตรง เพื่อสนับสนุนการประกาศใช้ FM-MR-01",
+      "__tests__/services/kpiService.test.ts: เพิ่มการทดสอบหน่วย (Unit tests) ครอบคลุมการส่งประกาศของ KpiService"
+    ],
+    "detailsEn": [
+      "lib/kpi-state-machine.ts: added direct APPROVED to ANNOUNCED transition path to support Master KPI announcement",
+      "__tests__/services/kpiService.test.ts: added unit tests for KpiService.announceKpi transitions"
+    ]
+  },
+  {
+    "id": "89",
+    "titleTh": "KPI: ลบคำอธิบายกลุ่มอีเมลที่ไม่จำเป็นออกจากหน้าประกาศใช้ FM-MR-01",
+    "titleEn": "KPI: remove redundant email group description text from FM-MR-01 announce dialog",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/kpi-master-announce-remove-desc",
+    "detailsTh": [
+      "components/kpi/KpiMasterAnnounceDialog.tsx: ลบคำบรรยายการใช้งานกลุ่มอีเมลที่ไม่จำเป็นออกตามที่ผู้ใช้ร้องขอ"
+    ],
+    "detailsEn": [
+      "components/kpi/KpiMasterAnnounceDialog.tsx: removed unnecessary email group system description text as requested"
+    ]
+  },
+  {
+    "id": "88",
+    "titleTh": "KPI: แก้ไขคำสะกดภาษาไทย 'สูตรคำนวณ' และปรับปรุงการแสดงผลข้อความ 2 ภาษา (TH/EN) ให้สมบูรณ์ยิ่งขึ้น",
+    "titleEn": "KPI: fix Thai spelling for calculation formula and enhance bilingual (TH/EN) localization consistency",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/kpi-master-print-bilingual-and-spelling",
+    "detailsTh": [
+      "components/kpi/FmMr01PrintTemplate.tsx, components/kpi/KpiMasterReviewDialog.tsx, services/email.ts: แก้ไขคำสะกดผิดจาก 'สูตรคำนวน' เป็น 'สูตรการคำนวณ' และ 'สูตรคำนวณ' ตามพจนานุกรมและพจนานุกรมหลัก",
+      "components/kpi/FmMr01PrintTemplate.tsx, components/kpi/KpiMasterReviewDialog.tsx: ปรับปรุงหัวตารางและข้อความแสดงผลในหน้าตรวจสอบและพิมพ์ FM-MR-01 ให้รองรับภาษาไทยควบคู่ภาษาอังกฤษ (Bilingual TH/EN) อย่างสมบูรณ์และเป็นมาตรฐานเดียวกัน",
+      "components/kpi/KpiMasterAnnounceDialog.tsx: แก้ไขข้อผิดพลาดการเข้ารหัสอักขระภาษาไทย (Mojibake) ของแบบฟอร์มร่างประกาศให้กลับมาแสดงผลภาษาไทยอย่างถูกต้อง และปรับข้อความใน Dialog ให้เป็น 2 ภาษา"
+    ],
+    "detailsEn": [
+      "components/kpi/FmMr01PrintTemplate.tsx, components/kpi/KpiMasterReviewDialog.tsx, services/email.ts: corrected spelling of Thai word for 'calculation formula' from 'สูตรคำนวน' to 'สูตรการคำนวณ' and 'สูตรคำนวณ'",
+      "components/kpi/FmMr01PrintTemplate.tsx, components/kpi/KpiMasterReviewDialog.tsx: updated table headers and UI text in FM-MR-01 print/review screens to display consistent, fully bilingual TH/EN labels",
+      "components/kpi/KpiMasterAnnounceDialog.tsx: resolved Thai character encoding distortion (mojibake) in draft email template, formatting it as a clean bilingual announcement body, and updated dialog labels"
+    ]
+  },
+  {
+    "id": "86",
+    "titleTh": "KPI/Auth Center: แก้การบันทึก email group ของหน่วยงานให้ส่งไปยัง Auth Center จริง",
+    "titleEn": "KPI/Auth Center: persist department email group values back to Auth Center",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/auth-center-department-email-group-persist",
+    "detailsTh": [
+      "lib/auth-center-admin-client.ts, services/departmentService.ts: แก้ create/update department ให้ส่งค่า emailGroup ไปยัง Auth Center แทนการอ่านอย่างเดียว เพื่อให้ /api/departments และ dialog ประกาศ FM-MR-01 เห็นอีเมลกลุ่มหน่วยงานได้ตามข้อมูลจริง"
+    ],
+    "detailsEn": [
+      "lib/auth-center-admin-client.ts, services/departmentService.ts: updated department create/update flows to pass emailGroup through to Auth Center so /api/departments and the FM-MR-01 announce dialog can read real department group emails instead of empty values"
+    ]
+  },
+  {
+    "id": "87",
+    "titleTh": "KPI: เปลี่ยน FM-MR-01 announce dialog ให้เลือก email group แบบเดียวกับ Announcement โดยตรง",
+    "titleEn": "KPI: switch FM-MR-01 announce dialog to direct Announcement-style email group selection",
+    "date": "2026-07-10",
+    "type": "fix",
+    "commit": "fix/kpi-master-announce-use-graph-groups",
+    "detailsTh": [
+      "components/kpi/KpiMasterAnnounceDialog.tsx: เปลี่ยนตัวเลือกผู้รับ To/CC จาก department email group ไปเป็น Graph email group picker แบบเดียวกับ Announcement เพื่อให้หน้า FM-MR-01 เลือกกลุ่มผู้รับจากระบบประกาศโดยตรง"
+    ],
+    "detailsEn": [
+      "components/kpi/KpiMasterAnnounceDialog.tsx: replaced department-based To/CC recipient selection with the same Graph email group picker used by Announcements so FM-MR-01 chooses recipients directly from the announcement group source"
+    ]
+  },
+  {
+    "id": "85",
+    "titleTh": "KPI: เพิ่มการส่งประกาศ (Announce) เอกสาร FM-MR-01 พร้อมตัวเลือกอีเมลกลุ่มและตัวแก้ไขข้อความ WYSIWYG",
+    "titleEn": "KPI: add FM-MR-01 Announce feature with group email selection and WYSIWYG content editor",
+    "date": "2026-07-09",
+    "type": "feat",
+    "commit": "feat/kpi-fm-mr-01-announce-group-wysiwyg",
+    "detailsTh": [
+      "prisma/schema.prisma, repositories/kpiObjectiveRepository.ts, services/kpiService.ts, components/kpi/FmMr01PrintTemplate.tsx: เพิ่มฟิลด์ isAdded เพื่อแยกแยะและจัดรูปแบบวัตถุประสงค์คุณภาพที่ถูกเพิ่มขึ้นใหม่ระหว่างรอบการ Revise โดยให้มีขีดเส้นใต้ (Underline) นอกเหนือจากการแสดงผลตัวหนา ตัวเอียง และพื้นหลังสีเขียว",
+      "components/kpi/FmMr01PrintTemplate.tsx: เพิ่มการตรวจสอบคุณลักษณะการปรับปรุง (isRevised) ของวัตถุประสงค์ เพื่อจัดรูปแบบตัวหนา ตัวเอียง และเปลี่ยนสีพื้นหลังแถวเป็นสีเขียวตาราง รวมถึงเพิ่มปุ่ม ส่งรีวิวใหม่อีกรอบ / Submit Review Again",
+      "components/kpi/KpiMasterAnnounceDialog.tsx, services/kpiService.ts: ปรับเปลี่ยนการดึงข้อมูลอีเมลกลุ่มหน่วยงานให้อ้างอิงและตรวจสอบจาก Auth Center ผ่าน DepartmentService และ /api/departments แทนฐานข้อมูล kpiDept ท้องถิ่น",
+      "components/kpi/FmMr01PrintTemplate.tsx: เพิ่มปุ่ม ประกาศใช้ / Announce บนแถบเครื่องมือเมื่อสถานะเอกสารเป็น APPROVED",
+      "components/kpi/KpiMasterAnnounceDialog.tsx: สร้างคอมโพเนนต์ Dialog สำหรับระบุข้อความประกาศผ่าน WYSIWYG และระบุอีเมลกลุ่ม (To, CC) ของแผนกต่างๆ",
+      "app/api/kpi/[id]/announce/route.ts, schemas/kpiSchema.ts: อัปเดต Schema และ Controller ให้รองรับการรับข้อความและอีเมลกลุ่ม",
+      "services/kpiService.ts: อัปเดตเมธอด announceKpi ให้ประมวลผลการส่งเมลไปยังกลุ่มและ CC แนบไฟล์ Excel สรุป KPI และสร้างบันทึก Announcement ลงฐานข้อมูล"
+    ],
+    "detailsEn": [
+      "prisma/schema.prisma, repositories/kpiObjectiveRepository.ts, services/kpiService.ts, components/kpi/FmMr01PrintTemplate.tsx: introduced isAdded database field to track and format objectives added during a revision cycle with an underline, alongside existing bold, italic, and green background styles",
+      "components/kpi/FmMr01PrintTemplate.tsx: implemented isRevised checks on objective items to format target rows in bold/italic with a light-green background, and added a Submit Review Again action button to the sticky review toolbar",
+      "components/kpi/KpiMasterAnnounceDialog.tsx, services/kpiService.ts: changed group email lookup and matching to use Auth Center active departments via DepartmentService and /api/departments rather than the local kpiDept database table",
+      "components/kpi/FmMr01PrintTemplate.tsx: added Announce button to toolbar when document status is APPROVED",
+      "components/kpi/KpiMasterAnnounceDialog.tsx: created dialog component with group email (To, CC) grids and tiptap WYSIWYG content editor",
+      "app/api/kpi/[id]/announce/route.ts, schemas/kpiSchema.ts: updated schema and controller to accept group emails and custom message payload",
+      "services/kpiService.ts: updated announceKpi method to support custom announcement emails to select groups, attach generated excel sheets, and save announcements into database"
+    ]
+  },
+  {
+    "id": "84",
+    "titleTh": "KPI Monthly: เปลี่ยน export yearly ให้มี preview ก่อน download และรีดีไซน์ yearly template",
+    "titleEn": "KPI Monthly: add yearly preview-before-download flow and redesign the yearly template",
+    "date": "2026-07-09",
+    "type": "improvement",
+    "commit": "improve/kpi-yearly-preview-template-flow",
+    "detailsTh": [
+      "components/kpi/KpiMonthlyClient.tsx, components/kpi/KpiYearlyExportPreviewDialog.tsx: เปลี่ยนปุ่ม Export Excel ให้เปิด preview dialog ก่อน และค่อยกด Download Excel จากใน preview",
+      "app/api/kpi/monthly-export/preview/route.ts, services/kpiExportService.ts: เพิ่ม API preview สำหรับ yearly KPI summary และรวม data-shape กลางให้ preview กับ export ใช้ข้อมูลชุดเดียวกัน",
+      "docs/template/kpi_yearly_template.html: รีดีไซน์ template ใหม่ทั้งไฟล์ให้ layout สะอาด อ่านง่าย และตรงกับหน้าตา preview ปัจจุบัน"
+    ],
+    "detailsEn": [
+      "components/kpi/KpiMonthlyClient.tsx and components/kpi/KpiYearlyExportPreviewDialog.tsx: changed the Export Excel action to open a preview dialog first, with Download Excel triggered from inside the preview",
+      "app/api/kpi/monthly-export/preview/route.ts and services/kpiExportService.ts: added a yearly KPI preview API and centralized the preview/export data shape so both surfaces stay aligned",
+      "docs/template/kpi_yearly_template.html: redesigned the yearly template file into a cleaner, more readable layout that matches the new preview direction"
+    ]
+  },
+  {
+    "id": "83",
+    "titleTh": "KPI Monthly: เพิ่มปุ่ม Export Excel ที่หน้า monthly และเปลี่ยนให้ใช้ template ผล KPI รายปี",
+    "titleEn": "KPI Monthly: add page-level Excel export and switch the monthly export to the yearly KPI template",
+    "date": "2026-07-09",
+    "type": "feature",
+    "commit": "feat/kpi-monthly-template-export",
+    "detailsTh": [
+      "components/kpi/KpiMonthlyClient.tsx: เพิ่มปุ่ม Export Excel บนหน้า qms/kpi/monthly และส่ง year พร้อม kpiId ที่เลือกอยู่ไปยัง API export",
+      "app/api/kpi/monthly-export/route.ts: เปลี่ยนจากการสร้างตารางดิบแบบ row-by-row มาใช้ไฟล์ docs/template/KPI Result Year 2026.xlsx เป็น template หลัก",
+      "app/api/kpi/monthly-export/route.ts: เติมข้อมูล KPI objectives รายปีลง sheet หลักตามเดือน Jan-Dec, อัปเดตหัวเอกสารตามปีที่เลือก และลบ sample sheets ที่ยังเป็นข้อมูลตัวอย่างออกจากไฟล์ส่งออก"
+    ],
+    "detailsEn": [
+      "components/kpi/KpiMonthlyClient.tsx: added an Export Excel button on qms/kpi/monthly and pass the selected year plus current kpiId into the export API",
+      "app/api/kpi/monthly-export/route.ts: replaced the raw row-based workbook generation with docs/template/KPI Result Year 2026.xlsx as the export template",
+      "app/api/kpi/monthly-export/route.ts: populate yearly KPI objective results into the main Jan-Dec sheet, rewrite the header year values, and remove leftover sample sheets from the exported file"
+    ]
+  },
+  {
+    "id": "82",
+    "titleTh": "KPI: ปรับปรุงการจัดวางหน้าจอการรีวิว/อนุมัติ FM-MR-01 ให้สอดคล้องกับมาตรฐานของระบบ",
+    "titleEn": "KPI: align FM-MR-01 review/approval page layout with standard system style",
+    "date": "2026-07-09",
+    "type": "fix",
+    "commit": "fix/fm-mr-01-approval-layout-alignment",
+    "detailsTh": [
+      "components/kpi/FmMr01ApprovalPageClient.tsx, components/kpi/KpiSignatureDialog.tsx: ย้ายส่วนอัปโหลดเอกสารแนบประกอบจากแผงหลักไปอยู่ใน Modal ลงลายเซ็น (KpiSignatureDialog) แทน โดยเพิ่มการรองรับ children ให้กับคอมโพเนนต์ Dialog",
+      "components/kpi/FmMr01ApprovalPageClient.tsx: ปรับปรุงโครงสร้าง Layout หน้าจอเป็นแบบสองคอลัมน์บน Desktop (แสดงตารางเอกสารทางซ้าย แผงดำเนินการทางขวา) และแบบ Stack บนมือถือที่มีแถบ Action ด้านล่าง",
+      "components/kpi/FmMr01ApprovalPageClient.tsx: เพิ่มการแสดงผล Timeline ของเวิร์กโฟลว์การลงนามแบบแนวตั้ง (vertical layout) ในแผง Action ด้านขวา และแสดงรายการแนบการดำเนินการ/การปฏิเสธให้ชัดเจน",
+      "components/kpi/FmMr01PrintTemplate.tsx: เพิ่มพร็อพ isEmbedded เพื่อซ่อนแถบ Print และ wrapper ด้านนอกเพื่อแสดงตารางเอกสารซ้อนใน Layout สองคอลัมน์ได้อย่างแนบเนียน",
+      "app/(dashboard)/approve/kpi/[id]/reviewer/page.tsx, app/(dashboard)/approve/kpi/[id]/approver/page.tsx: เปลี่ยนมาใช้ wrapper กว้างปกติ max-w-7xl เพื่อความต่อเนื่องและสอดคล้องกับหน้าอื่นๆ"
+    ],
+    "detailsEn": [
+      "components/kpi/FmMr01ApprovalPageClient.tsx, components/kpi/KpiSignatureDialog.tsx: moved the action attachments upload interface from the main panel to the signature modal, equiping the dialog component with children prop support",
+      "components/kpi/FmMr01ApprovalPageClient.tsx: updated page layout structure to standard double-column desktop layout (document on the left, sticky action panel on the right) and stacked layout with bottom drawer/bar on mobile screens",
+      "components/kpi/FmMr01ApprovalPageClient.tsx: added a vertical workflow timeline inside the right-hand action panel and reorganized file attachments section for actions/rejections",
+      "components/kpi/FmMr01PrintTemplate.tsx: added isEmbedded prop to hide the outer full-screen wrappers and print toolbar when integrated inside a split layout",
+      "app/(dashboard)/approve/kpi/[id]/reviewer/page.tsx, app/(dashboard)/approve/kpi/[id]/approver/page.tsx: updated wrapper classes to standard max-w-7xl for consistent page dimensions"
+    ]
+  },
+  {
+    "id": "81",
+    "titleTh": "KPI Monthly: เพิ่ม admin action สำหรับ cleanup ข้อมูลรายงานรายเดือนของ SYSTEM_MASTER ที่เกิดผิดประเภท",
+    "titleEn": "KPI Monthly: add one-time admin cleanup action for wrongly created SYSTEM_MASTER monthly data",
+    "date": "2026-07-09",
+    "type": "fix",
+    "commit": "fix/kpi-monthly-system-master-cleanup-action",
+    "detailsTh": [
+      "app/api/kpi/monthly/system-master-cleanup/route.ts, services/kpiMonthlyService.ts: เพิ่ม API และ service สำหรับ QMS/MR/IT เพื่อดูจำนวนข้อมูลที่ค้างและสั่ง cleanup รายงานรายเดือนของ SYSTEM_MASTER ได้ครั้งเดียว",
+      "services/kpiMonthlyService.ts, repositories/kpiMonthlyReportRepository.ts: ลบข้อมูล kpi_monthly_reports ของ SYSTEM_MASTER พร้อมกวาด ApprovalSignature, ActionToken, Notification และ AuditLog ที่ผูกกับรายงานเหล่านั้น",
+      "components/kpi/KpiMonthlyClient.tsx: เพิ่มแถบแจ้งเตือนและปุ่มยืนยัน Cleanup Once บนหน้า KPI Monthly สำหรับผู้มีสิทธิ์ และซ่อนปุ่มอัตโนมัติเมื่อ cleanup หมดแล้ว"
+    ],
+    "detailsEn": [
+      "app/api/kpi/monthly/system-master-cleanup/route.ts and services/kpiMonthlyService.ts: added a privileged one-time cleanup endpoint for QMS/MR/IT to inspect and remove wrongly created SYSTEM_MASTER monthly reports",
+      "services/kpiMonthlyService.ts and repositories/kpiMonthlyReportRepository.ts: delete SYSTEM_MASTER monthly reports and sweep their linked approval signatures, action tokens, notifications, and audit logs",
+      "components/kpi/KpiMonthlyClient.tsx: added an admin warning banner and Cleanup Once confirmation action on the KPI Monthly page, and hide it automatically after cleanup reaches zero"
+    ]
+  },
+  {
+    "id": "80",
+    "titleTh": "KPI: เพิ่มหน้า Print PDF / Export สำหรับรายงานผลวัตถุประสงค์คุณภาพรายเดือน (FM-MR-03)",
+    "titleEn": "KPI: add print/PDF export page for monthly quality objectives report (FM-MR-03)",
+    "date": "2026-07-09",
+    "type": "feature",
+    "commit": "feat/kpi-monthly-fm-mr-03-print",
+    "detailsTh": [
+      "components/kpi/FmMr03PrintTemplate.tsx: สร้างคอมโพเนนต์เทมเพลตการพิมพ์ตามโครงสร้าง docs/template/kpi_monthly_template.html",
+      "components/kpi/FmMr03PrintTemplate.tsx: เปลี่ยนการแสดงผลลัพธ์เป็น OK/NG และเปลี่ยนมาแสดงรูปโลโก้จริงจาก /logo/logo.webp",
+      "components/kpi/FmMr03PrintTemplate.tsx, app/print/qms/kpi/monthly/[reportId]/page.tsx: แสดงบล็อกและรูปภาพลายเซ็นของผู้ตรวจสอบ (Reviewed By) เพิ่มเติมเพื่อให้ตรงตามสิทธิ์การลงนามในเวิร์กโฟลว์",
+      "components/kpi/FmMr03PrintTemplate.tsx, app/print/qms/kpi/monthly/[reportId]/page.tsx: ลบกล่องและสิทธิ์การลงนามของผู้อนุมัติ (Approved By) ออกเพื่อให้เหลือเพียง Prepared By และ Reviewed By",
+      "app/print/qms/kpi/monthly/[reportId]/page.tsx: สร้างหน้าเพจสำหรับการดึงข้อมูลรายงานรายเดือนและผลงาน 12 เดือนเพื่อส่งต่อให้เทมเพลต",
+      "components/kpi/KpiMonthlyDetailModal.tsx: เชื่อมโยงปุ่มพิมพ์รายงานให้ไปที่หน้าเพจใหม่แบบเปิดแท็บใหม่",
+      "components/kpi/KpiMonthlyDetailModal.tsx: เพิ่มข้อกำหนดการล็อคสิทธิ์ให้แก้ไขข้อมูลผลจริงได้เฉพาะรายงานของเดือนปัจจุบันและเดือนย้อนหลังไม่เกิน 1 เดือนเท่านั้น สำหรับผู้ใช้งานทั่วไป",
+      "components/kpi/KpiMonthlyClient.tsx, components/kpi/KpiMonthlyTable.tsx, components/kpi/KpiMonthlyDetailModal.tsx: เพิ่มการแสดงผลสี ป้ายกำกับ (Badge) และข้อความชี้แจงโหมดการแก้ไขของแต่ละเดือนให้ผู้ใช้เห็นชัดเจน"
+    ],
+    "detailsEn": [
+      "components/kpi/FmMr03PrintTemplate.tsx: created print template component matching docs/template/kpi_monthly_template.html",
+      "components/kpi/FmMr03PrintTemplate.tsx: display status as OK/NG instead of Thai words and render NDC logo image from /logo/logo.webp",
+      "components/kpi/FmMr03PrintTemplate.tsx, app/print/qms/kpi/monthly/[reportId]/page.tsx: added reviewer signature box (Reviewed By) to the monthly quality objectives print layout",
+      "components/kpi/FmMr03PrintTemplate.tsx, app/print/qms/kpi/monthly/[reportId]/page.tsx: removed Approved By signature box, keeping only Prepared By and Reviewed By",
+      "app/print/qms/kpi/monthly/[reportId]/page.tsx: added route handler to fetch monthly report details and 12-month data grid for printing",
+      "components/kpi/KpiMonthlyDetailModal.tsx: updated Print/Export button to open the new print route in a new tab",
+      "components/kpi/KpiMonthlyDetailModal.tsx: restricted editing of monthly actual results to the current month and the previous 1 month only for non-privileged users",
+      "components/kpi/KpiMonthlyClient.tsx, components/kpi/KpiMonthlyTable.tsx, components/kpi/KpiMonthlyDetailModal.tsx: added visual color indicators, badges, and read-only informational banners to clearly present period editability status to users"
+    ]
+  },
+  {
+    "id": "79",
+    "titleTh": "KPI: แก้ไขการแสดงผลข้อความเรื่องการดำเนินการแก้ไขเมื่อข้อมูลเป็น PENDING (ยังไม่กรอกผลจริง)",
+    "titleEn": "KPI: fix corrective action message display when results are PENDING (unfilled actuals)",
+    "date": "2026-07-09",
+    "type": "fix",
+    "commit": "fix/kpi-monthly-pending-corrective-action-msg",
+    "detailsTh": [
+      "components/kpi/KpiMonthlyDetailModal.tsx: ตรวจสอบสถานะ PENDING ของเป้าหมายเพื่อแสดงข้อความให้เหมาะสมขึ้น หากมีเป้าหมายที่ยังไม่ได้ระบุผลจริง จะแสดงข้อความว่า 'ไม่มีวัตถุประสงค์ที่ไม่ผ่านเกณฑ์ — ไม่จำเป็นต้องดำเนินการแก้ไข' แทนที่จะบอกว่าผ่านเกณฑ์ทั้งหมด",
+      "messages/th.json, messages/en.json: เพิ่มคีย์แปลภาษาสำหรับ noneFailed"
+    ],
+    "detailsEn": [
+      "components/kpi/KpiMonthlyDetailModal.tsx: check hasPendingDetails to conditionally render a more accurate message 'No objectives failed criteria — no corrective action required' instead of saying 'All objectives achieved' when some actuals are unfilled",
+      "messages/th.json, messages/en.json: added noneFailed translation keys"
+    ]
+  },
+  {
+    "id": "78",
+    "titleTh": "KPI: จำกัดบล็อกลายเซ็น FM-MR-01 ให้อยู่ขวาล่างไม่เกินครึ่งหน้า",
+    "titleEn": "KPI: constrain the FM-MR-01 signature block to the bottom-right half of the page",
+    "date": "2026-07-09",
+    "type": "fix",
+    "commit": "fix/fm-mr-01-signature-block-right-half",
+    "detailsTh": [
+      "components/kpi/FmMr01PrintTemplate.tsx: ห่อบล็อกลายเซ็นให้ชิดขวา จำกัดความกว้างไว้ 48% ของหน้า และลด spacing ภายในตารางเพื่อไม่ให้ล้ำเข้าครึ่งซ้ายเวลา print"
+    ],
+    "detailsEn": [
+      "components/kpi/FmMr01PrintTemplate.tsx: wrapped the signature table in a right-aligned container, capped it at 48% page width, and tightened internal spacing so it stays within the right half when printed"
+    ]
+  },
+  {
+    "id": "77",
+    "titleTh": "KPI: ซ่อน Approval Workflow จากการ export หน้า FM-MR-01",
+    "titleEn": "KPI: hide the Approval Workflow section from FM-MR-01 export output",
+    "date": "2026-07-09",
+    "type": "fix",
+    "commit": "fix/fm-mr-01-hide-approval-workflow-on-export",
+    "detailsTh": [
+      "components/kpi/FmMr01PrintTemplate.tsx: เพิ่ม class สำหรับซ่อนส่วน Approval Workflow ตอน print/PDF แต่ยังแสดงบนหน้าจอ review"
+    ],
+    "detailsEn": [
+      "components/kpi/FmMr01PrintTemplate.tsx: added a print-only hide class so the Approval Workflow section stays visible on screen but is omitted from print/PDF export"
+    ]
+  },
+  {
+    "id": "76",
+    "titleTh": "KPI: ลบปุ่ม Download PDF ที่ซ้ำกับ Print บนหน้า FM-MR-01",
+    "titleEn": "KPI: remove the duplicate Download PDF button from the FM-MR-01 page",
+    "date": "2026-07-09",
+    "type": "fix",
+    "commit": "fix/fm-mr-01-remove-duplicate-print-button",
+    "detailsTh": [
+      "components/kpi/FmMr01PrintTemplate.tsx: ลบปุ่ม Download PDF เพราะเรียก `window.print()` เหมือนปุ่ม Print ทำให้ซ้ำและเพิ่มความรกของแถบ action"
+    ],
+    "detailsEn": [
+      "components/kpi/FmMr01PrintTemplate.tsx: removed the Download PDF button because it used the same `window.print()` action as the Print button and only added redundant UI"
+    ]
+  },
+  {
+    "id": "75",
+    "titleTh": "KPI: ผูก footer ของหน้า print FM-MR-01 ให้ใช้ qms/footer-config",
+    "titleEn": "KPI: wire the FM-MR-01 print footer to qms/footer-config",
+    "date": "2026-07-09",
+    "type": "feat",
+    "commit": "feat/fm-mr-01-footer-config",
+    "detailsTh": [
+      "app/print/qms/kpi/fm-mr-01/page.tsx: ดึงค่า footer config ของ `KPI_ANNUAL` ส่งเข้า template",
+      "components/kpi/FmMr01PrintTemplate.tsx: เปลี่ยน footer จาก hardcode เป็น prefix/label ที่อ่านจาก qms/footer-config พร้อม fallback ค่าเดิม"
+    ],
+    "detailsEn": [
+      "app/print/qms/kpi/fm-mr-01/page.tsx: loaded the `KPI_ANNUAL` footer config and passed it into the template",
+      "components/kpi/FmMr01PrintTemplate.tsx: replaced the hardcoded footer with qms/footer-config prefix/label values while keeping the old footer as fallback"
+    ]
+  },
+  {
+    "id": "74",
+    "titleTh": "Approve: ปรับการ์ดคิวอนุมัติ KPI ไม่ให้แสดง SYSTEM_MASTER",
+    "titleEn": "Approve: replace SYSTEM_MASTER on KPI queue cards with the FM-MR-01 label",
+    "date": "2026-07-09",
+    "type": "fix",
+    "commit": "fix/approve-kpi-system-master-card-label",
+    "detailsTh": [
+      "components/approve/ApprovePageClient.tsx: map `SYSTEM_MASTER` เป็น `FM-MR-01 / Annual Quality Objectives` ทั้งหัวข้อการ์ดและข้อมูลแผนกบนหน้า /approve"
+    ],
+    "detailsEn": [
+      "components/approve/ApprovePageClient.tsx: mapped `SYSTEM_MASTER` to `FM-MR-01 / Annual Quality Objectives` for the queue card title and department meta on /approve"
+    ]
+  },
+  {
+    "id": "73",
+    "titleTh": "KPI: ปรับคำแสดงผลบนหน้า approve ของ FM-MR-01 ไม่ให้โชว์ SYSTEM_MASTER",
+    "titleEn": "KPI: replace SYSTEM_MASTER label on the approve page with the FM-MR-01 document name",
+    "date": "2026-07-09",
+    "type": "fix",
+    "commit": "fix/kpi-approve-system-master-label",
+    "detailsTh": [
+      "components/approve/KpiApproveActionClient.tsx: เปลี่ยนคำแสดงผลของ department `SYSTEM_MASTER` บนหน้า approve เป็น `FM-MR-01 / Annual Quality Objectives`"
+    ],
+    "detailsEn": [
+      "components/approve/KpiApproveActionClient.tsx: replaced the raw `SYSTEM_MASTER` department label on the approve screen with `FM-MR-01 / Annual Quality Objectives`"
+    ]
+  },
+  {
+    "id": "72",
+    "titleTh": "KPI: à¸›à¸£à¸±à¸šà¸«à¸™à¹‰à¸² Review FM-MR-01 à¹ƒà¸«à¹‰à¸¢à¹‰à¸²à¸¢à¸¥à¸²à¸¢à¹€à¸‹à¹‡à¸™à¹„à¸›à¸”à¹‰à¸²à¸™à¸¥à¹ˆà¸²à¸‡ à¹à¸¥à¸°à¹€à¸žà¸´à¹ˆà¸¡à¸›à¸¸à¹ˆà¸¡ Cancel / Resend",
+    "titleEn": "KPI: move FM-MR-01 review signatures below and add Cancel / Resend actions",
+    "date": "2026-07-09",
+    "type": "feat",
+    "commit": "feat/kpi-master-review-cancel-resend",
+    "detailsTh": [
+      "components/kpi/FmMr01PrintTemplate.tsx: à¸¢à¹‰à¸²à¸¢ KpiApprovalTimeline à¸¥à¸‡à¹„à¸›à¸ªà¹ˆà¸§à¸™à¸¥à¹ˆà¸²à¸‡à¸‚à¸­à¸‡à¹€à¸­à¸à¸ªà¸²à¸£à¹ƒà¸™à¹‚à¸«à¸¡à¸” review à¹à¸¥à¸°à¹€à¸žà¸´à¹ˆà¸¡à¸›à¸¸à¹ˆà¸¡ Cancel / Resend à¸žà¸£à¹‰à¸­à¸¡ confirmation à¸ªà¸³à¸«à¸£à¸±à¸š recall",
+      "app/api/kpi/[id]/resend-notification/route.ts: à¹€à¸žà¸´à¹ˆà¸¡ API resend à¸à¸²à¸£à¹à¸ˆà¹‰à¸‡à¹€à¸•à¸·à¸­à¸™ KPI workflow à¸•à¸²à¸¡à¸ªà¸–à¸²à¸™à¸° PENDING_REVIEW / PENDING_APPROVAL à¸£à¸§à¸¡à¸–à¸¶à¸‡ FM-MR-01",
+      "services/kpiService.ts: à¸›à¸£à¸±à¸š recall notification à¸‚à¸­à¸‡ SYSTEM_MASTER à¹ƒà¸«à¹‰à¹à¸ªà¸”à¸‡à¸Šà¸·à¹ˆà¸­ FM-MR-01 à¹à¸¥à¸° link à¸à¸¥à¸±à¸šà¹„à¸›à¸«à¸™à¹‰à¸² KPI à¸—à¸µà¹ˆà¸–à¸¹à¸à¸•à¹‰à¸­à¸‡"
+    ],
+    "detailsEn": [
+      "components/kpi/FmMr01PrintTemplate.tsx: moved the approval timeline below the FM-MR-01 table in review mode and added Cancel / Resend actions with recall confirmation",
+      "app/api/kpi/[id]/resend-notification/route.ts: added resend notification support for KPI workflow pending-review and pending-approval states, including FM-MR-01",
+      "services/kpiService.ts: updated SYSTEM_MASTER recall notifications to use the FM-MR-01 display name and the correct KPI landing link"
+    ]
+  },
+  {
+    "id": "71",
+    "titleTh": "KPI: ปรับปรุงการนำทางไปยังหน้ารีวิว FM-MR-01 และความสวยงามของแถบสถานะการอนุมัติลายเซ็น",
+    "titleEn": "KPI: Improve FM-MR-01 review navigation and approval signatures status timeline design",
+    "date": "2026-07-09",
+    "type": "feat",
+    "commit": "feat/kpi-master-review-ux-timeline",
+    "detailsTh": [
+      "components/kpi/KpiObjectivesClient.tsx: เปลี่ยนการเปิด Dialog ของปุ่ม Review เป็นการ Navigate ไปหน้า /print/qms/kpi/fm-mr-01 พร้อมพารามิเตอร์ mode=review",
+      "app/print/qms/kpi/fm-mr-01/page.tsx: ปรับแก้ให้ดึงข้อมูล SYSTEM_MASTER KPI และดึงลายเซ็นมาแสดงผล",
+      "components/kpi/FmMr01PrintTemplate.tsx: เพิ่มแถบการทำงานด้านบนในโหมด Review ออกแบบสไตล์กระจกโปร่งแสง (glassmorphic) ที่สอดคล้องกับมาตรฐานของระบบ แสดงผล KpiApprovalTimeline และปุ่มส่งรีวิว พร้อมแสดงลายเซ็นที่ส่วนล่างของตารางเมื่ออนุมัติเสร็จสิ้น"
+    ],
+    "detailsEn": [
+      "components/kpi/KpiObjectivesClient.tsx: updated the Review button handler to navigate directly to the print route in review mode",
+      "app/print/qms/kpi/fm-mr-01/page.tsx: loaded master KPI details and approval signatures context for rendering",
+      "components/kpi/FmMr01PrintTemplate.tsx: added a sticky review actions header toolbar with horizontal timeline progress styled to match system standards, and rendering bottom signature block once signed"
+    ]
+  },
+  {
+    "id": "70",
+    "titleTh": "KPI: เพิ่มฟีเจอร์ Review แผนงานวัตถุประสงค์คุณภาพประจำปี (FM-MR-01)",
+    "titleEn": "KPI: Add Master Quality Objectives (FM-MR-01) review and approval flow",
+    "date": "2026-07-09",
+    "type": "feat",
+    "commit": "feat/kpi-master-review-flow",
+    "detailsTh": [
+      "components/kpi/KpiObjectivesClient.tsx: เพิ่มปุ่ม Review สำหรับ QMS_QMS, QMS_IT, QMS_MR เพื่อขอตรวจสอบแผนวัตถุประสงค์คุณภาพประจำปี",
+      "components/kpi/KpiMasterReviewDialog.tsx: สร้างคอมโพเนนต์ Dialog สำหรับ Preview การ Export (FM-MR-01) พร้อม pad วาดลายเซ็น และฟอร์มเลือก Reviewer และ Approver",
+      "app/api/kpi/master-review/route.ts: สร้าง API รับข้อมูลการ Review บันทึกลายเซ็น ออก actionToken และส่ง Email/Notification",
+      "services/kpiService.ts: ปรับปรุง getKpiById, reviewObjectives, approveObjectives, rejectObjectives ให้รองรับ SYSTEM_MASTER KPI ที่ดึงข้อมูลจากทุกแผนก และปรับแต่งการแจ้งเตือนและการสร้างรายงานรายเดือนอย่างมีเงื่อนไข",
+      "components/approve/KpiApproveActionClient.tsx: แสดงชื่อหน่วยงานระบบเป็น วัตถุประสงค์คุณภาพประจำปี (FM-MR-01)"
+    ],
+    "detailsEn": [
+      "components/kpi/KpiObjectivesClient.tsx: added a Review button for QMS_QMS, QMS_IT, QMS_MR to start the annual objectives master review",
+      "components/kpi/KpiMasterReviewDialog.tsx: created dialog component to preview the FM-MR-01 table, collect preparer's signature, and select Reviewer & Approver",
+      "app/api/kpi/master-review/route.ts: created API to initialize SYSTEM_MASTER KPI, save preparer signature, issue action token, and send email/in-app notifications",
+      "services/kpiService.ts: updated getKpiById, reviewObjectives, approveObjectives, and rejectObjectives to support combining objectives for SYSTEM_MASTER, skip monthly report generation, and customize notification parameters",
+      "components/approve/KpiApproveActionClient.tsx: resolved SYSTEM_MASTER department name as วัตถุประสงค์คุณภาพประจำปี (FM-MR-01) for display on approval screen"
+    ]
+  },
+  {
+    "id": "69",
+    "titleTh": "Notification: ซ่อนปุ่ม CTA ของ email template ในหน้าแจ้งเตือน",
+    "titleEn": "Notification: hide email CTA buttons inside in-app notification templates",
+    "date": "2026-07-08",
+    "type": "fix",
+    "commit": "fix/notification-hide-email-cta",
+    "detailsTh": [
+      "app/(dashboard)/notifications/NotificationsView.tsx: ปรับ iframe renderer ของ notification template ให้ลบปุ่ม CTA และบรรทัด URL ที่มาจาก email template ออก โดยยังคงปุ่มเปิดรายการของหน้า notification ไว้เหมือนเดิม"
+    ],
+    "detailsEn": [
+      "app/(dashboard)/notifications/NotificationsView.tsx: updated the notification iframe renderer to remove email CTA buttons and raw action URL rows while keeping the notification page action button intact"
+    ]
+  },
+  {
+    "id": "68",
+    "titleTh": "สิทธิ์: ให้ MR ใช้สิทธิ์ระดับ QMS ครบทุกจุดที่ยังถูกบล็อก",
+    "titleEn": "Auth: grant MR QMS-level privileges in the remaining blocked paths",
+    "date": "2026-07-08",
+    "type": "fix",
+    "commit": "fix/mr-qms-privileges-remaining-paths",
+    "detailsTh": [
+      "app/api/car/next-number/route.ts, app/api/car/[id]/route.ts, app/api/car/[id]/issue/route.ts, app/api/car/[id]/re-car/route.ts, app/api/car/[id]/remind/route.ts, app/api/car/[id]/verify/route.ts: ปรับ permission gate ให้ MR ผ่านสิทธิ์ระดับเดียวกับ QMS/IT ในการดูเลข CAR ถัดไป แก้ไข ออก Re-CAR ส่ง reminder และ verify",
+      "services/kpiService.ts: เปิดให้ MR ทำ QMS check และ announce KPI ได้เทียบเท่า QMS โดยใช้ helper สิทธิ์กลาง",
+      "lib/actions/announcement.ts: ปรับ server action ให้ MR โพสต์ประกาศได้เหมือน QMS"
+    ],
+    "detailsEn": [
+      "app/api/car/next-number/route.ts, app/api/car/[id]/route.ts, app/api/car/[id]/issue/route.ts, app/api/car/[id]/re-car/route.ts, app/api/car/[id]/remind/route.ts, app/api/car/[id]/verify/route.ts: updated permission gates so MR now shares QMS/IT-level access for CAR next-number preview, edit, issue, Re-CAR, reminder, and verification flows",
+      "services/kpiService.ts: allowed MR to perform KPI QMS check and KPI announcement through the shared privileged-role helper",
+      "lib/actions/announcement.ts: allowed MR to post announcements through the server action path"
+    ]
+  },
+  {
+    "id": "67",
+    "titleTh": "DAR: Fix false 404 when pending approver opens detail",
+    "titleEn": "DAR: Fix false 404 when a pending approver opens the detail page",
+    "date": "2026-07-08",
+    "type": "fix",
+    "commit": "fix/dar-detail-redirect-false-404",
+    "detailsTh": [
+      "app/(dashboard)/(user)/dar/[id]/page.tsx: Preserve Next.js redirect control flow so pending MR/QMS approvers are routed to the approval page instead of seeing 404"
+    ],
+    "detailsEn": [
+      "app/(dashboard)/(user)/dar/[id]/page.tsx: Preserved Next.js redirect control flow so pending MR/QMS approvers are routed to the approval page instead of seeing 404"
+    ]
+  },
+  {
+    "id": "66",
+    "titleTh": "แปลภาษา: เพิ่มแปลภาษาผู้รับผิดชอบ KPI และแก้ไขการเข้าดู DAR",
+    "titleEn": "Localization & Auth: Add translation for KPI responsible person and fix DAR detail access issues",
+    "date": "2026-07-08",
+    "type": "fix",
+    "commit": "fix/kpi-responsible-person-translation-and-dar-access",
+    "detailsTh": [
+      "messages/en.json, messages/th.json: เพิ่มคีย์แปลภาษา kpi.form.responsiblePerson และข้อความแจ้งเตือนความผิดพลาด",
+      "components/kpi/KpiObjectiveFormModal.tsx: แปลภาษาข้อความเตือนความผิดพลาดในช่องเลือกผู้รับผิดชอบ",
+      "app/(dashboard)/(user)/dar/[id]/page.tsx: ปรับปรุงการตรวจสอบผู้มีสิทธิ์อนุมัติให้รองรับ id และ authUserId และแก้ไขการจัดการข้อผิดพลาด Forbidden เพื่อลดการเกิด 404",
+      "app/(dashboard)/(user)/dar/[id]/edit/page.tsx, app/(dashboard)/(user)/dar/[id]/review/page.tsx, app/print/dar/[id]/page.tsx: ปรับปรุงการดักจับข้อผิดพลาด Forbidden ให้แม่นยำขึ้นเพื่อหลีกเลี่ยงหน้า 404"
+    ],
+    "detailsEn": [
+      "messages/en.json, messages/th.json: Added kpi.form.responsiblePerson translation keys and error validation message translations",
+      "components/kpi/KpiObjectiveFormModal.tsx: Localized error messages on the KPI responsible person picker",
+      "app/(dashboard)/(user)/dar/[id]/page.tsx: Updated pending step logic to support both id and authUserId matches, and made ForbiddenError handler robust to prevent false 404s",
+      "app/(dashboard)/(user)/dar/[id]/edit/page.tsx, app/(dashboard)/(user)/dar/[id]/review/page.tsx, app/print/dar/[id]/page.tsx: Updated ForbiddenError catch blocks to avoid incorrect 404s"
+    ]
+  },
+  {
+    "id": "65",
+    "titleTh": "สิทธิ์: ให้ QMS_MR มีสิทธิ์เท่า QMS_QMS ทุกจุด",
+    "titleEn": "Auth: Grant QMS_MR the same permissions as QMS_QMS everywhere",
+    "date": "2026-07-08",
+    "type": "fix",
+    "commit": "fix/mr-equal-qms-permissions",
+    "detailsTh": [
+      "app/(dashboard)/qms/footer-config/page.tsx: เปิดสิทธิ์ MR เข้าใช้งานหน้าตั้งค่าหัว/ท้ายเอกสาร",
+      "app/(dashboard)/qms/approval-config/page.tsx: เปิดสิทธิ์ MR เข้าใช้งานหน้าตั้งค่าผู้อนุมัติอัตโนมัติ",
+      "app/api/kpi/[id]/announce/route.ts, app/api/kpi/[id]/qms-check/route.ts: เปิดสิทธิ์ MR",
+      "components/car/QmsCarPageClient.tsx, app/(dashboard)/qms/car/page.tsx: ให้ MR ลบ/แก้/สร้าง CAR ได้เท่า QMS",
+      "app/(dashboard)/audit/plans/page.tsx, app/api/audit/attachments/[id]/route.ts, services/audit/auditFindingService.ts: ให้ MR สิทธิ์เท่า QMS/IT",
+      "components/car/CarDetailClient.tsx: ให้ MR สิทธิ์ verify/issue/edit/re-car/remind CAR ได้เท่า QMS"
+    ],
+    "detailsEn": [
+      "app/(dashboard)/qms/footer-config/page.tsx: Allowed MR to access the document footer config page",
+      "app/(dashboard)/qms/approval-config/page.tsx: Allowed MR to access the auto-approval config page",
+      "app/api/kpi/[id]/announce/route.ts, app/api/kpi/[id]/qms-check/route.ts: Allowed MR",
+      "components/car/QmsCarPageClient.tsx, app/(dashboard)/qms/car/page.tsx: MR can delete/edit/create CAR like QMS",
+      "app/(dashboard)/audit/plans/page.tsx, app/api/audit/attachments/[id]/route.ts, services/audit/auditFindingService.ts: MR granted QMS/IT-level privileges",
+      "components/car/CarDetailClient.tsx: MR can verify/issue/edit/re-car/remind CAR like QMS"
+    ]
+  },
+  {
+    "id": "64",
+    "titleTh": "QMS: เพิ่ม pendingCount รวมงานค้างของ DAR และ CAR",
+    "titleEn": "QMS: Add an aggregate pending count for unfinished work",
+    "date": "2026-07-08",
+    "type": "fix",
+    "commit": "fix/qms-pending-count-summary",
+    "detailsTh": [
+      "services/qmsSummaryService.ts: คำนวณ pendingCount รวมจาก DAR และ CAR ที่ยังไม่จบงาน",
+      "app/api/qms/pending-count/route.ts: เปิด API สำหรับ sidebar ดึงยอดค้างรวมของ QMS",
+      "components/layout/DashboardSidebar.tsx: แสดง badge ยอดค้าง DAR/CAR บนเมนู QMS/DAR และ QMS/CAR",
+      "components/summary/QmsSummaryClient.tsx: แสดงสรุปงานค้าง DAR/CAR บนหน้า QMS"
+    ],
+    "detailsEn": [
+      "services/qmsSummaryService.ts: Calculated an aggregate pending count from unfinished DAR and CAR items",
+      "app/api/qms/pending-count/route.ts: Added an API for the sidebar to fetch the total QMS backlog",
+      "components/layout/DashboardSidebar.tsx: Rendered backlog badges on QMS/DAR and QMS/CAR menu items",
+      "components/summary/QmsSummaryClient.tsx: Rendered the backlog summary on the QMS dashboard"
+    ]
+  },
+  {
+    "id": "63",
+    "titleTh": "CAR: เปิด Preview ไฟล์แนบในหน้า MR ตรวจสอบแผนแก้ไข",
+    "titleEn": "CAR: Preview response attachments on the MR corrective plan review page",
+    "date": "2026-07-08",
+    "type": "fix",
+    "commit": "fix/car-mr-review-attachment-preview",
+    "detailsTh": [
+      "components/car/CarMrResponseReviewPanel.tsx: แสดงไฟล์แนบของแผนแก้ไขในหน้า MR ตรวจสอบแผน และเปิด preview ผ่าน FilePreviewModal",
+      "components/car/CarMrResponseReviewPanel.tsx: เพิ่มปุ่มดาวน์โหลดผ่าน /api/sharepoint/get-file?itemId= โดยไม่ใช้ SharePoint URL ตรง"
+    ],
+    "detailsEn": [
+      "components/car/CarMrResponseReviewPanel.tsx: Displayed corrective plan response attachments on the MR review page and opened previews through FilePreviewModal",
+      "components/car/CarMrResponseReviewPanel.tsx: Added download actions through /api/sharepoint/get-file?itemId= without direct SharePoint URLs"
+    ]
+  },
+  {
+    "id": "62",
+    "titleTh": "CAR: รองรับ WYSIWYG ใน Email และ Notification template",
+    "titleEn": "CAR: Support WYSIWYG content in email and notification templates",
+    "date": "2026-07-08",
+    "type": "fix",
+    "commit": "fix/car-wysiwyg-email-notification-template",
+    "detailsTh": [
+      "services/carEmailService.ts: เพิ่ม rich text sanitizer สำหรับ email และ render defect/reference จาก WYSIWYG โดยไม่โชว์ HTML tag ดิบ",
+      "services/carNotificationService.ts: แปลง notification body แบบ plain text ให้ถอด HTML ออก และให้ htmlBody ใช้ template ที่รองรับ rich text",
+      "__tests__/services/carEmailService.test.ts: เพิ่ม unit test สำหรับ rich text email/plain text helper"
+    ],
+    "detailsEn": [
+      "services/carEmailService.ts: Added a rich text sanitizer for email and rendered WYSIWYG defect/reference content without raw HTML tags",
+      "services/carNotificationService.ts: Converted plain notification bodies to strip HTML while htmlBody uses the rich-text-aware template",
+      "__tests__/services/carEmailService.test.ts: Added unit tests for rich text email/plain text helpers"
+    ]
+  },
+  {
+    "id": "61",
+    "titleTh": "CAR: แสดงรายละเอียด WYSIWYG ในตารางและหน้าอนุมัติ",
+    "titleEn": "CAR: Render WYSIWYG details in tables and approval pages",
+    "date": "2026-07-08",
+    "type": "fix",
+    "commit": "fix/car-wysiwyg-detail-rendering",
+    "detailsTh": [
+      "components/car/CarListTable.tsx และ components/car/AllDeptCarSection.tsx: แสดงรายละเอียด CAR ด้วย RichTextView ในรายการตารางและการ์ดมือถือ",
+      "components/car/CarMrResponseReviewPanel.tsx และ components/car/CarMrSignDialog.tsx: แสดง Issue/Reference จาก WYSIWYG ในหน้าอนุมัติของ MR",
+      "components/car/CarPreviewExportDialog.tsx, components/car/CarPrintTemplate.tsx และ components/car/CarStatusPrintTemplate.tsx: แสดงรายละเอียด CAR ที่เป็น rich text ใน preview/print table"
+    ],
+    "detailsEn": [
+      "components/car/CarListTable.tsx and components/car/AllDeptCarSection.tsx: Render CAR detail with RichTextView in desktop tables and mobile cards",
+      "components/car/CarMrResponseReviewPanel.tsx and components/car/CarMrSignDialog.tsx: Render WYSIWYG Issue/Reference content on MR approval pages",
+      "components/car/CarPreviewExportDialog.tsx, components/car/CarPrintTemplate.tsx and components/car/CarStatusPrintTemplate.tsx: Render rich CAR detail in preview and print tables"
+    ]
+  },
+  {
+    "id": "60",
+    "titleTh": "CAR: แสดง MR reject และให้แผนกกำหนดวันติดตามรอบ 2",
+    "titleEn": "CAR: Show MR rejection details and let target department set round 2 follow-up date",
+    "date": "2026-07-08",
+    "type": "fix",
+    "commit": "fix/car-mr-reject-and-verify2-date-owner",
+    "detailsTh": [
+      "app/api/car/[id]/review-response/route.ts: ส่งไฟล์แนบและ QMS assignee จาก MR review เข้า service เพื่อไม่ให้ข้อมูล reject หาย",
+      "services/carService.ts: เพิ่ม QMS email recipient จาก QMS user ที่ MR เลือก และเปลี่ยน VERIFY_1 failed ให้แจ้งแผนกกำหนดวันติดตามรอบ 2 เอง",
+      "app/api/car/[id]/verify2-due-date/route.ts: เพิ่ม endpoint ให้แผนกเจ้าของ CAR บันทึกวันที่ติดตามรอบ 2",
+      "components/car/CarDetailClient.tsx: แสดงเหตุผล/ไฟล์แนบ MR reject และเพิ่มฟอร์มกำหนดวันติดตามรอบ 2 สำหรับแผนกเจ้าของ CAR"
+    ],
+    "detailsEn": [
+      "app/api/car/[id]/review-response/route.ts: Passed MR review attachments and QMS assignee into the service so rejection evidence is preserved",
+      "services/carService.ts: Added the selected QMS user's email to MR-approved recipients and changed VERIFY_1 failure to ask the target department to set the round 2 date",
+      "app/api/car/[id]/verify2-due-date/route.ts: Added an endpoint for the target department to save the verification round 2 follow-up date",
+      "components/car/CarDetailClient.tsx: Displayed MR rejection reason/attachments and added the target-department round 2 date form"
+    ]
+  },
+  {
+    "id": "59",
+    "titleTh": "Document Control: ลบคอลัมน์ 1st/2nd และเพิ่มการเลือกแผนกกระจายเอกสารตั้งแต่สร้างชื่อ",
+    "titleEn": "Document Control: Remove 1st/2nd columns and add distribution department selection at creation",
+    "date": "2026-07-07",
+    "type": "feat",
+    "commit": "feat/doc-control-distribution-and-clean-export",
+    "detailsTh": [
+      "scripts/create-master-list-template.mjs: ลบคอลัมน์ H(1st) และ I(2nd) ออกจากเทมเพลต สรุปเป็น 17 คอลัมน์แผนก (H-X)",
+      "docs/export-format/FM-DC-04 Rev.02...xlsx: รีเจนเทมเพลตใหม่ (64 คอลัมน์ A-X)",
+      "app/api/document-controls/export/route.ts: ลบค่า H/I และเลื่อนการเขียนข้อมูลแผนกกระจาย (MD→H ถึง PN→X)",
+      "prisma/schema.prisma: เพิ่มฟิลด์ distributions JSON บน DocumentControl",
+      "schemas/documentControlSchema.ts: เพิ่มฟิลด์ distributions ใน create/update schema",
+      "types/documentControl.ts: เพิ่ม DocumentDistribution interface กับ distributions ใน Create/Update/Detail",
+      "services/documentControlService.ts: บันทึก/อัปเดต distributions บน DocumentControl ตอน create/update",
+      "repositories/documentControlRepository.ts: เพิ่ม distributions ใน select ของ findForExport และ DOC_SELECT",
+      "services/documentControlExportService.ts: ผสาน document-level distributions กับ DAR distributions",
+      "components/document-control/DocumentControlModal.tsx: เพิ่ม grid checkbox สำหรับเลือกแผนกกระจาย (17 แผนก)"
+    ],
+    "detailsEn": [
+      "scripts/create-master-list-template.mjs: Removed H(1st) and I(2nd) columns from template, kept 17 department columns only (H-X)",
+      "docs/export-format/FM-DC-04 Rev.02...xlsx: Regenerated new template (64 columns A-X)",
+      "app/api/document-controls/export/route.ts: Removed H/I values and shifted department distribution data (MD→H through PN→X)",
+      "prisma/schema.prisma: Added distributions JSON field to DocumentControl",
+      "schemas/documentControlSchema.ts: Added distributions field to create/update schemas",
+      "types/documentControl.ts: Added DocumentDistribution interface and distributions to Create/Update/Detail types",
+      "services/documentControlService.ts: Persist distributions on create/update",
+      "repositories/documentControlRepository.ts: Included distributions in findForExport select and DOC_SELECT",
+      "services/documentControlExportService.ts: Merged document-level distributions with DAR distributions",
+      "components/document-control/DocumentControlModal.tsx: Added checkbox grid for distribution departments (17 depts)"
+    ]
+  },
+  {
+    "id": "58",
+    "titleTh": "KPI: ซ่อนปุ่มส่งตรวจสอบหลังสถานะออกจาก Draft/Rejected",
+    "titleEn": "KPI: Hide submit button after leaving Draft/Rejected",
+    "date": "2026-07-07",
+    "type": "fix",
+    "commit": "fix/kpi-submit-button-status-gate",
+    "detailsTh": [
+      "components/kpi/KpiDepartmentDetailClient.tsx: แยกเงื่อนไขปุ่มส่งตรวจสอบออกจากสิทธิ์แก้ไข และให้แสดงเฉพาะตอน KPI อยู่ในสถานะ DRAFT หรือ REJECTED เท่านั้น",
+      "ทำให้เมื่อกดส่งตรวจสอบแล้ว ปุ่มส่งตรวจสอบจะหายไปทันทีหลังข้อมูลสถานะอัปเดต"
+    ],
+    "detailsEn": [
+      "components/kpi/KpiDepartmentDetailClient.tsx: Separated submit-button visibility from edit permission and now show it only while KPI is in DRAFT or REJECTED",
+      "After submission, the button disappears once the status updates"
+    ]
+  },
+  {
+    "id": "57",
+    "titleTh": "KPI: เปิด Preview ไฟล์แนบตอนปฏิเสธจาก Approval Timeline",
+    "titleEn": "KPI: Preview rejection attachments from approval timeline",
+    "date": "2026-07-07",
+    "type": "fix",
+    "commit": "fix/kpi-rejection-attachment-preview",
+    "detailsTh": [
+      "components/kpi/KpiApprovalTimeline.tsx: เปลี่ยนไฟล์แนบใน comment การปฏิเสธจากลิงก์เปิดแท็บใหม่เป็น FilePreviewModal เหมือนหน้า DAR/[id]",
+      "ใช้ SharePoint itemId ผ่าน preview proxy และ infer MIME type จากนามสกุลไฟล์ เพื่อรองรับ PDF, รูปภาพ, Office และไฟล์ข้อความ"
+    ],
+    "detailsEn": [
+      "components/kpi/KpiApprovalTimeline.tsx: Changed rejection comment attachments from new-tab links to the shared FilePreviewModal used by DAR/[id]",
+      "Uses the SharePoint itemId preview proxy and infers MIME type by file extension for PDF, image, Office, and text previews"
+    ]
+  },
+  {
+    "id": "56",
+    "titleTh": "KPI: ลบ Notification รอบที่ 2 (Preparer) ออกเมื่อ KPI ถูกปฏิเสธ",
+    "titleEn": "KPI: Remove duplicate preparer notification on KPI rejection",
+    "date": "2026-07-07",
+    "type": "fix",
+    "commit": "fix/kpi-reject-duplicate-notification",
+    "detailsTh": [
+      "app/api/kpi/[id]/reject/route.ts: ลบ block notification รอบที่ 2 (sendKpiRejectedPreparerEmail ถึง preparer) ออก เหลือเฉพาะ template แรก (sendKpiResultEmail ถึง reviewer/approver)",
+      "ลบ import ApprovalSignatureRepository และ sendKpiRejectedPreparerEmail ที่ไม่ใช้งานแล้วออก"
+    ],
+    "detailsEn": [
+      "app/api/kpi/[id]/reject/route.ts: Removed the second notification block (sendKpiRejectedPreparerEmail to preparer), keeping only the first template (sendKpiResultEmail to reviewer/approver)",
+      "Removed unused imports: ApprovalSignatureRepository and sendKpiRejectedPreparerEmail"
+    ]
+  },
+  {
+    "id": "55",
+    "titleTh": "DAR: standardize attachment preview on detail page",
+    "titleEn": "DAR: standardize attachment preview on detail page",
+    "date": "2026-07-07",
+    "type": "fix",
+    "commit": "fix/dar-detail-attachment-preview-standard",
+    "detailsTh": [
+      "DarAttachmentUpload: replaced the module-specific preview modal on DAR detail attachments with the shared FilePreviewModal.",
+      "Preview now uses the standard SharePoint itemId preview-proxy / office-embed path used by other QMS detail pages.",
+      "Fixed Office MIME detection so .xlsx files do not also render as raw text because their MIME contains 'xml'.",
+      "Added persistent DAR rejection history so reviewers can see previous reject comments and attachments after the DAR is corrected and resubmitted.",
+      "Fixed DAR Reviewer approval notification/email routing to notify the actual pending MR approver step instead of relying on MR config lookup only.",
+      "Kept the previous reviewer on rejected DAR resubmission so users can send review again without selecting the same reviewer.",
+      "Allowed QMS_QMS, QMS_MR, and QMS_IT users on qms/dar to edit DAR details and attachments across all statuses for correction scenarios."
+    ],
+    "detailsEn": [
+      "DarAttachmentUpload: replaced the module-specific preview modal on DAR detail attachments with the shared FilePreviewModal.",
+      "Preview now uses the standard SharePoint itemId preview-proxy / office-embed path used by other QMS detail pages.",
+      "Fixed Office MIME detection so .xlsx files do not also render as raw text because their MIME contains 'xml'.",
+      "Added persistent DAR rejection history so reviewers can see previous reject comments and attachments after the DAR is corrected and resubmitted.",
+      "Fixed DAR Reviewer approval notification/email routing to notify the actual pending MR approver step instead of relying on MR config lookup only.",
+      "Kept the previous reviewer on rejected DAR resubmission so users can send review again without selecting the same reviewer.",
+      "Allowed QMS_QMS, QMS_MR, and QMS_IT users on qms/dar to edit DAR details and attachments across all statuses for correction scenarios."
+    ]
+  },
+  {
+    "id": "54",
+    "titleTh": "DAR: เปลี่ยนการ submit หลังจากถูกปฏิเสธเป็น popup signature + เลือก reviewer",
+    "titleEn": "DAR: change submit-after-reject to popup signature + reviewer selection",
+    "date": "2026-07-07",
+    "type": "feat",
+    "commit": "feat/dar-reject-resubmit-popup",
+    "detailsTh": [
+      "DarDraftActions: แทนที่การ submit แบบตรง (POST /submit) ด้วย popup signature (DarSignSubmitModal) แล้วตามด้วยเลือก reviewer (DarReviewerSelectModal)",
+      "เมื่อกดส่งรีวิว: submit → approve (signature) → assign-reviewer (ส่งเมล + notification) ครบ流程เหมือนสร้างใหม่จากหน้า /dar",
+      "ลบ submitDar mutation ที่ไม่ใช้แล้วออก",
+      "darService.ts rejectDar: อัปเดต in-app notification reject ให้มีข้อมูลครบถ้วนเหมือน email template (DAR No., ผู้ร้องขอ, ผู้ปฏิเสธ, เหตุผล)",
+      "page.tsx: เพิ่ม key={dar.status} ที่ DarReadOnlyDetail เพื่อ force remount ตอน status เปลี่ยนหลัง submit (แก้ปัญหา approval panel โชว์ข้อมูลเก่า)",
+      "fix lint: moved useEffect ก่อน early return ใน KpiDepartmentDetailClient, rename module→mod และ escape ' ใน ApprovalConfigClient, eslint-disable template",
+      "fix check:api: เพิ่ม Zod paramSchema ใน kpi revise/export routes",
+      "fix test: exclude .kilo/ ใน vitest.config.ts ป้องกัน vitest เก็บ test ของ zod v4"
+    ],
+    "detailsEn": [
+      "DarDraftActions: replaced direct submit (POST /submit) with signature popup (DarSignSubmitModal) followed by reviewer selection (DarReviewerSelectModal)",
+      "On submit review: submit → approve (signature) → assign-reviewer (sends email + notification) same flow as creating from /dar",
+      "Removed unused submitDar mutation",
+      "darService.ts rejectDar: enriched in-app rejection notification with full email template data (DAR No., requester, rejector, reason)",
+      "page.tsx: added key={dar.status} to DarReadOnlyDetail to force re-mount on status change after submit (fixes approval panel showing stale data)",
+      "fix lint: moved useEffect before early return in KpiDepartmentDetailClient, renamed module→mod and escaped ' in ApprovalConfigClient, eslint-disable template",
+      "fix check:api: added Zod paramSchema to kpi revise/export routes",
+      "fix test: exclude .kilo/ in vitest.config.ts to prevent picking up zod v4 tests"
+    ]
+  },
+  {
+    "id": "53",
+    "titleTh": "แก้ไข mojibake ใน email template และ dashboard icon mapping",
+    "titleEn": "Fix mojibake in email templates and dashboard icon matching",
+    "date": "2026-07-07",
+    "type": "fix",
+    "commit": "fix/mojibake-thai-encoding",
+    "detailsTh": [
+      "services/carEmailService.ts: แก้ actionLabel \"à¸”à¸¹à¸£à¸²à¸¢à¸¥à¸°à¹€à¸­à¸µà¸¢à¸”\" → \"ดูรายละเอียด\" ใน sendCarMrReviewRequestEmail",
+      "components/dashboard/DashboardClientView.tsx: แก้ string เปรียบเทียบชื่อแผนก 4 จุดที่เป็น mojibake → ตรวจสอบ, จัดซื้อ, ความปลอดภัย, บุคคล"
+    ],
+    "detailsEn": [
+      "services/carEmailService.ts: Fixed mojibake actionLabel \"à¸”à¸¹à¸£à¸²à¸¢à¸¥à¸°à¹€à¸­à¸µà¸¢à¸”\" → \"ดูรายละเอียด\" in sendCarMrReviewRequestEmail",
+      "components/dashboard/DashboardClientView.tsx: Fixed 4 department-name matching strings from mojibake to Thai: ตรวจสอบ, จัดซื้อ, ความปลอดภัย, บุคคล"
+    ]
+  },
+  {
+    "id": "52",
+    "titleTh": "DAR: พรีวิวไฟล์แนบการปฏิเสธบนหน้าอ่านรายละเอียด",
+    "titleEn": "DAR: preview rejection attachments in read-only detail view",
+    "date": "2026-07-07",
+    "type": "fix",
+    "commit": "fix/dar-rejection-attachment-preview",
+    "detailsTh": [
+      "ย้ายการ์ด Rejected ให้อยู่บนสุดของหน้า dar/[id] เพื่อให้เห็นสถานะที่ถูกปฏิเสธทันที",
+      "เปลี่ยนไฟล์แนบในเหตุผลการปฏิเสธจากลิงก์ /api/sharepoint/get-file ที่โชว์ JSON เป็นปุ่มเปิด preview modal",
+      "เพิ่มการพรีวิวไฟล์ข้อความ เช่น .md และ .txt ใน FilePreviewModal เพื่อให้อ่านไฟล์ประกอบการปฏิเสธได้ทันทีโดยไม่ต้องดาวน์โหลด"
+    ],
+    "detailsEn": [
+      "Moved the Rejected card to the top of dar/[id] so the rejection state is immediately visible.",
+      "Changed rejection attachments from /api/sharepoint/get-file links that opened JSON into preview modal triggers.",
+      "Added text file preview support for formats such as .md and .txt in FilePreviewModal so users can read rejection evidence without downloading."
+    ]
+  },
+  {
+    "id": "51",
+    "titleTh": "แก้ไข Export Master List: สร้างเทมเพลต Excel ที่หายไป",
+    "titleEn": "Fix Export Master List: create missing Excel template file",
+    "date": "2026-07-07",
+    "type": "fix",
+    "commit": "fix/missing-export-template",
+    "detailsTh": [
+      "สร้างไฟล์เทมเพลต FM-DC-04 Rev.02 ทะเบียนรายชื่อเอกสารควบคุม Master List.xlsx ที่หายไปใน docs/export-format/",
+      "เพิ่มสคริปต์ scripts/create-master-list-template.mjs สำหรับสร้างเทมเพลต",
+      "แก้ไข API /api/document-controls/export ที่ไม่สามารถทำงานได้เนื่องจากไม่พบไฟล์เทมเพลต"
+    ],
+    "detailsEn": [
+      "Created missing template file FM-DC-04 Rev.02 Master List.xlsx in docs/export-format/",
+      "Added scripts/create-master-list-template.mjs to generate the template",
+      "Fixed /api/document-controls/export returning 500 due to missing template file"
+    ]
+  },
+  {
+    "id": "50",
+    "titleTh": "Approval Config: เพิ่มป้ายชื่อ TH/EN และปุ่มบันทึกแยกรายโมดูล",
+    "titleEn": "Approval Config: bilingual TH/EN labels and per-module save buttons",
+    "date": "2026-07-07",
+    "type": "feat",
+    "commit": "feat/approval-config-bilingual-per-module-save",
+    "detailsTh": [
+      "เพิ่มป้ายชื่อภาษาไทยควบคู่ภาษาอังกฤษสำหรับหัวข้อหน้า คำอธิบายโมดูล และ label ของ QMS Reviewer / MR Approver",
+      "เปลี่ยนจากปุ่มบันทึกปุ่มเดียวทั้งหน้า เป็นปุ่ม 'บันทึก (Save)' แยกรายการ์ดแต่ละโมดูล",
+      "แต่ละโมดูลส่ง payload เฉพาะโมดูลนั้นไปที่ POST /api/qms/approval-config ไม่กระทบโมดูลอื่น",
+      "เพิ่ม loading state แยกรายโมดูล พร้อม toast สำเร็จ/ล้มเหลวระบุชื่อโมดูลเป็นภาษาไทย",
+      "เพิ่ม approvalConfig keys ใน messages/en.json และ messages/th.json ให้ครบและ synchronized"
+    ],
+    "detailsEn": [
+      "Added bilingual Thai/English labels for page title, module descriptions, and QMS Reviewer / MR Approver field labels.",
+      "Replaced the single global Save button with individual per-module 'บันทึก (Save)' buttons inside each card.",
+      "Each module sends only its own payload to POST /api/qms/approval-config without affecting other modules.",
+      "Added per-module loading state and Thai-language toast notifications on success/failure.",
+      "Added approvalConfig keys to messages/en.json and messages/th.json in sync."
+    ]
+  },
+  {
+    "id": "49",
+    "titleTh": "Approval Config: บันทึกผู้อนุมัติแยกราย Module และเพิ่ม KPI/Audit modules",
+    "titleEn": "Approval config: store defaults per module and add KPI/Audit modules",
+    "date": "2026-07-07",
+    "type": "feat",
+    "commit": "feat/approval-config-per-module",
+    "detailsTh": [
+      "ปรับหน้า approval-config ให้บันทึกค่า reviewer/approver แยกตามแต่ละ module แทนการแสดงเฉพาะ DAR/CAR กับ global default",
+      "เพิ่ม module ใหม่ในหน้า config ได้แก่ KPI, KPI-Monthly, Auditor(Appointment) และ Audit",
+      "เพิ่ม helper กลางสำหรับ config key ของ approval และขยาย role-users/default lookup ให้รองรับ module ใหม่ทั้งหมด",
+      "ผูกค่า default จาก approval-config ไปยัง KPI และ Audit surfaces เพื่อ prefill reviewer/approver จาก module config อัตโนมัติ"
+    ],
+    "detailsEn": [
+      "Reworked the approval-config page to store reviewer and approver defaults per module instead of only DAR/CAR plus global defaults.",
+      "Added KPI, KPI-Monthly, Auditor(Appointment), and Audit modules to the approval-config screen.",
+      "Added shared approval-config key helpers and extended default assignee lookup to support all configured modules.",
+      "Connected KPI and Audit reviewer/approver selection surfaces to prefill from the module approval config."
+    ]
+  },
+  {
+    "id": "48",
+    "titleTh": "DAR Detail: แก้ปัญหาเปิดหน้า dar/[id] แล้วขึ้น 404 ผิดกรณี",
+    "titleEn": "DAR detail: fix false 404 on dar/[id] caused by identity permission mismatch",
+    "date": "2026-07-07",
+    "type": "fix",
+    "commit": "fix/dar-detail-auth-id-404",
+    "detailsTh": [
+      "ปรับ DarService.getDarById ให้ตรวจ owner และ approver ได้ทั้ง local userId และ authUserId ตาม session model ปัจจุบัน",
+      "แก้หน้า dar/[id], dar/[id]/edit และ print/dar/[id] ให้ส่ง actor identity แบบครบถ้วนเข้า service",
+      "แยกกรณี Forbidden ออกจาก NotFound ในหน้า DAR detail/edit เพื่อไม่แสดง 404 หลอกเมื่อข้อมูลมีอยู่แต่ identity ไม่ match"
+    ],
+    "detailsEn": [
+      "Updated DarService.getDarById to authorize requester and approver access against both local userId and authUserId.",
+      "Updated dar/[id], dar/[id]/edit, and print/dar/[id] pages to pass the full actor identity into the DAR service.",
+      "Separated Forbidden from NotFound handling on DAR detail/edit pages so valid records do not surface as false 404s when identity mapping differs."
+    ]
+  },
+  {
+    "id": "47",
+    "titleTh": "DAR: เพิ่มวันกำหนดใช้หลัง Revision ในรายการเอกสาร",
+    "titleEn": "DAR: add effective date after revision for document items",
+    "date": "2026-07-06",
+    "type": "feat",
+    "commit": "feat/dar-effective-date-per-item",
+    "detailsTh": [
+      "เพิ่มฟิลด์ effectiveDate ใน DarItem เพื่อเก็บวันกำหนดใช้แยกระดับรายการเอกสาร",
+      "อัปเดต DAR schema, form state และ service mapping ให้รับค่า effectiveDate แบบ optional",
+      "เพิ่มคอลัมน์วันกำหนดใช้ถัดจาก Revision ใน DarItemsSection และ DarItemsTable",
+      "อัปเดตแบบพิมพ์ DAR และไฟล์ส่งออก Excel ให้แสดง effective date ของแต่ละรายการเอกสาร"
+    ],
+    "detailsEn": [
+      "Added an effectiveDate field to DarItem so each requested document can store its own effective date.",
+      "Updated DAR schema, form state, and service mappings to accept optional effectiveDate values.",
+      "Added an effective date column after Revision in DarItemsSection and DarItemsTable.",
+      "Updated the DAR print template and Excel export to show each item's effective date."
+    ]
+  },
+  {
+    "id": "46",
+    "titleTh": "CAR Verify/MR Close: เปลี่ยนจัดเก็บไฟล์แนบจาก Inline JSON สู่ CarAttachment Table",
+    "titleEn": "CAR Verify/MR Close: Migrate file attachments from inline JSON to CarAttachment table",
+    "date": "2026-07-06",
+    "type": "feat",
+    "commit": "feat/qms-car-verify-attachment-table",
+    "detailsTh": [
+      "เพิ่มฟิลด์ carVerificationId และ carMrSignatureId ใน Prisma model CarAttachment (carResponseId เปลี่ยนเป็น optional)",
+      "เพิ่ม relation attachments ไปยัง CarVerification และ CarMrSignature",
+      "แก้ไข createVerificationAndSetStatus, createMrSignatureAndUseToken, createMrSignature ให้ return ID",
+      "อัปเดต verifyCar: แทนที่จะ JSON.stringify ไฟล์แนบลงใน findings → สร้าง CarAttachment records ใน transaction",
+      "อัปเดต closeCar/closeCarAuthenticated: แทนที่จะ JSON.stringify ลงใน comment → สร้าง CarAttachment records",
+      "เพิ่ม attachments select ใน findDetailById สำหรับ CarVerification และ CarMrSignature",
+      "อัปเดต CarVerificationDetail, CarMrSignatureDetail types ให้มี attachments array",
+      "อัปเดต mapDetail mapping รวม attachments สำหรับ verification และ mrSignature"
+    ],
+    "detailsEn": [
+      "Added carVerificationId and carMrSignatureId fields to CarAttachment Prisma model (carResponseId made optional).",
+      "Added attachments relation to CarVerification and CarMrSignature models.",
+      "Modified createVerificationAndSetStatus, createMrSignatureAndUseToken, createMrSignature to return ID.",
+      "Updated verifyCar: creates CarAttachment records instead of JSON.stringify into findings.",
+      "Updated closeCar/closeCarAuthenticated: creates CarAttachment records instead of JSON.stringify into comment.",
+      "Added attachments select in findDetailById for CarVerification and CarMrSignature.",
+      "Updated CarVerificationDetail and CarMrSignatureDetail types with attachments array.",
+      "Updated mapDetail mapping for verification and mrSignature attachments."
+    ]
+  },
+  {
+    "id": "45",
+    "titleTh": "ปรับปรุง CAR Export: ตรวจสอบความถูกต้อง, Preview ก่อนส่งออก, เพิ่ม responderDepartment",
+    "titleEn": "CAR Export enhancement: template alignment, preview dialog, responderDepartment schema",
+    "date": "2026-07-06",
+    "type": "feat",
+    "commit": "feat/qms-car-export-preview-and-fix-mapping",
+    "detailsTh": [
+      "วิเคราะห์ความสอดคล้องของข้อมูล CAR กับแบบฟอร์ม FM-MR-11 Rev.02 พบปัญหา 2 จุด: Column G (หน่วยงาน Editor) และ Column I (หน่วยงาน Follower)",
+      "เพิ่มฟิลด์ responderDepartment ลงใน Prisma schema (CarResponse) และ db push เพื่อเก็บแผนกของผู้ตอบ CAR",
+      "แก้ไข Column G: ใช้ responderDepartment แทน targetDepartmentName (แผนกผู้ตอบ ไม่ใช่แผนกที่เกิดปัญหา)",
+      "แก้ไข Column I: ใช้ 'QMS/MR' เป็นชื่อแผนกผู้ติดตามแทนการใช้ตำแหน่งงาน (verifierPosition)",
+      "เพิ่มแถวสรุปท้ายตาราง: Total CAR, Closed, In Process (Row 24-26 ของ template)",
+      "ปรับ startRow จาก 8 เป็น 9 ให้ตรงกับตำแหน่งข้อมูลใน template",
+      "เพิ่ม API endpoint /api/car/export/preview สำหรับดูตัวอย่างข้อมูลในรูปแบบ JSON",
+      "สร้าง CarPreviewExportDialog component สำหรับ Preview ข้อมูลก่อน Export (เปิดจากปุ่ม Preview ใน CarListTable)",
+      "เพิ่มปุ่ม Preview และ ส่งออก Excel ใน CarListTable ถัดจาก FilterBar",
+      "เพิ่ม filter search ใน export/preview routes เพื่อให้กรองข้อมูลตาม FilterBar ได้"
+    ],
+    "detailsEn": [
+      "Analyzed CAR data mapping against FM-MR-11 Rev.02 template; found 2 issues: Column G (Editor Section) and Column I (Follower Section) were mapped incorrectly.",
+      "Added responderDepartment field to CarResponse Prisma schema and pushed to database.",
+      "Fixed Column G: now uses responderDepartment instead of targetDepartmentName (editor's department, not the problem department).",
+      "Fixed Column I: uses 'QMS/MR' as follower section name instead of job title (verifierPosition).",
+      "Added summary rows at bottom: Total CAR, Closed, In Process (template rows 24-26).",
+      "Changed startRow from 8 to 9 to align with the template's actual data area.",
+      "Added /api/car/export/preview JSON endpoint for export preview data.",
+      "Created CarPreviewExportDialog component for data preview before export (triggered from Preview button in CarListTable).",
+      "Added Preview and Export Excel buttons in CarListTable adjacent to the FilterBar.",
+      "Added search filter support in export/preview routes for consistent filtering with the list FilterBar."
+    ]
+  },
+  {
+    "id": "44",
+    "titleTh": "QMS CAR Export: ส่งออก Excel ตามแบบฟอร์ม FM-MR-11 Rev.02 ทะเบียนใบแจ้งดำเนินการแก้ไข",
+    "titleEn": "QMS CAR Export: Generate Excel based on FM-MR-11 Rev.02 Corrective Action Register template",
+    "date": "2026-07-06",
+    "type": "feat",
+    "commit": "feat/qms-car-export-fm-mr-11-template",
+    "detailsTh": [
+      "ปรับปรุง API endpoint /api/car/export ให้โหลดแบบฟอร์มมาตรฐาน FM-MR-11 Rev.02 แล้วเติมข้อมูล CAR ทุกรายการลงในตาราง",
+      "แมปคอลัมน์ครบถ้วน: ลำดับ, เลขที่ CAR, วันที่ออก, รายละเอียด, หน่วยงาน, Editor, Section, Follower, Due Date, Reply Date, กำหนดแล้วเสร็จ, ติดตามครั้งที่ 1-2, วันที่ปิด, สถานะ, หมายเหตุ",
+      "ขยาย findForExport() ใน CarRepository ให้ดึง responderName, verifierName, nextDueDate และ comment ของ mrSignature",
+      "รักษา border, font และ style ของแถวต้นแบบใน template ไว้สำหรับแถวข้อมูลทุกแถว"
+    ],
+    "detailsEn": [
+      "Refactored /api/car/export to load the standard FM-MR-11 Rev.02 Excel template and fill all CAR rows into the table.",
+      "Mapped all required columns: No., CAR Number, Issue Date, Detail, Department, Editor, Section, Follower, Due Date, Reply Date, Due Date Finish, Follow 1st/2nd time, Closing Date, Status, Remark.",
+      "Expanded findForExport() in CarRepository to retrieve responderName, verifierName, nextDueDate, and mrSignature.comment.",
+      "Preserved border, font, and fill styles from the template reference row for all output data rows."
+    ]
+  },
+  {
+    "id": "43",
+    "titleTh": "QMS CAR: เพิ่มรายงานสรุปผลและรายงานสถานะการแก้ไขพร้อมปุ่มส่งออก Excel/PDF",
+    "titleEn": "QMS CAR: Add summary and status reports with Excel/PDF export buttons",
+    "date": "2026-07-06",
+    "type": "feat",
+    "commit": "feat/qms-car-summary-status-reports",
+    "detailsTh": [
+      "เพิ่มหน้าประมวลผลสรุป (Summary) และติดตามสถานะ (Status) ของโมดูล CAR สำหรับหน้าเจ้าหน้าที่ QMS (/qms/car)",
+      "พัฒนา API endpoints และ repositories สำหรับดึงข้อมูลรายงานโดยไม่เชื่อมต่อกับฐานข้อมูลโดยตรงใน route handlers",
+      "พัฒนาหน้าพิมพ์และส่งออก PDF เอกสารสรุปผลและติดตามความก้าวหน้าตามกำหนด",
+      "เพิ่มความสามารถในการดาวน์โหลดข้อมูลเป็นไฟล์ Excel ผ่าน central QMS configuration"
+    ],
+    "detailsEn": [
+      "Added Summary and Status reports inside the QMS CAR landing dashboard (/qms/car).",
+      "Created non-direct database API endpoints and repository queries to load filtered report data.",
+      "Implemented landscape and portrait print templates for PDF export.",
+      "Integrated excel spreadsheet downloads for both CAR Summary and Status views."
+    ]
+  },
+  {
+    "id": "42",
+    "titleTh": "ปรับเปลี่ยนเอกสารคำแนะนำสกิลทั้งหมดเป็นภาษาอังกฤษ",
+    "titleEn": "Translate all agent skill instruction files to English",
+    "date": "2026-07-06",
+    "type": "improvement",
+    "commit": "improve/translate-agent-skills-to-english",
+    "detailsTh": [
+      "ปรับปรุงไฟล์ SKILL.md ในโมดูล agent-audit, agent-car, agent-dar, agent-document-control, agent-kpi และ design-system เป็นภาษาอังกฤษทั้งหมด"
+    ],
+    "detailsEn": [
+      "Translated SKILL.md in agent-audit, agent-car, agent-dar, agent-document-control, agent-kpi, and design-system modules entirely to English."
+    ]
+  },
+  {
+    "id": "41",
+    "titleTh": "KPI: เก็บประวัติ objective เดิมตอน revise และแสดงใน PDF พื้นเขียวตัวอักษรดำ",
+    "titleEn": "KPI: Preserve revised objective history and show it in PDF with green background",
+    "date": "2026-07-06",
+    "type": "feat",
+    "commit": "feat/kpi-revision-history-pdf-highlight",
+    "detailsTh": [
+      "ดึงประวัติการ revise KPI Annual Objective จาก audit log ทุกครั้ง เพื่อให้ objective ชุดเดิมยังย้อนดูได้หลังแก้ไขหลายรอบ",
+      "เพิ่มส่วน Revision history ในหน้า KPI detail เพื่อแสดง snapshot เดิม เหตุผล และรายการ objective ที่ถูก revise ในแต่ละรอบ",
+      "ปรับหน้า Print / Export PDF ของ KPI Annual ให้แสดงประวัติเก่าด้วยพื้นสีเขียวและตัวอักษรสีดำ รวมถึง highlight objective ที่ถูก revise"
+    ],
+    "detailsEn": [
+      "Loaded every KPI annual revision snapshot from audit logs so older objective sets remain visible after multiple revise rounds.",
+      "Added a revision history section on the KPI detail page showing prior snapshots, revision reasons, and the objectives revised in each round.",
+      "Updated the KPI annual print/PDF page to render old history with a green background and black text, and to highlight revised objectives."
+    ]
+  },
+  {
+    "id": "40",
+    "titleTh": "CAR: เปลี่ยนส่วน ISO Standards ให้ดึงข้อมูลจาก audit-standards แทน hard code",
+    "titleEn": "CAR: Replaced hardcoded ISO_STANDARDS with dynamic audit-standards data",
+    "date": "2026-07-06",
+    "type": "feat",
+    "commit": "feat/car-audit-standards-ref",
+    "detailsTh": [
+      "เปลี่ยนส่วนเลือก ISO Standards ในฟอร์มสร้าง CAR จาก hard code (ISO_STANDARDS ใน types/car.ts) เป็นการเรียกข้อมูลจาก API /api/audit/standards ผ่าน useAuditStandards hook",
+      "ลบ ISO_STANDARDS constant และ IsoStandard type ที่ไม่ได้ใช้งานแล้วออกจาก types/car.ts",
+      "เพิ่ม loading skeleton และ empty state สำหรับกรณีไม่มีมาตรฐานในระบบ"
+    ],
+    "detailsEn": [
+      "Changed ISO Standards selection in CAR create form from hardcoded ISO_STANDARDS to fetching from /api/audit/standards via useAuditStandards hook",
+      "Removed unused ISO_STANDARDS constant and IsoStandard type from types/car.ts",
+      "Added loading skeleton and empty state when no standards exist"
+    ]
+  },
+  {
+    "id": "39",
+    "titleTh": "สร้างหน้าพิมพ์รายงาน KPI Master FM-MR-01",
+    "titleEn": "Create KPI Master Print page for FM-MR-01",
+    "date": "2026-07-06",
+    "type": "feat",
+    "commit": "feat/kpi-fm-mr-01-master-print",
+    "detailsTh": [
+      "เพิ่มหน้า Print / Export KPI Master รายปีที่ดึงข้อมูลวัตถุประสงค์คุณภาพทั้งหมด (FM-MR-01)",
+      "แสดงข้อมูลแยกตามแผนก พร้อมแสดงเป้าหมาย สูตรคำนวณ แนวทางปฏิบัติ และความถี่",
+      "เพิ่มปุ่มพิมพ์ FM-MR-01 ในหน้าจัดการ KPI Dashboard ของแต่ละปีเพื่อความสะดวก"
+    ],
+    "detailsEn": [
+      "Added Annual KPI Master Print page displaying all quality objectives across departments (FM-MR-01).",
+      "Grouped objectives by department, showing targets, calculation formulas, operational plans, and frequencies.",
+      "Added an FM-MR-01 print button in the KPI Dashboard for the selected year."
+    ]
+  },
+  {
+    "id": "38",
+    "titleTh": "KPI: เพิ่มผู้รับผิดชอบของ Objective โดยเลือกจาก Auth Center",
+    "titleEn": "KPI: Add objective owner assignment from Auth Center",
+    "date": "2026-07-06",
+    "type": "feat",
+    "commit": "feat/kpi-objective-responsible-auth-center",
+    "detailsTh": [
+      "เพิ่ม field ผู้รับผิดชอบใน KPI Objective และเก็บ auth user id พร้อม snapshot ชื่อ อีเมล และรหัสพนักงาน",
+      "ฟอร์มสร้างและแก้ไข Objective เปลี่ยนเป็นเลือกผู้รับผิดชอบจาก Auth Center ตามมาตรฐาน user picker ของระบบ",
+      "หน้า KPI detail, revise comparison และหน้า print/export จะแสดงข้อมูลผู้รับผิดชอบของแต่ละ objective"
+    ],
+    "detailsEn": [
+      "Added responsible-owner fields to KPI objectives, storing the Auth Center user id plus name, email, and employee id snapshots.",
+      "Updated the objective create/edit form to assign the responsible person from Auth Center using the system-standard user picker.",
+      "Displayed the assigned responsible person in KPI detail, revision comparison, and print/export views."
+    ]
+  },
+  {
+    "id": "37",
+    "titleTh": "KPI: เพิ่มปุ่ม Export PDF กลับในหน้า detail",
+    "titleEn": "KPI: Restore the Export PDF button on the detail page",
+    "date": "2026-07-06",
+    "type": "fix",
+    "commit": "fix/kpi-detail-restore-export-pdf-button",
+    "detailsTh": [
+      "เพิ่มปุ่ม Export PDF กลับเข้า action bar ของหน้า KPI detail (kpi/[id])",
+      "เชื่อมปุ่มไปยังหน้า print ของ KPI เพื่อให้เปิดหน้าเอกสารและสั่ง Save as PDF ได้ทันที"
+    ],
+    "detailsEn": [
+      "Restored the Export PDF button in the KPI detail page action bar.",
+      "Linked the button to the KPI print page so users can open the document and save it as PDF immediately."
+    ]
+  },
+  {
+    "id": "36",
+    "titleTh": "KPI: ลบปุ่ม QMS Check ออกจากหน้า detail",
+    "titleEn": "KPI: Remove the QMS Check button from the detail page",
+    "date": "2026-07-06",
+    "type": "improvement",
+    "commit": "improve/kpi-detail-remove-qms-check-button",
+    "detailsTh": [
+      "ลบปุ่ม QMS Check และ signature flow ที่ผูกกับปุ่มดังกล่าวออกจากหน้า KPI detail (kpi/[id])",
+      "คง action อื่นของหน้าไว้ตามเดิมเพื่อไม่ให้กระทบ flow submit, review, approve, announce และ revise"
+    ],
+    "detailsEn": [
+      "Removed the QMS Check button and its signature flow from the KPI detail page at kpi/[id].",
+      "Left the remaining actions intact so submit, review, approve, announce, and revise continue to work as before."
+    ]
+  },
+  {
+    "id": "35",
+    "titleTh": "แก้ไขการแสดงผล Footer บน Form/PDF ให้ตรงตามที่ตั้งค่า",
+    "titleEn": "Remove uppercase transform from footer on forms/PDF",
+    "date": "2026-07-06",
+    "type": "fix",
+    "commit": "fix: remove uppercase from kpi monthly footer display",
+    "detailsTh": [
+      "นำคลาส uppercase ออกจากส่วน Footer ของแบบฟอร์ม KPI Monthly เพื่อให้แสดงผลพิมพ์เล็ก-พิมพ์ใหญ่ตรงตามที่ผู้ใช้กรอกไว้ใน Footer Config"
+    ],
+    "detailsEn": [
+      "Removed the uppercase CSS class from the KPI Monthly form footer so that the casing exactly matches what is configured in Footer Config."
+    ]
+  },
+  {
+    "id": "35",
+    "titleTh": "KPI: แสดง Original เทียบกับรายการที่แก้ไขในหน้า revise",
+    "titleEn": "KPI: Show original objectives alongside revised items",
+    "date": "2026-07-06",
+    "type": "improvement",
+    "commit": "improve/kpi-revision-comparison-view",
+    "detailsTh": [
+      "บันทึก snapshot ของ KPI objectives เดิมไว้ตอนกด Revise เพื่อใช้เปรียบเทียบภายหลัง",
+      "หน้า KPI detail จะแสดงรายการที่แก้ไขพร้อม Original เดิม และแยกรายการที่ถูกลบออกจาก revision เพื่อให้ตรวจสอบการเพิ่ม ลบ และแก้ไขได้ชัดเจน"
+    ],
+    "detailsEn": [
+      "Captured the original KPI objective snapshot at revise time so the system can compare later changes against the pre-revision state.",
+      "Updated the KPI detail page to show revised objectives with their original values and list objectives removed during the revision for easier review."
+    ]
+  },
+  {
+    "id": "34",
+    "titleTh": "เพิ่มระบบสองภาษา (TH/EN) ในหน้า Footer Config",
+    "titleEn": "Add i18n TH/EN support to Footer Config page",
+    "date": "2026-07-06",
+    "type": "improvement",
+    "commit": "feat: add i18n to footer config",
+    "detailsTh": [
+      "เพิ่มการรองรับ 2 ภาษาในหน้า Footer Config ตามมาตรฐานของระบบ",
+      "เปลี่ยนข้อความในหน้าจอให้ดึงคำแปลจากไฟล์ messages/th.json และ en.json"
+    ],
+    "detailsEn": [
+      "Added dual-language (TH/EN) support to the Footer Config page.",
+      "Updated the UI component to fetch translations from messages/th.json and en.json."
+    ]
+  },
+  {
+    "id": "33",
+    "titleTh": "ปรับหน้า Footer Config ให้สั้นลงและบันทึกแยกรายการ",
+    "titleEn": "Simplified Footer Config copy and added per-card save actions",
+    "date": "2026-07-06",
+    "type": "improvement",
+    "commit": "improve/footer-config-per-card-save",
+    "detailsTh": [
+      "ลดข้อความอธิบายบนหน้า Footer Config ให้เหลือเฉพาะข้อมูลจำเป็นเพื่อลดความรกของหน้าจอ",
+      "ย้ายจากปุ่มบันทึกรวมทั้งหน้าเป็นปุ่ม Save แยกในแต่ละ config card เพื่อให้แก้และบันทึกเฉพาะรายการที่ต้องการได้ทันที"
+    ],
+    "detailsEn": [
+      "Reduced the Footer Config page copy to the essentials so the screen is less verbose.",
+      "Replaced the single page-level save action with per-card Save buttons so each config can be updated independently."
+    ]
+  },
+  {
+    "id": "32",
+    "titleTh": "CAR: เพิ่มการเลือกแผนกที่รับผิดชอบแก้ไขและแผนกที่เกี่ยวข้อง",
+    "titleEn": "CAR: Added responsible department and related departments selection to creation form",
+    "date": "2026-07-06",
+    "type": "feat",
+    "commit": "feat/car-related-departments",
+    "detailsTh": [
+      "เพิ่ม field relatedDepartmentIds (String[]) ในตาราง CarMaster",
+      "ปรับชื่อ field targetDepartmentId เป็น 'แผนกที่รับผิดชอบแก้ไข' ให้ชัดเจนยิ่งขึ้น",
+      "เพิ่ม multi-select checkbox สำหรับเลือกแผนกที่เกี่ยวข้องในฟอร์มสร้าง CAR",
+      "อัปเดต validation schema (carBaseSchema), types (CarDetail, CarSummary), repository (createDraft, updateDraft, findDetailById, findManySummary, paginateSummaries), service (mapDetail, mapSummaries), และ i18n (th/en)"
+    ],
+    "detailsEn": [
+      "Added relatedDepartmentIds (String[]) field to CarMaster table",
+      "Renamed targetDepartmentId label to 'Responsible Department' for clarity",
+      "Added multi-select checkbox list for selecting related departments in CAR create form",
+      "Updated validation schema (carBaseSchema), types (CarDetail, CarSummary), repository (createDraft, updateDraft, findDetailById, findManySummary, paginateSummaries), service (mapDetail, mapSummaries), and i18n (th/en)"
+    ]
+  },
+  {
+    "id": "31",
+    "titleTh": "เพิ่มชื่อเอกสารและปุ่มพิมพ์ (PDF Export) ในฟอร์ม KPI Monthly",
+    "titleEn": "Added document name and Print/PDF Export button to KPI Monthly Form",
+    "date": "2026-07-06",
+    "type": "feat",
+    "commit": "feat/kpi-monthly-pdf-doc-name",
+    "detailsTh": [
+      "เพิ่มชื่อเอกสารกำกับมุมล่างขวาของ Modal รายงาน KPI Monthly โดยอ้างอิงจาก Document Name ของ Form KPI เป็นหลัก",
+      "หากไม่ได้ตั้งค่าไว้ จะใช้ค่าเริ่มต้นตามที่ QMS กำหนดในระบบ Doc No Config (KPI_MONTHLY_FORM)",
+      "เพิ่มปุ่ม Print / Export PDF ภายใน Form KPI Monthly เพื่อให้สามารถพิมพ์หรือบันทึกเป็น PDF ที่มีชื่อฟอร์มแสดงตรงตามที่กำหนด"
+    ],
+    "detailsEn": [
+      "Added a document name label at the bottom right of the KPI Monthly modal, referencing the master KPI document name.",
+      "If not set, falls back to the default QMS-configured Doc No Config setting (KPI_MONTHLY_FORM).",
+      "Added a Print / Export PDF button to the KPI Monthly Form to seamlessly generate PDFs containing the correct form name footer."
+    ]
+  },
+  {
+    "id": "30",
+    "titleTh": "ปรับชื่อเอกสารท้าย PDF KPI ให้ใช้ Footer Config กลาง",
+    "titleEn": "Aligned annual KPI PDF footer naming with the central Footer Config",
+    "date": "2026-07-06",
+    "type": "fix",
+    "commit": "fix/kpi-pdf-footer-config-label",
+    "detailsTh": [
+      "ปรับ annual KPI print/PDF footer ให้ชื่อเอกสารมุมล่างขวาอ้างอิงค่า Document Label จากหน้า `qms/footer-config` ของ `KPI_ANNUAL`",
+      "คงการใช้ `documentName` รายแผนกไว้สำหรับหัวเอกสาร แต่ footer จะใช้ค่ากลางเดียวกันทุกแผนกตามที่ QMS กำหนด"
+    ],
+    "detailsEn": [
+      "Updated the annual KPI print/PDF footer so the bottom-right document label reads from the shared `KPI_ANNUAL` Document Label configured in `qms/footer-config`.",
+      "Kept per-department `documentName` behavior for the main document heading while standardizing the footer label from the central QMS configuration."
+    ]
+  },
+  {
+    "id": "29",
+    "titleTh": "ปรับ Footer PDF KPI ประจำปีให้ใช้ชื่อเอกสารกลางจากหน้า Footer Config",
+    "titleEn": "Aligned annual KPI PDF footer naming with the central Footer Config form label",
+    "date": "2026-07-03",
+    "type": "fix",
+    "commit": "fix/kpi-annual-pdf-footer-config-label",
+    "detailsTh": [
+      "ปรับส่วนชื่อเอกสารมุมล่างขวาของแบบพิมพ์และ PDF KPI ประจำปีให้ใช้ค่า Document Label จากการตั้งค่า `KPI_ANNUAL` ในหน้า `qms/footer-config` เป็นหลัก",
+      "คงการใช้ชื่อเอกสารรายฉบับ (`documentName`) ไว้สำหรับหัวเอกสารตามเดิม เพื่อไม่ให้กระทบการตั้งชื่อภายในเอกสารของแต่ละแผนกเกินความจำเป็น"
+    ],
+    "detailsEn": [
+      "Updated the annual KPI print/PDF footer so the bottom-right document label now prioritizes the shared `KPI_ANNUAL` Document Label configured in `qms/footer-config`.",
+      "Kept per-record `documentName` behavior for the main document heading to avoid unnecessary changes to department-specific document titles."
+    ]
+  },
+  {
+    "id": "28",
+    "titleTh": "อัปเดตการส่งออก Master List ของ Document Control ตามเทมเพลตมาตรฐาน FM-DC-04 Rev.02",
+    "titleEn": "Upgraded Document Control Master List Export to standard FM-DC-04 Rev.02 Template",
+    "date": "2026-07-03",
+    "type": "feature",
+    "commit": "feat/document-control-master-list-template-export",
+    "detailsTh": [
+      "ปรับปรุงการทำงานของระบบส่งออก Master List ของฝ่ายควบคุมเอกสารให้โหลดเทมเพลตมาตรฐานจากไฟล์ FM-DC-04 Rev.02",
+      "ดึงข้อมูลการแจกจ่ายเอกสาร (Distributions) จากใบคำขอ DAR ล่าสุดมาทำเครื่องหมายถูก (✓) ลงในคอลัมน์ MD, QMS, SM, PU, HR, SHE, PD, QA, QC, QC Lab, WH, MO, EN, IT, MN, GA, PN อัตโนมัติ",
+      "ผสานเซลล์ชื่อเอกสาร (B และ C) ในทุก ๆ แถวข้อมูล พร้อมปรับความสูงของแถว จัดแต่งฟอนต์เป็น Tahoma 9pt และเขียนวันอัปเดต พ.ศ. ลงบนหัวชีต C4",
+      "เพิ่มระบบพรีวิวรายละเอียดก่อนยืนยันการส่งออกข้อมูล (Export Preview Modal) ในหน้าจอแสดงรายการเอกสารควบคุมเพื่อความสอดคล้องกับหน้า DAR",
+      "เพิ่มปุ่ม Export Master List ในหน้าจอแสดงรายการแผนกหลัก (Level-1 Summary) เพื่อรองรับการส่งออกข้อมูลทะเบียนเอกสารควบคุมของทุกแผนกพร้อมกัน โดยแสดงหน้าพรีวิวก่อนดาวน์โหลดเหมือนกัน",
+      "เพิ่มมุมมอง 'เอกสารทั้งหมด' (All Documents) ในหน้าจอหลัก of Document Control เพื่อแสดงตารางเอกสารทั้งหมดในระบบพร้อมช่องค้นหา ตัวกรองสถานะ และตารางแสดงข้อมูล รหัส, ชื่อ, แผนก, หมวดหมู่ และคอลัมน์ 'จำนวนครั้งที่แก้ไข' (Revision Count) ที่คำนวณจากประวัติเวอร์ชันจริง",
+      "ล้างการตั้งค่า Conditional Formatting แบบเดิมของเทมเพลตก่อนทำการบันทึกและส่งออก เพื่อแก้ปัญหาการแจ้งเตือนไฟล์เสียหาย (Removed Records: Conditional formatting) บน MS Excel โดยเปลี่ยนไปใช้การลงสีพื้นหลังสีแดงอ่อนบนเซลล์สถานะยกเลิกด้วยโค้ดโดยตรงแทน",
+      "ปรับปรุงให้ระบบส่งออกข้อมูลทะเบียนเอกสารควบคุมแสดงทุกรายการประวัติการแก้ไข (All Revisions) ของแต่ละเอกสารแยกเป็นแต่ละแถวในไฟล์ Excel แม้ว่าเวอร์ชันนั้นจะไม่ได้ใช้งานแล้วก็ตาม"
+    ],
+    "detailsEn": [
+      "Upgraded Document Control Master List export endpoint to read and write directly into the FM-DC-04 Rev.02 Excel template.",
+      "Mapped approved DAR distributions to dynamically print checkmarks (✓) in J-Z distribution columns (MD, QMS, SM, PU, HR, SHE, PD, QA, QC, QC Lab, WH, MO, EN, IT, MN, GA, PN).",
+      "Merged cells B and C for Document Name on each data row, standardized cell fonts to Tahoma 9pt, and formatted cell C4 as Thai Buddhist date.",
+      "Implemented an Export Preview Modal for Document Control master list downloads across category-level and department-level summaries to align with the DAR workflow.",
+      "Added an Export Master List button to the main department grid view (Level-1 Summary) for exporting all departments' documents at once, equipped with the Export Preview Modal.",
+      "Added an 'All Documents' tab to the Document Control landing page, providing a unified list of all system documents with search, status filters, and a dedicated 'Revision Count' column computed from revision history.",
+      "Cleared the template's conditional formatting configurations before writing buffer to resolve Microsoft Excel's recovery warning ('Removed Records: Conditional formatting'), falling back to programmatically styling Cancelled and Obsolete status cells with light red fill and dark red font.",
+      "Modified the Document Control Master List Excel export to list every historical revision of each document as a separate row in the sheet, including obsolete and inactive versions."
+    ]
+  },
+  {
+    "id": "27",
+    "titleTh": "ผูกเลขที่เอกสาร Document Control กับรหัสย่อแผนกจาก Department Codes",
+    "titleEn": "Bound Document Control numbering to department abbreviations from Department Codes",
+    "date": "2026-07-03",
+    "type": "improvement",
+    "commit": "fix/document-control-department-code-numbering",
+    "detailsTh": [
+      "ปรับการสร้างเลขที่เอกสารของ Document Control ให้ใช้รูปแบบ {หมวดหมู่}-{ตัวย่อแผนกจาก qms/department-codes}-{ลำดับ}",
+      "เพิ่มการ resolve รหัสย่อผ่าน DepartmentCodeRepository ก่อน fallback ไปใช้ค่าดั้งเดิมของแผนก เพื่อให้เลขเอกสารถูกต้องตามหน้าตั้งค่า Department Codes"
+    ],
+    "detailsEn": [
+      "Updated Document Control number generation to follow {category}-{department abbreviation from qms/department-codes}-{running number}.",
+      "Resolved department abbreviations through DepartmentCodeRepository before falling back to legacy department values so numbering now follows the configured Department Codes screen."
+    ]
+  },
+  {
+    "id": "26",
+    "titleTh": "แปลภาษารายงาน Excel เป็นภาษาไทย และเพิ่มตัวกรองข้อมูล DAR แบบครอบคลุม",
+    "titleEn": "Thai Translation for DAR Export Excel and Comprehensive Filtering Parameters",
+    "date": "2026-07-03",
+    "type": "feature",
+    "commit": "feat/dar-export-thai-translation-and-advanced-filters",
+    "detailsTh": [
+      "แปลภาษาของหัวคอลัมน์และค่าข้อมูลประเภทเอกสาร วัตถุประสงค์ และสถานะในรายงาน Excel ของ DAR ให้เป็นภาษาไทย",
+      "ขยายความสามารถในการกรองข้อมูลใน endpoint /api/dar/export ให้รองรับการกรองตาม วัน เดือน ปี แผนก ผู้ใช้งานยื่นคำขอ ประเภทเอกสาร และวัตถุประสงค์",
+      "ปรับปรุงให้ปุ่มส่งออกพรีวิวในหน้า /dar และ /qms/dar ดึงค่าตัวกรองแผนก ปี เดือน และผู้ใช้งานปัจจุบันส่งไปยัง API ได้ถูกต้อง",
+      "เพิ่มกล่องตัวเลือก ปี และ เดือน พร้อมช่องระบุช่วงวันที่เริ่มต้น-สิ้นสุด (Date Range Pickers) บนตัวกรองหน้าจอของ /dar และ /qms/dar เพื่อให้กรองข้อมูลบนเว็บและพรีวิวก่อนส่งออกได้อย่างสะดวก"
+    ],
+    "detailsEn": [
+      "Translated Excel columns, headers, status, objective, and document type values to Thai for DAR exports.",
+      "Expanded filtering capabilities in the `/api/dar/export` endpoint to support day, month, year, department, user, docType, and objective.",
+      "Updated export hooks in user and QMS list pages to parse and forward date, department, and user filter criteria to the preview modal.",
+      "Added Year and Month dropdown selects plus Start/End Date Range Pickers directly to the filter panel of /dar and /qms/dar UI screens."
+    ]
+  },
+  {
+    "id": "25",
+    "titleTh": "ปรับปรุงระบบ KPI อย่างครอบคลุม: QMS Check, ประกาศ KPI, แก้ไขระหว่างปี, ชื่อเอกสาร Footer, Excel highlighting, อัปโหลดไฟล์ผู้ตรวจ/ผู้อนุมัติ",
+    "titleEn": "Comprehensive KPI System Upgrade: QMS Check, Announcement, Mid-Year Revision, Document Name Footer, Excel Revision Highlighting, Reviewer/Approver File Uploads",
+    "date": "2026-07-03",
+    "type": "feature",
+    "commit": "feat/kpi-annual-monthly-enhancement",
+    "detailsTh": [
+      "เพิ่มฟิลด์ documentName ให้ KPI และ KPIMonthlyReport สำหรับชื่อเอกสารใน Footer (QMS แก้ไขได้)",
+      "เพิ่มสถานะ QMS_CHECK และ ANNOUNCED ใน KPI Workflow: DRAFT → PENDING_REVIEW → PENDING_APPROVAL → APPROVED → QMS_CHECK → ANNOUNCED",
+      "QMS Check: QMS ตรวจสอบ KPI ทั้งหมด ลงชื่อ และส่งต่อไปยังผู้ตรวจ (Reviewer) และผู้อนุมัติ (Approver) เพื่อลงนาม",
+      "ประกาศ KPI: ส่งอีเมลถึงสมาชิกทุกคนในแผนกตาม System User List พร้อมแนบไฟล์ Excel KPI Objectives",
+      "เพิ่มฟังก์ชันคัดลอก KPI จากปีก่อนหน้า (Copy from Previous Year) เพื่อใช้เป็นฐานสำหรับปีใหม่",
+      "เพิ่มฟังก์ชันแก้ไข KPI ระหว่างปี (Revise): รีเซ็ตสถานะเป็น DRAFT, สร้าง Monthly Reports เฉพาะเดือนที่เหลือ",
+      "เพิ่มฟิลด์ isRevised ใน KPIObjective และ isRevision ใน KPI เพื่อติดตามการแก้ไขใน Excel Export",
+      "Excel Export: บันทึกที่ถูกแก้ไขแสดงด้วยพื้นหลังสีเขียว (green), ตัวอักษรสีดำ (black), ขีดเส้นใต้ (underline), ตัวเอียง (italic)",
+      "ผู้อนุมัติและผู้ตรวจสามารถอัปโหลดไฟล์แนบเมื่อ Approve หรือ Reject ทั้ง KPI Annual และ KPI Monthly",
+      "เพิ่ม documentName ใน KPIMonthlyReport Form Footer (QMS แก้ไขได้) พร้อมใช้ชื่อเอกสารเดียวกันใน PDF Export",
+      "เพิ่ม endpoint /api/kpi/[id]/qms-check, /api/kpi/[id]/announce, /api/kpi/copy, /api/kpi/[id]/revise",
+      "KPI Print Template และ metadata ใช้ documentName แทนค่า default จาก Footer Config"
+    ],
+    "detailsEn": [
+      "Added documentName field to KPI and KPIMonthlyReport models for editable document footer name (QMS editable)",
+      "Added QMS_CHECK and ANNOUNCED statuses to KPI Workflow: DRAFT → PENDING_REVIEW → PENDING_APPROVAL → APPROVED → QMS_CHECK → ANNOUNCED",
+      "QMS Check: QMS reviews all KPI records, signs them, and forwards to Reviewers/Approvers for signatures before announcement",
+      "KPI Announcement: Sends email to all department members via System User List with KPI Objectives Excel attachment",
+      "Added Copy from Previous Year feature to use last year's KPIs as base for new year planning",
+      "Added Mid-Year Revision: Resets KPI to DRAFT, regenerates only remaining monthly reports after revision month",
+      "Added isRevised field to KPIObjective and isRevision to KPI for tracking changes in Excel exports",
+      "Excel export revision highlighting: green background (#C6EFCE), black text, underline, italic formatting for revised records",
+      "Reviewers and MR approvers can now upload file attachments when approving or rejecting (both Annual and Monthly)",
+      "Added documentName field to KPIMonthlyReport for monthly form footer (QMS editable), used consistently in PDF exports",
+      "New API endpoints: /api/kpi/[id]/qms-check, /api/kpi/[id]/announce, /api/kpi/copy, /api/kpi/[id]/revise",
+      "KPI Print Template now uses per-KPI documentName instead of global footer config default"
+    ]
+  },
+  {
+    "id": "24",
+    "titleTh": "เพิ่มสถานะยกเลิกและปรับ Master List ของ Document Control",
+    "titleEn": "Added cancelled-document controls and expanded the Document Control master list",
+    "date": "2026-07-03",
+    "type": "feature",
+    "commit": "feat/document-control-cancelled-master-list",
+    "detailsTh": [
+      "เพิ่มสถานะ CANCELLED ให้ Document Control พร้อมบังคับให้เอกสารที่ยกเลิกแล้วยังมองเห็นได้แต่ไม่สามารถ preview หรือ download ได้",
+      "บังคับฟอร์มสร้างเอกสารใหม่ให้กรอก Document Number, Document Name, Description และ Status โดยใช้สถานะ Active หรือ Cancelled",
+      "ปรับ Export Master List ให้รองรับทั้งทุกแผนกหรือรายแผนก พร้อมคอลัมน์มาตรฐาน เช่น Document Name, Document Number, Revision, DAR No., Type, Requested By, วันที่ และ Effective Date",
+      "เชื่อม revision กับ DAR ให้แสดงและส่งออกข้อมูลผู้ขอ/เลข DAR ได้ครบ พร้อมปรับ DAR selector ให้ค้นหาและเรียงลำดับได้",
+      "แสดง Download Audit Log ถัดจาก Revision History ในหน้ารายละเอียดเอกสารและ modal รายละเอียด"
+    ],
+    "detailsEn": [
+      "Added a CANCELLED status for Document Control so cancelled documents remain visible but cannot be previewed or downloaded.",
+      "Required Document Number, Document Name, Description, and Status when creating a new document, with Active and Cancelled as the supported statuses.",
+      "Expanded the Master List export for all departments and per-department views with standard columns including document identity, DAR linkage, requester, dates, and effective date.",
+      "Kept revision-to-DAR linkage visible in both export and detail views, and upgraded the DAR picker with search and sorting support.",
+      "Displayed the document download audit log immediately after revision history in the main detail surfaces."
+    ]
+  },
+  {
+    "id": "23",
+    "titleTh": "เพิ่มการส่งออกข้อมูล DAR แบบกรองสถิติ เพิ่มตัวกรองสถิติภาพรวม และปรับปรุงรหัสท้ายเอกสาร DAR",
+    "titleEn": "Enhanced DAR Export, Interactive Filtering on Summary, and Document Footer Naming",
+    "date": "2026-07-03",
+    "type": "feature",
+    "commit": "feat/dar-export-filter-and-footer-config",
+    "detailsTh": [
+      "เพิ่มตัวกรองตามประเภทเอกสาร (Form) และวัตถุประสงค์ (Purpose) ในแท็บ DAR ของหน้าสรุปผลภาพรวม QMS",
+      "พัฒนา endpoint /api/dar/export ให้รองรับการค้นหาและกรองสถิติตามแผนก ประเภทเอกสาร และวัตถุประสงค์",
+      "เพิ่มปุ่มส่งออก Excel ในหน้าจัดการคำขอ DAR สำหรับเจ้าหน้าที่ QMS พร้อมสืบทอดค่าตัวกรองปัจจุบัน",
+      "แสดงรหัสเอกสาร (Document Prefix) ที่ดึงจากการตั้งค่าส่วนกลางของ QMS ไว้ที่มุมล่างขวาในหน้าจอฟอร์มและหน้าต่างแสดงรายละเอียดคำขอ DAR ทั้งหมด",
+      "ปรับรหัสสิทธิ์ของ GET /api/qms/footer-config ให้รองรับสิทธิ์ผู้ใช้งานทั่วไปเพื่อดึงรหัสท้ายฟอร์มได้ถูกต้อง",
+      "ปรับแต่ง metadata title ในหน้า /print/dar/[id] ให้ใช้รหัสรหัสเอกสาร (Prefix) เพื่อให้สอดคล้องกับฟอร์มเมื่อพิมพ์หรือดาวน์โหลดเป็น PDF",
+      "พัฒนา Modal แสดงตัวอย่างข้อมูลก่อนการดาวน์โหลดรายงาน (Export Preview Modal) ในหน้า /dar และ /qms/dar เพื่อให้ผู้ใช้ตรวจสอบความถูกต้องก่อนการดาวน์โหลดจริง",
+      "ปรับปรุงสิทธิ์การดาวน์โหลดรายงานผ่าน API /api/dar/export ให้รองรับผู้ใช้งานทั่วไปให้สามารถดาวน์โหลดข้อมูลประวัติเฉพาะคำขอของตัวเองได้",
+      "แก้ไขข้อผิดพลาดประเภท TypeScript ใน DocumentControlModal และ KPI Monthly API endpoint"
+    ],
+    "detailsEn": [
+      "Added Document Type (Form) and Objective (Purpose) interactive filters inside the DAR Summary tab of the QMS Summary Dashboard.",
+      "Upgraded `/api/dar/export` API route to support filtering by department, docType, objective, and search query.",
+      "Added an Excel export button to the QMS DAR management page that forwards active search and filter criteria.",
+      "Rendered the central QMS-configured document prefix at the bottom-right of DAR create/edit forms and detail views.",
+      "Changed GET authorization level on the footer config API to allow regular logged-in users to display document prefixes.",
+      "Aligned the page title of the print view to match the document prefix (e.g. `DAR-2026-0001 - FM-DC-01`) for default PDF filenames.",
+      "Implemented an Export Preview Modal for both `/dar` and `/qms/dar` list pages to display a preview table of filtered DAR records and count before download.",
+      "Updated `/api/dar/export` API endpoint authorization to allow standard users to download Excel exports of their own requests.",
+      "Resolved TypeScript compiler errors in `DocumentControlModal` and KPI Monthly API endpoint."
+    ]
+  },
+  {
+    "id": "22",
+    "titleTh": "เพิ่มเอกสารพิมพ์ผู้ตรวจ (Auditor Doc) และรายงานส่งออกข้อมูลแผนการตรวจ/ผู้ตรวจแบบ Standalone พร้อมอัปเดตระบบตารางเวลา",
+    "titleEn": "Added Standalone Auditor Print Document, Standalone Exports, and Calendar/Schedule Enhancements",
+    "date": "2026-07-03",
+    "type": "feature",
+    "commit": "feat/auditor-standalone-doc-and-plan-export",
+    "detailsTh": [
+      "สร้าง print route และ template อิสระสำหรับพิมพ์รายชื่อผู้ตรวจ (Auditor Doc) ที่ /print/audit/auditor/[id] และ components/audit/AuditorPrintTemplate.tsx โดยอิง central QMS configuration",
+      "เพิ่ม endpoint ส่งออกข้อมูลรายคนของผู้ตรวจติดตาม (Auditor List Export) ที่ /api/audit/auditors/export ตาม naming config ของโมดูล AUDITOR",
+      "เพิ่ม endpoint ส่งออกสรุปข้อมูลแผนการตรวจสอบ (Audit Plan Export) ที่ /api/audit/plans/export ตาม naming config ของโมดูล AUDIT_PLAN",
+      "เพิ่มปุ่ม พิมพ์เอกสารผู้ตรวจ (Auditor Doc) ในหน้ารายละเอียดประกาศแต่งตั้ง และหน้ารายละเอียดแผนการตรวจ (ถ้ามี reference)",
+      "เพิ่มปุ่ม ส่งออกรายงาน ในหน้าตารางรายชื่อประกาศแต่งตั้ง และหน้าตารางสรุปแผนการตรวจพร้อมส่งต่อ filter parameter",
+      "ปรับปรุงสิทธิ์การกดยืนยัน Availability ของตารางตรวจสอบใน AuditPlan ให้รองรับ Lead Auditor และ Assigned Auditors",
+      "พัฒนาหน้าต่างแจ้งไม่ว่าง (Unavailable Dialog) ให้ผู้กดยืนยันสามารถ 'เสนอวันเวลาใหม่ที่สะดวก' แล้วจัดรูปแบบบันทึกร่วมกับเหตุผลที่ไม่ว่างอัตโนมัติ",
+      "เพิ่มปุ่มสลับมุมมอง 'รายการตาราง' และ 'ปฏิทิน' (Calendar View) ในแท็บตารางเวลาของหน้าแผนการตรวจ เพื่อแสดงตารางตรวจรายแผนกบนปฏิทินรายเดือน",
+      "แนบไฟล์ Excel ของ Auditor Standalone Document ที่สร้างขึ้นอัตโนมัติจาก backend แนบไปพร้อมกับอีเมลประกาศแต่งตั้งผู้ตรวจตอนเผยแพร่ (PUBLISHED)"
+    ],
+    "detailsEn": [
+      "Created a standalone print route and template for internal/external auditors (Auditor Doc) at /print/audit/auditor/[id] and components/audit/AuditorPrintTemplate.tsx linked to the central config.",
+      "Implemented the Auditor Standalone Export API at /api/audit/auditors/export using the AUDITOR naming metadata config.",
+      "Implemented the Audit Plan Standalone Export API at /api/audit/plans/export using the AUDIT_PLAN naming metadata config.",
+      "Integrated direct Auditor Doc print entry points in both the Audit Appointment and Audit Plan detail views.",
+      "Added dedicated export action buttons in both the Audit Appointment list view (for letters & auditor list) and the Audit Plan summary table with query filtering.",
+      "Enhanced the schedule availability confirmation permission checks to allow Lead Auditor and Assigned Auditors of the plan.",
+      "Upgraded the Unavailable Dialog to allow users to propose alternative dates, formatting and saving them automatically with the unavailability reason.",
+      "Implemented a monthly Calendar View tab inside the Audit Plan detail schedule tab to display department schedules on calendar cells.",
+      "Integrated backend generation of the Auditor Standalone Excel file to be sent automatically as an email attachment when the appointment is PUBLISHED."
+    ]
+  },
+  {
+    "id": "21",
+    "titleTh": "เพิ่มเส้นทางพิมพ์กลางสำหรับ Audit Appointment และ Audit Plan พร้อม shared print actions",
+    "titleEn": "Added central print routes for Audit Appointment and Audit Plan with shared print actions",
+    "date": "2026-07-03",
+    "type": "feature",
+    "commit": "feat/audit-print-surfaces-qms-config",
+    "detailsTh": [
+      "เพิ่ม print route ของ Audit Appointment และ Audit Plan เพื่อให้ config กลางของ AUDIT_APPT, AUDIT_PLAN และ AUDITOR ถูกใช้งานจริงในฝั่งเอกสารพิมพ์",
+      "สร้าง shared print action component สำหรับปุ่ม Print และ Download PDF แล้วนำไปใช้ซ้ำกับ DAR print เพื่อลดความซ้ำของ UI",
+      "เพิ่มปุ่มเปิดหน้าพิมพ์จากหน้า Audit Appointment และ Audit Plan detail เพื่อให้ผู้ใช้เข้าถึงเอกสารพิมพ์ได้ตรงจาก workflow หลัก"
+    ],
+    "detailsEn": [
+      "Added dedicated print routes for Audit Appointment and Audit Plan so the shared AUDIT_APPT, AUDIT_PLAN, and AUDITOR config is consumed by real print surfaces.",
+      "Introduced a shared print action component for Print and Download PDF, and reused it in the DAR print page to reduce UI duplication.",
+      "Added direct print entry points from the Audit Appointment and Audit Plan detail pages so users can access printable documents from the main workflow."
+    ]
+  },
+  {
+    "id": "20",
+    "titleTh": "เก็บ residual naming ของ Audit Appointment และ DAR print พร้อมอัปเดต matrix สถานะรวมทุกโมดูล",
+    "titleEn": "Closed residual naming gaps for Audit Appointment and DAR print, and refreshed the cross-module status matrix",
+    "date": "2026-07-03",
+    "type": "improvement",
+    "commit": "feat/qms-shared-features-matrix-refresh",
+    "detailsTh": [
+      "ปรับ Audit Appointment export ให้ sheet ที่เกี่ยวกับผู้ตรวจใช้ label จาก config กลางของโมดูล AUDITOR แทน suffix คงที่",
+      "ปรับ browser title ของ DAR print page ให้ดึง document label จาก config กลางของ DAR",
+      "อัปเดต docs/qms-requirements-matrix.md และ implement-status/qms-shared-features.md ให้สะท้อนสถานะจริงของ shared features ทุกโมดูลใน repo ปัจจุบัน"
+    ],
+    "detailsEn": [
+      "Updated Audit Appointment export so the related auditor worksheet uses the AUDITOR config label instead of a fixed suffix.",
+      "Updated the DAR print browser title to derive its document label from the shared DAR config.",
+      "Refreshed docs/qms-requirements-matrix.md and implement-status/qms-shared-features.md to reflect the real cross-module shared-feature status in the current repo."
+    ]
+  },
+  {
+    "id": "19",
+    "titleTh": "เพิ่มระบบพรีวิวไฟล์แนบ (รูปภาพ/PDF/MS Office) และปรับขนาด Modal แสดงรายละเอียดประกาศ",
+    "titleEn": "Added side-by-side file attachment preview (images, PDF, MS Office) and expanded Announcement modal width",
+    "date": "2026-07-03",
+    "type": "feature",
+    "commit": "feat/announcement-attachment-preview-side-by-side",
+    "detailsTh": [
+      "ปรับหน้ารายละเอียดประกาศให้ขยายกว้างขึ้นอัตโนมัติ (sm:max-w-5xl) และจัดรูปแบบเป็น 2 คอลัมน์เมื่อมีไฟล์แนบ",
+      "ฝั่งซ้ายแสดงข้อมูลประกาศ ฝั่งขวาแสดงตัวอย่างรูปภาพ ไฟล์ PDF หรือเว็บวิวเอกสาร Word/Excel/PowerPoint สดๆ จาก SharePoint",
+      "แก้ไขบัคการดึงฟิลด์ spItemId และ mimeType ใน API และเพจหน้าประกาศฝั่งผู้ใช้ทั่วไป เพื่อเปิดใช้ระบบพรีวิวได้ครบถ้วน",
+      "เพิ่มระบบแคช Redis บนเซิร์ฟเวอร์ (TTL 45 นาที) สำหรับเก็บ URL ของไฟล์แนบ เพื่อให้หน้าตัวอย่างพรีวิวโหลดได้ทันใจภายในหลักมิลลิวินาที"
+    ],
+    "detailsEn": [
+      "Automatically expanded the announcement view dialog (sm:max-w-5xl) and formatted it to a 2-column side-by-side layout when files exist.",
+      "Displays announcement content/metadata on the left and the live SharePoint preview of images, PDFs, or Office docs on the right.",
+      "Fixed data mapping bug where spItemId and mimeType were omitted in public page views and caching.",
+      "Implemented server-side Redis caching (45-minute TTL) for pre-signed file URLs to speed up subsequent preview loads to milliseconds."
+    ]
+  },
+  {
+    "id": "18",
+    "titleTh": "เชื่อม DAR export, Document Control export และหัวเอกสาร DAR print เข้ากับ naming config กลาง",
+    "titleEn": "Connected DAR export, Document Control export, and DAR print headings to the central naming config",
+    "date": "2026-07-03",
+    "type": "improvement",
+    "commit": "feat/dar-doccontrol-central-naming-integration",
+    "detailsTh": [
+      "ปรับ DAR export ให้ใช้ชื่อชีตและชื่อไฟล์จาก QMS naming config กลางแทนการ hardcode",
+      "ปรับ Document Control export ให้ใช้ worksheet name และ filename base จาก config กลางแล้วค่อยต่อ suffix ตาม scope ที่ export",
+      "ปรับ DAR print template ให้รองรับ document label แบบ bilingual จาก config กลางผ่านรูปแบบ EN | TH และใช้ fallback เดียวกันแทนการ hardcode หลายจุด"
+    ],
+    "detailsEn": [
+      "Updated DAR export to derive worksheet and filename naming from the shared QMS config instead of hardcoded route strings.",
+      "Updated Document Control export to use the central worksheet and filename base, while still appending the current export scope suffix.",
+      "Refined the DAR print template to support bilingual document labels from central config using an EN | TH pattern, replacing multiple hardcoded title strings with one shared source."
+    ]
+  },
+  {
+    "id": "17",
+    "titleTh": "เชื่อม export naming ของ CAR, KPI และ Audit Appointment เข้ากับ QMS config กลาง",
+    "titleEn": "Connected CAR, KPI, and Audit Appointment export naming to the central QMS config",
+    "date": "2026-07-03",
+    "type": "improvement",
+    "commit": "feat/export-naming-qms-config-integration",
+    "detailsTh": [
+      "เพิ่มโมดูล AUDIT_APPT ในหน้า Footer Configuration เพื่อให้ QMS ตั้งชื่อและ prefix สำหรับเอกสารแต่งตั้งผู้ตรวจได้จากหน้ากลาง",
+      "เพิ่ม helper กลางสำหรับแปลง footer config เป็น worksheet name และ export filename ที่ปลอดภัยต่อ Excel และระบบไฟล์",
+      "ปรับ export route ของ CAR, KPI, KPI Monthly และ Audit Appointment ให้ใช้ชื่อไฟล์และชื่อชีตจาก config กลางแทนการ hardcode"
+    ],
+    "detailsEn": [
+      "Added AUDIT_APPT to the footer configuration page so QMS can centrally manage appointment document labels and prefixes.",
+      "Introduced a shared helper that converts footer config into safe worksheet names and export filenames for Excel and filesystem constraints.",
+      "Updated CAR, KPI, KPI Monthly, and Audit Appointment export routes to use centrally managed sheet names and filenames instead of hardcoded values."
+    ]
+  },
+  {
+    "id": "16",
+    "titleTh": "เชื่อมการตั้งค่า footer และเลขเอกสารกลางเข้ากับ DAR print และหน้า QMS config",
+    "titleEn": "Connected central footer and document-number settings to DAR print and QMS config pages",
+    "date": "2026-07-03",
+    "type": "improvement",
+    "commit": "feat/qms-footer-config-dar-print-integration",
+    "detailsTh": [
+      "เพิ่ม Document Control เข้าไปในหน้า Document Number Configuration เพื่อให้ QMS จัดการรูปแบบเลขเอกสารจากหน้ากลางได้ครบทุกโมดูลที่รองรับ",
+      "ปรับหน้า Footer Configuration ให้ใช้ design-system component และแสดง label/preview ที่อ่านง่ายขึ้นเพื่อลดโอกาสตั้งค่าผิด",
+      "เชื่อม DAR print page ให้ดึง footer label และ footer prefix จาก QMS config กลางแทนการ hardcode ใน template"
+    ],
+    "detailsEn": [
+      "Added Document Control to the central document-number configuration page so QMS can manage all supported numbering formats in one place.",
+      "Refined the footer configuration UI with design-system components and clearer labels and previews to reduce configuration mistakes.",
+      "Connected the DAR print page to the shared QMS footer config so the print label and footer prefix no longer depend on hardcoded template text."
+    ]
+  },
+  {
+    "id": "15",
+    "titleTh": "เพิ่มการแนบไฟล์ในอีเมลอนุมัติของโมดูล DAR, CAR, KPI รายเดือน และ Audit",
+    "titleEn": "Added email attachments for approval notifications in DAR, CAR, KPI Monthly, and Audit modules",
+    "date": "2026-07-03",
+    "type": "feature",
+    "commit": "feat/approval-email-attachments",
+    "detailsTh": [
+      "ดึงไฟล์แนบจาก SharePoint ในโมดูล DAR, CAR, KPI รายเดือน และ Audit โดยแปลงเป็น base64 และแนบตรงไปกับอีเมลแจ้งเตือนการอนุมัติ/ขอลายเซ็น",
+      "ช่วยให้ผู้มีอำนาจอนุมัติสามารถตรวจสอบไฟล์แนบได้โดยตรงจากกล่องจดหมายอีเมลทันทีโดยไม่จำเป็นต้องล็อกอินเข้าระบบ"
+    ],
+    "detailsEn": [
+      "Fetched SharePoint attachments for DAR, CAR, KPI Monthly, and Audit modules on-demand, encoded them to base64, and attached them directly to outgoing approval/sign-off emails.",
+      "Allows approvers and reviewers to verify document contents directly within their mail clients without needing to log in first."
+    ]
+  },
+  {
+    "id": "14",
+    "titleTh": "ปรับมาตรฐาน Document Control เพิ่ม Export Master List และลดความเสี่ยงเรื่องเลขเอกสารกับ relation",
+    "titleEn": "Standardized Document Control with master-list export and safer numbering and relation checks",
+    "date": "2026-07-03",
+    "type": "feature",
+    "commit": "feat/document-control-standardization-export-hardening",
+    "detailsTh": [
+      "ขยายระบบ doc-no-config ให้รองรับ Document Control เพื่อลด hardcode ของเลขเอกสาร prefix และ running sequence",
+      "เพิ่ม export master list ของ Document Control ทั้งภาพรวม รายแผนก และรายหมวดหมู่ พร้อมปุ่มใช้งานในหน้า module",
+      "เพิ่ม validation การผูก DAR กับ revision ให้รับเฉพาะ DAR ที่สถานะ COMPLETED และบังคับ download revision เฉพาะรายการ ACTIVE",
+      "ปรับหน้า Document Control detail และ upload revision dialog ให้ใช้ UI pattern ที่สอดคล้องกับ design system และลดการใช้ any"
+    ],
+    "detailsEn": [
+      "Extended the shared document-number config path to support Document Control and reduce hardcoded prefix and sequence logic.",
+      "Added Document Control master-list export for all departments, a single department, and category-scoped views with UI entry points.",
+      "Validated DAR-to-revision links against COMPLETED DAR records only and restricted revision downloads to ACTIVE rows.",
+      "Refined the Document Control detail and revision-upload UI to align better with the design system and reduce any usage."
+    ]
+  },
+  {
+    "id": "13",
+    "titleTh": "เพิ่มการสร้างเลขเอกสารอัตโนมัติ การจำกัดดาวน์โหลด และการเชื่อมโยง DAR สำหรับ Document Control",
+    "titleEn": "Auto document number generation, download restrictions, and DAR link for Document Control",
+    "date": "2026-07-02",
+    "type": "feature",
+    "commit": "feat/doc-control-numbering-download-dar-link",
+    "detailsTh": [
+      "เพิ่ม API route /api/document-controls/next-number สำหรับดึงเลขเอกสารตามรหัสหมวดหมู่และแผนกแบบ {หมวดหมู่}-{แผนก}-{running no}",
+      "เพิ่มการดึงเลขเอกสารอัตโนมัติไปแสดงผลในฟิลด์ docNumber ของ DocumentControlModal เมื่อสร้างเอกสารใหม่",
+      "อัปเดตโมเดลใน schema.prisma และ PostgreSQL DB เพิ่มการเชื่อมโยง darMasterId และ darMaster เข้ากับ DocumentControlRevision",
+      "เพิ่มการเลือก DAR ที่มีสถานะเสร็จสิ้น (searchable/filterable) ในหน้าต่างอัปโหลดรีวิชัน (UploadRevisionDialog)",
+      "แสดงผลเลขที่ DAR ที่เชื่อมโยงในตารางประวัติการรีวิชันเอกสารของหน้ารายละเอียด",
+      "จำกัดห้ามดาวน์โหลดไฟล์เอกสารที่สถานะไม่ใช่ ACTIVE ทั้งทาง Frontend UI และทาง Backend download-latest API พร้อมแสดงข้อความเตือนชัดเจน",
+      "เพิ่ม API และส่วนแสดงผลประวัติการดาวน์โหลดเอกสาร (Download Audit Log) ต่อท้ายตารางประวัติรีวิชันในหน้ารายละเอียดเอกสาร",
+      "เพิ่มการส่งเอกสารแนบจาก SharePoint ไปกับอีเมลประกาศประกาศใหม่ (Announcement Mail Delivery)"
+    ],
+    "detailsEn": [
+      "Added API route /api/document-controls/next-number to generate next document number in format {category}-{dept}-{running no}.",
+      "Pre-filled docNumber field inside DocumentControlModal automatically when creating new document controls.",
+      "Updated schema.prisma and PostgreSQL DB to link DocumentControlRevision with DarMaster via darMasterId.",
+      "Integrated searchable/filterable completed DAR selection inside UploadRevisionDialog.",
+      "Displayed clickable linked DAR numbers within the revisions table on the Document Control detail page.",
+      "Blocked preview and downloads of non-ACTIVE documents on both Frontend UI and Backend download-latest API.",
+      "Rendered Download Audit Log table containing actor names, roles, and download timestamps below the revision history.",
+      "Integrated SharePoint file attachments into the new announcement email delivery flow."
+    ]
+  },
+  {
+    "id": "12",
+    "titleTh": "เพิ่มการอัปโหลดไฟล์แนบในการอนุมัติและปฏิเสธสำหรับโมดูล DAR, CAR, KPI",
+    "titleEn": "Added file attachment uploads on approval & rejection for DAR, CAR, and KPI modules",
+    "date": "2026-07-02",
+    "type": "feature",
+    "commit": "feat/approval-attachments-dar-car-kpi",
+    "detailsTh": [
+      "เพิ่มปุ่มอัปโหลดและแสดงรายการไฟล์แนบใน RejectModal ของ DAR",
+      "เพิ่มการอัปโหลดและแสดงรายการไฟล์แนบใน ActionModal (MR Review) และ SignModal (MR Close) ของ CAR",
+      "เพิ่มการอัปโหลดและแสดงรายการไฟล์แนบในใบรายงานผลการตรวจติดตาม (CarVerifyForm) ของ CAR",
+      "เพิ่มการอัปโหลดและแสดงรายการไฟล์แนบใน Dialog ปฏิเสธ (reject dialog) ของ KPI และ KPI รายเดือน",
+      "อัปเดต Timeline ของ DAR, CAR, KPI ให้แสดงและดาวน์โหลดไฟล์แนบประกอบการอนุมัติ/ปฏิเสธผ่าน SharePoint get-file API",
+      "บันทึกไฟล์แนบในฟิลด์ comment/findings โดยการแปลงเป็น JSON เพื่อเลี่ยงการแก้ไข Database Schema"
+    ],
+    "detailsEn": [
+      "Added upload inputs and file tag lists in DAR RejectModal.",
+      "Added upload inputs and file tag lists in CAR MR ActionModal and SignModal.",
+      "Added upload inputs and file tag lists in CAR CarVerifyForm.",
+      "Added upload inputs and file tag lists in KPI and Monthly KPI reject dialogs.",
+      "Updated DAR, CAR, and KPI timeline displays to parse and show download links using SharePoint get-file API.",
+      "Stored attachments serialized as JSON within existing comment and findings fields to avoid database migrations."
+    ]
+  },
+  {
+    "id": "10",
+    "titleTh": "สรุปความเข้าใจรายการอัปเดตจากการคุยกับแผนก QMS ลงเอกสาร",
+    "titleEn": "Documented QMS update-summary from application-backed meeting notes",
+    "date": "2026-07-02",
+    "type": "docs",
+    "commit": "docs/qms-update-summary",
+    "detailsTh": [
+      "เพิ่มไฟล์ docs/update-summary.md เพื่อสรุปความเข้าใจจากรายการอัปเดตที่คุยกับแผนก QMS",
+      "จัดกลุ่ม requirement เป็นภาพรวม งานแกนกลาง และรายละเอียดรายโมดูล เพื่อใช้ต่อยอดเป็น plan, list และ report"
+    ],
+    "detailsEn": [
+      "Added docs/update-summary.md to capture the current understanding of QMS-requested updates.",
+      "Grouped the requests into cross-cutting capabilities and module-specific items to support follow-up planning, task lists, and reporting."
+    ]
+  },
+  {
+    "id": "11",
+    "titleTh": "เพิ่มเอกสาร Summary และ Implementation Plan สำหรับงานอัปเดต QMS",
+    "titleEn": "Added summary and implementation plan documents for QMS updates",
+    "date": "2026-07-02",
+    "type": "docs",
+    "commit": "docs/qms-summary-and-implementation-plan",
+    "detailsTh": [
+      "ปรับ docs/update-summary.md ให้แยก shared platform features ออกจาก module-specific rules ชัดเจนขึ้น",
+      "เพิ่ม docs/implementation-plan.md เพื่อใช้แตกงาน implementation เป็น workstreams, batches, risks และ done criteria"
+    ],
+    "detailsEn": [
+      "Refined docs/update-summary.md to separate shared platform features from module-specific rules.",
+      "Added docs/implementation-plan.md to break the work into workstreams, batches, risks, and done criteria."
+    ]
+  },
+  {
+    "id": "9",
+    "titleTh": "จำกัดสิทธิ์การเลือกผู้อนุมัติ MR ให้เฉพาะกลุ่มบทบาท QMS_MR เท่านั้น",
+    "titleEn": "Restricted MR Approver candidates strictly to QMS_MR role",
+    "date": "2026-07-02",
+    "type": "improvement",
+    "commit": "fix/restrict-mr-candidates-role",
+    "detailsTh": [
+      "แก้ไขหน้าตั้งค่าผู้อนุมัติอัตโนมัติให้กรองเฉพาะผู้ใช้ที่มีบทบาท MR (QMS_MR) สำหรับตัวเลือกผู้แทนฝ่ายบริหาร"
+    ],
+    "detailsEn": [
+      "Updated approval configuration dropdowns to filter candidate users strictly by the MR role."
+    ]
+  },
+  {
+    "id": "8",
+    "titleTh": "ยกเลิกการใช้ req.clone().formData() เป็น req.formData() มาตรฐาน",
+    "titleEn": "Replaced req.clone().formData() with standard req.formData()",
+    "date": "2026-07-02",
+    "type": "refactor",
+    "commit": "refactor/standard-form-data",
+    "detailsTh": [
+      "เปลี่ยนวิธีอ่านไฟล์อัปโหลดจากการใช้ req.clone().formData() มาเป็น req.formData() ปกติใน 9 API routes",
+      "ข้ามการทวนสอบเซสชันด้วย Middleware สำหรับทั้ง 9 เส้นทาง เพื่อป้องกันการชนกันของสายข้อมูลไฟล์ (Stream Lock)",
+      "รักษาความปลอดภัยของระบบ 100% โดยการทวนสอบสิทธิ์ด้วย requireRoleEdge / requireAuthEdge ภายใน API handlers"
+    ],
+    "detailsEn": [
+      "Replaced req.clone().formData() with standard req.formData() in 9 file upload routes.",
+      "Bypassed session check in middleware for these 9 paths to prevent request stream locking.",
+      "Maintained 100% security by verifying roles and sessions inside API handlers using requireRoleEdge / requireAuthEdge."
+    ]
+  },
+  {
+    "id": "7",
+    "titleTh": "ขยายระบบตั้งค่าผู้อนุมัติอัตโนมัติแยกตามโมดูล DAR และ CAR",
+    "titleEn": "Expand Module-Specific Default MR and QMS Configurations",
+    "date": "2026-07-02",
+    "type": "feature",
+    "commit": "feat/module-specific-approval-config",
+    "detailsTh": [
+      "ขยายระบบตั้งค่าผู้อนุมัติอัตโนมัติแยกโมดูล DAR และ CAR สำหรับทั้งผู้อนุมัติ MR และเจ้าหน้าที่ QMS",
+      "ปรับปรุงระบบ Backend logic และ API route ให้ดึงค่าเริ่มต้นและทวนสอบสิทธิ์แยกตามโมดูลอย่างถูกต้อง",
+      "ปรับปรุงหน้าตา UI ในส่วนของการตั้งค่าให้ดูเรียบง่ายและเป็นระเบียบตามกลุ่มโมดูล"
+    ],
+    "detailsEn": [
+      "Expanded automatic approval configuration to allow module-specific Default MR and QMS settings for both DAR and CAR.",
+      "Updated backend logic, API fallback flows, and role resolution queries to prioritize module-specific configurations.",
+      "Redesigned the configuration UI into a cleaner, minimalist layout grouped by module."
+    ]
+  },
+  {
+    "id": "6",
+    "titleTh": "เพิ่มระบบกำหนดผู้อนุมัติอัตโนมัติ (Automated Approval Config)",
+    "titleEn": "Automated Approval Workflow Configuration",
+    "date": "2026-07-02",
+    "type": "feature",
+    "commit": "auto-config",
+    "detailsTh": [
+      "เพิ่มหน้าตั้งค่าผู้อนุมัติอัตโนมัติสำหรับโมดูล DAR และ CAR โดยสามารถระบุผู้อนุมัติ MR และเจ้าหน้าที่ QMS เริ่มต้นได้",
+      "อัปเดตระบบตรวจสอบการเลือกผู้อนุมัติใน backend ให้ดึงค่าเริ่มต้นอัตโนมัติเมื่อผู้ใช้ไม่ได้ระบุค่า",
+      "ปรับปรุง UI ฟอร์มอนุมัติของ DAR และ CAR ให้เลือกผู้รับผิดชอบเริ่มต้นโดยอัตโนมัติ"
+    ],
+    "detailsEn": [
+      "Added approval configuration dashboard for DAR and CAR to set default MR and QMS assignees.",
+      "Updated backend services to automatically fallback to configured default users if target assignees are omitted.",
+      "Enhanced DAR and CAR frontend forms to fetch and pre-populate configured default assignees."
+    ]
+  },
+  {
+    "id": "1",
+    "titleTh": "แก้ไขสิทธิ์ประกาศหน้าหลัก และลบตัวกรองศูนย์กลาง",
+    "titleEn": "Announcement Hub Bypass & Home Feed Fix",
+    "date": "2026-07-02",
+    "type": "improvement",
+    "commit": "93299ee",
+    "detailsTh": [
+      "นำเงื่อนไข pushToCompanyCenter ออกจากการกรองประกาศ ทำให้ข่าวสารและประกาศโชว์บนหน้าหลัก Dashboard ทุกรายการ",
+      "เพิ่มระบบตรวจสอบสถานะข้อมูลระบบ (System Info) บันทึกและดึงรหัส Git Commit SHA ล่าสุดมาแสดงผลโดยอัตโนมัติเมื่อทำการ Deploy"
+    ],
+    "detailsEn": [
+      "Removed pushToCompanyCenter filter from the main Dashboard query, allowing all active announcements to be displayed.",
+      "Integrated Git Commit SHA and Build Time extraction into the Docker build process for system diagnostics."
+    ]
+  },
+  {
+    "id": "2",
+    "titleTh": "แก้ไขบั๊ก Response Body Stream Lock (Next.js 15 / NextAuth v5)",
+    "titleEn": "Fix Request Body Disturbed & Locked Exception",
+    "date": "2026-07-02",
+    "type": "bugfix",
+    "commit": "f367e86",
+    "detailsTh": [
+      "แก้ไขปัญหา TypeError: Response body object should not be disturbed or locked",
+      "นำคำสั่ง req.clone().formData() มาใช้ใน API อัปโหลดไฟล์ทั้ง 9 เส้นทาง เพื่อแยกการทำงานของ Stream ระหว่างระบบเช็กความปลอดภัย (NextAuth) และระบบประมวลผลไฟล์ ป้องกันการชนกันของสายข้อมูลไฟล์อัปโหลด"
+    ],
+    "detailsEn": [
+      "Resolved TypeError: Response body object should not be disturbed or locked when uploading files.",
+      "Replaced req.formData() with req.clone().formData() in all 9 file upload routes, separating the request stream from middleware authentication."
+    ]
+  },
+  {
+    "id": "3",
+    "titleTh": "ปรับปรุงตัวกรองประกาศหน้าแรก และระบบล้างแคชอัตโนมัติ",
+    "titleEn": "Active Announcement Filtering & Cache Purging",
+    "date": "2026-07-02",
+    "type": "improvement",
+    "commit": "5ad007d",
+    "detailsTh": [
+      "เพิ่มเงื่อนไข status: 'ACTIVE' ในตัวกรองหน้าแรก ช่วยป้องกันการแสดงผลประกาศที่ถูก 'ปิดใช้งาน' แล้วค้างอยู่บน Dashboard",
+      "เพิ่มคำสั่ง revalidatePath สำหรับเคลียร์แคช Next.js หน้าแรก (/) และหน้ารวมประกาศ (/announcements) ทุกครั้งที่มีการบันทึก สร้าง หรือลบข้อมูลใน API ทำให้ข้อมูลหน้าหลักแสดงผลทันทีหลังการเปลี่ยนแปลง"
+    ],
+    "detailsEn": [
+      "Added status: 'ACTIVE' to the main dashboard query to prevent inactive announcements from displaying.",
+      "Integrated revalidatePath for the main page and public announcements route to trigger immediate Next.js cache purging on data changes."
+    ]
+  },
+  {
+    "id": "4",
+    "titleTh": "แก้บั๊กการอัปโหลดไฟล์ที่มีชื่อเป็นภาษาไทย (Multipart Non-ASCII Bug)",
+    "titleEn": "Thai / Non-ASCII Filename Upload Crash Fix",
+    "date": "2026-07-01",
+    "type": "bugfix",
+    "commit": "273ea43",
+    "detailsTh": [
+      "แก้ปัญหา API แครช TypeError: Failed to parse body as FormData เมื่อผู้ใช้อัปโหลดไฟล์ภาษาไทย",
+      "ทำระบบเข้ารหัสชื่อไฟล์ (Percent-Encoding) ที่หน้าบ้าน และส่งชื่อไฟล์จริงในพารามิเตอร์แยก ก่อนถอดรหัสในหลังบ้านเพื่อรองรับอักษรภาษาไทยอย่างสมบูรณ์ครอบคลุมทุกโมดูล (DAR, CAR, Audit, KPI และเอกสารควบคุม)"
+    ],
+    "detailsEn": [
+      "Fixed TypeError: Failed to parse body as FormData when uploading files containing Thai/non-ASCII characters.",
+      "Implemented client-side percent-encoding and server-side decoding of filenames across all application modules."
+    ]
+  },
+  {
+    "id": "5",
+    "titleTh": "Re-apply Multipart Upload Stream Lock Fix",
+    "titleEn": "Re-apply Multipart Upload Stream Lock Fix",
+    "date": "2026-07-02",
+    "type": "bugfix",
+    "commit": "f367e86",
+    "detailsTh": [
+      "Re-applied req.clone().formData() across all 9 multipart upload routes after the stream lock bug returned.",
+      "The regression came from handlers being switched back to req.formData() after auth or middleware had already touched the request stream."
+    ],
+    "detailsEn": [
+      "Re-applied req.clone().formData() across all 9 multipart upload routes after the stream lock bug returned.",
+      "The regression came from handlers being switched back to req.formData() after auth or middleware had already touched the request stream."
+    ]
+  }
+]

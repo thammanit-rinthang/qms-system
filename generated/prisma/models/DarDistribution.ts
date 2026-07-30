@@ -28,18 +28,24 @@ export type DarDistributionMinAggregateOutputType = {
   id: string | null
   darMasterId: string | null
   departmentId: string | null
+  authDepartmentId: string | null
+  departmentName: string | null
 }
 
 export type DarDistributionMaxAggregateOutputType = {
   id: string | null
   darMasterId: string | null
   departmentId: string | null
+  authDepartmentId: string | null
+  departmentName: string | null
 }
 
 export type DarDistributionCountAggregateOutputType = {
   id: number
   darMasterId: number
   departmentId: number
+  authDepartmentId: number
+  departmentName: number
   _all: number
 }
 
@@ -48,18 +54,24 @@ export type DarDistributionMinAggregateInputType = {
   id?: true
   darMasterId?: true
   departmentId?: true
+  authDepartmentId?: true
+  departmentName?: true
 }
 
 export type DarDistributionMaxAggregateInputType = {
   id?: true
   darMasterId?: true
   departmentId?: true
+  authDepartmentId?: true
+  departmentName?: true
 }
 
 export type DarDistributionCountAggregateInputType = {
   id?: true
   darMasterId?: true
   departmentId?: true
+  authDepartmentId?: true
+  departmentName?: true
   _all?: true
 }
 
@@ -139,6 +151,8 @@ export type DarDistributionGroupByOutputType = {
   id: string
   darMasterId: string
   departmentId: string
+  authDepartmentId: string | null
+  departmentName: string | null
   _count: DarDistributionCountAggregateOutputType | null
   _min: DarDistributionMinAggregateOutputType | null
   _max: DarDistributionMaxAggregateOutputType | null
@@ -166,16 +180,18 @@ export type DarDistributionWhereInput = {
   id?: Prisma.StringFilter<"DarDistribution"> | string
   darMasterId?: Prisma.StringFilter<"DarDistribution"> | string
   departmentId?: Prisma.StringFilter<"DarDistribution"> | string
+  authDepartmentId?: Prisma.StringNullableFilter<"DarDistribution"> | string | null
+  departmentName?: Prisma.StringNullableFilter<"DarDistribution"> | string | null
   darMaster?: Prisma.XOR<Prisma.DarMasterScalarRelationFilter, Prisma.DarMasterWhereInput>
-  department?: Prisma.XOR<Prisma.DepartmentScalarRelationFilter, Prisma.DepartmentWhereInput>
 }
 
 export type DarDistributionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   departmentId?: Prisma.SortOrder
+  authDepartmentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  departmentName?: Prisma.SortOrderInput | Prisma.SortOrder
   darMaster?: Prisma.DarMasterOrderByWithRelationInput
-  department?: Prisma.DepartmentOrderByWithRelationInput
 }
 
 export type DarDistributionWhereUniqueInput = Prisma.AtLeast<{
@@ -185,14 +201,17 @@ export type DarDistributionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.DarDistributionWhereInput | Prisma.DarDistributionWhereInput[]
   darMasterId?: Prisma.StringFilter<"DarDistribution"> | string
   departmentId?: Prisma.StringFilter<"DarDistribution"> | string
+  authDepartmentId?: Prisma.StringNullableFilter<"DarDistribution"> | string | null
+  departmentName?: Prisma.StringNullableFilter<"DarDistribution"> | string | null
   darMaster?: Prisma.XOR<Prisma.DarMasterScalarRelationFilter, Prisma.DarMasterWhereInput>
-  department?: Prisma.XOR<Prisma.DepartmentScalarRelationFilter, Prisma.DepartmentWhereInput>
 }, "id">
 
 export type DarDistributionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   departmentId?: Prisma.SortOrder
+  authDepartmentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  departmentName?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.DarDistributionCountOrderByAggregateInput
   _max?: Prisma.DarDistributionMaxOrderByAggregateInput
   _min?: Prisma.DarDistributionMinOrderByAggregateInput
@@ -205,46 +224,63 @@ export type DarDistributionScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"DarDistribution"> | string
   darMasterId?: Prisma.StringWithAggregatesFilter<"DarDistribution"> | string
   departmentId?: Prisma.StringWithAggregatesFilter<"DarDistribution"> | string
+  authDepartmentId?: Prisma.StringNullableWithAggregatesFilter<"DarDistribution"> | string | null
+  departmentName?: Prisma.StringNullableWithAggregatesFilter<"DarDistribution"> | string | null
 }
 
 export type DarDistributionCreateInput = {
   id?: string
+  departmentId: string
+  authDepartmentId?: string | null
+  departmentName?: string | null
   darMaster: Prisma.DarMasterCreateNestedOneWithoutDistributionsInput
-  department: Prisma.DepartmentCreateNestedOneWithoutDarDistributionsInput
 }
 
 export type DarDistributionUncheckedCreateInput = {
   id?: string
   darMasterId: string
   departmentId: string
+  authDepartmentId?: string | null
+  departmentName?: string | null
 }
 
 export type DarDistributionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   darMaster?: Prisma.DarMasterUpdateOneRequiredWithoutDistributionsNestedInput
-  department?: Prisma.DepartmentUpdateOneRequiredWithoutDarDistributionsNestedInput
 }
 
 export type DarDistributionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   darMasterId?: Prisma.StringFieldUpdateOperationsInput | string
   departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DarDistributionCreateManyInput = {
   id?: string
   darMasterId: string
   departmentId: string
+  authDepartmentId?: string | null
+  departmentName?: string | null
 }
 
 export type DarDistributionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DarDistributionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   darMasterId?: Prisma.StringFieldUpdateOperationsInput | string
   departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DarDistributionListRelationFilter = {
@@ -261,60 +297,24 @@ export type DarDistributionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   departmentId?: Prisma.SortOrder
+  authDepartmentId?: Prisma.SortOrder
+  departmentName?: Prisma.SortOrder
 }
 
 export type DarDistributionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   departmentId?: Prisma.SortOrder
+  authDepartmentId?: Prisma.SortOrder
+  departmentName?: Prisma.SortOrder
 }
 
 export type DarDistributionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   departmentId?: Prisma.SortOrder
-}
-
-export type DarDistributionCreateNestedManyWithoutDepartmentInput = {
-  create?: Prisma.XOR<Prisma.DarDistributionCreateWithoutDepartmentInput, Prisma.DarDistributionUncheckedCreateWithoutDepartmentInput> | Prisma.DarDistributionCreateWithoutDepartmentInput[] | Prisma.DarDistributionUncheckedCreateWithoutDepartmentInput[]
-  connectOrCreate?: Prisma.DarDistributionCreateOrConnectWithoutDepartmentInput | Prisma.DarDistributionCreateOrConnectWithoutDepartmentInput[]
-  createMany?: Prisma.DarDistributionCreateManyDepartmentInputEnvelope
-  connect?: Prisma.DarDistributionWhereUniqueInput | Prisma.DarDistributionWhereUniqueInput[]
-}
-
-export type DarDistributionUncheckedCreateNestedManyWithoutDepartmentInput = {
-  create?: Prisma.XOR<Prisma.DarDistributionCreateWithoutDepartmentInput, Prisma.DarDistributionUncheckedCreateWithoutDepartmentInput> | Prisma.DarDistributionCreateWithoutDepartmentInput[] | Prisma.DarDistributionUncheckedCreateWithoutDepartmentInput[]
-  connectOrCreate?: Prisma.DarDistributionCreateOrConnectWithoutDepartmentInput | Prisma.DarDistributionCreateOrConnectWithoutDepartmentInput[]
-  createMany?: Prisma.DarDistributionCreateManyDepartmentInputEnvelope
-  connect?: Prisma.DarDistributionWhereUniqueInput | Prisma.DarDistributionWhereUniqueInput[]
-}
-
-export type DarDistributionUpdateManyWithoutDepartmentNestedInput = {
-  create?: Prisma.XOR<Prisma.DarDistributionCreateWithoutDepartmentInput, Prisma.DarDistributionUncheckedCreateWithoutDepartmentInput> | Prisma.DarDistributionCreateWithoutDepartmentInput[] | Prisma.DarDistributionUncheckedCreateWithoutDepartmentInput[]
-  connectOrCreate?: Prisma.DarDistributionCreateOrConnectWithoutDepartmentInput | Prisma.DarDistributionCreateOrConnectWithoutDepartmentInput[]
-  upsert?: Prisma.DarDistributionUpsertWithWhereUniqueWithoutDepartmentInput | Prisma.DarDistributionUpsertWithWhereUniqueWithoutDepartmentInput[]
-  createMany?: Prisma.DarDistributionCreateManyDepartmentInputEnvelope
-  set?: Prisma.DarDistributionWhereUniqueInput | Prisma.DarDistributionWhereUniqueInput[]
-  disconnect?: Prisma.DarDistributionWhereUniqueInput | Prisma.DarDistributionWhereUniqueInput[]
-  delete?: Prisma.DarDistributionWhereUniqueInput | Prisma.DarDistributionWhereUniqueInput[]
-  connect?: Prisma.DarDistributionWhereUniqueInput | Prisma.DarDistributionWhereUniqueInput[]
-  update?: Prisma.DarDistributionUpdateWithWhereUniqueWithoutDepartmentInput | Prisma.DarDistributionUpdateWithWhereUniqueWithoutDepartmentInput[]
-  updateMany?: Prisma.DarDistributionUpdateManyWithWhereWithoutDepartmentInput | Prisma.DarDistributionUpdateManyWithWhereWithoutDepartmentInput[]
-  deleteMany?: Prisma.DarDistributionScalarWhereInput | Prisma.DarDistributionScalarWhereInput[]
-}
-
-export type DarDistributionUncheckedUpdateManyWithoutDepartmentNestedInput = {
-  create?: Prisma.XOR<Prisma.DarDistributionCreateWithoutDepartmentInput, Prisma.DarDistributionUncheckedCreateWithoutDepartmentInput> | Prisma.DarDistributionCreateWithoutDepartmentInput[] | Prisma.DarDistributionUncheckedCreateWithoutDepartmentInput[]
-  connectOrCreate?: Prisma.DarDistributionCreateOrConnectWithoutDepartmentInput | Prisma.DarDistributionCreateOrConnectWithoutDepartmentInput[]
-  upsert?: Prisma.DarDistributionUpsertWithWhereUniqueWithoutDepartmentInput | Prisma.DarDistributionUpsertWithWhereUniqueWithoutDepartmentInput[]
-  createMany?: Prisma.DarDistributionCreateManyDepartmentInputEnvelope
-  set?: Prisma.DarDistributionWhereUniqueInput | Prisma.DarDistributionWhereUniqueInput[]
-  disconnect?: Prisma.DarDistributionWhereUniqueInput | Prisma.DarDistributionWhereUniqueInput[]
-  delete?: Prisma.DarDistributionWhereUniqueInput | Prisma.DarDistributionWhereUniqueInput[]
-  connect?: Prisma.DarDistributionWhereUniqueInput | Prisma.DarDistributionWhereUniqueInput[]
-  update?: Prisma.DarDistributionUpdateWithWhereUniqueWithoutDepartmentInput | Prisma.DarDistributionUpdateWithWhereUniqueWithoutDepartmentInput[]
-  updateMany?: Prisma.DarDistributionUpdateManyWithWhereWithoutDepartmentInput | Prisma.DarDistributionUpdateManyWithWhereWithoutDepartmentInput[]
-  deleteMany?: Prisma.DarDistributionScalarWhereInput | Prisma.DarDistributionScalarWhereInput[]
+  authDepartmentId?: Prisma.SortOrder
+  departmentName?: Prisma.SortOrder
 }
 
 export type DarDistributionCreateNestedManyWithoutDarMasterInput = {
@@ -359,59 +359,18 @@ export type DarDistributionUncheckedUpdateManyWithoutDarMasterNestedInput = {
   deleteMany?: Prisma.DarDistributionScalarWhereInput | Prisma.DarDistributionScalarWhereInput[]
 }
 
-export type DarDistributionCreateWithoutDepartmentInput = {
-  id?: string
-  darMaster: Prisma.DarMasterCreateNestedOneWithoutDistributionsInput
-}
-
-export type DarDistributionUncheckedCreateWithoutDepartmentInput = {
-  id?: string
-  darMasterId: string
-}
-
-export type DarDistributionCreateOrConnectWithoutDepartmentInput = {
-  where: Prisma.DarDistributionWhereUniqueInput
-  create: Prisma.XOR<Prisma.DarDistributionCreateWithoutDepartmentInput, Prisma.DarDistributionUncheckedCreateWithoutDepartmentInput>
-}
-
-export type DarDistributionCreateManyDepartmentInputEnvelope = {
-  data: Prisma.DarDistributionCreateManyDepartmentInput | Prisma.DarDistributionCreateManyDepartmentInput[]
-  skipDuplicates?: boolean
-}
-
-export type DarDistributionUpsertWithWhereUniqueWithoutDepartmentInput = {
-  where: Prisma.DarDistributionWhereUniqueInput
-  update: Prisma.XOR<Prisma.DarDistributionUpdateWithoutDepartmentInput, Prisma.DarDistributionUncheckedUpdateWithoutDepartmentInput>
-  create: Prisma.XOR<Prisma.DarDistributionCreateWithoutDepartmentInput, Prisma.DarDistributionUncheckedCreateWithoutDepartmentInput>
-}
-
-export type DarDistributionUpdateWithWhereUniqueWithoutDepartmentInput = {
-  where: Prisma.DarDistributionWhereUniqueInput
-  data: Prisma.XOR<Prisma.DarDistributionUpdateWithoutDepartmentInput, Prisma.DarDistributionUncheckedUpdateWithoutDepartmentInput>
-}
-
-export type DarDistributionUpdateManyWithWhereWithoutDepartmentInput = {
-  where: Prisma.DarDistributionScalarWhereInput
-  data: Prisma.XOR<Prisma.DarDistributionUpdateManyMutationInput, Prisma.DarDistributionUncheckedUpdateManyWithoutDepartmentInput>
-}
-
-export type DarDistributionScalarWhereInput = {
-  AND?: Prisma.DarDistributionScalarWhereInput | Prisma.DarDistributionScalarWhereInput[]
-  OR?: Prisma.DarDistributionScalarWhereInput[]
-  NOT?: Prisma.DarDistributionScalarWhereInput | Prisma.DarDistributionScalarWhereInput[]
-  id?: Prisma.StringFilter<"DarDistribution"> | string
-  darMasterId?: Prisma.StringFilter<"DarDistribution"> | string
-  departmentId?: Prisma.StringFilter<"DarDistribution"> | string
-}
-
 export type DarDistributionCreateWithoutDarMasterInput = {
   id?: string
-  department: Prisma.DepartmentCreateNestedOneWithoutDarDistributionsInput
+  departmentId: string
+  authDepartmentId?: string | null
+  departmentName?: string | null
 }
 
 export type DarDistributionUncheckedCreateWithoutDarMasterInput = {
   id?: string
   departmentId: string
+  authDepartmentId?: string | null
+  departmentName?: string | null
 }
 
 export type DarDistributionCreateOrConnectWithoutDarMasterInput = {
@@ -440,44 +399,43 @@ export type DarDistributionUpdateManyWithWhereWithoutDarMasterInput = {
   data: Prisma.XOR<Prisma.DarDistributionUpdateManyMutationInput, Prisma.DarDistributionUncheckedUpdateManyWithoutDarMasterInput>
 }
 
-export type DarDistributionCreateManyDepartmentInput = {
-  id?: string
-  darMasterId: string
-}
-
-export type DarDistributionUpdateWithoutDepartmentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  darMaster?: Prisma.DarMasterUpdateOneRequiredWithoutDistributionsNestedInput
-}
-
-export type DarDistributionUncheckedUpdateWithoutDepartmentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  darMasterId?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type DarDistributionUncheckedUpdateManyWithoutDepartmentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  darMasterId?: Prisma.StringFieldUpdateOperationsInput | string
+export type DarDistributionScalarWhereInput = {
+  AND?: Prisma.DarDistributionScalarWhereInput | Prisma.DarDistributionScalarWhereInput[]
+  OR?: Prisma.DarDistributionScalarWhereInput[]
+  NOT?: Prisma.DarDistributionScalarWhereInput | Prisma.DarDistributionScalarWhereInput[]
+  id?: Prisma.StringFilter<"DarDistribution"> | string
+  darMasterId?: Prisma.StringFilter<"DarDistribution"> | string
+  departmentId?: Prisma.StringFilter<"DarDistribution"> | string
+  authDepartmentId?: Prisma.StringNullableFilter<"DarDistribution"> | string | null
+  departmentName?: Prisma.StringNullableFilter<"DarDistribution"> | string | null
 }
 
 export type DarDistributionCreateManyDarMasterInput = {
   id?: string
   departmentId: string
+  authDepartmentId?: string | null
+  departmentName?: string | null
 }
 
 export type DarDistributionUpdateWithoutDarMasterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  department?: Prisma.DepartmentUpdateOneRequiredWithoutDarDistributionsNestedInput
+  departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DarDistributionUncheckedUpdateWithoutDarMasterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DarDistributionUncheckedUpdateManyWithoutDarMasterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   departmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  authDepartmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -486,56 +444,59 @@ export type DarDistributionSelect<ExtArgs extends runtime.Types.Extensions.Inter
   id?: boolean
   darMasterId?: boolean
   departmentId?: boolean
+  authDepartmentId?: boolean
+  departmentName?: boolean
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["darDistribution"]>
 
 export type DarDistributionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   darMasterId?: boolean
   departmentId?: boolean
+  authDepartmentId?: boolean
+  departmentName?: boolean
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["darDistribution"]>
 
 export type DarDistributionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   darMasterId?: boolean
   departmentId?: boolean
+  authDepartmentId?: boolean
+  departmentName?: boolean
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["darDistribution"]>
 
 export type DarDistributionSelectScalar = {
   id?: boolean
   darMasterId?: boolean
   departmentId?: boolean
+  authDepartmentId?: boolean
+  departmentName?: boolean
 }
 
-export type DarDistributionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "darMasterId" | "departmentId", ExtArgs["result"]["darDistribution"]>
+export type DarDistributionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "darMasterId" | "departmentId" | "authDepartmentId" | "departmentName", ExtArgs["result"]["darDistribution"]>
 export type DarDistributionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
 }
 export type DarDistributionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
 }
 export type DarDistributionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
 }
 
 export type $DarDistributionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DarDistribution"
   objects: {
     darMaster: Prisma.$DarMasterPayload<ExtArgs>
-    department: Prisma.$DepartmentPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     darMasterId: string
     departmentId: string
+    authDepartmentId: string | null
+    departmentName: string | null
   }, ExtArgs["result"]["darDistribution"]>
   composites: {}
 }
@@ -931,7 +892,6 @@ readonly fields: DarDistributionFieldRefs;
 export interface Prisma__DarDistributionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   darMaster<T extends Prisma.DarMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DarMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__DarMasterClient<runtime.Types.Result.GetResult<Prisma.$DarMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  department<T extends Prisma.DepartmentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DepartmentDefaultArgs<ExtArgs>>): Prisma.Prisma__DepartmentClient<runtime.Types.Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -964,6 +924,8 @@ export interface DarDistributionFieldRefs {
   readonly id: Prisma.FieldRef<"DarDistribution", 'String'>
   readonly darMasterId: Prisma.FieldRef<"DarDistribution", 'String'>
   readonly departmentId: Prisma.FieldRef<"DarDistribution", 'String'>
+  readonly authDepartmentId: Prisma.FieldRef<"DarDistribution", 'String'>
+  readonly departmentName: Prisma.FieldRef<"DarDistribution", 'String'>
 }
     
 

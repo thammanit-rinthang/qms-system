@@ -51,6 +51,7 @@ export type DarItemInput = {
   docNumber: string;
   docName: string;
   revision: string;
+  effectiveDate?: string | null;
 };
 
 export type DarAttachmentRow = {
@@ -62,14 +63,28 @@ export type DarAttachmentRow = {
   spWebUrl: string;
   spDownloadUrl: string;
   folderPath: string;
+  remark?: string | null;
   createdAt: string;
   uploadedBy: { id: string; name: string | null };
 };
 
+export type DarAttachmentActionRow = {
+  id: string;
+  attachmentId: string | null;
+  fileName: string;
+  action: "ADD" | "DELETE";
+  remark: string | null;
+  actorName: string | null;
+  actorRole: string;
+  createdAt: string;
+};
+
 export type DarRequester = {
   id: string;
+  authUserId?: string | null;
   name: string | null;
   employeeId: string | null;
+  email?: string | null;
   department: { id: string; name: string } | null;
 };
 
@@ -85,8 +100,24 @@ export type DarApprovalRow = {
   actionDate: string | null;
   signatureUsedUrl: string | null;
   signatureTypeUsed: SignatureType | null;
+  comment: string | null;
   assignedUser: {
     id: string;
+    authUserId?: string | null;
+    name: string | null;
+    employeeId: string | null;
+    department: { id: string; name: string } | null;
+  };
+};
+
+export type DarRejectionHistoryRow = {
+  id: string;
+  stepRole: ApprovalStep;
+  actionDate: string;
+  comment: string;
+  rejectedBy: {
+    id: string;
+    authUserId?: string | null;
     name: string | null;
     employeeId: string | null;
     department: { id: string; name: string } | null;
@@ -115,7 +146,24 @@ export type DarDetail = {
   items: DarItemInput[];
   distributions: DarDistributionItem[];
   approvals: DarApprovalRow[];
+  rejectionHistory: DarRejectionHistoryRow[];
   attachments: DarAttachmentRow[];
+  attachmentActions: DarAttachmentActionRow[];
+  qmsProcessing: {
+    chkHasAttachment: boolean;
+    chkPrintAndValidate: boolean;
+    chkRenumber: boolean;
+    chkImpactInvestigated: boolean;
+    chkSubmitVerification: boolean;
+    chkGetBackProcess: boolean;
+    chkCopyDistribute: boolean;
+    comments: string | null;
+    processDate: string | null;
+    qmsUserId: string;
+    qmsAuthUserId?: string | null;
+    qmsUserName?: string | null;
+    qmsUserEmployeeId?: string | null;
+  } | null;
 };
 
 export type DarSummary = {
@@ -147,4 +195,3 @@ export type CreateDarInput = {
   distributionDepartmentIds: string[];
   tempAttachments?: TempAttachmentInput[];
 };
-

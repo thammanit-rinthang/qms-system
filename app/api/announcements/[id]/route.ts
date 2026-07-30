@@ -1,120 +1,92 @@
-
-import { z } from "zod";
 import { requireRole } from "@/lib/auth";
-import { NextResponse, type NextRequest } from "next/server";
-import { AppError } from "@/lib/errors";
-import { getAnnouncement, updateAnnouncement, deleteAnnouncement, toggleAnnouncementActive } from "@/services/announcement";
-import type { ApiResponse } from "@/types/api";
+import { AnnouncementService } from "@/services/announcementService";
+import { updateAnnouncementSchema } from "@/schemas/announcementSchema";
+import { sendSuccess } from "@/lib/apiResponse";
+import { handleApiError } from "@/lib/apiErrorHandler";
+import { type NextRequest } from "next/server";
+import { z } from "zod";
+import { revalidatePath } from "next/cache";
 
-const updateSchema = z.object({
-  title: z.string().min(1).max(255),
-  content: z.string().min(1).max(5000),
-  sourceSystem: z.string().max(100).default("QMS"),
-  displayType: z.enum(["LIST", "SCROLLING"]).default("LIST"),
-  pushToCompanyCenter: z.boolean().default(false),
-  startDate: z.string().datetime({ offset: true }).optional().nullable(),
-  endDate: z.string().datetime({ offset: true }).optional().nullable(),
-  bgColor: z.string().max(20).optional().nullable(),
-  bgImageUrl: z.string().url().optional().nullable(),
-  bgImageSpId: z.string().optional().nullable(),
-  textColor: z.string().max(20).optional().nullable(),
-});
+const announcementService = new AnnouncementService();
+const toggleSchema = z.object({ active: z.boolean() });
+const paramSchema = z.object({ id: z.string().uuid() });
 
 type Params = { params: Promise<{ id: string }> };
 
-export async function GET(_req: NextRequest, { params }: Params): Promise<NextResponse<ApiResponse<unknown>>> {
+export async function GET(_req: NextRequest, { params }: Params) {
   try {
-    const { id } = await params;
+    const { id } = paramSchema.parse(await params);
     await requireRole("QMS", "IT", "MR");
 
-    const row = await getAnnouncement(id);
-
-    return NextResponse.json({ data: row, error: null });
+    const row = await announcementService.getAnnouncement(id);
+    return sendSuccess(row, "Announcement retrieved successfully");
   } catch (error) {
-    if (error instanceof AppError) {
-      return NextResponse.json({ data: null, error: error.message }, { status: error.statusCode });
-    }
-    console.error("[GET /api/announcements/[id]]", error);
-    return NextResponse.json({ data: null, error: "Failed to fetch announcement" }, { status: 500 });
+    return handleApiError(error);
   }
 }
 
-export async function PUT(req: NextRequest, { params }: Params): Promise<NextResponse<ApiResponse<{ id: string }>>> {
+export async function PUT(req: NextRequest, { params }: Params) {
   try {
-    const { id } = await params;
+    const { id } = paramSchema.parse(await params);
     await requireRole("QMS", "IT", "MR");
 
-    const body: unknown = await req.json();
-    const parsed = updateSchema.safeParse(body);
+    const body = await req.json();
+    const parsed = updateAnnouncementSchema.parse(body);
 
-    if (!parsed.success) {
-      return NextResponse.json(
-        { data: null, error: parsed.error.issues[0]?.message ?? "Invalid data" },
-        { status: 400 },
-      );
-    }
-
-    const { title, content, sourceSystem, displayType, pushToCompanyCenter, startDate, endDate,
-      bgColor, bgImageUrl, bgImageSpId, textColor } = parsed.data;
-
-    const updated = await updateAnnouncement(id, {
-      title, content, sourceSystem, displayType, pushToCompanyCenter,
-      startDate: startDate ? new Date(startDate) : null,
-      endDate: endDate ? new Date(endDate) : null,
-      bgColor, bgImageUrl, bgImageSpId, textColor,
+    const result = await announcementService.updateAnnouncement(id, {
+      title: parsed.title ?? "",
+      content: parsed.content ?? "",
+      sourceSystem: parsed.sourceSystem ?? "QMS",
+      displayType: parsed.displayType ?? "LIST",
+      pushToCompanyCenter: parsed.pushToCompanyCenter ?? false,
+      startDate: parsed.startDate ? new Date(parsed.startDate) : null,
+      endDate: parsed.endDate ? new Date(parsed.endDate) : null,
+      bgColor: parsed.bgColor,
+      bgImageUrl: parsed.bgImageUrl,
+      bgImageSpId: parsed.bgImageSpId,
+      textColor: parsed.textColor,
     });
 
-    return NextResponse.json({ data: updated, error: null });
+    revalidatePath("/");
+    revalidatePath("/announcements");
+
+    return sendSuccess(result, "Announcement updated successfully");
   } catch (error) {
-    if (error instanceof AppError) {
-      return NextResponse.json({ data: null, error: error.message }, { status: error.statusCode });
-    }
-    console.error("[PUT /api/announcements/[id]]", error);
-    return NextResponse.json({ data: null, error: "Failed to update announcement" }, { status: 500 });
+    return handleApiError(error);
   }
 }
 
-const toggleSchema = z.object({ active: z.boolean() }); // maps to status ACTIVE/INACTIVE
-
-export async function PATCH(req: NextRequest, { params }: Params): Promise<NextResponse<ApiResponse<{ id: string }>>> {
+export async function PATCH(req: NextRequest, { params }: Params) {
   try {
-    const { id } = await params;
+    const { id } = paramSchema.parse(await params);
     await requireRole("QMS", "IT", "MR");
 
-    const body: unknown = await req.json();
-    const parsed = toggleSchema.safeParse(body);
+    const body = await req.json();
+    const parsed = toggleSchema.parse(body);
 
-    if (!parsed.success) {
-      return NextResponse.json(
-        { data: null, error: parsed.error.issues[0]?.message ?? "Invalid data" },
-        { status: 400 },
-      );
-    }
+    const result = await announcementService.toggleAnnouncementActive(id, parsed.active);
 
-    const updated = await toggleAnnouncementActive(id, parsed.data.active);
-    return NextResponse.json({ data: updated, error: null });
+    revalidatePath("/");
+    revalidatePath("/announcements");
+
+    return sendSuccess(result, "Announcement active status toggled successfully");
   } catch (error) {
-    if (error instanceof AppError) {
-      return NextResponse.json({ data: null, error: error.message }, { status: error.statusCode });
-    }
-    console.error("[PATCH /api/announcements/[id]]", error);
-    return NextResponse.json({ data: null, error: "Failed to toggle announcement" }, { status: 500 });
+    return handleApiError(error);
   }
 }
 
-export async function DELETE(_req: NextRequest, { params }: Params): Promise<NextResponse<ApiResponse<{ id: string }>>> {
+export async function DELETE(_req: NextRequest, { params }: Params) {
   try {
-    const { id } = await params;
+    const { id } = paramSchema.parse(await params);
     await requireRole("QMS", "IT", "MR");
 
-    await deleteAnnouncement(id);
+    await announcementService.deleteAnnouncement(id);
 
-    return NextResponse.json({ data: { id }, error: null });
+    revalidatePath("/");
+    revalidatePath("/announcements");
+
+    return sendSuccess({ id }, "Announcement deleted successfully");
   } catch (error) {
-    if (error instanceof AppError) {
-      return NextResponse.json({ data: null, error: error.message }, { status: error.statusCode });
-    }
-    console.error("[DELETE /api/announcements/[id]]", error);
-    return NextResponse.json({ data: null, error: "Failed to delete announcement" }, { status: 500 });
+    return handleApiError(error);
   }
 }

@@ -15,9 +15,15 @@ const sarabun = Sarabun({
 });
 
 export const metadata: Metadata = {
-  title: "QMS System - Company Center",
-  description: "Quality Management System with Digital Approval Workflow",
+  title: {
+    template: "%s — QMS System",
+    default: "QMS System",
+  },
+  description: "Quality Management System",
 };
+
+import QueryProvider from "@/components/common/QueryProvider";
+import { Toaster } from "sonner";
 
 export default function RootLayout({
   children,
@@ -29,7 +35,12 @@ export default function RootLayout({
       lang="th"
       className={`${inter.variable} ${sarabun.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans">
+        <QueryProvider>{children}</QueryProvider>
+        <Toaster position="top-right" richColors />
+      </body>
     </html>
   );
 }
+
+

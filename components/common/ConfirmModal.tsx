@@ -1,5 +1,16 @@
 "use client";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { AlertTriangle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
 type Props = {
   title: string;
   message: string;
@@ -9,6 +20,7 @@ type Props = {
   onCancel: () => void;
   loading?: boolean;
   danger?: boolean;
+  children?: React.ReactNode;
 };
 
 export default function ConfirmModal({
@@ -20,45 +32,45 @@ export default function ConfirmModal({
   onCancel,
   loading = false,
   danger = true,
+  children,
 }: Props) {
   return (
-    <dialog open className="modal modal-open">
-      <div className="modal-box max-w-sm">
-        {/* Icon */}
-        <div className="flex items-center gap-3 mb-3">
-          {danger && (
-            <div className="w-10 h-10 rounded-xl bg-error/10 flex items-center justify-center shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-error" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
-              </svg>
-            </div>
-          )}
-          <h3 className="text-sm md:text-base font-bold text-primary">{title}</h3>
-        </div>
+    <Dialog open={true} onOpenChange={(open) => { if (!open) onCancel() }}>
+      <DialogContent className="max-w-sm">
+        <DialogHeader>
+          <div className="flex items-center gap-3">
+            {danger && (
+              <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center shrink-0">
+                <AlertTriangle className="h-5 w-5 text-rose-600" />
+              </div>
+            )}
+            <DialogTitle className={danger ? "text-rose-600" : "text-[#0F1059]"}>{title}</DialogTitle>
+          </div>
+          <DialogDescription className="text-left mt-2">{message}</DialogDescription>
+        </DialogHeader>
 
-        <p className="text-xs md:text-sm text-gray-500 mb-5 leading-relaxed">{message}</p>
+        {children}
 
-        <div className="flex justify-end gap-2">
-          <button
+        <DialogFooter className="mt-4">
+          <Button
             type="button"
-            className="btn btn-ghost btn-sm"
+            variant="outline"
             onClick={onCancel}
             disabled={loading}
           >
             {cancelLabel}
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
-            className={`btn btn-sm ${danger ? "btn-error" : "btn-primary"}`}
+            variant={danger ? "destructive" : "default"}
             onClick={onConfirm}
             disabled={loading}
           >
-            {loading && <span className="loading loading-spinner loading-xs" />}
+            {loading && <div className="w-4 h-4 mr-2 rounded-full border-2 border-white/30 border-t-white animate-spin" />}
             {confirmLabel}
-          </button>
-        </div>
-      </div>
-      <div className="modal-backdrop" onClick={onCancel} />
-    </dialog>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

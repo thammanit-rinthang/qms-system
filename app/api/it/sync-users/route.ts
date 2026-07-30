@@ -1,32 +1,23 @@
 
-import { NextResponse } from "next/server";
 import { requireRole } from "@/lib/auth";
-import { AppError } from "@/lib/errors";
-import { fetchAllEntraUsers } from "@/services/ms-graph";
-import { syncEntraUsers, type SyncResult } from "@/services/user";
-import type { ApiResponse } from "@/types/api";
+import { sendSuccess } from "@/lib/apiResponse";
+import { handleApiError } from "@/lib/apiErrorHandler";
 
 /**
  * POST /api/it/sync-users
  *
- * Pulls all M365-licensed member accounts from Microsoft Entra ID and
- * upserts them into the local database. Restricted to IT role.
- *
- * Response: { data: SyncResult, error: null }
+ * Previously pulled M365 users into local User table.
+ * Now that User table is removed (Phase D), sync is handled by Auth Center.
  */
-export async function POST(): Promise<NextResponse<ApiResponse<SyncResult>>> {
+export async function POST() {
   try {
     await requireRole("IT");
 
-    const entraUsers = await fetchAllEntraUsers();
-    const result = await syncEntraUsers(entraUsers);
-
-    return NextResponse.json({ data: result, error: null });
+    return sendSuccess(
+      { total: 0, created: 0, updated: 0, skipped: 0, errors: [], message: "User sync is now handled by Auth Center. Local User table has been removed." },
+      "Sync not needed — identity managed by Auth Center",
+    );
   } catch (err) {
-    if (err instanceof AppError) {
-      return NextResponse.json({ data: null, error: err.message }, { status: err.statusCode });
-    }
-    console.error("[sync-users]", err);
-    return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 });
+    return handleApiError(err);
   }
 }

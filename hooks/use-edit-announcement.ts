@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { AnnouncementRow } from "@/services/announcement";
+import type { AnnouncementRow } from "@/services/announcementService";
+import { getErrorMessage } from "@/lib/error-message";
 
 export type EditFormData = {
   title: string;
@@ -64,7 +65,10 @@ export function useEditAnnouncement(
 
       if (bgImageFile) {
         const fd = new FormData();
-        fd.append("file", bgImageFile);
+        // Use URL-encoded filename to bypass Next.js/Undici multipart non-ASCII body parsing bugs
+        const safeName = encodeURIComponent(bgImageFile.name);
+        fd.append("file", bgImageFile, safeName);
+        fd.append("filename", bgImageFile.name);
         fd.append("path", "Announcements/Backgrounds");
         const uploadRes = await fetch("/api/sharepoint/upload-file", { method: "POST", body: fd });
         if (!uploadRes.ok) throw new Error("Upload failed");
@@ -85,8 +89,8 @@ export function useEditAnnouncement(
       const res = await fetch(`/api/announcements/${item.id}`, {
         method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
       });
-      const json = (await res.json()) as { data: unknown; error: string | null };
-      onSaved(res.ok && !json.error, json.error ?? undefined);
+      const json = (await res.json()) as { data: unknown; error: unknown };
+      onSaved(res.ok && !json.error, json.error ? getErrorMessage(json.error) : undefined);
     } catch {
       onSaved(false);
     } finally {

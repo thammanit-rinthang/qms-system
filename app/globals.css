@@ -1,12 +1,7 @@
 @import "tailwindcss";
-@plugin "daisyui" {
-  themes: mytheme --default;
-}
 
-@plugin "daisyui/theme" {
-  name: "mytheme";
-  default: true;
 
+@theme {
   /* --- Primary: Corporate Navy #0F1059 --- */
   --color-primary:          #0F1059;
   --color-primary-content:  #FFFFFF;
@@ -39,13 +34,11 @@
   --color-info:             #3B82F6;
   --color-info-content:     #FFFFFF;
 
-  /* --- Radius: rounded-md(6px) / rounded-lg(8px) / rounded-xl(12px) --- */
+  /* --- Radius --- */
   --radius-selector: 0.375rem;
   --radius-field:    0.5rem;
   --radius-box:      0.75rem;
-}
 
-@theme {
   --font-sans: var(--font-sarabun), var(--font-inter), system-ui, sans-serif;
 
   --animate-float: float 3s ease-in-out infinite;
@@ -65,6 +58,51 @@
   @keyframes ticker {
     from { transform: translateX(0); }
     to   { transform: translateX(-50%); }
+  }
+
+  /* ── Login page animations ── */
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  --animate-fade-in: fade-in 0.6s ease both;
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  --animate-orb: orb 8s ease-in-out infinite;
+  @keyframes orb {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%       { transform: translate(30px, -20px) scale(1.05); }
+    66%       { transform: translate(-20px, 15px) scale(0.97); }
+  }
+
+  --animate-orb-reverse: orb-reverse 10s ease-in-out infinite;
+  @keyframes orb-reverse {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%       { transform: translate(-25px, 20px) scale(0.96); }
+    66%       { transform: translate(20px, -15px) scale(1.04); }
+  }
+
+  --animate-pulse-glow: pulse-glow 2.5s ease-in-out infinite;
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px 4px oklch(55% 0.22 264 / 0.4); }
+    50%       { box-shadow: 0 0 35px 10px oklch(55% 0.22 264 / 0.65); }
+  }
+
+  --animate-spin-slow: spin-slow 20s linear infinite;
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  --animate-beam: beam 3s ease-in-out infinite;
+  @keyframes beam {
+    0%, 100% { opacity: 0.3; transform: scaleX(0.8); }
+    50%       { opacity: 0.7; transform: scaleX(1); }
   }
 }
 
@@ -190,6 +228,9 @@ body {
 }
 
 /* ── Scrollbar ───────────────────────────────────────────── */
+.scrollbar-none { scrollbar-width: none; }
+.scrollbar-none::-webkit-scrollbar { display: none; }
+
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
@@ -198,6 +239,23 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover { background: oklch(70% 0.012 264); }
 
+
+/* ── Skeleton loading placeholder ──────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-base-300) 25%,
+    oklch(93% 0.008 264) 50%,
+    var(--color-base-300) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  border-radius: 0.375rem;
+}
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
 
 /* ── Card section header with left accent bar ──────────── */
 .card-section-title {
@@ -240,3 +298,13 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(15, 16, 89, 0.09), 0 2px 6px rgba(15, 16, 89, 0.05) !important;
 }
+
+/* ── Rich text view (Tiptap rendered HTML) ───────────────── */
+.rich-view p          { margin: 0 0 0.35em; line-height: 1.6; }
+.rich-view p:last-child { margin-bottom: 0; }
+.rich-view ul,
+.rich-view ol         { padding-left: 1.4em; margin: 0.3em 0; }
+.rich-view li          { margin: 0.1em 0; }
+.rich-view strong      { font-weight: 700; }
+.rich-view em          { font-style: italic; }
+.rich-view hr          { border: none; border-top: 1px solid #e2e8f0; margin: 0.5em 0; }

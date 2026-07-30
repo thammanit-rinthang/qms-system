@@ -37,6 +37,9 @@ export type QmsProcessingMinAggregateOutputType = {
   processDate: Date | null
   darMasterId: string | null
   qmsUserId: string | null
+  qmsAuthUserId: string | null
+  qmsUserName: string | null
+  qmsUserEmployeeId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,6 +57,9 @@ export type QmsProcessingMaxAggregateOutputType = {
   processDate: Date | null
   darMasterId: string | null
   qmsUserId: string | null
+  qmsAuthUserId: string | null
+  qmsUserName: string | null
+  qmsUserEmployeeId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -71,6 +77,9 @@ export type QmsProcessingCountAggregateOutputType = {
   processDate: number
   darMasterId: number
   qmsUserId: number
+  qmsAuthUserId: number
+  qmsUserName: number
+  qmsUserEmployeeId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -90,6 +99,9 @@ export type QmsProcessingMinAggregateInputType = {
   processDate?: true
   darMasterId?: true
   qmsUserId?: true
+  qmsAuthUserId?: true
+  qmsUserName?: true
+  qmsUserEmployeeId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -107,6 +119,9 @@ export type QmsProcessingMaxAggregateInputType = {
   processDate?: true
   darMasterId?: true
   qmsUserId?: true
+  qmsAuthUserId?: true
+  qmsUserName?: true
+  qmsUserEmployeeId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -124,6 +139,9 @@ export type QmsProcessingCountAggregateInputType = {
   processDate?: true
   darMasterId?: true
   qmsUserId?: true
+  qmsAuthUserId?: true
+  qmsUserName?: true
+  qmsUserEmployeeId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -214,6 +232,9 @@ export type QmsProcessingGroupByOutputType = {
   processDate: Date | null
   darMasterId: string
   qmsUserId: string
+  qmsAuthUserId: string | null
+  qmsUserName: string | null
+  qmsUserEmployeeId: string | null
   createdAt: Date
   updatedAt: Date
   _count: QmsProcessingCountAggregateOutputType | null
@@ -252,10 +273,12 @@ export type QmsProcessingWhereInput = {
   processDate?: Prisma.DateTimeNullableFilter<"QmsProcessing"> | Date | string | null
   darMasterId?: Prisma.StringFilter<"QmsProcessing"> | string
   qmsUserId?: Prisma.StringFilter<"QmsProcessing"> | string
+  qmsAuthUserId?: Prisma.StringNullableFilter<"QmsProcessing"> | string | null
+  qmsUserName?: Prisma.StringNullableFilter<"QmsProcessing"> | string | null
+  qmsUserEmployeeId?: Prisma.StringNullableFilter<"QmsProcessing"> | string | null
   createdAt?: Prisma.DateTimeFilter<"QmsProcessing"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"QmsProcessing"> | Date | string
   darMaster?: Prisma.XOR<Prisma.DarMasterScalarRelationFilter, Prisma.DarMasterWhereInput>
-  qmsUser?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type QmsProcessingOrderByWithRelationInput = {
@@ -271,10 +294,12 @@ export type QmsProcessingOrderByWithRelationInput = {
   processDate?: Prisma.SortOrderInput | Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   qmsUserId?: Prisma.SortOrder
+  qmsAuthUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  qmsUserName?: Prisma.SortOrderInput | Prisma.SortOrder
+  qmsUserEmployeeId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   darMaster?: Prisma.DarMasterOrderByWithRelationInput
-  qmsUser?: Prisma.UserOrderByWithRelationInput
 }
 
 export type QmsProcessingWhereUniqueInput = Prisma.AtLeast<{
@@ -293,10 +318,12 @@ export type QmsProcessingWhereUniqueInput = Prisma.AtLeast<{
   comments?: Prisma.StringNullableFilter<"QmsProcessing"> | string | null
   processDate?: Prisma.DateTimeNullableFilter<"QmsProcessing"> | Date | string | null
   qmsUserId?: Prisma.StringFilter<"QmsProcessing"> | string
+  qmsAuthUserId?: Prisma.StringNullableFilter<"QmsProcessing"> | string | null
+  qmsUserName?: Prisma.StringNullableFilter<"QmsProcessing"> | string | null
+  qmsUserEmployeeId?: Prisma.StringNullableFilter<"QmsProcessing"> | string | null
   createdAt?: Prisma.DateTimeFilter<"QmsProcessing"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"QmsProcessing"> | Date | string
   darMaster?: Prisma.XOR<Prisma.DarMasterScalarRelationFilter, Prisma.DarMasterWhereInput>
-  qmsUser?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "darMasterId">
 
 export type QmsProcessingOrderByWithAggregationInput = {
@@ -312,6 +339,9 @@ export type QmsProcessingOrderByWithAggregationInput = {
   processDate?: Prisma.SortOrderInput | Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   qmsUserId?: Prisma.SortOrder
+  qmsAuthUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  qmsUserName?: Prisma.SortOrderInput | Prisma.SortOrder
+  qmsUserEmployeeId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.QmsProcessingCountOrderByAggregateInput
@@ -335,6 +365,9 @@ export type QmsProcessingScalarWhereWithAggregatesInput = {
   processDate?: Prisma.DateTimeNullableWithAggregatesFilter<"QmsProcessing"> | Date | string | null
   darMasterId?: Prisma.StringWithAggregatesFilter<"QmsProcessing"> | string
   qmsUserId?: Prisma.StringWithAggregatesFilter<"QmsProcessing"> | string
+  qmsAuthUserId?: Prisma.StringNullableWithAggregatesFilter<"QmsProcessing"> | string | null
+  qmsUserName?: Prisma.StringNullableWithAggregatesFilter<"QmsProcessing"> | string | null
+  qmsUserEmployeeId?: Prisma.StringNullableWithAggregatesFilter<"QmsProcessing"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"QmsProcessing"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"QmsProcessing"> | Date | string
 }
@@ -350,10 +383,13 @@ export type QmsProcessingCreateInput = {
   chkCopyDistribute?: boolean
   comments?: string | null
   processDate?: Date | string | null
+  qmsUserId: string
+  qmsAuthUserId?: string | null
+  qmsUserName?: string | null
+  qmsUserEmployeeId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   darMaster: Prisma.DarMasterCreateNestedOneWithoutQmsProcessingInput
-  qmsUser: Prisma.UserCreateNestedOneWithoutQmsProcessingsInput
 }
 
 export type QmsProcessingUncheckedCreateInput = {
@@ -369,6 +405,9 @@ export type QmsProcessingUncheckedCreateInput = {
   processDate?: Date | string | null
   darMasterId: string
   qmsUserId: string
+  qmsAuthUserId?: string | null
+  qmsUserName?: string | null
+  qmsUserEmployeeId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -384,10 +423,13 @@ export type QmsProcessingUpdateInput = {
   chkCopyDistribute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   processDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qmsUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  qmsAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qmsUserName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qmsUserEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   darMaster?: Prisma.DarMasterUpdateOneRequiredWithoutQmsProcessingNestedInput
-  qmsUser?: Prisma.UserUpdateOneRequiredWithoutQmsProcessingsNestedInput
 }
 
 export type QmsProcessingUncheckedUpdateInput = {
@@ -403,6 +445,9 @@ export type QmsProcessingUncheckedUpdateInput = {
   processDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   darMasterId?: Prisma.StringFieldUpdateOperationsInput | string
   qmsUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  qmsAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qmsUserName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qmsUserEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -420,6 +465,9 @@ export type QmsProcessingCreateManyInput = {
   processDate?: Date | string | null
   darMasterId: string
   qmsUserId: string
+  qmsAuthUserId?: string | null
+  qmsUserName?: string | null
+  qmsUserEmployeeId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -435,6 +483,10 @@ export type QmsProcessingUpdateManyMutationInput = {
   chkCopyDistribute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   processDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qmsUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  qmsAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qmsUserName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qmsUserEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -452,18 +504,11 @@ export type QmsProcessingUncheckedUpdateManyInput = {
   processDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   darMasterId?: Prisma.StringFieldUpdateOperationsInput | string
   qmsUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  qmsAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qmsUserName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qmsUserEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type QmsProcessingListRelationFilter = {
-  every?: Prisma.QmsProcessingWhereInput
-  some?: Prisma.QmsProcessingWhereInput
-  none?: Prisma.QmsProcessingWhereInput
-}
-
-export type QmsProcessingOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
 }
 
 export type QmsProcessingNullableScalarRelationFilter = {
@@ -484,6 +529,9 @@ export type QmsProcessingCountOrderByAggregateInput = {
   processDate?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   qmsUserId?: Prisma.SortOrder
+  qmsAuthUserId?: Prisma.SortOrder
+  qmsUserName?: Prisma.SortOrder
+  qmsUserEmployeeId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -501,6 +549,9 @@ export type QmsProcessingMaxOrderByAggregateInput = {
   processDate?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   qmsUserId?: Prisma.SortOrder
+  qmsAuthUserId?: Prisma.SortOrder
+  qmsUserName?: Prisma.SortOrder
+  qmsUserEmployeeId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -518,50 +569,11 @@ export type QmsProcessingMinOrderByAggregateInput = {
   processDate?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   qmsUserId?: Prisma.SortOrder
+  qmsAuthUserId?: Prisma.SortOrder
+  qmsUserName?: Prisma.SortOrder
+  qmsUserEmployeeId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type QmsProcessingCreateNestedManyWithoutQmsUserInput = {
-  create?: Prisma.XOR<Prisma.QmsProcessingCreateWithoutQmsUserInput, Prisma.QmsProcessingUncheckedCreateWithoutQmsUserInput> | Prisma.QmsProcessingCreateWithoutQmsUserInput[] | Prisma.QmsProcessingUncheckedCreateWithoutQmsUserInput[]
-  connectOrCreate?: Prisma.QmsProcessingCreateOrConnectWithoutQmsUserInput | Prisma.QmsProcessingCreateOrConnectWithoutQmsUserInput[]
-  createMany?: Prisma.QmsProcessingCreateManyQmsUserInputEnvelope
-  connect?: Prisma.QmsProcessingWhereUniqueInput | Prisma.QmsProcessingWhereUniqueInput[]
-}
-
-export type QmsProcessingUncheckedCreateNestedManyWithoutQmsUserInput = {
-  create?: Prisma.XOR<Prisma.QmsProcessingCreateWithoutQmsUserInput, Prisma.QmsProcessingUncheckedCreateWithoutQmsUserInput> | Prisma.QmsProcessingCreateWithoutQmsUserInput[] | Prisma.QmsProcessingUncheckedCreateWithoutQmsUserInput[]
-  connectOrCreate?: Prisma.QmsProcessingCreateOrConnectWithoutQmsUserInput | Prisma.QmsProcessingCreateOrConnectWithoutQmsUserInput[]
-  createMany?: Prisma.QmsProcessingCreateManyQmsUserInputEnvelope
-  connect?: Prisma.QmsProcessingWhereUniqueInput | Prisma.QmsProcessingWhereUniqueInput[]
-}
-
-export type QmsProcessingUpdateManyWithoutQmsUserNestedInput = {
-  create?: Prisma.XOR<Prisma.QmsProcessingCreateWithoutQmsUserInput, Prisma.QmsProcessingUncheckedCreateWithoutQmsUserInput> | Prisma.QmsProcessingCreateWithoutQmsUserInput[] | Prisma.QmsProcessingUncheckedCreateWithoutQmsUserInput[]
-  connectOrCreate?: Prisma.QmsProcessingCreateOrConnectWithoutQmsUserInput | Prisma.QmsProcessingCreateOrConnectWithoutQmsUserInput[]
-  upsert?: Prisma.QmsProcessingUpsertWithWhereUniqueWithoutQmsUserInput | Prisma.QmsProcessingUpsertWithWhereUniqueWithoutQmsUserInput[]
-  createMany?: Prisma.QmsProcessingCreateManyQmsUserInputEnvelope
-  set?: Prisma.QmsProcessingWhereUniqueInput | Prisma.QmsProcessingWhereUniqueInput[]
-  disconnect?: Prisma.QmsProcessingWhereUniqueInput | Prisma.QmsProcessingWhereUniqueInput[]
-  delete?: Prisma.QmsProcessingWhereUniqueInput | Prisma.QmsProcessingWhereUniqueInput[]
-  connect?: Prisma.QmsProcessingWhereUniqueInput | Prisma.QmsProcessingWhereUniqueInput[]
-  update?: Prisma.QmsProcessingUpdateWithWhereUniqueWithoutQmsUserInput | Prisma.QmsProcessingUpdateWithWhereUniqueWithoutQmsUserInput[]
-  updateMany?: Prisma.QmsProcessingUpdateManyWithWhereWithoutQmsUserInput | Prisma.QmsProcessingUpdateManyWithWhereWithoutQmsUserInput[]
-  deleteMany?: Prisma.QmsProcessingScalarWhereInput | Prisma.QmsProcessingScalarWhereInput[]
-}
-
-export type QmsProcessingUncheckedUpdateManyWithoutQmsUserNestedInput = {
-  create?: Prisma.XOR<Prisma.QmsProcessingCreateWithoutQmsUserInput, Prisma.QmsProcessingUncheckedCreateWithoutQmsUserInput> | Prisma.QmsProcessingCreateWithoutQmsUserInput[] | Prisma.QmsProcessingUncheckedCreateWithoutQmsUserInput[]
-  connectOrCreate?: Prisma.QmsProcessingCreateOrConnectWithoutQmsUserInput | Prisma.QmsProcessingCreateOrConnectWithoutQmsUserInput[]
-  upsert?: Prisma.QmsProcessingUpsertWithWhereUniqueWithoutQmsUserInput | Prisma.QmsProcessingUpsertWithWhereUniqueWithoutQmsUserInput[]
-  createMany?: Prisma.QmsProcessingCreateManyQmsUserInputEnvelope
-  set?: Prisma.QmsProcessingWhereUniqueInput | Prisma.QmsProcessingWhereUniqueInput[]
-  disconnect?: Prisma.QmsProcessingWhereUniqueInput | Prisma.QmsProcessingWhereUniqueInput[]
-  delete?: Prisma.QmsProcessingWhereUniqueInput | Prisma.QmsProcessingWhereUniqueInput[]
-  connect?: Prisma.QmsProcessingWhereUniqueInput | Prisma.QmsProcessingWhereUniqueInput[]
-  update?: Prisma.QmsProcessingUpdateWithWhereUniqueWithoutQmsUserInput | Prisma.QmsProcessingUpdateWithWhereUniqueWithoutQmsUserInput[]
-  updateMany?: Prisma.QmsProcessingUpdateManyWithWhereWithoutQmsUserInput | Prisma.QmsProcessingUpdateManyWithWhereWithoutQmsUserInput[]
-  deleteMany?: Prisma.QmsProcessingScalarWhereInput | Prisma.QmsProcessingScalarWhereInput[]
 }
 
 export type QmsProcessingCreateNestedOneWithoutDarMasterInput = {
@@ -596,84 +608,6 @@ export type QmsProcessingUncheckedUpdateOneWithoutDarMasterNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.QmsProcessingUpdateToOneWithWhereWithoutDarMasterInput, Prisma.QmsProcessingUpdateWithoutDarMasterInput>, Prisma.QmsProcessingUncheckedUpdateWithoutDarMasterInput>
 }
 
-export type QmsProcessingCreateWithoutQmsUserInput = {
-  id?: string
-  chkHasAttachment?: boolean
-  chkPrintAndValidate?: boolean
-  chkRenumber?: boolean
-  chkImpactInvestigated?: boolean
-  chkSubmitVerification?: boolean
-  chkGetBackProcess?: boolean
-  chkCopyDistribute?: boolean
-  comments?: string | null
-  processDate?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  darMaster: Prisma.DarMasterCreateNestedOneWithoutQmsProcessingInput
-}
-
-export type QmsProcessingUncheckedCreateWithoutQmsUserInput = {
-  id?: string
-  chkHasAttachment?: boolean
-  chkPrintAndValidate?: boolean
-  chkRenumber?: boolean
-  chkImpactInvestigated?: boolean
-  chkSubmitVerification?: boolean
-  chkGetBackProcess?: boolean
-  chkCopyDistribute?: boolean
-  comments?: string | null
-  processDate?: Date | string | null
-  darMasterId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type QmsProcessingCreateOrConnectWithoutQmsUserInput = {
-  where: Prisma.QmsProcessingWhereUniqueInput
-  create: Prisma.XOR<Prisma.QmsProcessingCreateWithoutQmsUserInput, Prisma.QmsProcessingUncheckedCreateWithoutQmsUserInput>
-}
-
-export type QmsProcessingCreateManyQmsUserInputEnvelope = {
-  data: Prisma.QmsProcessingCreateManyQmsUserInput | Prisma.QmsProcessingCreateManyQmsUserInput[]
-  skipDuplicates?: boolean
-}
-
-export type QmsProcessingUpsertWithWhereUniqueWithoutQmsUserInput = {
-  where: Prisma.QmsProcessingWhereUniqueInput
-  update: Prisma.XOR<Prisma.QmsProcessingUpdateWithoutQmsUserInput, Prisma.QmsProcessingUncheckedUpdateWithoutQmsUserInput>
-  create: Prisma.XOR<Prisma.QmsProcessingCreateWithoutQmsUserInput, Prisma.QmsProcessingUncheckedCreateWithoutQmsUserInput>
-}
-
-export type QmsProcessingUpdateWithWhereUniqueWithoutQmsUserInput = {
-  where: Prisma.QmsProcessingWhereUniqueInput
-  data: Prisma.XOR<Prisma.QmsProcessingUpdateWithoutQmsUserInput, Prisma.QmsProcessingUncheckedUpdateWithoutQmsUserInput>
-}
-
-export type QmsProcessingUpdateManyWithWhereWithoutQmsUserInput = {
-  where: Prisma.QmsProcessingScalarWhereInput
-  data: Prisma.XOR<Prisma.QmsProcessingUpdateManyMutationInput, Prisma.QmsProcessingUncheckedUpdateManyWithoutQmsUserInput>
-}
-
-export type QmsProcessingScalarWhereInput = {
-  AND?: Prisma.QmsProcessingScalarWhereInput | Prisma.QmsProcessingScalarWhereInput[]
-  OR?: Prisma.QmsProcessingScalarWhereInput[]
-  NOT?: Prisma.QmsProcessingScalarWhereInput | Prisma.QmsProcessingScalarWhereInput[]
-  id?: Prisma.StringFilter<"QmsProcessing"> | string
-  chkHasAttachment?: Prisma.BoolFilter<"QmsProcessing"> | boolean
-  chkPrintAndValidate?: Prisma.BoolFilter<"QmsProcessing"> | boolean
-  chkRenumber?: Prisma.BoolFilter<"QmsProcessing"> | boolean
-  chkImpactInvestigated?: Prisma.BoolFilter<"QmsProcessing"> | boolean
-  chkSubmitVerification?: Prisma.BoolFilter<"QmsProcessing"> | boolean
-  chkGetBackProcess?: Prisma.BoolFilter<"QmsProcessing"> | boolean
-  chkCopyDistribute?: Prisma.BoolFilter<"QmsProcessing"> | boolean
-  comments?: Prisma.StringNullableFilter<"QmsProcessing"> | string | null
-  processDate?: Prisma.DateTimeNullableFilter<"QmsProcessing"> | Date | string | null
-  darMasterId?: Prisma.StringFilter<"QmsProcessing"> | string
-  qmsUserId?: Prisma.StringFilter<"QmsProcessing"> | string
-  createdAt?: Prisma.DateTimeFilter<"QmsProcessing"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"QmsProcessing"> | Date | string
-}
-
 export type QmsProcessingCreateWithoutDarMasterInput = {
   id?: string
   chkHasAttachment?: boolean
@@ -685,9 +619,12 @@ export type QmsProcessingCreateWithoutDarMasterInput = {
   chkCopyDistribute?: boolean
   comments?: string | null
   processDate?: Date | string | null
+  qmsUserId: string
+  qmsAuthUserId?: string | null
+  qmsUserName?: string | null
+  qmsUserEmployeeId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  qmsUser: Prisma.UserCreateNestedOneWithoutQmsProcessingsInput
 }
 
 export type QmsProcessingUncheckedCreateWithoutDarMasterInput = {
@@ -702,6 +639,9 @@ export type QmsProcessingUncheckedCreateWithoutDarMasterInput = {
   comments?: string | null
   processDate?: Date | string | null
   qmsUserId: string
+  qmsAuthUserId?: string | null
+  qmsUserName?: string | null
+  qmsUserEmployeeId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -733,9 +673,12 @@ export type QmsProcessingUpdateWithoutDarMasterInput = {
   chkCopyDistribute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   processDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qmsUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  qmsAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qmsUserName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qmsUserEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  qmsUser?: Prisma.UserUpdateOneRequiredWithoutQmsProcessingsNestedInput
 }
 
 export type QmsProcessingUncheckedUpdateWithoutDarMasterInput = {
@@ -750,70 +693,9 @@ export type QmsProcessingUncheckedUpdateWithoutDarMasterInput = {
   comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   processDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   qmsUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type QmsProcessingCreateManyQmsUserInput = {
-  id?: string
-  chkHasAttachment?: boolean
-  chkPrintAndValidate?: boolean
-  chkRenumber?: boolean
-  chkImpactInvestigated?: boolean
-  chkSubmitVerification?: boolean
-  chkGetBackProcess?: boolean
-  chkCopyDistribute?: boolean
-  comments?: string | null
-  processDate?: Date | string | null
-  darMasterId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type QmsProcessingUpdateWithoutQmsUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  chkHasAttachment?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkPrintAndValidate?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkRenumber?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkImpactInvestigated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkSubmitVerification?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkGetBackProcess?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkCopyDistribute?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  processDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  darMaster?: Prisma.DarMasterUpdateOneRequiredWithoutQmsProcessingNestedInput
-}
-
-export type QmsProcessingUncheckedUpdateWithoutQmsUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  chkHasAttachment?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkPrintAndValidate?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkRenumber?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkImpactInvestigated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkSubmitVerification?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkGetBackProcess?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkCopyDistribute?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  processDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  darMasterId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type QmsProcessingUncheckedUpdateManyWithoutQmsUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  chkHasAttachment?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkPrintAndValidate?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkRenumber?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkImpactInvestigated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkSubmitVerification?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkGetBackProcess?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  chkCopyDistribute?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  processDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  darMasterId?: Prisma.StringFieldUpdateOperationsInput | string
+  qmsAuthUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qmsUserName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qmsUserEmployeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -833,10 +715,12 @@ export type QmsProcessingSelect<ExtArgs extends runtime.Types.Extensions.Interna
   processDate?: boolean
   darMasterId?: boolean
   qmsUserId?: boolean
+  qmsAuthUserId?: boolean
+  qmsUserName?: boolean
+  qmsUserEmployeeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  qmsUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["qmsProcessing"]>
 
 export type QmsProcessingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -852,10 +736,12 @@ export type QmsProcessingSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   processDate?: boolean
   darMasterId?: boolean
   qmsUserId?: boolean
+  qmsAuthUserId?: boolean
+  qmsUserName?: boolean
+  qmsUserEmployeeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  qmsUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["qmsProcessing"]>
 
 export type QmsProcessingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -871,10 +757,12 @@ export type QmsProcessingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   processDate?: boolean
   darMasterId?: boolean
   qmsUserId?: boolean
+  qmsAuthUserId?: boolean
+  qmsUserName?: boolean
+  qmsUserEmployeeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  qmsUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["qmsProcessing"]>
 
 export type QmsProcessingSelectScalar = {
@@ -890,29 +778,28 @@ export type QmsProcessingSelectScalar = {
   processDate?: boolean
   darMasterId?: boolean
   qmsUserId?: boolean
+  qmsAuthUserId?: boolean
+  qmsUserName?: boolean
+  qmsUserEmployeeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type QmsProcessingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chkHasAttachment" | "chkPrintAndValidate" | "chkRenumber" | "chkImpactInvestigated" | "chkSubmitVerification" | "chkGetBackProcess" | "chkCopyDistribute" | "comments" | "processDate" | "darMasterId" | "qmsUserId" | "createdAt" | "updatedAt", ExtArgs["result"]["qmsProcessing"]>
+export type QmsProcessingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chkHasAttachment" | "chkPrintAndValidate" | "chkRenumber" | "chkImpactInvestigated" | "chkSubmitVerification" | "chkGetBackProcess" | "chkCopyDistribute" | "comments" | "processDate" | "darMasterId" | "qmsUserId" | "qmsAuthUserId" | "qmsUserName" | "qmsUserEmployeeId" | "createdAt" | "updatedAt", ExtArgs["result"]["qmsProcessing"]>
 export type QmsProcessingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  qmsUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type QmsProcessingIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  qmsUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type QmsProcessingIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
-  qmsUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $QmsProcessingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "QmsProcessing"
   objects: {
     darMaster: Prisma.$DarMasterPayload<ExtArgs>
-    qmsUser: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -927,6 +814,9 @@ export type $QmsProcessingPayload<ExtArgs extends runtime.Types.Extensions.Inter
     processDate: Date | null
     darMasterId: string
     qmsUserId: string
+    qmsAuthUserId: string | null
+    qmsUserName: string | null
+    qmsUserEmployeeId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["qmsProcessing"]>
@@ -1324,7 +1214,6 @@ readonly fields: QmsProcessingFieldRefs;
 export interface Prisma__QmsProcessingClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   darMaster<T extends Prisma.DarMasterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DarMasterDefaultArgs<ExtArgs>>): Prisma.Prisma__DarMasterClient<runtime.Types.Result.GetResult<Prisma.$DarMasterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  qmsUser<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1366,6 +1255,9 @@ export interface QmsProcessingFieldRefs {
   readonly processDate: Prisma.FieldRef<"QmsProcessing", 'DateTime'>
   readonly darMasterId: Prisma.FieldRef<"QmsProcessing", 'String'>
   readonly qmsUserId: Prisma.FieldRef<"QmsProcessing", 'String'>
+  readonly qmsAuthUserId: Prisma.FieldRef<"QmsProcessing", 'String'>
+  readonly qmsUserName: Prisma.FieldRef<"QmsProcessing", 'String'>
+  readonly qmsUserEmployeeId: Prisma.FieldRef<"QmsProcessing", 'String'>
   readonly createdAt: Prisma.FieldRef<"QmsProcessing", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"QmsProcessing", 'DateTime'>
 }

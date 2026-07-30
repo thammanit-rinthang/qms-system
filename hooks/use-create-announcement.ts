@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { getErrorMessage } from "@/lib/error-message";
+import type { GraphGroupResult } from "@/components/shared/GraphGroupPicker";
 
 export type CreateFormData = {
   title: string;
@@ -12,6 +14,7 @@ export type CreateFormData = {
   pushToCompanyCenter: boolean;
   bgColor: string;
   textColor: string;
+  emailGroups: GraphGroupResult[];
 };
 
 const EMPTY_FORM: CreateFormData = {
@@ -24,6 +27,7 @@ const EMPTY_FORM: CreateFormData = {
   pushToCompanyCenter: true,
   bgColor: "#0F1059",
   textColor: "#FFFFFF",
+  emailGroups: [],
 };
 
 export function useCreateAnnouncement(
@@ -42,7 +46,10 @@ export function useCreateAnnouncement(
 
   async function uploadToSharePoint(f: File, path: string) {
     const fd = new FormData();
-    fd.append("file", f);
+    // Use URL-encoded filename to bypass Next.js/Undici multipart non-ASCII body parsing bugs
+    const safeName = encodeURIComponent(f.name);
+    fd.append("file", f, safeName);
+    fd.append("filename", f.name);
     fd.append("path", path);
     const res = await fetch("/api/sharepoint/upload-file", { method: "POST", body: fd });
     if (!res.ok) throw new Error("Upload failed");
@@ -62,6 +69,11 @@ export function useCreateAnnouncement(
       if (form.endDate) formData.append("endDate", new Date(form.endDate).toISOString());
       formData.append("bgColor", form.bgColor);
       formData.append("textColor", form.textColor);
+      const mails = form.emailGroups.map((g) => g.mail ?? g.id).filter((v) => v.includes("@"));
+      console.log("[announcement] emailGroups:", form.emailGroups, "mails:", mails);
+      if (mails.length) {
+        formData.append("emailGroupMails", JSON.stringify(mails));
+      }
 
       // Upload attachment
       if (file) {
@@ -86,8 +98,8 @@ export function useCreateAnnouncement(
       }
 
       const res = await fetch("/api/announcements", { method: "POST", body: formData });
-      const json = (await res.json()) as { data: unknown; error: string | null };
-      if (!res.ok || json.error) { onCreated(false, json.error ?? undefined); return; }
+      const json = (await res.json()) as { data: unknown; error: unknown };
+      if (!res.ok || json.error) { onCreated(false, getErrorMessage(json.error)); return; }
       reset();
       onCreated(true);
     } catch {

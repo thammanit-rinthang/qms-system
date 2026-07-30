@@ -1,8 +1,8 @@
 "use client";
-
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import type { SyncResult } from "@/services/user";
+import type { SyncResult } from "@/types/user";
 import { useT } from "@/lib/i18n";
 import { useLocale } from "@/lib/locale-context";
 
@@ -41,26 +41,27 @@ export default function SyncActions() {
 
   return (
     <div className="flex flex-col items-end gap-2">
-      <button
-        className="btn btn-secondary btn-sm gap-2"
+      <Button
+        variant="secondary"
+        size="sm"
         onClick={handleSync}
         disabled={state === "loading"}
       >
         {state === "loading" ? (
           <>
-            <span className="loading loading-spinner loading-xs" />
+            <span className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin mr-1.5" />
             {t("syncing")}
           </>
         ) : (
           <>
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 2v6h-6" /><path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
               <path d="M3 22v-6h6" /><path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
             </svg>
             {t("syncBtn")}
           </>
         )}
-      </button>
+      </Button>
 
       {state === "done" && result && (
         <p className="text-[13px] text-right text-neutral">
@@ -75,7 +76,7 @@ export default function SyncActions() {
         </p>
       )}
       {state === "error" && error && (
-        <p className="text-[13px] text-error text-right">{error}</p>
+        <p className="text-[13px] text-rose-600 text-right">{error}</p>
       )}
     </div>
   );

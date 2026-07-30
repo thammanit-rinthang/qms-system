@@ -5,6 +5,7 @@ import { requireAuth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { ForbiddenError, ValidationError } from "@/lib/errors";
+import { isPrivilegedQmsRole } from "@/lib/qms-roles";
 
 const ANNOUNCEMENT_EXPIRY_DAYS = 7;
 
@@ -19,8 +20,8 @@ const createAnnouncementSchema = z.object({
 export async function createAnnouncement(formData: FormData) {
   const session = await requireAuth();
 
-  if (session.user.role === "USER") {
-    throw new ForbiddenError("Unauthorized: Only Admins/QMS/IT can post announcements.");
+  if (!isPrivilegedQmsRole(session.user.role)) {
+    throw new ForbiddenError("Unauthorized: Only QMS/MR/IT can post announcements.");
   }
 
   const rawData = {

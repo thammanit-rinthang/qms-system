@@ -1,8 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: { ignoreDuringBuilds: true },
   output: "standalone",
+  productionBrowserSourceMaps: true,
   async headers() {
     return [
+      {
+        source: "/api/distribution/:id/preview",
+        headers: [
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Content-Security-Policy", value: "frame-ancestors 'self'" },
+        ],
+      },
       {
         source: "/(.*)",
         headers: [

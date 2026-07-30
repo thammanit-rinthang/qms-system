@@ -1,28 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-type TickerItem = { id: string; title: string; sourceSystem: string };
+import { useAnnouncementsTicker } from "@/hooks/api/use-announcements";
 
 type Props = {
   locale: "th" | "en";
 };
 
 export default function AnnouncementTicker({ locale }: Props) {
-  const [items, setItems] = useState<TickerItem[]>([]);
-  const [loaded, setLoaded] = useState(false);
+  const { data: items = [], isSuccess } = useAnnouncementsTicker();
 
-  useEffect(() => {
-    fetch("/api/announcements/ticker")
-      .then((r) => r.json())
-      .then((d: { data: TickerItem[] }) => {
-        if (d.data) setItems(d.data);
-      })
-      .catch(() => {})
-      .finally(() => setLoaded(true));
-  }, []);
-
-  if (!loaded || items.length === 0) return null;
+  if (!isSuccess || items.length === 0) return null;
 
   const tickerText = items.map((item) => `[${item.sourceSystem}]  ${item.title}`).join("     ·     ");
 
@@ -39,7 +26,7 @@ export default function AnnouncementTicker({ locale }: Props) {
       {/* Scrolling area — full remaining width */}
       <div className="flex-1 overflow-hidden relative">
         <div className="pointer-events-none absolute inset-y-0 right-0 w-8 z-10"
-          style={{ background: "linear-gradient(to left, oklch(var(--b2) / 0.6), transparent)" }} />
+          style={{ background: "linear-gradient(to left, rgb(248 250 252), transparent)" }} />
         <div className="flex whitespace-nowrap animate-ticker">
           <span className="text-[12px] font-medium text-primary/80 px-4">{tickerText}</span>
           <span className="text-[12px] font-medium text-primary/80 px-4">{tickerText}</span>

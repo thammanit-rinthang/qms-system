@@ -18,20 +18,35 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
- * Model Department
- * 
- */
-export type Department = Prisma.DepartmentModel
-/**
- * Model User
- * 
- */
-export type User = Prisma.UserModel
-/**
  * Model SystemConfig
  * 
  */
 export type SystemConfig = Prisma.SystemConfigModel
+/**
+ * Model LocalRoleGrant
+ * 
+ */
+export type LocalRoleGrant = Prisma.LocalRoleGrantModel
+/**
+ * Model DepartmentCode
+ * 
+ */
+export type DepartmentCode = Prisma.DepartmentCodeModel
+/**
+ * Model KpiDept
+ * 
+ */
+export type KpiDept = Prisma.KpiDeptModel
+/**
+ * Model DocControlDept
+ * 
+ */
+export type DocControlDept = Prisma.DocControlDeptModel
+/**
+ * Model UserPreference
+ * 
+ */
+export type UserPreference = Prisma.UserPreferenceModel
 /**
  * Model Announcement
  * 
@@ -58,10 +73,25 @@ export type DarDistribution = Prisma.DarDistributionModel
  */
 export type DarAttachment = Prisma.DarAttachmentModel
 /**
+ * Model DarAttachmentAction
+ * 
+ */
+export type DarAttachmentAction = Prisma.DarAttachmentActionModel
+/**
  * Model DarApproval
  * 
  */
 export type DarApproval = Prisma.DarApprovalModel
+/**
+ * Model DarRejectionHistory
+ * 
+ */
+export type DarRejectionHistory = Prisma.DarRejectionHistoryModel
+/**
+ * Model ApprovalSignature
+ * 
+ */
+export type ApprovalSignature = Prisma.ApprovalSignatureModel
 /**
  * Model QmsProcessing
  * 
@@ -73,27 +103,217 @@ export type QmsProcessing = Prisma.QmsProcessingModel
  */
 export type PublicDocument = Prisma.PublicDocumentModel
 /**
- * Model KpiSchedule
+ * Model KPI
  * 
  */
-export type KpiSchedule = Prisma.KpiScheduleModel
+export type KPI = Prisma.KPIModel
 /**
- * Model KpiMaster
+ * Model KPIObjective
  * 
  */
-export type KpiMaster = Prisma.KpiMasterModel
+export type KPIObjective = Prisma.KPIObjectiveModel
 /**
- * Model KpiMonthlyResult
+ * Model KPIMonthlyReport
  * 
  */
-export type KpiMonthlyResult = Prisma.KpiMonthlyResultModel
+export type KPIMonthlyReport = Prisma.KPIMonthlyReportModel
 /**
- * Model KpiCorrectiveAction
+ * Model KPIMonthlySummaryReview
  * 
  */
-export type KpiCorrectiveAction = Prisma.KpiCorrectiveActionModel
+export type KPIMonthlySummaryReview = Prisma.KPIMonthlySummaryReviewModel
 /**
- * Model KpiApprovalLog
+ * Model KPIMonthlySummaryReviewHistory
  * 
  */
-export type KpiApprovalLog = Prisma.KpiApprovalLogModel
+export type KPIMonthlySummaryReviewHistory = Prisma.KPIMonthlySummaryReviewHistoryModel
+/**
+ * Model KPIMonthlyDetail
+ * 
+ */
+export type KPIMonthlyDetail = Prisma.KPIMonthlyDetailModel
+/**
+ * Model KPICorrectiveAction
+ * 
+ */
+export type KPICorrectiveAction = Prisma.KPICorrectiveActionModel
+/**
+ * Model DocumentControl
+ * 
+ */
+export type DocumentControl = Prisma.DocumentControlModel
+/**
+ * Model DocumentCategory
+ * 
+ */
+export type DocumentCategory = Prisma.DocumentCategoryModel
+/**
+ * Model DocumentControlRevision
+ * 
+ */
+export type DocumentControlRevision = Prisma.DocumentControlRevisionModel
+/**
+ * Model DocumentDistribution
+ * 
+ */
+export type DocumentDistribution = Prisma.DocumentDistributionModel
+/**
+ * Model DocumentDistributionTarget
+ * 
+ */
+export type DocumentDistributionTarget = Prisma.DocumentDistributionTargetModel
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model NotificationLog
+ * 
+ */
+export type NotificationLog = Prisma.NotificationLogModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model ActionToken
+ * 
+ */
+export type ActionToken = Prisma.ActionTokenModel
+/**
+ * Model CarMaster
+ * 
+ */
+export type CarMaster = Prisma.CarMasterModel
+/**
+ * Model CarResponse
+ * 
+ */
+export type CarResponse = Prisma.CarResponseModel
+/**
+ * Model CarVerification
+ * 
+ */
+export type CarVerification = Prisma.CarVerificationModel
+/**
+ * Model CarMrSignature
+ * 
+ */
+export type CarMrSignature = Prisma.CarMrSignatureModel
+/**
+ * Model CarAttachment
+ * 
+ */
+export type CarAttachment = Prisma.CarAttachmentModel
+/**
+ * Model CarMrResponseReview
+ * 
+ */
+export type CarMrResponseReview = Prisma.CarMrResponseReviewModel
+/**
+ * Model CarNotificationLog
+ * 
+ */
+export type CarNotificationLog = Prisma.CarNotificationLogModel
+/**
+ * Model AuditAppointment
+ * 
+ */
+export type AuditAppointment = Prisma.AuditAppointmentModel
+/**
+ * Model AuditAppointmentMember
+ * 
+ */
+export type AuditAppointmentMember = Prisma.AuditAppointmentMemberModel
+/**
+ * Model AuditAppointmentSignoff
+ * 
+ */
+export type AuditAppointmentSignoff = Prisma.AuditAppointmentSignoffModel
+/**
+ * Model AuditSessionPlan
+ * 
+ */
+export type AuditSessionPlan = Prisma.AuditSessionPlanModel
+/**
+ * Model AuditSessionRow
+ * 
+ */
+export type AuditSessionRow = Prisma.AuditSessionRowModel
+/**
+ * Model AuditSessionTeamMember
+ * 
+ */
+export type AuditSessionTeamMember = Prisma.AuditSessionTeamMemberModel
+/**
+ * Model AuditGanttRow
+ * 
+ */
+export type AuditGanttRow = Prisma.AuditGanttRowModel
+/**
+ * Model AuditPlan
+ * 
+ */
+export type AuditPlan = Prisma.AuditPlanModel
+/**
+ * Model AuditStandard
+ * 
+ */
+export type AuditStandard = Prisma.AuditStandardModel
+/**
+ * Model AuditPlanDepartment
+ * 
+ */
+export type AuditPlanDepartment = Prisma.AuditPlanDepartmentModel
+/**
+ * Model AuditAuditorAssignment
+ * 
+ */
+export type AuditAuditorAssignment = Prisma.AuditAuditorAssignmentModel
+/**
+ * Model AuditSchedule
+ * 
+ */
+export type AuditSchedule = Prisma.AuditScheduleModel
+/**
+ * Model AuditScheduleTeamMember
+ * 
+ */
+export type AuditScheduleTeamMember = Prisma.AuditScheduleTeamMemberModel
+/**
+ * Model AuditAttachment
+ * 
+ */
+export type AuditAttachment = Prisma.AuditAttachmentModel
+/**
+ * Model AuditAnnouncement
+ * 
+ */
+export type AuditAnnouncement = Prisma.AuditAnnouncementModel
+/**
+ * Model AuditFinding
+ * 
+ */
+export type AuditFinding = Prisma.AuditFindingModel
+/**
+ * Model AuditCorrectiveAction
+ * 
+ */
+export type AuditCorrectiveAction = Prisma.AuditCorrectiveActionModel
+/**
+ * Model AuditVerification
+ * 
+ */
+export type AuditVerification = Prisma.AuditVerificationModel
+/**
+ * Model AuditSignoff
+ * 
+ */
+export type AuditSignoff = Prisma.AuditSignoffModel
+/**
+ * Model AuditReport
+ * 
+ */
+export type AuditReport = Prisma.AuditReportModel

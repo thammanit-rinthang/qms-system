@@ -1,0 +1,138 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ndc-industrialco/qms-system
+
+jobs:
+  ci:
+    name: CI — Lint / Test / Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Validate & generate Prisma
+        run: |
+          npx prisma validate
+          npx prisma generate
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Check API patterns
+        run: npm run check:api
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        env:
+          DATABASE_URL: postgresql://dummy:dummy@localhost:5432/dummy
+          DIRECT_DATABASE_URL: postgresql://dummy:dummy@localhost:5432/dummy
+          NEXTAUTH_URL: http://localhost:3000
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET || 'dummy-auth-secret-for-ci-build-at-least-32-chars' }}
+        run: npm run build -- --no-lint
+
+  docker:
+    name: Build & Push Docker Image
+    needs: ci
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image_tag: ${{ steps.meta.outputs.version }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,format=short
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            NEXT_PUBLIC_GIT_COMMIT_SHA=${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    name: CD — Deploy to On-Prem
+    runs-on: [self-hosted, Linux, X64]
+    needs: docker
+    environment: production
+    timeout-minutes: 15
+
+    steps:
+      - name: Login to GHCR
+        run: |
+          echo "${{ secrets.GHCR_PAT }}" | \
+            docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Pull & deploy
+        env:
+          IMAGE_TAG: ${{ needs.docker.outputs.image_tag }}
+        run: |
+            set -e
+            cd /opt/qms-system
+
+            export IMAGE_TAG=${IMAGE_TAG}
+
+            docker compose pull qms-system
+
+            # Run DB migrations before starting the app
+            echo "⏳ Running database migrations..."
+            docker compose run --rm --no-deps \
+              -e DATABASE_URL \
+              -e DIRECT_DATABASE_URL \
+              qms-system \
+              sh -c 'npx prisma migrate deploy' || true
+
+            docker compose up -d --remove-orphans qms-system
+
+            docker image prune -f
+
+            echo "✅ Deploy complete — $IMAGE_TAG"

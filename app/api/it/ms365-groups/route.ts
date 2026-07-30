@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { requireRole } from "@/lib/auth";
 import { AppError } from "@/lib/errors";
+import { logger } from "@/lib/logger";
 import { fetchAllEntraGroups, type GraphGroup } from "@/services/ms-graph";
 import type { ApiResponse } from "@/types/api";
 
@@ -23,7 +24,7 @@ export async function GET(): Promise<NextResponse<ApiResponse<GraphGroup[]>>> {
     if (err instanceof AppError) {
       return NextResponse.json({ data: null, error: err.message }, { status: err.statusCode });
     }
-    console.error("[ms365-groups]", err);
+    logger.error("[ms365-groups]", err);
     return NextResponse.json({ data: null, error: "Internal server error" }, { status: 500 });
   }
 }

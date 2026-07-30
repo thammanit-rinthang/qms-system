@@ -40,6 +40,7 @@ export type DarItemMinAggregateOutputType = {
   docNumber: string | null
   docName: string | null
   revision: string | null
+  effectiveDate: Date | null
   darMasterId: string | null
 }
 
@@ -49,6 +50,7 @@ export type DarItemMaxAggregateOutputType = {
   docNumber: string | null
   docName: string | null
   revision: string | null
+  effectiveDate: Date | null
   darMasterId: string | null
 }
 
@@ -58,6 +60,7 @@ export type DarItemCountAggregateOutputType = {
   docNumber: number
   docName: number
   revision: number
+  effectiveDate: number
   darMasterId: number
   _all: number
 }
@@ -77,6 +80,7 @@ export type DarItemMinAggregateInputType = {
   docNumber?: true
   docName?: true
   revision?: true
+  effectiveDate?: true
   darMasterId?: true
 }
 
@@ -86,6 +90,7 @@ export type DarItemMaxAggregateInputType = {
   docNumber?: true
   docName?: true
   revision?: true
+  effectiveDate?: true
   darMasterId?: true
 }
 
@@ -95,6 +100,7 @@ export type DarItemCountAggregateInputType = {
   docNumber?: true
   docName?: true
   revision?: true
+  effectiveDate?: true
   darMasterId?: true
   _all?: true
 }
@@ -191,6 +197,7 @@ export type DarItemGroupByOutputType = {
   docNumber: string
   docName: string
   revision: string
+  effectiveDate: Date | null
   darMasterId: string
   _count: DarItemCountAggregateOutputType | null
   _avg: DarItemAvgAggregateOutputType | null
@@ -223,6 +230,7 @@ export type DarItemWhereInput = {
   docNumber?: Prisma.StringFilter<"DarItem"> | string
   docName?: Prisma.StringFilter<"DarItem"> | string
   revision?: Prisma.StringFilter<"DarItem"> | string
+  effectiveDate?: Prisma.DateTimeNullableFilter<"DarItem"> | Date | string | null
   darMasterId?: Prisma.StringFilter<"DarItem"> | string
   darMaster?: Prisma.XOR<Prisma.DarMasterScalarRelationFilter, Prisma.DarMasterWhereInput>
 }
@@ -233,6 +241,7 @@ export type DarItemOrderByWithRelationInput = {
   docNumber?: Prisma.SortOrder
   docName?: Prisma.SortOrder
   revision?: Prisma.SortOrder
+  effectiveDate?: Prisma.SortOrderInput | Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   darMaster?: Prisma.DarMasterOrderByWithRelationInput
 }
@@ -246,6 +255,7 @@ export type DarItemWhereUniqueInput = Prisma.AtLeast<{
   docNumber?: Prisma.StringFilter<"DarItem"> | string
   docName?: Prisma.StringFilter<"DarItem"> | string
   revision?: Prisma.StringFilter<"DarItem"> | string
+  effectiveDate?: Prisma.DateTimeNullableFilter<"DarItem"> | Date | string | null
   darMasterId?: Prisma.StringFilter<"DarItem"> | string
   darMaster?: Prisma.XOR<Prisma.DarMasterScalarRelationFilter, Prisma.DarMasterWhereInput>
 }, "id">
@@ -256,6 +266,7 @@ export type DarItemOrderByWithAggregationInput = {
   docNumber?: Prisma.SortOrder
   docName?: Prisma.SortOrder
   revision?: Prisma.SortOrder
+  effectiveDate?: Prisma.SortOrderInput | Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
   _count?: Prisma.DarItemCountOrderByAggregateInput
   _avg?: Prisma.DarItemAvgOrderByAggregateInput
@@ -273,6 +284,7 @@ export type DarItemScalarWhereWithAggregatesInput = {
   docNumber?: Prisma.StringWithAggregatesFilter<"DarItem"> | string
   docName?: Prisma.StringWithAggregatesFilter<"DarItem"> | string
   revision?: Prisma.StringWithAggregatesFilter<"DarItem"> | string
+  effectiveDate?: Prisma.DateTimeNullableWithAggregatesFilter<"DarItem"> | Date | string | null
   darMasterId?: Prisma.StringWithAggregatesFilter<"DarItem"> | string
 }
 
@@ -282,6 +294,7 @@ export type DarItemCreateInput = {
   docNumber: string
   docName: string
   revision: string
+  effectiveDate?: Date | string | null
   darMaster: Prisma.DarMasterCreateNestedOneWithoutItemsInput
 }
 
@@ -291,6 +304,7 @@ export type DarItemUncheckedCreateInput = {
   docNumber: string
   docName: string
   revision: string
+  effectiveDate?: Date | string | null
   darMasterId: string
 }
 
@@ -300,6 +314,7 @@ export type DarItemUpdateInput = {
   docNumber?: Prisma.StringFieldUpdateOperationsInput | string
   docName?: Prisma.StringFieldUpdateOperationsInput | string
   revision?: Prisma.StringFieldUpdateOperationsInput | string
+  effectiveDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   darMaster?: Prisma.DarMasterUpdateOneRequiredWithoutItemsNestedInput
 }
 
@@ -309,6 +324,7 @@ export type DarItemUncheckedUpdateInput = {
   docNumber?: Prisma.StringFieldUpdateOperationsInput | string
   docName?: Prisma.StringFieldUpdateOperationsInput | string
   revision?: Prisma.StringFieldUpdateOperationsInput | string
+  effectiveDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   darMasterId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -318,6 +334,7 @@ export type DarItemCreateManyInput = {
   docNumber: string
   docName: string
   revision: string
+  effectiveDate?: Date | string | null
   darMasterId: string
 }
 
@@ -327,6 +344,7 @@ export type DarItemUpdateManyMutationInput = {
   docNumber?: Prisma.StringFieldUpdateOperationsInput | string
   docName?: Prisma.StringFieldUpdateOperationsInput | string
   revision?: Prisma.StringFieldUpdateOperationsInput | string
+  effectiveDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type DarItemUncheckedUpdateManyInput = {
@@ -335,6 +353,7 @@ export type DarItemUncheckedUpdateManyInput = {
   docNumber?: Prisma.StringFieldUpdateOperationsInput | string
   docName?: Prisma.StringFieldUpdateOperationsInput | string
   revision?: Prisma.StringFieldUpdateOperationsInput | string
+  effectiveDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   darMasterId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -354,6 +373,7 @@ export type DarItemCountOrderByAggregateInput = {
   docNumber?: Prisma.SortOrder
   docName?: Prisma.SortOrder
   revision?: Prisma.SortOrder
+  effectiveDate?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
 }
 
@@ -367,6 +387,7 @@ export type DarItemMaxOrderByAggregateInput = {
   docNumber?: Prisma.SortOrder
   docName?: Prisma.SortOrder
   revision?: Prisma.SortOrder
+  effectiveDate?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
 }
 
@@ -376,6 +397,7 @@ export type DarItemMinOrderByAggregateInput = {
   docNumber?: Prisma.SortOrder
   docName?: Prisma.SortOrder
   revision?: Prisma.SortOrder
+  effectiveDate?: Prisma.SortOrder
   darMasterId?: Prisma.SortOrder
 }
 
@@ -425,20 +447,13 @@ export type DarItemUncheckedUpdateManyWithoutDarMasterNestedInput = {
   deleteMany?: Prisma.DarItemScalarWhereInput | Prisma.DarItemScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type DarItemCreateWithoutDarMasterInput = {
   id?: string
   itemNo: number
   docNumber: string
   docName: string
   revision: string
+  effectiveDate?: Date | string | null
 }
 
 export type DarItemUncheckedCreateWithoutDarMasterInput = {
@@ -447,6 +462,7 @@ export type DarItemUncheckedCreateWithoutDarMasterInput = {
   docNumber: string
   docName: string
   revision: string
+  effectiveDate?: Date | string | null
 }
 
 export type DarItemCreateOrConnectWithoutDarMasterInput = {
@@ -484,6 +500,7 @@ export type DarItemScalarWhereInput = {
   docNumber?: Prisma.StringFilter<"DarItem"> | string
   docName?: Prisma.StringFilter<"DarItem"> | string
   revision?: Prisma.StringFilter<"DarItem"> | string
+  effectiveDate?: Prisma.DateTimeNullableFilter<"DarItem"> | Date | string | null
   darMasterId?: Prisma.StringFilter<"DarItem"> | string
 }
 
@@ -493,6 +510,7 @@ export type DarItemCreateManyDarMasterInput = {
   docNumber: string
   docName: string
   revision: string
+  effectiveDate?: Date | string | null
 }
 
 export type DarItemUpdateWithoutDarMasterInput = {
@@ -501,6 +519,7 @@ export type DarItemUpdateWithoutDarMasterInput = {
   docNumber?: Prisma.StringFieldUpdateOperationsInput | string
   docName?: Prisma.StringFieldUpdateOperationsInput | string
   revision?: Prisma.StringFieldUpdateOperationsInput | string
+  effectiveDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type DarItemUncheckedUpdateWithoutDarMasterInput = {
@@ -509,6 +528,7 @@ export type DarItemUncheckedUpdateWithoutDarMasterInput = {
   docNumber?: Prisma.StringFieldUpdateOperationsInput | string
   docName?: Prisma.StringFieldUpdateOperationsInput | string
   revision?: Prisma.StringFieldUpdateOperationsInput | string
+  effectiveDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type DarItemUncheckedUpdateManyWithoutDarMasterInput = {
@@ -517,6 +537,7 @@ export type DarItemUncheckedUpdateManyWithoutDarMasterInput = {
   docNumber?: Prisma.StringFieldUpdateOperationsInput | string
   docName?: Prisma.StringFieldUpdateOperationsInput | string
   revision?: Prisma.StringFieldUpdateOperationsInput | string
+  effectiveDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -527,6 +548,7 @@ export type DarItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   docNumber?: boolean
   docName?: boolean
   revision?: boolean
+  effectiveDate?: boolean
   darMasterId?: boolean
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["darItem"]>
@@ -537,6 +559,7 @@ export type DarItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   docNumber?: boolean
   docName?: boolean
   revision?: boolean
+  effectiveDate?: boolean
   darMasterId?: boolean
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["darItem"]>
@@ -547,6 +570,7 @@ export type DarItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   docNumber?: boolean
   docName?: boolean
   revision?: boolean
+  effectiveDate?: boolean
   darMasterId?: boolean
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["darItem"]>
@@ -557,10 +581,11 @@ export type DarItemSelectScalar = {
   docNumber?: boolean
   docName?: boolean
   revision?: boolean
+  effectiveDate?: boolean
   darMasterId?: boolean
 }
 
-export type DarItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemNo" | "docNumber" | "docName" | "revision" | "darMasterId", ExtArgs["result"]["darItem"]>
+export type DarItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemNo" | "docNumber" | "docName" | "revision" | "effectiveDate" | "darMasterId", ExtArgs["result"]["darItem"]>
 export type DarItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   darMaster?: boolean | Prisma.DarMasterDefaultArgs<ExtArgs>
 }
@@ -582,6 +607,7 @@ export type $DarItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     docNumber: string
     docName: string
     revision: string
+    effectiveDate: Date | null
     darMasterId: string
   }, ExtArgs["result"]["darItem"]>
   composites: {}
@@ -1012,6 +1038,7 @@ export interface DarItemFieldRefs {
   readonly docNumber: Prisma.FieldRef<"DarItem", 'String'>
   readonly docName: Prisma.FieldRef<"DarItem", 'String'>
   readonly revision: Prisma.FieldRef<"DarItem", 'String'>
+  readonly effectiveDate: Prisma.FieldRef<"DarItem", 'DateTime'>
   readonly darMasterId: Prisma.FieldRef<"DarItem", 'String'>
 }
     
