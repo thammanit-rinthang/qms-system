@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Printer, FileText, RotateCcw, History, ArrowRight } from "lucide-react";
+import { ArrowLeft, Printer, FileText, RotateCcw, History, ArrowRight } from "lucide-react";
 import KpiMonthlySummaryReviewDialog from "@/components/kpi/KpiMonthlySummaryReviewDialog";
 import KpiMonthlySummaryHistoryDialog from "@/components/kpi/KpiMonthlySummaryHistoryDialog";
 import KpiMonthlySummaryMatrixTable from "@/components/kpi/KpiMonthlySummaryMatrixTable";
@@ -27,9 +28,11 @@ interface Props {
   role: string;
   userId: string;
   authUserId: string | null;
+  /** Revision number of the KPI Yearly master document — shown in the print header. */
+  masterRevisionNo: number;
 }
 
-export default function KpiMonthlyReviewPrintTemplate({ preview, year, record, signatures, role, userId, authUserId }: Props) {
+export default function KpiMonthlyReviewPrintTemplate({ preview, year, record, signatures, role, userId, authUserId, masterRevisionNo }: Props) {
   const router = useRouter();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
@@ -81,9 +84,17 @@ export default function KpiMonthlyReviewPrintTemplate({ preview, year, record, s
 
       <div className="py-8 bg-slate-50 min-h-screen">
         <div className="no-print max-w-[280mm] mx-auto mb-4 flex flex-wrap items-center justify-between gap-2 px-2">
-          <div>
-            <h1 className="text-lg font-bold text-slate-800">KPI Monthly Review — ปี {preview.yearBE} / {preview.year}</h1>
-            <p className="text-xs text-slate-500 font-medium mt-0.5">สถานะเอกสาร: {STATUS_LABEL_TH[status] ?? status}</p>
+          <div className="flex items-center gap-3">
+            <Button asChild variant="outline" className="rounded-xl border-slate-200 bg-white hover:bg-slate-50 text-slate-700 h-9 font-semibold text-xs gap-1.5">
+              <Link href={`/qms/kpi/monthly?year=${year}`}>
+                <ArrowLeft className="w-3.5 h-3.5" />
+                ย้อนกลับ / Back
+              </Link>
+            </Button>
+            <div>
+              <h1 className="text-lg font-bold text-slate-800">KPI Monthly Review — ปี {preview.yearBE} / {preview.year}</h1>
+              <p className="text-xs text-slate-500 font-medium mt-0.5">สถานะเอกสาร: {STATUS_LABEL_TH[status] ?? status}</p>
+            </div>
           </div>
 
           <div className="flex items-center gap-2">
@@ -119,20 +130,26 @@ export default function KpiMonthlyReviewPrintTemplate({ preview, year, record, s
             )}
 
             {canSubmit && (
-              <Button className="bg-[#0F1059] hover:bg-[#161875] text-white rounded-xl" onClick={() => setDialogOpen(true)}>
+              <Button className="bg-primary hover:bg-[#161875] text-white rounded-xl" onClick={() => setDialogOpen(true)}>
                 <FileText className="mr-1.5 h-4 w-4" />
                 ส่งขอรีวิว / Submit Review
               </Button>
             )}
 
-            <Button type="button" className="bg-[#0F1059] hover:bg-[#161875] text-white h-9 rounded-xl font-medium px-5" onClick={() => window.print()}>
+            <Button type="button" className="bg-primary hover:bg-[#161875] text-white h-9 rounded-xl font-medium px-5" onClick={() => window.print()}>
               <Printer className="mr-1.5 h-4 w-4" />
               Print
             </Button>
           </div>
         </div>
 
-        <KpiMonthlySummaryMatrixTable preview={preview} record={record} signatures={signatures} />
+        <KpiMonthlySummaryMatrixTable
+          preview={preview}
+          record={record}
+          signatures={signatures}
+          revisionNo={masterRevisionNo}
+          updatedAt={record?.updatedAt}
+        />
       </div>
 
       {dialogOpen && (

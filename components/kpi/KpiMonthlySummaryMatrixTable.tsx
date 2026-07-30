@@ -9,37 +9,72 @@ const STATUS_BG: Record<string, string> = {
 
 interface Props {
   preview: KpiYearlyPreviewData;
-  record: KPIMonthlySummaryReview | null;
-  signatures: ApprovalSignature[];
+  record: Pick<KPIMonthlySummaryReview, "reviewerName" | "approverName"> | null;
+  signatures: Pick<ApprovalSignature, "step" | "action" | "signaturePath">[];
   /** Print page caps the card at A4-landscape width; other contexts can go wider. */
   fullWidth?: boolean;
+  /** Shown in the "Revision No." box, top right of the header — defaults to 1. */
+  revisionNo?: number;
+  /** Shown in the "Update วันที่" box, top right of the header — defaults to now. */
+  updatedAt?: Date | string;
 }
 
-export default function KpiMonthlySummaryMatrixTable({ preview, record, signatures, fullWidth }: Props) {
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+export default function KpiMonthlySummaryMatrixTable({ preview, record, signatures, fullWidth, revisionNo = 1, updatedAt }: Props) {
   const preparerSig = signatures.find((s) => s.step === "PREPARER" && s.action === "APPROVED");
   const reviewerSig = signatures.find((s) => s.step === "REVIEWER" && s.action === "APPROVED");
   const approverSig = signatures.find((s) => s.step === "APPROVER" && s.action === "APPROVED");
+  const updateDateLabel = new Date(updatedAt ?? Date.now()).toLocaleDateString("en-US");
 
   return (
     <div className={`mx-auto bg-white p-6 shadow-sm ${fullWidth ? "w-full" : "max-w-[280mm]"}`}>
-      <div className="text-center mb-4">
-        <div className="font-bold text-base">สรุปผลการดำเนินงานตามวัตถุประสงค์คุณภาพ ประจำปี {preview.yearBE}</div>
-        <div className="font-semibold text-sm">Summary of Key Performance Results Year {preview.year}</div>
-      </div>
+      <table className="w-full border-collapse text-[11px] mb-2" style={{ tableLayout: "fixed" }}>
+        <colgroup>
+          <col style={{ width: "16%" }} />
+          <col />
+          <col style={{ width: "13%" }} />
+          <col style={{ width: "10%" }} />
+        </colgroup>
+        <tbody>
+          <tr>
+            <td className="border border-black p-2 align-middle" rowSpan={2}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo/logo.webp" alt="NDC Industrial" className="h-8 object-contain mx-auto" />
+            </td>
+            <td className="border border-black text-center align-middle" rowSpan={2}>
+              <div className="font-bold text-sm" style={{ color: "#0F1059" }}>บริษัท เอ็นดีซี อินดัสเทรียล จำกัด</div>
+              <div className="font-bold text-sm" style={{ color: "#0F1059" }}>NDC INDUSTRIAL CO., LTD.</div>
+              <div className="font-bold text-[13px] mt-1" style={{ color: "#0F1059" }}>สรุปผลการดำเนินงานตามวัตถุประสงค์คุณภาพ ประจำปี {preview.yearBE}</div>
+              <div className="font-semibold text-xs" style={{ color: "#0F1059" }}>Summary of Key Performance Results Year {preview.year}</div>
+            </td>
+            <td className="border border-black text-center font-semibold p-1 whitespace-nowrap">Revision No.</td>
+            <td className="border border-black text-center p-1">{String(revisionNo).padStart(2, "0")}</td>
+          </tr>
+          <tr>
+            <td className="border border-black text-center font-semibold p-1 whitespace-nowrap">Update วันที่</td>
+            <td className="border border-black text-center p-1">{updateDateLabel}</td>
+          </tr>
+        </tbody>
+      </table>
 
       <div className="overflow-x-auto">
         <table className="w-full min-w-275 border-collapse text-[11px]">
           <thead>
             <tr style={{ backgroundColor: "#0F1059", color: "#fff" }}>
-              <th className="border border-black px-2 py-1.5">No.</th>
-              <th className="border border-black px-2 py-1.5 text-left">Quality Objectives and Indicators</th>
-              <th className="border border-black px-2 py-1.5">Target</th>
-              <th className="border border-black px-2 py-1.5">Frequency</th>
-              <th className="border border-black px-2 py-1.5">Team</th>
-              {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((m) => (
+              <th className="border border-black px-2 py-1.5" rowSpan={2}>No.</th>
+              <th className="border border-black px-2 py-1.5 text-left" rowSpan={2}>Quality Objectives and Indicators</th>
+              <th className="border border-black px-2 py-1.5" rowSpan={2}>Target</th>
+              <th className="border border-black px-2 py-1.5" rowSpan={2}>Frequency</th>
+              <th className="border border-black px-2 py-1.5" rowSpan={2}>Team</th>
+              <th className="border border-black px-2 py-1.5" colSpan={12}>ประจำปี {preview.yearBE} / Year {preview.year}</th>
+              <th className="border border-black px-2 py-1.5" rowSpan={2}>Average<br />Y {preview.year}</th>
+              <th className="border border-black px-2 py-1.5" rowSpan={2}>New Target<br />Y {preview.nextYear}</th>
+            </tr>
+            <tr style={{ backgroundColor: "#0F1059", color: "#fff" }}>
+              {MONTHS.map((m) => (
                 <th key={m} className="border border-black px-1.5 py-1.5">{m}</th>
               ))}
-              <th className="border border-black px-2 py-1.5">Average</th>
             </tr>
           </thead>
           <tbody>
@@ -65,11 +100,12 @@ export default function KpiMonthlySummaryMatrixTable({ preview, record, signatur
                   </td>
                 ))}
                 <td className="border border-black px-2 py-1 text-center font-semibold">{row.average}</td>
+                <td className="border border-black px-2 py-1 text-center text-slate-400">-</td>
               </tr>
             ))}
             {preview.rows.length === 0 && (
               <tr>
-                <td colSpan={18} className="border border-black text-center italic py-4">
+                <td colSpan={19} className="border border-black text-center italic py-4">
                   ไม่มีข้อมูลสำหรับปีนี้ / No data for this year
                 </td>
               </tr>

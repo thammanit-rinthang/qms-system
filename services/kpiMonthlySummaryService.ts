@@ -4,6 +4,7 @@ import { ConflictError, ForbiddenError, NotFoundError } from "@/errors/customErr
 import { KpiMonthlySummaryReviewRepository } from "@/repositories/kpiMonthlySummaryReviewRepository";
 import { ApprovalSignatureRepository } from "@/repositories/approvalSignatureRepository";
 import { KpiMonthlySummaryReviewHistoryRepository } from "@/repositories/kpiMonthlySummaryReviewHistoryRepository";
+import { KpiExportService } from "@/services/kpiExportService";
 import type { ActorContext } from "@/types/kpi";
 import type { SignatureType } from "@/generated/prisma/client";
 
@@ -30,6 +31,7 @@ export class KpiMonthlySummaryService {
   private repo = new KpiMonthlySummaryReviewRepository();
   private approvalSignatureRepo = new ApprovalSignatureRepository();
   private historyRepo = new KpiMonthlySummaryReviewHistoryRepository();
+  private exportService = new KpiExportService();
 
   async getByYear(year: number) {
     return this.repo.findByYear(year);
@@ -37,6 +39,10 @@ export class KpiMonthlySummaryService {
 
   async getHistory(year: number) {
     return this.historyRepo.listByYear(year);
+  }
+
+  async getHistoryDocument(id: string) {
+    return this.historyRepo.findById(id);
   }
 
   /**
@@ -96,6 +102,7 @@ export class KpiMonthlySummaryService {
     return db.$transaction(async (tx) => {
       if (record.status !== "DRAFT") {
         const existingSignatures = await this.approvalSignatureRepo.findByDocument("KPI_MONTHLY_SUMMARY", record.id);
+        const snapshot = await this.exportService.getYearlyPreview({ year });
         await this.historyRepo.archiveCycle({
           year,
           cycleNo: record.cycleNo,
@@ -115,6 +122,7 @@ export class KpiMonthlySummaryService {
             signaturePath: s.signaturePath,
             comment: s.comment,
           })),
+          snapshot,
         }, tx);
       }
 

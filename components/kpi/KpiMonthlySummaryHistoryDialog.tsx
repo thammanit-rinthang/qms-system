@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Loader2, History, Download } from "lucide-react";
+import { Loader2, History, FileText } from "lucide-react";
 
 interface HistorySignature {
   step: string;
@@ -29,6 +29,7 @@ interface HistoryCycle {
   submittedAt: string | null;
   closedAt: string;
   signatures: HistorySignature[];
+  snapshot: unknown;
 }
 
 const STATUS_LABEL_TH: Record<string, string> = {
@@ -88,36 +89,34 @@ export default function KpiMonthlySummaryHistoryDialog({ open, onClose, year }: 
               <div key={cycle.id} className="rounded-xl border border-slate-200 overflow-hidden">
                 <div className="flex items-center justify-between bg-slate-50 px-4 py-2.5">
                   <span className="text-sm font-semibold text-slate-700">
-                    รอบที่ / Round {cycle.cycleNo} — {STATUS_LABEL_TH[cycle.status] ?? cycle.status}
+                    รอบที่ / Round {cycle.cycleNo} — เอกสารที่เซ็นครบแล้ว ({STATUS_LABEL_TH[cycle.status] ?? cycle.status})
                   </span>
                   <span className="text-xs text-slate-400">
                     ปิดเมื่อ / Closed: {new Date(cycle.closedAt).toLocaleString("th-TH")}
                   </span>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
-                  {cycle.signatures.map((sig) => (
-                    <div key={sig.step} className="p-3 text-center space-y-1.5">
-                      <p className="text-xs font-semibold text-slate-600">{STEP_LABEL_TH[sig.step] ?? sig.step}</p>
-                      <p className="text-sm text-slate-800">{sig.signerName ?? "-"}</p>
-                      <p className="text-[11px] text-slate-400">{sig.action}{sig.actionDate ? ` · ${new Date(sig.actionDate).toLocaleDateString("th-TH")}` : ""}</p>
-                      {sig.signaturePath ? (
-                        <div className="space-y-1">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={sig.signaturePath} alt={sig.step} className="max-h-14 object-contain mx-auto" />
-                          <a
-                            href={sig.signaturePath}
-                            download={`${year}-round${cycle.cycleNo}-${sig.step}.png`}
-                            className="inline-flex items-center gap-1 text-[11px] text-indigo-600 hover:underline"
-                          >
-                            <Download className="h-3 w-3" /> ดาวน์โหลด
-                          </a>
-                        </div>
-                      ) : (
-                        <p className="text-[11px] text-slate-300">ไม่มีลายเซ็น</p>
-                      )}
-                      {sig.comment && <p className="text-[11px] text-rose-500">{sig.comment}</p>}
-                    </div>
-                  ))}
+                <div className="flex items-center justify-between px-4 py-3">
+                  <div className="text-xs text-slate-500 space-y-0.5">
+                    {cycle.signatures.map((sig) => (
+                      <p key={sig.step}>
+                        <span className="font-medium text-slate-600">{STEP_LABEL_TH[sig.step] ?? sig.step}:</span>{" "}
+                        {sig.signerName ?? "-"}
+                        {sig.actionDate ? ` · ${new Date(sig.actionDate).toLocaleDateString("th-TH")}` : ""}
+                      </p>
+                    ))}
+                  </div>
+                  {cycle.snapshot ? (
+                    <a
+                      href={`/print/qms/kpi/monthly/history/${cycle.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-lg bg-[#0F1059] hover:bg-[#161875] text-white text-xs font-medium px-3 py-2 shrink-0"
+                    >
+                      <FileText className="h-3.5 w-3.5" /> ดูเอกสาร / View Document
+                    </a>
+                  ) : (
+                    <span className="text-[11px] text-slate-300 shrink-0">ไม่มีเอกสารย้อนหลัง</span>
+                  )}
                 </div>
               </div>
             ))}

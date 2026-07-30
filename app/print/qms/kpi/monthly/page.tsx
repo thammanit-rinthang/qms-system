@@ -1,11 +1,13 @@
 import { requireAuth } from "@/lib/auth";
 import { KpiExportService } from "@/services/kpiExportService";
 import { KpiMonthlySummaryService } from "@/services/kpiMonthlySummaryService";
+import { KpiService } from "@/services/kpiService";
 import { ApprovalSignatureRepository } from "@/repositories/approvalSignatureRepository";
 import KpiMonthlyReviewPrintTemplate from "@/components/kpi/KpiMonthlyReviewPrintTemplate";
 
 const exportService = new KpiExportService();
 const summaryService = new KpiMonthlySummaryService();
+const kpiService = new KpiService();
 const approvalSignatureRepo = new ApprovalSignatureRepository();
 
 type Props = { searchParams: Promise<{ year?: string; kpiId?: string }> };
@@ -19,9 +21,10 @@ export default async function KpiMonthlyReviewPrintPage({ searchParams }: Props)
   const yearParsed = params.year ? parseInt(params.year, 10) : new Date().getFullYear();
   const year = Number.isNaN(yearParsed) ? new Date().getFullYear() : yearParsed;
 
-  const [preview, record] = await Promise.all([
+  const [preview, record, masterRevisionNo] = await Promise.all([
     exportService.getYearlyPreview({ year, kpiId: params.kpiId }),
     summaryService.getByYear(year),
+    kpiService.getMasterRevisionNumber(year),
   ]);
   const signatures = record ? await approvalSignatureRepo.findByDocument("KPI_MONTHLY_SUMMARY", record.id) : [];
 
@@ -34,6 +37,7 @@ export default async function KpiMonthlyReviewPrintPage({ searchParams }: Props)
       role={session.user.role}
       userId={session.user.id}
       authUserId={session.user.authUserId ?? null}
+      masterRevisionNo={masterRevisionNo}
     />
   );
 }

@@ -5352,6 +5352,7 @@ export const KPIMonthlySummaryReviewHistoryScalarFieldEnum = {
   submittedAt: 'submittedAt',
   closedAt: 'closedAt',
   signatures: 'signatures',
+  snapshot: 'snapshot',
   createdAt: 'createdAt'
 } as const
 

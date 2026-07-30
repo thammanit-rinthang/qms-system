@@ -37,8 +37,13 @@ export async function POST(req: NextRequest) {
       accessToken: session.user.accessToken,
     }, { signatureDataUrl, comment, attachments });
 
-    const toList: MailRecipient[] = record.emailGroupMails.map((email) => ({ name: email, email }));
-    const ccList: MailRecipient[] = record.emailGroupMailsCc.map((email) => ({ name: email, email }));
+    const groupTo: MailRecipient[] = record.emailGroupMails.map((email) => ({ name: email, email }));
+    const groupCc: MailRecipient[] = record.emailGroupMailsCc.map((email) => ({ name: email, email }));
+    // sendMail() only delivers by looping over `to` — a CC-only selection (no To
+    // group) would otherwise be silently dropped, so promote the first CC address
+    // into `to` when that's all the user picked.
+    const toList: MailRecipient[] = groupTo.length > 0 ? groupTo : groupCc.slice(0, 1);
+    const ccList: MailRecipient[] = groupTo.length > 0 ? groupCc : groupCc.slice(1);
     const url = `${(process.env.NEXTAUTH_URL ?? "").replace(/\/+$/, "")}/print/qms/kpi/monthly?year=${year}`;
     const preview = await exportService.getYearlyPreview({ year });
     const printHtml = buildKpiMonthlySummaryPrintHtml({

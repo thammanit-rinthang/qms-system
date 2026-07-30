@@ -79,6 +79,7 @@ export type KPIMonthlySummaryReviewHistoryCountAggregateOutputType = {
   submittedAt: number
   closedAt: number
   signatures: number
+  snapshot: number
   createdAt: number
   _all: number
 }
@@ -137,6 +138,7 @@ export type KPIMonthlySummaryReviewHistoryCountAggregateInputType = {
   submittedAt?: true
   closedAt?: true
   signatures?: true
+  snapshot?: true
   createdAt?: true
   _all?: true
 }
@@ -240,6 +242,7 @@ export type KPIMonthlySummaryReviewHistoryGroupByOutputType = {
   submittedAt: Date | null
   closedAt: Date
   signatures: runtime.JsonValue
+  snapshot: runtime.JsonValue | null
   createdAt: Date
   _count: KPIMonthlySummaryReviewHistoryCountAggregateOutputType | null
   _avg: KPIMonthlySummaryReviewHistoryAvgAggregateOutputType | null
@@ -279,6 +282,7 @@ export type KPIMonthlySummaryReviewHistoryWhereInput = {
   submittedAt?: Prisma.DateTimeNullableFilter<"KPIMonthlySummaryReviewHistory"> | Date | string | null
   closedAt?: Prisma.DateTimeFilter<"KPIMonthlySummaryReviewHistory"> | Date | string
   signatures?: Prisma.JsonFilter<"KPIMonthlySummaryReviewHistory">
+  snapshot?: Prisma.JsonNullableFilter<"KPIMonthlySummaryReviewHistory">
   createdAt?: Prisma.DateTimeFilter<"KPIMonthlySummaryReviewHistory"> | Date | string
 }
 
@@ -295,6 +299,7 @@ export type KPIMonthlySummaryReviewHistoryOrderByWithRelationInput = {
   submittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   closedAt?: Prisma.SortOrder
   signatures?: Prisma.SortOrder
+  snapshot?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -314,6 +319,7 @@ export type KPIMonthlySummaryReviewHistoryWhereUniqueInput = Prisma.AtLeast<{
   submittedAt?: Prisma.DateTimeNullableFilter<"KPIMonthlySummaryReviewHistory"> | Date | string | null
   closedAt?: Prisma.DateTimeFilter<"KPIMonthlySummaryReviewHistory"> | Date | string
   signatures?: Prisma.JsonFilter<"KPIMonthlySummaryReviewHistory">
+  snapshot?: Prisma.JsonNullableFilter<"KPIMonthlySummaryReviewHistory">
   createdAt?: Prisma.DateTimeFilter<"KPIMonthlySummaryReviewHistory"> | Date | string
 }, "id">
 
@@ -330,6 +336,7 @@ export type KPIMonthlySummaryReviewHistoryOrderByWithAggregationInput = {
   submittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   closedAt?: Prisma.SortOrder
   signatures?: Prisma.SortOrder
+  snapshot?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.KPIMonthlySummaryReviewHistoryCountOrderByAggregateInput
   _avg?: Prisma.KPIMonthlySummaryReviewHistoryAvgOrderByAggregateInput
@@ -354,6 +361,7 @@ export type KPIMonthlySummaryReviewHistoryScalarWhereWithAggregatesInput = {
   submittedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"KPIMonthlySummaryReviewHistory"> | Date | string | null
   closedAt?: Prisma.DateTimeWithAggregatesFilter<"KPIMonthlySummaryReviewHistory"> | Date | string
   signatures?: Prisma.JsonWithAggregatesFilter<"KPIMonthlySummaryReviewHistory">
+  snapshot?: Prisma.JsonNullableWithAggregatesFilter<"KPIMonthlySummaryReviewHistory">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"KPIMonthlySummaryReviewHistory"> | Date | string
 }
 
@@ -370,6 +378,7 @@ export type KPIMonthlySummaryReviewHistoryCreateInput = {
   submittedAt?: Date | string | null
   closedAt?: Date | string
   signatures: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  snapshot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
@@ -386,6 +395,7 @@ export type KPIMonthlySummaryReviewHistoryUncheckedCreateInput = {
   submittedAt?: Date | string | null
   closedAt?: Date | string
   signatures: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  snapshot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
@@ -402,6 +412,7 @@ export type KPIMonthlySummaryReviewHistoryUpdateInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   signatures?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  snapshot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -418,6 +429,7 @@ export type KPIMonthlySummaryReviewHistoryUncheckedUpdateInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   signatures?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  snapshot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -434,6 +446,7 @@ export type KPIMonthlySummaryReviewHistoryCreateManyInput = {
   submittedAt?: Date | string | null
   closedAt?: Date | string
   signatures: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  snapshot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
@@ -450,6 +463,7 @@ export type KPIMonthlySummaryReviewHistoryUpdateManyMutationInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   signatures?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  snapshot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -466,6 +480,7 @@ export type KPIMonthlySummaryReviewHistoryUncheckedUpdateManyInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   signatures?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  snapshot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -482,6 +497,7 @@ export type KPIMonthlySummaryReviewHistoryCountOrderByAggregateInput = {
   submittedAt?: Prisma.SortOrder
   closedAt?: Prisma.SortOrder
   signatures?: Prisma.SortOrder
+  snapshot?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -540,6 +556,7 @@ export type KPIMonthlySummaryReviewHistorySelect<ExtArgs extends runtime.Types.E
   submittedAt?: boolean
   closedAt?: boolean
   signatures?: boolean
+  snapshot?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["kPIMonthlySummaryReviewHistory"]>
 
@@ -556,6 +573,7 @@ export type KPIMonthlySummaryReviewHistorySelectCreateManyAndReturn<ExtArgs exte
   submittedAt?: boolean
   closedAt?: boolean
   signatures?: boolean
+  snapshot?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["kPIMonthlySummaryReviewHistory"]>
 
@@ -572,6 +590,7 @@ export type KPIMonthlySummaryReviewHistorySelectUpdateManyAndReturn<ExtArgs exte
   submittedAt?: boolean
   closedAt?: boolean
   signatures?: boolean
+  snapshot?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["kPIMonthlySummaryReviewHistory"]>
 
@@ -588,10 +607,11 @@ export type KPIMonthlySummaryReviewHistorySelectScalar = {
   submittedAt?: boolean
   closedAt?: boolean
   signatures?: boolean
+  snapshot?: boolean
   createdAt?: boolean
 }
 
-export type KPIMonthlySummaryReviewHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "year" | "cycleNo" | "status" | "prepareBy" | "reviewerName" | "reviewerEmail" | "approverName" | "approverEmail" | "submittedAt" | "closedAt" | "signatures" | "createdAt", ExtArgs["result"]["kPIMonthlySummaryReviewHistory"]>
+export type KPIMonthlySummaryReviewHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "year" | "cycleNo" | "status" | "prepareBy" | "reviewerName" | "reviewerEmail" | "approverName" | "approverEmail" | "submittedAt" | "closedAt" | "signatures" | "snapshot" | "createdAt", ExtArgs["result"]["kPIMonthlySummaryReviewHistory"]>
 
 export type $KPIMonthlySummaryReviewHistoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "KPIMonthlySummaryReviewHistory"
@@ -609,6 +629,7 @@ export type $KPIMonthlySummaryReviewHistoryPayload<ExtArgs extends runtime.Types
     submittedAt: Date | null
     closedAt: Date
     signatures: runtime.JsonValue
+    snapshot: runtime.JsonValue | null
     createdAt: Date
   }, ExtArgs["result"]["kPIMonthlySummaryReviewHistory"]>
   composites: {}
@@ -1045,6 +1066,7 @@ export interface KPIMonthlySummaryReviewHistoryFieldRefs {
   readonly submittedAt: Prisma.FieldRef<"KPIMonthlySummaryReviewHistory", 'DateTime'>
   readonly closedAt: Prisma.FieldRef<"KPIMonthlySummaryReviewHistory", 'DateTime'>
   readonly signatures: Prisma.FieldRef<"KPIMonthlySummaryReviewHistory", 'Json'>
+  readonly snapshot: Prisma.FieldRef<"KPIMonthlySummaryReviewHistory", 'Json'>
   readonly createdAt: Prisma.FieldRef<"KPIMonthlySummaryReviewHistory", 'DateTime'>
 }
     

@@ -445,6 +445,7 @@ model KPIMonthlySummaryReviewHistory {
   submittedAt   DateTime?     @map("submitted_at")
   closedAt      DateTime      @default(now()) @map("closed_at")
   signatures    Json
+  snapshot      Json?
   createdAt     DateTime      @default(now())
 
   @@index([year])

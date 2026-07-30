@@ -1,4 +1,4 @@
-import { MonthlyStatus, Prisma } from "@/generated/prisma/client";
+import { MonthlyStatus, Prisma, type KPIMonthlySummaryReviewHistory } from "@/generated/prisma/client";
 import { BaseRepository } from "./baseRepository";
 
 export interface KpiMonthlySummaryHistorySignature {
@@ -11,7 +11,7 @@ export interface KpiMonthlySummaryHistorySignature {
   comment: string | null;
 }
 
-export class KpiMonthlySummaryReviewHistoryRepository extends BaseRepository<Record<string, unknown>> {
+export class KpiMonthlySummaryReviewHistoryRepository extends BaseRepository<KPIMonthlySummaryReviewHistory> {
   constructor() {
     super("kPIMonthlySummaryReviewHistory");
   }
@@ -28,6 +28,7 @@ export class KpiMonthlySummaryReviewHistoryRepository extends BaseRepository<Rec
       approverEmail: string | null;
       submittedAt: Date | null;
       signatures: KpiMonthlySummaryHistorySignature[];
+      snapshot: unknown;
     },
     tx: Prisma.TransactionClient,
   ) {
@@ -43,6 +44,7 @@ export class KpiMonthlySummaryReviewHistoryRepository extends BaseRepository<Rec
         approverEmail: input.approverEmail,
         submittedAt: input.submittedAt,
         signatures: input.signatures as unknown as Prisma.InputJsonValue,
+        snapshot: input.snapshot as Prisma.InputJsonValue,
       },
     });
   }
