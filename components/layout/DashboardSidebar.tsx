@@ -76,8 +76,8 @@ function getSections(
       icon: <FolderOpen className="h-4.5 w-4.5 shrink-0" />,
     },
     {
-      labelTh: "เอกสารรอรับทราบ",
-      labelEn: "Pending Documents",
+      labelTh: "เอกสารแจกจ่าย",
+      labelEn: "Distribution Documents",
       href: "/distribution",
       icon: <Send className="h-4.5 w-4.5 shrink-0" />,
     },
